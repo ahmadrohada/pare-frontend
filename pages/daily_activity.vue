@@ -90,7 +90,6 @@
 
 
 <script>
-//import "tui-calendar/dist/tui-calendar.css";
 import { Calendar } from "@toast-ui/vue-calendar";
 import moment from "moment";
 

@@ -1,8 +1,8 @@
 {
-  "name": "nuxt-black-dashboard",
-  "version": "1.0.0",
-  "description": "Nuxt Black Dashboard",
-  "author": "creativetim",
+  "name": "PARE",
+  "version": "3.0.0",
+  "description": "Performance Agreemen Report by Electronic",
+  "author": "BKPSDM@Karawangkab",
   "private": true,
   "scripts": {
     "dev": "nuxt",

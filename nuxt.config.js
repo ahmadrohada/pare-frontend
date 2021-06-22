@@ -58,7 +58,7 @@ export default {
     baseURL:
       process.env.NODE_ENV === 'dev'
         ? 'http://localhost:8000/api'
-        : 'https://pare_api:8000/api'
+        : 'https://api-pare-v3.bkpsdm.karawangkab.go.id/api'
   },
   auth: {
     strategies: {

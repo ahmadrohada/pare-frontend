@@ -8,14 +8,14 @@
       :title="$t('sidebar.title')"
     >
       <template slot-scope="props" slot="links">
-        <sidebar-item
+       <!--  <sidebar-item
           :link="{
             name: $t('sidebar.dashboard'),
             icon: 'tim-icons icon-chart-pie-36',
             path: '/'
           }"
         >
-        </sidebar-item>
+        </sidebar-item> -->
         <sidebar-item
           :link="{
             name: $t('sidebar.dailyActivity'),
@@ -25,13 +25,13 @@
         >
         </sidebar-item>
 
-        <sidebar-item
+       <!--  <sidebar-item
           :link="{
             name: $t('sidebar.userProfile'),
             icon: 'tim-icons icon-single-02',
-            path: '/user' }"
+            path: '/user/profile' }"
         >
-        </sidebar-item>
+        </sidebar-item> -->
 
       </template>
     </side-bar>
@@ -57,7 +57,6 @@
   /* eslint-disable no-new */
   import PerfectScrollbar from 'perfect-scrollbar';
   import 'perfect-scrollbar/css/perfect-scrollbar.css';
-  import SidebarShare from '@/components/Layout/SidebarSharePlugin';
   function hasElement(className) {
     return document.getElementsByClassName(className).length > 0;
   }

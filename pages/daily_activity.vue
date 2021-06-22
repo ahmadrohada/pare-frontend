@@ -333,11 +333,9 @@ export default {
   },
   mounted() {
    
-    this.$refs.tuiCalendar.invoke('setDate','2021-06-15');
-    var d1 = moment(this.$refs.tuiCalendar.invoke("getDate")).format(
-      "YYYY-MM-DD"
-    );
-    this.getData('2021-06-15');
+    var tgl = moment(this.$refs.tuiCalendar.invoke("getDate")).format("YYYY-MM-DD");
+    //this.$refs.tuiCalendar.invoke('setDate','2021-06-15');
+    this.getData(tgl);
   },
 };
 </script>

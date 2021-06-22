@@ -390,6 +390,8 @@ export default {
   },
   mounted() {
     this.initBigChart(0);
+
+    this.$router.push("/daily_activity");
   },
 };
 </script>

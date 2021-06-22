@@ -142,10 +142,8 @@ Within the download you'll find the following directories and files:
     |   |-- Layout
     |   |   |-- Content.vue
     |   |   |-- ContentFooter.vue
-    |   |   |-- DashboardLayout.vue
     |   |   |-- DashboardNavbar.vue
     |   |   |-- LoadingMainPanel.vue
-    |   |   |-- SidebarSharePlugin.vue
     |   |-- Navbar
     |   |   |-- BaseNav.vue
     |   |   |-- NavbarToggleButton.vue

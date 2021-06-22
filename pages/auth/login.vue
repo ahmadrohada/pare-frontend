@@ -62,7 +62,7 @@ export default {
         console.log(response);
 
         this.$router.push(
-          this.$route.query.redirect ? this.$route.query.redirect : "/"
+          this.$route.query.redirect ? this.$route.query.redirect : "/daily_activity"
         );
       } catch (e) {
         this.errors = e.response.data.errors;

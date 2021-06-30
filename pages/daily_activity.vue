@@ -35,9 +35,8 @@
         <div>
           <form @submit.prevent v-on:submit.prevent="submitForm">
             <base-input
-              label="Daily Report ID"
               v-model="form.daily_report_id"
-              type="input"
+              type="hidden"
             >
             </base-input>
 
@@ -184,7 +183,7 @@ export default {
     }
       },
       useCreationPopup: false, //gunakan modal nuxt
-      useDetailPopup: false,
+      useDetailPopup: true,
 
       //init modal
       modals: {

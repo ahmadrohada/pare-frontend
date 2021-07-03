@@ -121,9 +121,7 @@ export default {
   pwa: {
     manifest: {
       name: 'PARE V3',
-      lang: 'en',
-      useWebmanifestExtension: false,
-      theme_color: '#2196F3',
+      theme_color: '#1c9963',
     }
   }
   

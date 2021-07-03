@@ -119,6 +119,8 @@ export default {
     }
     
     this.tes_connection();
+    this.form.username = "";
+    this.form.password = "";
 
   },
 };

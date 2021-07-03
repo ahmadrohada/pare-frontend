@@ -8,7 +8,7 @@
 </script>
 <style lang="scss">
 .login-page {
-  background-image: url(~/static/img/pare_bg.jpg) !important;
+  //background-image: url(~/static/img/pare_bg.jpg) !important;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;

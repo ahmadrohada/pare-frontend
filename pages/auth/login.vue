@@ -48,17 +48,12 @@
 </template>
  
 <script>
-import { mapGetters } from 'vuex'
 export default {
   layout: "guest",
   middleware: "guest",
   auth:"guet",
-  computed: { 
-    ...mapGetters([
-        'isLoggedIn'
-    ])
-  },
-  head() {
+  
+ /*  head() {
     
     return {
       title: "PARE|LOGIN",
@@ -68,7 +63,7 @@ export default {
         },
       ],
     };
-  },
+  }, */
   data() {
     return {
       form: {
@@ -102,13 +97,28 @@ export default {
     },
     checkExist(event){
          this.$refs.input_password.focus();
-    } 
+    },
+    onScriptLoaded(event = null) {
+      if (event) {
+        console.log("Was added");
+      } else {
+        console.log("Already existed");
+      }
+      console.log(window.jQuery);
+    }
   },
   mounted() {
+     if (!process.server && !window.jQuery) {
+      const script = document.createElement("script");
+      script.onload = this.onScriptLoaded;
+      script.type = "text/javascript";
+      script.src = "/js/login.js";
+      document.head.appendChild(script);
+    } else {
+      this.onScriptLoaded();
+    }
+    
     this.tes_connection();
-
-    console.log(this.$auth);
-
 
   },
 };

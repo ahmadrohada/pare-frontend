@@ -151,4 +151,11 @@
   .main-panel .zoomOut {
     animation-name: zoomOut95;
   }
+
+  .swal2-popup {
+    width: 35em !important;
+    padding: 1.1em !important;
+    font-size: 0.8rem !important;
+    max-width: 80% !important;
+  }
 </style>

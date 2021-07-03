@@ -1,23 +1,5 @@
-*{
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
-}
 
-body{
-    font-family: 'Poppins', sans-serif;
-    overflow: hidden;
-}
-
-.wave{
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	height: 100%;
-	z-index: -1;
-}
-
-.container{
+.login-container{
     width: 100vw;
     height: 100vh;
     display: grid;
@@ -31,6 +13,15 @@ body{
 	justify-content: flex-end;
 	align-items: center;
 }
+
+.wave{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 100%;
+	z-index: -1;
+}
+
 
 .login-content{
 	display: flex;
@@ -48,7 +39,7 @@ form{
 }
 
 .login-content img{
-    height: 100px;
+    height: 140px;
 }
 
 .login-content h2{
@@ -181,9 +172,16 @@ a:hover{
 	background-position: right;
 }
 
+.login-title{
+	margin-top:-20px;
+	font-size: 1.1rem;
+	color: rgb(139, 139, 139);
+	font-family: 'Poppins', sans-serif;
+}
+
 
 @media screen and (max-width: 1050px){
-	.container{
+	.login-container{
 		grid-gap: 5rem;
 	}
 }
@@ -193,9 +191,8 @@ a:hover{
 		width: 290px;
 	}
 
-	.login-content h2{
-        font-size: 2.4rem;
-        margin: 8px 0;
+	.login-content .login-title{
+        font-size: 0.8rem;
 	}
 
 	.img img{
@@ -204,7 +201,7 @@ a:hover{
 }
 
 @media screen and (max-width: 900px){
-	.container{
+	.login-container{
 		grid-template-columns: 1fr;
 	}
 

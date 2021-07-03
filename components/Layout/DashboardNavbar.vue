@@ -101,9 +101,21 @@ export default {
       this.showMenu = !this.showMenu;
     },
     signOut() {
+      this.$swal.fire({
+        title: 'Keluar dari aplikasi',
+        text: "",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Logout',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$auth.logout();
+        }
+      })
      
-      this.$auth.logout();
-  
     }
   }
 };

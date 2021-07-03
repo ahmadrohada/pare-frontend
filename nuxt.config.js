@@ -1,6 +1,6 @@
 
 export default {
-  //mode: 'spa',
+  //mode: 'universal',
   /*
   ** Headers of the page
   */
@@ -69,7 +69,7 @@ export default {
           },
           user: { 
             url: 'me', method: 'get', propertyName: 'data' 
-          },
+          }, 
           logout: false
          
         }
@@ -117,5 +117,14 @@ export default {
         ]
       ]
     }
+  },
+  pwa: {
+    manifest: {
+      name: 'PARE V3',
+      lang: 'en',
+      useWebmanifestExtension: false,
+      theme_color: '#2196F3',
+    }
   }
+  
 }

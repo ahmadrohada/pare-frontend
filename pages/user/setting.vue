@@ -2,8 +2,6 @@
   <div class="row">
     <div class="col-md-12">{{test}}</div>
     <div class="col-md-12">{{user}}</div>
-    <div class="col-md-8"><edit-profile-form> </edit-profile-form></div>
-    <div class="col-md-4"><user-card> </user-card></div>
   </div>
 </template>
 
@@ -15,7 +13,7 @@ import { mapGetters } from 'vuex'
 
 
 export default {
-  name: 'user',
+  name: 'setting',
   middleware: 'auth',
   data(){
     return{

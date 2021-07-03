@@ -52,18 +52,11 @@ export default {
   layout: "guest",
   middleware: "guest",
   auth:"guet",
-  
- /*  head() {
-    
+  head() {
     return {
       title: "PARE|LOGIN",
-      script: [
-        {
-          src: "/js/login.js",
-        },
-      ],
     };
-  }, */
+  }, 
   data() {
     return {
       form: {

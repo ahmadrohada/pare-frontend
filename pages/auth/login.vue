@@ -112,7 +112,7 @@ export default {
       const script = document.createElement("script");
       script.onload = this.onScriptLoaded;
       script.type = "text/javascript";
-      script.src = "/js/login.js";
+      script.src = "/login.js";
       document.head.appendChild(script);
     } else {
       this.onScriptLoaded();

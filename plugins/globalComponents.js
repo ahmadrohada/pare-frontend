@@ -8,6 +8,12 @@ import BaseCheckbox from '@/components/Inputs/BaseCheckbox.vue';
 import { Input, InputNumber, Tooltip, Popover } from 'element-ui';
 import Modal from '@/components/Modal.vue';
 import VueSweetalert2 from 'vue-sweetalert2';
+
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
+
+
 /**
  * You can register global components here and use them as a plugin in your main Vue instance
  */
@@ -29,6 +35,7 @@ Vue.use(Tooltip);
 Vue.use(Popover);
 Vue.use(VueSweetalert2);
 
+Vue.use(VueMaterial)
 
 
 

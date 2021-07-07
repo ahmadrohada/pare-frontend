@@ -10,28 +10,14 @@
       <template slot-scope="props" slot="links">
         <sidebar-item
           :link="{
-            name: $t('sidebar.dashboard'),
+            name: $t('sidebar.home'),
             icon: 'tim-icons icon-chart-pie-36',
             path: '/home'
           }"
         >
         </sidebar-item>
-        <sidebar-item
-          :link="{
-            name: $t('sidebar.dailyActivity'),
-            icon: 'tim-icons icon-calendar-60',
-            path: '/daily_activity'
-          }"
-        >
-        </sidebar-item>
+       
 
-       <!--  <sidebar-item
-          :link="{
-            name: $t('sidebar.userProfile'),
-            icon: 'tim-icons icon-single-02',
-            path: '/user/profile' }"
-        >
-        </sidebar-item> -->
 
       </template>
     </side-bar>

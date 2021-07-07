@@ -1,6 +1,5 @@
 <template>
   <div>
-    <img class="wave" src="~/static/img/login_form/wave.png" />
     <div class="login-container">
       <div class="img">
         <img src="~/static/img/login_form/bg.svg" />

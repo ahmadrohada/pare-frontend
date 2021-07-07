@@ -13,20 +13,23 @@
 
       <div class="form">
         <md-field>
-          <label>E-mail</label>
+          <label>Username</label>
           <md-input v-model="form.username" autofocus></md-input>
         </md-field>
+        <span class="float-left kesalahan">{{username_error}}</span>
 
         <md-field md-has-password>
           <label>Password</label>
           <md-input v-model="form.password" type="password"></md-input>
         </md-field>
+        <span class="float-left kesalahan">{{password_error}}</span>
       </div>
 
       <div class="actions md-layout md-alignment-center-space-between">
-       
-        <md-button class="md-raised md-primary" @click="login">Log in</md-button>
+        <md-button class="md-raised btn-block md-primary" @click="login">Log in</md-button>
       </div>
+      <hr>
+      Login dengan <span @click="loginSimASn" style="color:#E9967A; cursor:pointer;">SIM-ASN</span> 
 
       <div class="loading-overlay" v-if="loading">
         <md-progress-spinner
@@ -39,18 +42,29 @@
 </template>
 
 <script>
+
+
+
 export default {
   name: "LoginForm",
   data() {
     return {
       loading: false,
+      username_error: null,
+      password_error: null,
       form: {
-        username: "",
-        password: "",
+        
+        username: null,
+        password: null,
       },
     };
   },
   methods: {
+    async loginSimASn(){
+      console.log("login sim asn");
+      window.open("https://sim-asn.bkpsdm.karawangkab.go.id/oauth/authorize?client_id=93ce4ca9-b473-4f37-bd34-1a03c5c61e58&redirect_uri=http://localhost&response_type=code&scope=profile+pegawai&state=login", "_blank");    
+
+    },
     async login() {
       this.loading = true;
       try {
@@ -60,7 +74,9 @@ export default {
         console.log(response);
         this.$router.push("/home");
       } catch (e) {
-        //this.errors = e.response.data.errors;
+        this.loading = false;
+        //this.username_error = e.response.data.errors.username[0];
+        //this.password_error = e.response.data.errors.password[0];
       }
     }
   },
@@ -74,28 +90,48 @@ export default {
   justify-content: center;
   position: relative;
   height: 100vh;
+  
   .title {
     text-align: center;
     margin-bottom: 30px;
+    
     img {
       margin-bottom: -5px;
       height: 160px;
     }
+    .md-body-1{
+      color:#077821;
+      text-shadow: 1px 1px 2px rgb(241, 241, 241), 0 0 25px rgb(235, 234, 234), 0 0 5px rgb(230, 230, 230);
+
+    }
+   
+   
   }
+  
   .actions {
+    margin-top:-30px;
     .md-button {
       margin: 0;
     }
   }
   .form {
     margin-bottom: 60px;
+    .kesalahan{
+      color:#b40000;
+      font-size:8pt;
+      margin-top:-22px;
+
+    }
   }
   .md-content {
     z-index: 1;
-    padding: 40px;
+    padding: 30px;
     width: 100%;
-    max-width: 340px;
+    max-width: 380px;
     position: relative;
+    border-radius: 8px;
+
+
   }
   .loading-overlay {
     z-index: 10;

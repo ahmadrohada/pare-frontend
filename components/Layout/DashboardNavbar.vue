@@ -64,7 +64,7 @@ export default {
       const { path } = this.$route;
       let parts = path.split('/')
       if(parts == ','){
-        return 'Dashboard';
+        return 'Home';
       }
       return parts.map(p => this.capitalizeFirstLetter(p)).join(' ');
     },

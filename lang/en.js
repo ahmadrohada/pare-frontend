@@ -37,6 +37,7 @@ module.exports = {
     "widgets": "Widgets",
     "charts": "Charts",
     "calendar": "Calendar",
+    "home": "Home",
 
     "dailyActivity": "Daily Activity"
   }

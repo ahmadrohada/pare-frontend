@@ -3,29 +3,29 @@
     <md-content class="md-elevation-3">
       <div class="title">
         <img
-          src="https://github.com/lindelof/particles-bg-vue/raw/master/images/logo.png?raw=true"
+          src="~/static/img/login_form/pare-logo.png"
         />
-        <div class="md-title">particles-bg-vue</div>
+        <!-- <div class="md-title">particles-bg-vue</div> -->
         <div class="md-body-1">
-          A Vue.js particles animation background component
+          Performance Agreement Report by Electronic
         </div>
       </div>
 
       <div class="form">
         <md-field>
           <label>E-mail</label>
-          <md-input v-model="login.email" autofocus></md-input>
+          <md-input v-model="form.username" autofocus></md-input>
         </md-field>
 
         <md-field md-has-password>
           <label>Password</label>
-          <md-input v-model="login.password" type="password"></md-input>
+          <md-input v-model="form.password" type="password"></md-input>
         </md-field>
       </div>
 
       <div class="actions md-layout md-alignment-center-space-between">
-        <a href="/resetpassword">Reset password</a>
-        <md-button class="md-raised md-primary" @click="auth">Log in</md-button>
+       
+        <md-button class="md-raised md-primary" @click="login">Log in</md-button>
       </div>
 
       <div class="loading-overlay" v-if="loading">
@@ -44,37 +44,25 @@ export default {
   data() {
     return {
       loading: false,
-      login: {
-        email: "",
+      form: {
+        username: "",
         password: "",
       },
     };
   },
   methods: {
     async login() {
+      this.loading = true;
       try {
         let response = await this.$auth.loginWith("local", {
           data: this.form,
         });
         console.log(response);
-
-        this.$router.push(
-          this.$route.query.redirect
-            ? this.$route.query.redirect
-            : "/daily_activity"
-        );
+        this.$router.push("/home");
       } catch (e) {
-        this.errors = e.response.data.errors;
+        //this.errors = e.response.data.errors;
       }
-    },
-    auth() {
-      // your code to login user
-      // this is only for example of loading
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-      }, 5000);
-    },
+    }
   },
 };
 </script>
@@ -90,8 +78,8 @@ export default {
     text-align: center;
     margin-bottom: 30px;
     img {
-      margin-bottom: 16px;
-      max-width: 300px;
+      margin-bottom: -5px;
+      height: 160px;
     }
   }
   .actions {
@@ -106,7 +94,7 @@ export default {
     z-index: 1;
     padding: 40px;
     width: 100%;
-    max-width: 400px;
+    max-width: 340px;
     position: relative;
   }
   .loading-overlay {

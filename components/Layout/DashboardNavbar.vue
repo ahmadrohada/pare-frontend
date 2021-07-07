@@ -36,7 +36,7 @@
         >
           <div class="photo"><img src="img/user.png" /></div>
           <b class="caret d-none d-lg-block d-xl-block"></b>
-          <p class="d-lg-none">{{user.name}}</p>
+          <p class="d-lg-none">USername</p>
         </template>
         <li class="nav-link">
           <a href="/user/profile" class="nav-item dropdown-item">Profile</a>
@@ -52,7 +52,6 @@
 <script>
 import { CollapseTransition } from 'vue2-transitions';
 import { BaseNav, Modal } from '@/components';
-import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -69,12 +68,6 @@ export default {
       }
       return parts.map(p => this.capitalizeFirstLetter(p)).join(' ');
     },
-    isRTL() {
-      return this.$rtl.isRTL;
-    },
-     ...mapGetters([
-        'user'
-    ])
   },
   data() {
     return {

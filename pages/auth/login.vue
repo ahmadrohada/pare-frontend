@@ -21,14 +21,10 @@ export default {
   },
   layout: "guest",
   middleware: "guest",
-  auth: "guet",
   head() {
     return {
-      title: "PARE|LOGIN",
+      title: "Login Masuk",
     };
-  },
-  data() {
-    
   },
   methods: {
     
@@ -37,29 +33,10 @@ export default {
         this.$router.push("/auth/connection_error");
       });
     },
-    checkExist(event) {
-      this.$refs.input_password.focus();
-    },
-    onScriptLoaded(event = null) {
-      if (event) {
-        console.log("Was added");
-      } else {
-        console.log("Already existed");
-      }
-      console.log(window.jQuery);
-    },
+    
   },
   mounted() {
-    if (!process.server && !window.jQuery) {
-      const script = document.createElement("script");
-      script.onload = this.onScriptLoaded;
-      script.type = "text/javascript";
-      script.src = "/login.js";
-      document.head.appendChild(script);
-    } else {
-      this.onScriptLoaded();
-    }
-
+    
     this.tes_connection();
   },
 };

@@ -26,11 +26,11 @@
       </div>
 
       <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-raised btn-block md-primary" @click="login">Log in</md-button>
+        <md-button class="md-dense  btn-sim-asn" @click="loginSimASn">SIM-ASN</md-button>
+        <md-button class="md-dense md-raised md-primary" @click="login">MASUK</md-button>
       </div>
       <hr>
-      Login dengan <span @click="loginSimASn" style="color:#E9967A; cursor:pointer;">SIM-ASN</span> 
-
+     
       <div class="loading-overlay" v-if="loading">
         <md-progress-spinner
           md-mode="indeterminate"
@@ -62,7 +62,7 @@ export default {
   methods: {
     async loginSimASn(){
       console.log("login sim asn");
-      window.open("https://sim-asn.bkpsdm.karawangkab.go.id/oauth/authorize?client_id=93ce4ca9-b473-4f37-bd34-1a03c5c61e58&redirect_uri=http://localhost&response_type=code&scope=profile+pegawai&state=login", "_blank");    
+      window.location.replace("https://sim-asn.bkpsdm.karawangkab.go.id/oauth/authorize?client_id=93ce4ca9-b473-4f37-bd34-1a03c5c61e58&redirect_uri=https://api-pare-v3.bkpsdm.karawangkab.go.id/api/login_simpeg&response_type=code&scope=profile+pegawai&state=login");    
 
     },
     async login() {
@@ -122,6 +122,7 @@ export default {
       margin-top:-22px;
 
     }
+    
   }
   .md-content {
     z-index: 1;
@@ -131,6 +132,10 @@ export default {
     position: relative;
     border-radius: 8px;
 
+    .btn-sim-asn{
+      background: rgb(133, 3, 3) !important;
+      color:rgb(236, 236, 236) !important;
+    }
 
   }
   .loading-overlay {
@@ -146,5 +151,7 @@ export default {
     align-items: center;
     justify-content: center;
   }
+
+  
 }
 </style>

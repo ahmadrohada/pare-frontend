@@ -1,9 +1,9 @@
 export const getters = {
     user(state) {
-      return state.auth.user.user
+      return state.auth.user.pegawai
     },
     nip(state) {
-      return state.auth.user.user.nip
+      return state.auth.user.pegawai.nip
     },
     
     isLoggedIn(state) {
@@ -13,4 +13,10 @@ export const getters = {
       return state.loggedIn;
     },
 
+}
+
+export const mutations = {
+  SET_LOGIN(state, data) {
+    state.auth.loggedIn = data
+  }
 }

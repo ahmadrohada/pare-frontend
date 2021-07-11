@@ -73,12 +73,12 @@ export default {
           logout: false
          
         }
-      }
+      },
     },
     redirect: {
-      login: '/auth/login',
-      logout: '/auth/login', //after logout, user will be redirected here.
-      home: '/'
+      login: '/login',
+      logout: '/login', //after logout, user will be redirected here.
+      home: '/home'
     }
   },
   i18n: {

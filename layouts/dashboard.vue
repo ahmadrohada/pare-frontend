@@ -8,7 +8,7 @@
       :title="$t('sidebar.title')"
     >
       <template slot-scope="props" slot="links">
-        <default-menu></default-menu>
+        <dashboard-menu></dashboard-menu>
       </template>
     </side-bar>
     
@@ -54,7 +54,7 @@
   import ContentFooter from '@/components/Layout/ContentFooter.vue';
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
-  import DefaultMenu from '~/components/Menu/DefaultMenu.vue';
+  import DashboardMenu from '~/components/Menu/DashboardMenu.vue';
 
   export default {
     
@@ -64,7 +64,7 @@
       DashboardContent,
       SlideYDownTransition,
       ZoomCenterTransition,
-      DefaultMenu,
+      DashboardMenu,
     },
     data() {
       return {

@@ -391,7 +391,7 @@ export default {
   mounted() {
     this.initBigChart(0);
 
-    this.$router.push("/daily_activity");
+    this.$router.push("/home");
   },
 };
 </script>

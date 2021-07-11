@@ -36,9 +36,20 @@ module.exports = {
     "vectorMaps": "Vector Maps",
     "widgets": "Widgets",
     "charts": "Charts",
+
+
+
+
+    //MENU PARE
     "calendar": "Calendar",
     "home": "Home",
+    "dailyActivity": "Daily Activity",
+    "dashboard"     : "Dashboard",
+    "adminSkpd"     : "Admnin SKPD",
+    "adminBkpsdm"     : "Admin BKPSDM",
+    "personalDashboard"     : "Perrsonal",
 
-    "dailyActivity": "Daily Activity"
+
+
   }
 }

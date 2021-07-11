@@ -116,7 +116,7 @@
             }
 
             > a{
-                margin: 10px 15px 0;
+                margin: 6px 15px 0;
                 border-radius: $btn-round-radius;
                 font-weight: $font-weight-normal;
                 color: $white;
@@ -125,8 +125,8 @@
                 position: relative;
                 text-transform: uppercase;
                 cursor: pointer;
-                font-size: $font-size-xs;
-                padding: 10px 8px;
+                font-size: 12px;
+                //padding: 10px 8px;
                 line-height: $line-height-lg;
             }
 
@@ -157,12 +157,12 @@
                 &:before{
                   content: " ";
                   position: absolute;
-                  height: 6px;
-                  width: 6px;
-                  top: 22px;
+                  height: 18px;
+                  width: 3px;
+                  top: 6px;
                   left: -4px;
                   background: $white;
-                  border-radius: 50%;
+                  border-radius: 30%;
                 }
             }
 

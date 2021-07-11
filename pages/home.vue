@@ -3,7 +3,7 @@
     <!-- Big Chart -->
     <div class="col-12">
       <card>
-        Dalam Pengembangan
+        Selamat Datang di Aplikasi PARE 2021
       </card>
     </div>
   </div>

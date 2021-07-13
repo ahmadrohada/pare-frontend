@@ -2,7 +2,7 @@
   <div>
     <div class="login-container">
       <div class="img">
-        <img src="~/static/img/login_form/bg.svg" />
+        <img src="~/static/img/login_form/bg.png" />
       </div>
       <div class="login-content">
         <login-form></login-form>
@@ -36,8 +36,10 @@ export default {
     
   },
   mounted() {
-    
     this.tes_connection();
+
+
+    
   },
 };
 </script>

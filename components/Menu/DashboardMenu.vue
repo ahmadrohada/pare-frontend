@@ -1,6 +1,13 @@
 <template>
   <div>
-       
+       <sidebar-item 
+          :link="{
+            name: $t('sidebar.home'),
+            icon: 'tim-icons icon-app',
+            path: '/home'
+          }"
+        >
+        </sidebar-item>
 
         <sidebar-item 
           :link="{

@@ -83,7 +83,7 @@ export default {
   },
   mounted() {
       
-        if (this.$route.query.token) {
+      if (this.$route.query.token) {
            
           this.$auth.setToken('local', 'Bearer ' + this.$route.query.token)
           this.$store.commit('SET_LOGIN', true)

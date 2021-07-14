@@ -1,7 +1,14 @@
 .navbar {
   width: 100%;
   z-index: 1050;
-  background: $vue;
+  //background: $vue;
+  background: rgb(46,203,65);
+  background: linear-gradient(90deg, rgba(46,203,65,1) 0%, rgba(23,120,79,1) 0%, rgba(10,194,137,1) 100%); 
+  border-bottom:1px solid rgb(2, 145, 90);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  padding-top:4px;
+  padding-bottom:4px;
+
   
 
   .photo {

@@ -57,7 +57,7 @@
   import DefaultMenu from '~/components/Menu/DefaultMenu.vue';
 
   export default {
-    
+    middleware: 'auth',
     components: {
       DashboardNavbar,
       ContentFooter,

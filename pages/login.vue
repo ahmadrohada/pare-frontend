@@ -2,7 +2,7 @@
   <div>
     <div class="login-container">
       <div class="img">
-        <img src="~/static/img/login_form/bg.png" />
+        <!-- <img src="~/static/img/login_form/bg.png" /> -->
       </div>
       <div class="login-content">
         <login-form></login-form>
@@ -26,6 +26,20 @@ export default {
       title: "Login Masuk",
     };
   },
+  data() {
+      return {
+        user_data: []
+      }
+  },
+  async fetch() {
+    if (this.$route.query.token) {
+      const user_data = await this.$axios.get('/me', { headers: { Authorization: 'Bearer ' + this.$route.query.token } });
+      console.log(user_data.data)
+      this.$store.commit('GET_DATA',user_data.data.data)
+      this.$auth.setToken('local', 'Bearer ' + this.$route.query.token)
+      this.$store.commit('SET_LOGIN', true)
+    }
+  },
   methods: {
     
     tes_connection() {
@@ -37,8 +51,6 @@ export default {
   },
   mounted() {
     this.tes_connection();
-
-
     
   },
 };

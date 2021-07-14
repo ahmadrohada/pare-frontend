@@ -26,10 +26,15 @@
       </div>
 
       <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-dense btn-sim-asn" href="https://sim-asn.bkpsdm.karawangkab.go.id/oauth/authorize?client_id=93ce4ca9-b473-4f37-bd34-1a03c5c61e58&redirect_uri=http://localhost:8000/api/login_simpeg&response_type=code&scope=profile+pegawai&state=login"><img src="~/static/img/logo-sim-asn.png" style="height:24px;" /> SIM-ASN</md-button>
-        <md-button class="md-dense md-raised md-primary" @click="login">MASUK</md-button>
+        <md-button class="md-dense md-raised md-primary btn-block" @click="login">MASUK</md-button>
       </div>
       <hr>
+
+      <div class="actions" style="margin-top:8px;">
+        <span class="text-muted">atau login dengan</span>
+        
+        <md-button class="md-dense md-raised md-primary btn-block btn-block btn-sim-asn" href="https://sim-asn.bkpsdm.karawangkab.go.id/oauth/authorize?client_id=93ce4ca9-b473-4f37-bd34-1a03c5c61e58&redirect_uri=https://api-pare-v3.bkpsdm.karawangkab.go.id/api/login_simpeg&response_type=code&scope=profile+pegawai&state=login"><img src="~/static/img/logo-sim-asn.png" style="height:24px;" /> SIM-ASN</md-button>
+      </div>
      
       <div class="loading-overlay" v-if="loading">
         <md-progress-spinner
@@ -42,7 +47,7 @@
 </template>
 
 <script>
-const axios = require('axios');
+
 
 export default {
   
@@ -69,27 +74,14 @@ export default {
           data: this.form,
         });
         console.log(response);
-        this.$router.push("/home");
       } catch (e) {
         this.loading = false;
       }
     }
   },
-  create() {
-      if (this.$route.query.error){
-          this.$toast.error(this.$route.query.error)
-          
-      }
-  },
   mounted() {
       
-      if (this.$route.query.token) {
-           
-          this.$auth.setToken('local', 'Bearer ' + this.$route.query.token)
-          this.$store.commit('SET_LOGIN', true)
-          this.$router.push("/home")
-          
-      } 
+      
   }
 };
 </script>

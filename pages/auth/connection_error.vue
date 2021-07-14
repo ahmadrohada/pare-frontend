@@ -22,7 +22,7 @@ export default {
     tes_connection() {
       this.$axios.get("/")
       .then((response) => {
-          this.$router.push("/auth/login");
+          this.$router.push("/login");
         })
       
       .catch((error) => {

@@ -3,22 +3,24 @@
     <!-- Big Chart -->
     <div class="col-12">
       <card>
-        Selamat Datang di Aplikasi PARE 2021
+        Selamat Datang di Aplikasi PARE 2021 <br>
+        Anda login sebagai <b>{{user.name}}</b>
       </card>
     </div>
   </div>
 </template>
 <script>
-/* import LineChart from "@/components/Charts/LineChart";
-import BarChart from "@/components/Charts/BarChart";
-import * as chartConfigs from "@/components/Charts/config";
-import TaskList from "@/components/Dashboard/TaskList";
-import config from "@/config";
-import { Table, TableColumn } from "element-ui"; */
 
+
+import { mapGetters } from 'vuex'
 export default {
   name: "home",
-  middleware: 'auth'
+  middleware: 'auth',
+    computed: { 
+    ...mapGetters([
+        'user'
+    ])
+  },
 };
 </script>
 <style></style>

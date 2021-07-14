@@ -76,9 +76,9 @@ export default {
       },
     },
     redirect: {
-      login: '/login',
-      logout: '/login', //after logout, user will be redirected here.
-      home: '/home'
+      //login: '/login',
+      //logout: '/login', //after logout, user will be redirected here.
+      //home: '/home'
     }
   },
   i18n: {

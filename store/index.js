@@ -18,5 +18,9 @@ export const getters = {
 export const mutations = {
   SET_LOGIN(state, data) {
     state.auth.loggedIn = data
-  }
+  },
+  GET_DATA(state,payload){
+    //state.singleView =false
+    state.auth.user = payload
+  },
 }

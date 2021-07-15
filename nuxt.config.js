@@ -74,6 +74,13 @@ export default {
          
         }
       },
+      token: {
+        property: 'access_token',
+        maxAge: 60 * 60
+      },
+      refreshToken: {
+        maxAge: 20160 * 60
+      },
     },
     redirect: {
       //login: '/login',

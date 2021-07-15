@@ -38,10 +38,10 @@ export default {
       this.$store.commit('GET_DATA',user_data.data.data)
       this.$auth.setToken('local', 'Bearer ' + this.$route.query.token)
       this.$store.commit('SET_LOGIN', true)
+      this.$router.push("/");
     }
   },
   methods: {
-    
     tes_connection() {
       this.$axios.get("/").catch((error) => {
         this.$router.push("/auth/connection_error");
@@ -51,7 +51,6 @@ export default {
   },
   mounted() {
     this.tes_connection();
-    
   },
 };
 </script>

@@ -15,7 +15,7 @@
 import LoginForm from "~/components/Login/LoginForm.vue";
 
 export default {
-  
+  name:"login",
   components: {
     LoginForm
   },
@@ -40,7 +40,7 @@ export default {
       this.$store.commit('SET_LOGIN', true)
       this.$router.push("/");
     }
-  },
+  }, 
   methods: {
     tes_connection() {
       this.$axios.get("/").catch((error) => {
@@ -48,6 +48,12 @@ export default {
       });
     },
     
+  },
+  created () {
+    if (this.$route.query.error){
+      this.$toast.error(this.$route.query.error)
+      this.goReplace({name : 'login'})
+    }
   },
   mounted() {
     this.tes_connection();

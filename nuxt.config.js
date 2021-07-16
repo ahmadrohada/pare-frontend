@@ -51,15 +51,10 @@ export default {
   /*
   ** Nuxt.js modules
   */
-  modules: ["@nuxtjs/pwa", "nuxt-i18n", "@nuxtjs/axios", "@nuxtjs/auth"],
+  modules: ["@nuxtjs/pwa", "nuxt-i18n", "@nuxtjs/axios", "@nuxtjs/auth","@nuxtjs/dotenv"],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    baseURL:
-      process.env.NODE_ENV === 'dev'
-        ? 'http://localhost:8000/api'
-        : 'https://api-pare-v3.bkpsdm.karawangkab.go.id/api'
-  },
+  axios: { baseURL: process.env.apiUrl },
   auth: {
     strategies: {
       local: {
@@ -73,13 +68,6 @@ export default {
           logout: false
          
         }
-      },
-      token: {
-        property: 'access_token',
-        maxAge: 60 * 60
-      },
-      refreshToken: {
-        maxAge: 20160 * 60
       },
     },
     redirect: {

@@ -3,6 +3,8 @@ export const isSameURL = (a, b) => a.split('?')[0] === b.split('?')[0]
 export const isRelativeURL = u =>
   u && u.length && /^\/[a-zA-Z0-9@\-%_~][/a-zA-Z0-9@\-%_~]*[?]?([^#]*)#?([^#]*)$/.test(u)
 
+
+
 export default function ({ app }) {
   const redirect = function (name, noRouter = false) {
     if (!this.options.redirect) {

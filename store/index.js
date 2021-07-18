@@ -1,6 +1,9 @@
 export const getters = {
-    user(state) {
+    pegawai(state) {
       return state.auth.user.pegawai
+    },
+    user(state) {
+      return state.auth.user
     },
     nip(state) {
       return state.auth.user.pegawai.nip
@@ -11,6 +14,9 @@ export const getters = {
     },
     authenticated(state){
       return state.loggedIn;
+    },
+    roles(state) {
+      return state.auth.user.roles
     },
 
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row row-body">
     <div class="col-md-12">
       <card class="text-center">
         <div class="places-buttons">
@@ -22,3 +22,9 @@ export default {
   middleware: 'auth',
 };
 </script>
+
+<style scoped>
+.row-body{
+  min-height:450px;
+}
+</style>

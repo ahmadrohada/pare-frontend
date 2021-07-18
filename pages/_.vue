@@ -1,7 +1,7 @@
 <script>
 export default {
   asyncData ({ redirect }) {
-    //return redirect('/error/NotFoundPage')
+    return redirect('/error/404')
   }
 }
 </script>

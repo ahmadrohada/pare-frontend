@@ -4,7 +4,7 @@
     <div class="col-12">
       <card>
         Selamat Datang di Aplikasi PARE 2021 <br>
-        Anda login sebagai <b>{{user.name}}</b>
+        Anda login sebagai <b>{{user.pegawai.name}}</b>
       </card>
     </div>
   </div>

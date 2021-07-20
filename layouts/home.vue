@@ -8,7 +8,7 @@
       :title="$t('sidebar.title')"
     >
       <template slot-scope="props" slot="links">
-        <home-menu></home-menu>
+          <home-menu></home-menu>
       </template>
     </side-bar>
     
@@ -72,9 +72,7 @@
       };
     },
     computed: {
-      isFullScreenRoute() {
-        return this.$route.path === '/maps/full-screen'
-      }
+     
     },
     methods: {
       toggleSidebar() {

@@ -1,14 +1,14 @@
 <template>
   <div class="sidebar" :data="backgroundColor">
     <div class="sidebar-wrapper" ref="sidebarScrollArea">
-      <div class="logo">
+     <!--  <div class="logo">
         <a href="#" class="simple-text logo-mini">
           <img :src="logo" alt="app-logo" />
         </a>
         <a href="#" class="simple-text logo-normal">
           {{ title }}
         </a>
-      </div>
+      </div> -->
       <slot></slot>
       <ul class="nav">
         <slot name="links">

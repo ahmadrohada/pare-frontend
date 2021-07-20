@@ -7,32 +7,46 @@
       <div class="block block-three"></div>
       <div class="block block-four"></div>
       <a href="javascript:void(0)">
-        <img class="avatar" src="img/emilyz.jpg" alt="..." />
-        <h5 class="title">Mike Andrew</h5>
+        <img class="avatar" src="img/lora.jpg" alt="..." />
+        <h5 class="title">{{user.pegawai.name}}</h5>
       </a>
-      <p class="description">Ceo/Co-Founder</p>
+      <p class="description">{{user.pegawai.jabatan.name}}</p>
     </div>
-    <p></p>
-    <div class="card-description">
-      Do not be scared of the truth because we need to restart the human
-      foundation in truth And I love you like Kanye loves Kanye I love Rick
-      Owens’ bed design but the back is...
-    </div>
-
-    <div slot="footer" class="button-container">
-      <base-button class="btn-facebook" icon round>
-        <i class="fab fa-facebook"></i>
-      </base-button>
-      <base-button class="btn-twitter" icon round>
-        <i class="fab fa-twitter"></i>
-      </base-button>
-      <base-button class="btn-google" icon round>
-        <i class="fab fa-google-plus"></i>
-      </base-button>
-    </div>
+   
   </card>
 </template>
 <script>
-export default {};
+import { mapGetters } from 'vuex'
+export default {
+  name: 'profile',
+  middleware: 'auth',
+  layout:'user',
+  head() {
+    return {
+      title: "Profile Atasan",
+    };
+  },
+  data(){
+    return{
+      test:'data load....'
+    }
+  },
+  computed: { 
+    ...mapGetters([
+        'user'
+    ])
+  },
+  mounted() {
+    this.test = this.$auth.user
+  },
+};
 </script>
-<style></style>
+<style>
+  .md-tabs.md-theme-default .md-tabs-navigation{
+     background: rgb(46,203,65) !important;
+    background: linear-gradient(90deg, rgba(46,203,65,1) 0%, rgba(23,120,79,1) 0%, rgba(10,194,137,1) 100%) !important; 
+    margin-top: 14px;
+    
+  }
+ 
+</style>

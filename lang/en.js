@@ -48,6 +48,10 @@ module.exports = {
     "adminSkpd"     : "Admnin SKPD",
     "adminBkpsdm"     : "Admin BKPSDM",
     "personalDashboard"     : "Perrsonal",
+    "profile"     : "User Profile",
+    "user"     : "User",
+    "atasan"     : "Atasan",
+
 
 
 

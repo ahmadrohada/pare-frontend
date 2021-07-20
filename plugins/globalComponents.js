@@ -12,6 +12,7 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 
 /**

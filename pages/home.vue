@@ -16,6 +16,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: "home",
   middleware: 'auth',
+  layout: 'home',
   computed: { 
     ...mapGetters([
         'user'

@@ -4,17 +4,17 @@
        <sidebar-item 
           :link="{
             name: $t('sidebar.home'),
-            icon: 'tim-icons icon-app',
+            icon: 'fa fa-home',
             path: '/home'
           }"
         >
         </sidebar-item>
-
+        <div class="dropdown-divider"></div>
         <sidebar-item 
           v-if = "isPersonal === true "
           :link="{
             name: $t('sidebar.personalDashboard'),
-            icon: 'tim-icons icon-bullet-list-67',
+            icon: 'fa fa-user-cog',
             path: '/personal/dashboard'
           }"
         >
@@ -24,7 +24,7 @@
           v-if = "isAdminBkpsdm"
           :link="{
             name: $t('sidebar.adminBkpsdm'),
-            icon: 'tim-icons icon-bullet-list-67',
+            icon: 'fa fa-user-shield',
             path: '/admin_bkpsdm/dashboard'
           }"
         >
@@ -33,7 +33,7 @@
           v-if = "isAdminSkpd"
           :link="{
             name: $t('sidebar.adminSkpd'),
-            icon: 'tim-icons icon-bullet-list-67',
+            icon: 'fa fa-users-cog',
             path: '/admin_skpd/dashboard'
           }"
         >

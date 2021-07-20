@@ -38,12 +38,9 @@
           <b class="caret d-none d-lg-block d-xl-block"></b>
           <p class="d-lg-none">{{user.name}}</p>
         </template>
+        <!-- <div class="dropdown-divider"></div> -->
         <li class="nav-link">
-          <a href="/user/profile" class="nav-item dropdown-item">Profile</a>
-        </li>
-        <div class="dropdown-divider"></div>
-        <li class="nav-link">
-          <a href="/" @click.prevent="signOut" class="nav-item dropdown-item">Log out</a>
+          <a href="#" @click.prevent="signOut" class="nav-item dropdown-item">Log out</a>
         </li>
       </base-dropdown>
     </ul>

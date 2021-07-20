@@ -8,7 +8,7 @@
       :title="$t('sidebar.title')"
     >
       <template slot-scope="props" slot="links">
-        <home-menu></home-menu>
+        <user-menu></user-menu>
       </template>
     </side-bar>
     
@@ -20,7 +20,7 @@
         :class="{ content: !isFullScreenRoute }"
         @click="toggleSidebar"
       >
-        <zoom-center-transition :duration="200" mode="out-in">
+        <zoom-center-transition :duration="300" mode="out-in">
           <!-- your content here -->
           <nuxt></nuxt>
         </zoom-center-transition>
@@ -54,17 +54,17 @@
   import ContentFooter from '@/components/Layout/ContentFooter.vue';
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
-  import HomeMenu from '~/components/Menu/HomeMenu.vue';
+  import UserMenu from '~/components/Menu/UserMenu.vue';
 
   export default {
-    middleware: 'auth',
+    
     components: {
       DashboardNavbar,
       ContentFooter,
       DashboardContent,
       SlideYDownTransition,
       ZoomCenterTransition,
-      HomeMenu,
+      UserMenu,
     },
     data() {
       return {

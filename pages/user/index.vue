@@ -7,16 +7,14 @@
  
 
 export default {
-  name: "home",
+  name: "userIndex",
   middleware: 'auth',
-  layout: 'home',
+  layout: 'user',
   methods: {
     
   },
   mounted() {
-
-
-    this.$router.push("/home");
+    this.$router.push("/user/profile");
   },
 };
 </script>

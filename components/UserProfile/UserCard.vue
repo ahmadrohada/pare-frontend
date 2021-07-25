@@ -7,10 +7,10 @@
       <div class="block block-three"></div>
       <div class="block block-four"></div>
       <a href="javascript:void(0)">
-        <img class="avatar" src="img/lora.jpg" alt="..." />
-        <h5 class="title">{{user.pegawai.name}}</h5>
+        <img class="avatar" :src="photoUrl" alt="..." />
+        <h5 class="title">{{nip}}</h5>
       </a>
-      <p class="description">{{user.pegawai.jabatan.name}}</p>
+      <p class="description">{{nama_lengkap}}</p>
     </div>
    
   </card>
@@ -28,16 +28,22 @@ export default {
   },
   data(){
     return{
-      test:'data load....'
+      test:'data load....',
+      photoUrl: '/img/user.png',
+      nama_lengkap:null,
+      nip:null,
     }
   },
   computed: { 
     ...mapGetters([
-        'user'
+        'profile'
     ])
   },
   mounted() {
     this.test = this.$auth.user
+    this.photoUrl = this.$auth.user.profile.photo
+    this.nama_lengkap = this.$auth.user.profile.pegawai.nama_lengkap
+    this.nip = this.$auth.user.nip
   },
 };
 </script>

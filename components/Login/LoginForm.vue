@@ -38,10 +38,6 @@
      
       <div class="loading-overlay" v-if="loading">
         <img src="~/static/img/loaders/loader.gif" style="height:120px" alt="">
-        <!-- <md-progress-spinner
-          md-mode="indeterminate"
-          :md-stroke="2"
-        ></md-progress-spinner> -->
       </div>
     </md-content>
   </div>
@@ -75,15 +71,32 @@ export default {
           data: this.form,
         });
         console.log(response);
-      } catch (e) {
+      } catch (error) {
+        console.log(error.response.data.message);
         this.loading = false;
+        this.notifyVue('top', 'center','danger',error.response.data.message);
       }
+    },
+    notifyVue(verticalAlign, horizontalAlign, alertType, alertMessage) {
+      
+      
+      this.$notify({
+        message: alertMessage,
+        timeout: 4000,
+        closeOnClick:true,
+        icon: 'fa fa-key',
+        horizontalAlign: horizontalAlign,
+        verticalAlign: verticalAlign,
+        type: alertType,
+      });
     }
   },
   mounted() {
      if (this.$route.query.token) {
       this.loading = true;
     }
+
+    
       
   }
 };

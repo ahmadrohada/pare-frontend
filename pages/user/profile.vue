@@ -1,6 +1,7 @@
 <template>
   <div class="row">
-    <div class="col-md-12">{{test}}</div>
+    <div class="col-md-4"><user-card> </user-card></div>
+    <div class="col-md-8"><edit-profile-form> </edit-profile-form></div>
   </div>
 </template>
 
@@ -12,9 +13,14 @@ import { mapGetters } from 'vuex'
 
 
 export default {
-  name: 'setting',
+  name: 'profile',
   middleware: 'auth',
   layout:'user',
+  head() {
+    return {
+      title: "Profile Pegawai",
+    };
+  },
   data(){
     return{
       test:'data load....'

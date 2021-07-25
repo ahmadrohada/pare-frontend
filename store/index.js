@@ -1,22 +1,21 @@
 export const getters = {
-    pegawai(state) {
-      return state.auth.user.pegawai
-    },
     user(state) {
       return state.auth.user
     },
     nip(state) {
-      return state.auth.user.pegawai.nip
-    },
-    
-    isLoggedIn(state) {
-      return state.auth.loggedIn
-    },
-    authenticated(state){
-      return state.loggedIn;
+      return ( state.auth.user ) ? ( state.auth.user.nip ) : null  
     },
     roles(state) {
-      return state.auth.user.roles
+      return  ( state.auth.user ) ? ( state.auth.user.roles ) : null  
+    },
+    profile(state) {
+      return ( state.auth.user ) ? ( state.auth.user.profile ) : null 
+    },
+    photo(state) {
+      return ( state.auth.user ) ? ( state.auth.user.profile.photo ) : null 
+    },
+    isLoggedIn(state) {
+      return state.auth.loggedIn
     },
 
 }

@@ -13,7 +13,7 @@ import { mapGetters } from 'vuex'
 
 
 export default {
-  name: 'profile',
+  name: 'atasan',
   middleware: 'auth',
   layout:'user',
   head() {

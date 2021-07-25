@@ -8,7 +8,7 @@
       :title="$t('sidebar.title')"
     >
       <template slot-scope="props" slot="links">
-          <home-menu></home-menu>
+        <home-menu ></home-menu>
       </template>
     </side-bar>
     
@@ -20,7 +20,7 @@
         :class="{ content: !isFullScreenRoute }"
         @click="toggleSidebar"
       >
-        <zoom-center-transition :duration="200" mode="out-in">
+        <zoom-center-transition :duration="300" mode="out-in">
           <!-- your content here -->
           <nuxt></nuxt>
         </zoom-center-transition>
@@ -30,9 +30,6 @@
   </div>
 </template>
 <script>
-  /* eslint-disable no-new */
-
-  
   import PerfectScrollbar from 'perfect-scrollbar';
   import 'perfect-scrollbar/css/perfect-scrollbar.css';
   function hasElement(className) {
@@ -57,7 +54,7 @@
   import HomeMenu from '~/components/Menu/HomeMenu.vue';
 
   export default {
-    middleware: 'auth',
+    
     components: {
       DashboardNavbar,
       ContentFooter,
@@ -72,7 +69,9 @@
       };
     },
     computed: {
-     
+      isFullScreenRoute() {
+        //return this.$route.path === '/maps/full-screen'
+      }
     },
     methods: {
       toggleSidebar() {
@@ -102,6 +101,7 @@
     },
     mounted() {
       this.initScrollbar();
+      
     }
   };
 </script>

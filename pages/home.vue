@@ -4,23 +4,29 @@
     <div class="col-12">
       <card>
         Selamat Datang di Aplikasi PARE 2021 <br>
-        Anda login sebagai <b>{{user.pegawai.name}}</b>
+        Anda login sebagai <b>{{nama_lengkap}}</b>
       </card>
     </div>
   </div>
 </template>
 <script>
 
-
-import { mapGetters } from 'vuex'
 export default {
   name: "home",
   middleware: 'auth',
   layout: 'home',
-  computed: { 
-    ...mapGetters([
-        'user'
-    ])
+  head() {
+    return {
+      title: "PARE - Home",
+    };
+  },
+  data(){
+    return{
+      nama_lengkap:' . . . '
+    }
+  },
+  mounted() {
+    this.nama_lengkap = this.$auth.user.profile.pegawai.nama_lengkap
   },
 };
 </script>

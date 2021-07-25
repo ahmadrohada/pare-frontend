@@ -1,8 +1,7 @@
 <template>
-  <div>
+  <div class="col-md-12">
     <div class="login-container">
       <div class="img">
-        <!-- <img src="~/static/img/login_form/bg.png" /> -->
       </div>
       <div class="login-content">
         <login-form></login-form>
@@ -13,11 +12,13 @@
  
 <script>
 import LoginForm from "~/components/Login/LoginForm.vue";
+import { BaseAlert } from '@/components';
 
 export default {
   name:"login",
   components: {
-    LoginForm
+    LoginForm,
+    BaseAlert
   },
   layout: "guest",
   middleware: "guest",
@@ -28,7 +29,8 @@ export default {
   },
   data() {
       return {
-        user_data: []
+        user_data: [],
+        
       }
   },
   async fetch() {
@@ -39,6 +41,11 @@ export default {
       this.$auth.setToken('local', 'Bearer ' + this.$route.query.token)
       this.$store.commit('SET_LOGIN', true)
       this.$router.push("/");
+    }else if(this.$route.query.message){
+      console.log(this.$route.query.message)
+      this.notifyVue('top', 'center','danger',this.$route.query.message);
+
+
     }
   }, 
   methods: {
@@ -47,7 +54,17 @@ export default {
         this.$router.push("/auth/connection_error");
       });
     },
-    
+    notifyVue(verticalAlign, horizontalAlign, alertType, alertMessage) {
+      this.$notify({
+        message: alertMessage,
+        timeout: 4000,
+        closeOnClick:true,
+        icon: 'fa fa-key',
+        horizontalAlign: horizontalAlign,
+        verticalAlign: verticalAlign,
+        type: alertType,
+      });
+    }
   },
   created () {
     if (this.$route.query.error){

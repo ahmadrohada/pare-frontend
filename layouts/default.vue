@@ -73,7 +73,7 @@
     },
     computed: {
       isFullScreenRoute() {
-        return this.$route.path === '/maps/full-screen'
+        //return this.$route.path === '/maps/full-screen'
       }
     },
     methods: {

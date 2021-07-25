@@ -8,14 +8,12 @@
 
 export default {
   name: "home",
-  middleware: 'auth',
+  middleware: ['auth'],
   layout: 'home',
   methods: {
     
   },
   mounted() {
-
-
     this.$router.push("/home");
   },
 };

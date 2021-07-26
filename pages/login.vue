@@ -1,13 +1,5 @@
 <template>
-  <div class="col-md-12">
-    <div class="login-container">
-      <div class="img">
-      </div>
-      <div class="login-content">
         <login-form></login-form>
-      </div>
-    </div>
-  </div>
 </template>
  
 <script>

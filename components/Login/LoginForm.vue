@@ -111,15 +111,17 @@ export default {
 
 <style lang="scss">
 .centered-container {
+  padding:0 15px 0 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  height: 620px;
+  height: 100vh;
   background: #1D976C;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to left, #6cc08b, #1D976C);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to left, #6cc08b, #1D976C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
+
+
   .title {
     text-align: center;
     margin-bottom: -10px;
@@ -146,12 +148,6 @@ export default {
   }
   .form {
     margin-bottom: 60px;
-    .kesalahan{
-      color:#b40000;
-      font-size:8pt;
-      margin-top:-22px;
-
-    }
     
   }
   .md-content {

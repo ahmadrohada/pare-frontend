@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper login_page" >
+  <div class="wrapper" >
     <notifications></notifications>
     <div class="main-panel">
       <guest-navbar></guest-navbar>
@@ -8,6 +8,7 @@
           <!-- your content here -->
           <nuxt></nuxt>
         </zoom-center-transition>
+        
       </div>
       <content-footer></content-footer>
     </div>

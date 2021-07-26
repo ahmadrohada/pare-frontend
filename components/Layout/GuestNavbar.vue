@@ -1,16 +1,16 @@
 <template>
-  <base-nav class="navbar-fixed top-navbar">
-    <div slot="brand" class="navbar-wrapper">
-      PARE
+  <guest-nav class="navbar-fixed top-navbar">
+    <div class="app_name">
+      PARE - BKPSDM KARAWANG
     </div>
-  </base-nav>
+  </guest-nav>
 </template>
 <script>
-import { BaseNav } from '@/components';
+import GuestNav  from  '~/components/Navbar/GuestNav.vue';
 
 export default {
   components: {
-    BaseNav
+    GuestNav
   },
   computed: {
   },
@@ -30,5 +30,10 @@ export default {
 .top-navbar {
   top: 0px;
 }
-
+.app_name{
+  color :rgb(190, 233, 208) ;
+}
+.top-navbar{
+  padding: 2px 2px 2px 10px;
+}
 </style>

@@ -17,12 +17,12 @@ export default {
   head() {
     return {
       title: "Login Masuk",
+      
     };
   },
   data() {
       return {
         user_data: [],
-        
       }
   },
   async fetch() {
@@ -43,15 +43,15 @@ export default {
   methods: {
     tes_connection() {
       this.$axios.get("/").catch((error) => {
-        this.$router.push("/auth/connection_error");
+        this.notifyVue('top', 'center','danger',"Tidak terkoneksi ke database");
       });
     },
     notifyVue(verticalAlign, horizontalAlign, alertType, alertMessage) {
       this.$notify({
         message: alertMessage,
-        timeout: 4000,
-        closeOnClick:true,
-        icon: 'fa fa-key',
+        timeout: 60000,
+        closeOnClick:false,
+        icon: 'fa fa-database',
         horizontalAlign: horizontalAlign,
         verticalAlign: verticalAlign,
         type: alertType,

@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" >
+  <div class="wrapper login_page" >
     <notifications></notifications>
     <div class="main-panel">
       <guest-navbar></guest-navbar>
@@ -12,7 +12,7 @@
       <content-footer></content-footer>
     </div>
   </div>
-</template>
+</template> 
 <script>
   import PerfectScrollbar from 'perfect-scrollbar';
   import 'perfect-scrollbar/css/perfect-scrollbar.css';
@@ -103,6 +103,7 @@
   .main-panel .zoomIn {
     animation-name: zoomIn95;
   }
+  
 
   @keyframes zoomOut95 {
     from {
@@ -124,4 +125,8 @@
     font-size: 0.8rem !important;
     max-width: 80% !important;
   }
+ .footer{
+   padding: 2px 10px 2px 10px !important;
+   height: 30px !important;
+ }
 </style>

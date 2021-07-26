@@ -26,14 +26,14 @@
       </div>
 
       <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-dense md-raised md-primary btn-block" @click="login">MASUK</md-button>
+        <md-button :disabled="!!myInput" class="md-dense md-raised md-primary btn-block btn-pare" @click="login">MASUK</md-button>
       </div>
       <hr>
 
-      <div class="actions" style="margin-top:8px;">
-        <span class="text-muted">atau login dengan</span>
+      <div class="actions " style="margin-top:8px; text-align: center;">
+        <span class="text-muted" style="font-size:11px; margin-top:-15px !important;">atau login dengan</span>
         
-        <md-button class="md-dense md-raised md-primary btn-block btn-block btn-sim-asn" :href="simpegLink"><img src="~/static/img/logo-sim-asn.png" style="height:24px;" /> SIM-ASN</md-button>
+        <md-button :disabled="!!myInput" class="md-dense md-raised md-primary btn-block btn-sim-asn" :href="simpegLink"><img src="~/static/img/logo-sim-asn.png" style="height:24px;" /> SIM-ASN</md-button>
       </div>
      
       <div class="loading-overlay" v-if="loading">
@@ -61,6 +61,7 @@ export default {
         username: null,
         password: null,
       },
+      myInput:false,
     };
   },
   methods: {
@@ -75,7 +76,7 @@ export default {
         console.log(error.response.data.message);
         this.loading = false;
         this.notifyVue('top', 'center','danger',error.response.data.message);
-      }
+      } 
     },
     notifyVue(verticalAlign, horizontalAlign, alertType, alertMessage) {
       
@@ -89,12 +90,18 @@ export default {
         verticalAlign: verticalAlign,
         type: alertType,
       });
-    }
+    },
+    tes_connection() {
+      this.$axios.get("/").catch((error) => {
+        this.myInput = true ;
+      });
+    },
   },
   mounted() {
      if (this.$route.query.token) {
       this.loading = true;
     }
+    this.tes_connection();
 
     
       
@@ -108,15 +115,19 @@ export default {
   align-items: center;
   justify-content: center;
   position: relative;
-  height: 100vh;
+  height: 620px;
+  background: #1D976C;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #6cc08b, #1D976C);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #6cc08b, #1D976C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   
   .title {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: -10px;
     
     img {
-      margin-bottom: -5px;
-      height: 160px;
+      margin-top: -10px;
+      margin-bottom: -10px;
+      height: 140px;
     }
     .md-body-1{
       color:#077821;
@@ -153,6 +164,11 @@ export default {
 
     .btn-sim-asn{
       background: rgb(133, 3, 3) !important;
+      color:rgb(236, 236, 236) !important;
+    }
+
+    .btn-pare{
+      background: rgb(3, 151, 90) !important;
       color:rgb(236, 236, 236) !important;
     }
 

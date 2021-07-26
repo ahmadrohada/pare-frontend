@@ -170,7 +170,7 @@ export default {
   z-index: 10000;
 
   &[data-notify='container'] {
-    width: 400px;
+    width: 350px;
   }
 
   &.center {

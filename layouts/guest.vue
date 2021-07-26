@@ -101,6 +101,8 @@
     }
   }
 
+  
+
   .main-panel .zoomIn {
     animation-name: zoomIn95;
   }

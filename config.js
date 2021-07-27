@@ -6,6 +6,7 @@ export default {
     danger: '#fd5d93',
     orange: '#ff8a76',
     teal: '#00d6b4',
+    pare: '#1D976C',
     primaryGradient: [
       'rgba(76, 211, 150, 0.1)',
       'rgba(53, 183, 125, 0)',

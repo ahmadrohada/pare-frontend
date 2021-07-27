@@ -1,6 +1,15 @@
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+
+  font-size: 13px !important;
+  font-family: "maian" !important;
+
+}
+
+@font-face {
+  font-family: "maian";
+  src: local("maian"),     url(~assets/fonts/MAIAN.TTF) format("truetype");
 }
 
 iframe {

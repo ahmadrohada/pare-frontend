@@ -13,9 +13,6 @@
       <p class="description">{{namaLengkap}}</p> 
     </div>
     
-    <br>
-    Koneksikan akun PARE  dengan SIM-ASN agar  dapat melakukan sinkronisasi untuk memperbaharui profile PARE anda
-    <p>SIM-ASN <a :href="simpegLink"> Connect with SIM-ASN</a> </p>
    
   </card>
 </template>

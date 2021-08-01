@@ -8,14 +8,14 @@ export const getters = {
     roles(state) {
       return  ( state.auth.user ) ? ( state.auth.user.roles ) : null  
     },
-    profile(state) {
-      return ( state.auth.user ) ? ( state.auth.user.profile ) : null 
+    pegawai(state) {
+      return ( state.auth.user ) ? ( state.auth.user.pegawai ) : null 
     },
     photo(state) {
-      return ( state.auth.user.profile ) ? ( state.auth.user.profile.photo ) : '/img/user.png' 
+      return ( state.auth.user.pegawai ) ? ( state.auth.user.pegawai.photo ) : '/img/user.png' 
     },
     nama_lengkap(state) {
-      return ( state.auth.user.profile ) ? ( state.auth.user.profile.pegawai ) : 'anonim' 
+      return ( state.auth.user.pegawai ) ? ( state.auth.user.pegawai.nama_lengkap ) : 'anonim' 
     },
     isLoggedIn(state) {
       return state.auth.loggedIn

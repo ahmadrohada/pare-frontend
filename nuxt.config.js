@@ -1,10 +1,10 @@
 
 export default {
-  mode: 'universal',
+  //mode: 'universal',
   /*
   ** Headers of the page
   */
-  //ssr:false,
+  ssr:false,
   head: {
     title: 'PARE 2021',
     meta: [

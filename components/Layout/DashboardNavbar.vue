@@ -36,7 +36,7 @@
         >
           <div class="photo"><img :src="photoUrl" /></div>
           <b class="caret d-none d-lg-block d-xl-block"></b>
-          <p class="d-lg-none">{{nama_lengkap}}</p>
+          <p class="d-lg-none">{{namaLengkap}}</p>
         </template>
         <!-- <div class="dropdown-divider"></div> -->
         <li class="nav-link">
@@ -49,6 +49,7 @@
 <script>
 import { CollapseTransition } from 'vue2-transitions';
 import { BaseNav, Modal } from '@/components';
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -65,6 +66,10 @@ export default {
       }
       return parts.map(p => this.capitalizeFirstLetter(p)).join(' ');
     },
+    ...mapGetters({
+      photoUrl: 'photo',
+      namaLengkap:'nama_lengkap',
+    })
   },
   data() {
     return {
@@ -72,8 +77,6 @@ export default {
       showMenu: false,
       searchModalVisible: false,
       searchQuery: '',
-      photoUrl: '/img/user.png',
-      nama_lengkap:' . . . '
     };
   },
   methods: {
@@ -111,8 +114,8 @@ export default {
     }
   },
   mounted() {
-    this.photoUrl = this.$auth.user.profile.photo
-    this.nama_lengkap = this.$auth.user.profile.pegawai.nama_lengkap
+    //this.photoUrl = this.$auth.user.profile.photo
+    //this.nama_lengkap = this.$auth.user.profile.pegawai.nama_lengkap
   },
 };
 </script>

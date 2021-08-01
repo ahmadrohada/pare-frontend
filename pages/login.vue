@@ -7,7 +7,7 @@ import LoginForm from "~/components/Login/LoginForm.vue";
 import { BaseAlert } from '@/components';
 
 export default {
-  name:"login",
+  name:"logins",
   components: {
     LoginForm,
     BaseAlert

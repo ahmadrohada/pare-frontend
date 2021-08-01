@@ -75,7 +75,7 @@ export default {
 
   },
   mounted() {
-    this.getData(this.$auth.user.id)
+    this.getData(this.$auth.profile)
   }
 };
 </script>

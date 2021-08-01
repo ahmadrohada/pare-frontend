@@ -1,10 +1,10 @@
 
 export default {
-  //mode: 'universal',
+  mode: 'universal',
   /*
   ** Headers of the page
   */
-  ssr:false,
+  //ssr:false,
   head: {
     title: 'PARE 2021',
     meta: [
@@ -67,7 +67,7 @@ export default {
             url: 'me', method: 'get', propertyName: 'data' 
           }, 
           logout: false
-         
+          
         }
       },
     },
@@ -75,8 +75,9 @@ export default {
       //login: '/login',
       //logout: '/login', //after logout, user will be redirected here.
       //home: '/home'
-    }
+    },
   },
+  
   i18n: {
     locales: [
       {

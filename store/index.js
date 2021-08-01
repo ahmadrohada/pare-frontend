@@ -12,7 +12,10 @@ export const getters = {
       return ( state.auth.user ) ? ( state.auth.user.profile ) : null 
     },
     photo(state) {
-      return ( state.auth.user ) ? ( state.auth.user.profile.photo ) : null 
+      return ( state.auth.user.profile ) ? ( state.auth.user.profile.photo ) : '/img/user.png' 
+    },
+    nama_lengkap(state) {
+      return ( state.auth.user.profile ) ? ( state.auth.user.profile.pegawai ) : 'anonim' 
     },
     isLoggedIn(state) {
       return state.auth.loggedIn

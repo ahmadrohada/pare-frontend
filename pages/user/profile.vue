@@ -15,7 +15,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'profile',
   middleware: 'auth',
-  layout:'user',
+  layout:'userLayout',
   head() {
     return {
       title: "Profile Pegawai",

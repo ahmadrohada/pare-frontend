@@ -10,40 +10,41 @@
         <img class="avatar" :src="photoUrl" alt="..." />
         <h5 class="title">{{nip}}</h5>
       </a>
-      <p class="description">{{nama_lengkap}}</p>
+      <p class="description">{{namaLengkap}}</p> 
     </div>
+    
+    <br>
+    Koneksikan akun PARE  dengan SIM-ASN agar  dapat melakukan sinkronisasi untuk memperbaharui profile PARE anda
+    <p>SIM-ASN <a :href="simpegLink"> Connect with SIM-ASN</a> </p>
    
   </card>
 </template>
 <script>
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'profile',
   middleware: 'auth',
   layout:'user',
   head() {
     return {
-      title: "Profile Atasan",
+      title: "Profile",
     };
   },
   data(){
     return{
-      test:'data load....',
-      photoUrl: '/img/user.png',
-      nama_lengkap:null,
-      nip:null,
+      simpegLink: `${process.env.simpegUrl}/oauth/authorize?client_id=${process.env.simpegClientId}&redirect_uri=${process.env.apiUrl}/login_simpeg&response_type=code&scope=profile+pegawai&state=profile`,
     }
   },
   computed: { 
-    ...mapGetters([
-        'profile'
-    ])
+    ...mapGetters({
+      photoUrl: 'photo',
+      namaLengkap:'nama_lengkap',
+      nip:'nip',
+    })
   },
   mounted() {
-    this.test = this.$auth.user
-    this.photoUrl = this.$auth.user.profile.photo
-    this.nama_lengkap = this.$auth.user.profile.pegawai.nama_lengkap
-    this.nip = this.$auth.user.nip
+    
   },
 };
 </script>

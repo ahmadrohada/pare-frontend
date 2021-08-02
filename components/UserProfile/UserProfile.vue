@@ -1,14 +1,24 @@
 <template>
   <card class="font-weight-300">
     <h4 class="card-title">User Profile</h4>
-        <p class="card-text"><i class="fa fa-university"></i> SKPD</p>
-        <p class="text-muted">{{ user.skpd }}</p>
-
-
+        <p class="card-text"><i class="fa fa-user"></i> NAMA LENGKAP</p>
+        <p class="text-muted">{{ user.pegawai.nama_lengkap }}</p>
         <hr>
+        <p class="card-text"><i class="fa fa-id-badge"></i> NIP</p>
+        <p class="text-muted">{{ user.pegawai.nip }}</p>
+        <hr>
+
+        <p class="card-text"><i class="fa fa-id-card"></i> JABATAN ( {{ user.jabatan.jenis}} )</p>
+        <p class="text-muted">{{ user.jabatan.nama}}</p>
+        <hr>
+
+        <p class="card-text"><i class="fa fa-university"></i> SKPD</p>
+        <p class="text-muted">{{ user.skpd.nama}}</p>
+        <hr>
+
         <p class="card-text"><i class="fa fa-tags"></i> Unit Kerja</p>
-        <p class="text-muted">{{ user.unit_kerja }}</p>
-        <hr />
+        <p class="text-muted">{{ user.unit_kerja.nama }}</p>
+        <hr /> 
 
         <!-- <p class="card-text"><i class="fa fa-sitemap"></i> Jabatan</p>
         <p class="text-muted">
@@ -51,32 +61,33 @@
   </card>
 </template>
 <script>
+
+
 export default {
   data() {
     return {
       user: [],
+      user:{
+        pegawai : [],
+        skpd : [],
+        jabatan : [],
+        unit_kerja : []
+      },
+      nama_lengkap : null ,
     };
   },
-  methods: {
-    getData($user_id) {
-      this.$axios
-        .$get("/profile", {
-          params: {
-            user_id: $user_id,
-          },
-        })
+  async fetch()  {
+  
+
+      await this.$axios
+        .$get("/me/profile",{ headers: {  } })
         .then((response) => {
-          this.user = response;
+          this.user = response['data'];
         })
         .catch((err) => {
           console.log(err);
         });
-    },
-
   },
-  mounted() {
-    this.getData(this.$auth.profile)
-  }
 };
 </script>
 <style></style>

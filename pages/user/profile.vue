@@ -18,7 +18,7 @@ export default {
   layout:'userLayout',
   head() {
     return {
-      title: "Profile Pegawai",
+      title: "Profile User",
     };
   },
   data(){

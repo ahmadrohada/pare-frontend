@@ -32,3 +32,5 @@ export const mutations = {
     state.auth.user = payload
   },
 }
+
+

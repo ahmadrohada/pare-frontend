@@ -30,9 +30,11 @@ export default {
       const user_data = await this.$axios.get('/me', { headers: { Authorization: 'Bearer ' + this.$route.query.token } });
       console.log(user_data.data)
       this.$store.commit('GET_DATA',user_data.data.data)
-      this.$auth.setToken('local', 'Bearer ' + this.$route.query.token)
       this.$store.commit('SET_LOGIN', true)
-      this.$router.push("/");
+      //this.$auth.setToken('local', 'Bearer ' + this.$route.query.token)
+      this.$axios.setToken(this.$route.query.token, 'Bearer')
+      //this.$router.push("/");
+      
     }else if(this.$route.query.message){
       console.log(this.$route.query.message)
       this.notifyVue('top', 'center','danger',this.$route.query.message);

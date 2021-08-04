@@ -66,7 +66,7 @@ export default {
           user: { 
             url: 'me', method: 'get', propertyName: 'data' 
           }, 
-          logout: false
+          logout: false,
           
         }
       },

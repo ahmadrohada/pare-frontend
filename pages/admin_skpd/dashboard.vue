@@ -40,8 +40,8 @@ export default {
 
   },
   mounted() {
-    this.getData(this.$auth.user.profile.skpd.id)
-    this.nama_skpd = this.$auth.user.profile.skpd.nama
+    this.getData(this.$auth.user.skpd.id)
+    this.nama_skpd = this.$auth.user.skpd.nama
   }
 };
 </script>

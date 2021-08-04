@@ -1,6 +1,7 @@
 <template>
   <card class="font-weight-300">
     <h4 class="card-title">User Profile</h4>
+    {{ someData }}
         <p class="card-text"><i class="fa fa-user"></i> NAMA LENGKAP</p>
         <p class="text-muted">{{ user.pegawai.nama_lengkap }}</p>
         <hr>
@@ -76,11 +77,9 @@ export default {
       nama_lengkap : null ,
     };
   },
-  async fetch()  {
-  
-
+  async beforeMount()  {
       await this.$axios
-        .$get("/me/profile",{ headers: {  } })
+        .$get("/me/profile")
         .then((response) => {
           this.user = response['data'];
         })

@@ -6,8 +6,8 @@
 
 
 <script>
-import EditProfileForm from '../../components/UserProfile/EditProfileForm.vue';
-import UserCard from '../../components/UserProfile/UserCard.vue';
+import EditProfileForm from '../../components/Profile/EditProfileForm.vue';
+import UserCard from '../../components/Profile/UserCard.vue';
 import { mapGetters } from 'vuex'
 
 

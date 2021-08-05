@@ -2,6 +2,8 @@
   <div class="wrapper" :class="{ 'nav-open': $sidebar.showSidebar }">
     <notifications></notifications>
 
+   
+
     <side-bar
       :background-color="sidebarBackground"
       :short-title="$t('sidebar.shortTitle')"
@@ -22,6 +24,7 @@
       >
         <zoom-center-transition :duration="300" mode="out-in">
           <!-- your content here -->
+          
           <nuxt></nuxt>
         </zoom-center-transition>
       </div>
@@ -141,4 +144,5 @@
     font-size: 0.8rem !important;
     max-width: 80% !important;
   }
+
 </style>

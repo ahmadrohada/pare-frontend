@@ -7,9 +7,8 @@
 
 
 <script>
-import UserProfile from '../../components/UserProfile/UserProfile.vue';
-import UserCard from '../../components/UserProfile/UserCard.vue';
-import { mapGetters } from 'vuex'
+import UserProfile from '../../components/Profile/UserProfile.vue';
+import UserCard from '../../components/Profile/UserCard.vue';
 
 
 export default {
@@ -19,26 +18,13 @@ export default {
   head() {
     return {
       title: "Profile User",
+      
     };
   },
-  data(){
-    return{
-      test:'data load....'
-    }
-  },
-  computed: { 
-    ...mapGetters([
-        'user'
-    ])
-  },
-  
   components: {
     UserProfile,
     UserCard
-  },
-  mounted() {
-    this.test = this.$auth.user
-  },
+  }
 };
 </script>
 <style></style>

@@ -20,9 +20,9 @@
 
      <sidebar-item 
           :link="{
-            name: $t('sidebar.atasan'),
+            name: $t('sidebar.hirarcy'),
             icon: 'fa fa-sitemap',
-            path: '/user/atasan'
+            path: '/user/hirarcy'
           }"
         >
       </sidebar-item>

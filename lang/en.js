@@ -41,16 +41,16 @@ module.exports = {
 
 
     //MENU PARE
-    "calendar": "Calendar",
-    "home": "Home",
-    "dailyActivity": "Daily Activity",
-    "dashboard"     : "Dashboard",
-    "adminSkpd"     : "Admnin SKPD",
-    "adminBkpsdm"     : "Admin BKPSDM",
-    "personalDashboard"     : "Perrsonal",
-    "profile"     : "User Profile",
-    "user"     : "User",
-    "atasan"     : "Atasan",
+    "calendar"          : "Calendar",
+    "home"              : "Home",
+    "dailyActivity"     : "Daily Activity",
+    "dashboard"         : "Dashboard",
+    "adminSkpd"         : "Admnin SKPD",
+    "adminBkpsdm"       : "Admin BKPSDM",
+    "personalDashboard" : "Perrsonal",
+    "profile"           : "User Profile",
+    "user"              : "User",
+    "hirarcy"           : "Hirarcy",
 
 
 

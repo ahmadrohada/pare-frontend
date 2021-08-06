@@ -2,10 +2,10 @@
   <card class="font-weight-300">
     <h4 class="card-title">Profile Pegawai</h4>
         <p class="card-text"><i class="fa fa-user"></i> NAMA LENGKAP</p>
-        <p class="text-muted">{{ user.pegawai.nama_lengkap }}</p>
+        <p class="text-muted">{{ user.profile.nama_lengkap }}</p>
         <hr>
         <p class="card-text"><i class="fa fa-id-badge"></i> NIP</p>
-        <p class="text-muted">{{ user.pegawai.nip }}</p>
+        <p class="text-muted">{{ user.profile.nip }}</p>
         <hr>
 
         <p class="card-text"><i class="fa fa-id-card"></i> JABATAN ( {{ user.jabatan.jenis}} )</p>
@@ -32,7 +32,7 @@ export default {
     return {
       user: [],
       user:{
-        pegawai : [],
+        profile : [],
         skpd : [],
         jabatan : [],
         unit_kerja : []

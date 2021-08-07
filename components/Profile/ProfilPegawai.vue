@@ -1,6 +1,10 @@
 <template>
   <card class="font-weight-300">
-    <h4 class="card-title">Profile Pegawai</h4>
+    <div class="loading-overlay" v-if="loading" :value="overlay">
+      <img src="~/static/img/loaders/loader.gif" style="height:80px" alt="">
+    </div>
+
+    <h4 class="card-title">Profile Pegawai d</h4>
         <p class="card-text"><i class="fa fa-user"></i> NAMA LENGKAP</p>
         <p class="text-muted">{{ user.profile.nama_lengkap }}</p>
         <hr>
@@ -23,10 +27,9 @@
 </template>
 <script>
 
-
 export default {
   components: {
-   
+    
   },
   data() {
     return {
@@ -38,30 +41,54 @@ export default {
         unit_kerja : []
       },
       nama_lengkap : null ,
+      loading: false,
+	    overlay: false,
     };
   },
-  async beforeMount()  {
-      this.$nextTick(() => {
-        this.$nuxt.$loading.start()
-      }) 
+  methods: {
+    start() {
+      this.loading = true
+      this.overlay = true
+    },
+    finish() {
+      this.loading = false
+      this.overlay = false
+	  },
 
-      await this.$axios
-        .$get("/me/profile")
+    detail_pegawai(){
+      
+      this.$axios
+        .$get("/me/hirarki")
         .then((response) => {
-          this.user = response['data'];
-          setTimeout(() => this.$nuxt.$loading.finish(), 800)
+          this.user = response["pegawai"];
         })
         .catch((err) => {
           console.log(err);
-          setTimeout(() => this.$nuxt.$loading.finish(), 800)
         });
+    },
+    detail_pejabat_penilai(){
+      this.$axios
+        .$get("/me/hirarki")
+        .then((response) => {
+          this.user = response["pejabat_penilai"];
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    detail_atasan_pejabat_penilai(){
+      this.$axios
+        .$get("/me/hirarki")
+        .then((response) => {
+          this.user = response["atasan_pejabat_penilai"];
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   },
-   mounted() {
-   /*   
-    this.$nextTick(() => {
-      this.$nuxt.$loading.start()
-      setTimeout(() => this.$nuxt.$loading.finish(), 800)
-    })  */
+  mounted() {
+   this.detail_pegawai()
   }
   
 };

@@ -2,9 +2,13 @@
   width: 100%;
   z-index: 1050;
   //background: $vue;
-  background: rgb(46,203,65);
-  background: linear-gradient(90deg, rgba(46,203,65,1) 0%, rgba(23,120,79,1) 0%, rgba(10,194,137,1) 100%); 
-  border-bottom:1px solid rgb(2, 145, 90);
+  background: #01a37b;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #02362a, #01a37b);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #02362a, #01a37b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+  border-bottom:1px solid #01a37b;
   box-shadow: rgba(11, 158, 72, 0.25) 0px 6px 14px -5px, rgba(18, 100, 43, 0.3) 0px 4px 8px -4px;
   padding-top:4px;
   padding-bottom:4px;

@@ -44,10 +44,18 @@
     p{
       color: $opacity-8;
     }
+    background: #01a37b;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #024737, #039772);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #024737, #039772); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
   }
 
   .main-panel{
-    background: $light-bg;
+    //background: $light-bg;
+    background: #ecf0ef;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #f1f1f1, #E0EAFC);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #f3f7f6, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   }
 
   h1, h2, h3, h4, h5, h6, p, ol li, ul li, pre {

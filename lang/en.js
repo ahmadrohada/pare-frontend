@@ -50,7 +50,7 @@ module.exports = {
     "personalDashboard" : "Perrsonal",
     "profile"           : "User Profile",
     "user"              : "User",
-    "hirarcy"           : "Hirarcy",
+    "hirarki"           : "Hirarki",
 
 
 

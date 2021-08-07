@@ -31,7 +31,7 @@ export default {
       console.log(user_data.data)
       this.$store.commit('GET_DATA',user_data.data.data)
       this.$store.commit('SET_LOGIN', true)
-      //this.$auth.setToken('local', 'Bearer ' + this.$route.query.token)
+      this.$auth.setToken('local', 'Bearer ' + this.$route.query.token)
       this.$axios.setToken(this.$route.query.token, 'Bearer')
       //this.$router.push("/");
       

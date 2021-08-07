@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-5" style="margin-bottom:5px;">
       <card class="font-weight-300">
         <md-card
           class="md-primary md_user"
@@ -118,7 +118,7 @@
         </md-card>
       </card>
     </div>
-    <div class="col-md-7"><profil-pegawai ref="child"> </profil-pegawai></div>
+    <div class="col-md-7" style="margin-bottom:5px;"><profil-pegawai ref="child"> </profil-pegawai></div>
   </div>
 </template>
 

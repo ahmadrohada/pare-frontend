@@ -208,7 +208,7 @@ export default {
 </script>
 <style>
 .md-card-header {
-  height: 98px;
+  height:98px;
 }
 
 .user_img {
@@ -233,13 +233,16 @@ export default {
   background: rgb(211, 43, 43) !important;
   opacity: 0.64 !important;
 }
-
+.md-card-header-text{
+  margin-left:-5px;
+}
 .md-card .md-title {
-  font-size: 15px !important;
+  font-size: 14px !important;
   margin-top: -4px !important;
   line-height: 25px;
 }
 .md-card .md-subhead {
+  font-size: 11px !important;
   opacity: 0.74 !important;
 }
 .md-card-media img {
@@ -250,6 +253,7 @@ export default {
 }
 .md-icon-button {
   margin-top: 10px !important;
+  margin-right: -8px !important;
 }
 
 .btn-sim-asn {

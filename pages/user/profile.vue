@@ -1,7 +1,7 @@
 <template>
   <div class="row">
-    <div class="col-md-4"><user-card> </user-card></div>
-    <div class="col-md-8"><user-profile> </user-profile></div>
+    <div class="col-md-4 content"><user-card> </user-card></div>
+    <div class="col-md-8 content"><user-profile> </user-profile></div>
   </div>
 </template>
 

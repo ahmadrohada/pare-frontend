@@ -4,7 +4,7 @@
       <img src="~/static/img/loaders/loader.gif" style="height:80px" alt="">
     </div>
 
-    <h4 class="card-title">Profile Pegawai d</h4>
+    <h4 class="card-title">{{contentHeader}}</h4>
         <p class="card-text"><i class="fa fa-user"></i> NAMA LENGKAP</p>
         <p class="text-muted">{{ user.profile.nama_lengkap }}</p>
         <hr>
@@ -43,6 +43,7 @@ export default {
       nama_lengkap : null ,
       loading: false,
 	    overlay: false,
+      contentHeader: "DETAIL PEGAWAI"
     };
   },
   methods: {
@@ -56,7 +57,7 @@ export default {
 	  },
 
     detail_pegawai(){
-      
+      this.contentHeader = "DETAIL PEGAWAI"
       this.$axios
         .$get("/me/hirarki")
         .then((response) => {
@@ -67,6 +68,7 @@ export default {
         });
     },
     detail_pejabat_penilai(){
+      this.contentHeader = "DETAIL PEJABAT PENILAI"
       this.$axios
         .$get("/me/hirarki")
         .then((response) => {
@@ -77,6 +79,7 @@ export default {
         });
     },
     detail_atasan_pejabat_penilai(){
+      this.contentHeader = "DETAIL ATASAN PEJABAT PENILAI"
       this.$axios
         .$get("/me/hirarki")
         .then((response) => {

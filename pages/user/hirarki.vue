@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-md-5" style="margin-bottom:5px;">
+    <div class="col-md-5 content">
       <card class="font-weight-300">
         <md-card
           class="md-primary md_user"
@@ -18,7 +18,7 @@
                 {{ atasan_pejabat_penilai.profile.nama_lengkap }}
               </div>
               <div class="md-subhead">
-                {{ atasan_pejabat_penilai.profile.nip }}
+                NIP. {{ atasan_pejabat_penilai.profile.nip }}
               </div>
               <!-- <div class="md-subhead">Kepala Badan kepegawaian dan pengembangan sukmber data manusia</div> -->
             </md-card-header-text>
@@ -62,7 +62,7 @@
               <div class="md-title">
                 {{ pejabat_penilai.profile.nama_lengkap }}
               </div>
-              <div class="md-subhead">{{ pejabat_penilai.profile.nip }}</div>
+              <div class="md-subhead">NIP. {{ pejabat_penilai.profile.nip }}</div>
               <!-- <div class="md-subhead">Kepala Badan kepegawaian dan pengembangan sukmber data manusia</div> -->
             </md-card-header-text>
             <md-button
@@ -103,7 +103,7 @@
             </md-card-media>
             <md-card-header-text>
               <div class="md-title">{{ pegawai.profile.nama_lengkap }}</div>
-              <div class="md-subhead">{{ pegawai.profile.nip }}</div>
+              <div class="md-subhead">NIP. {{ pegawai.profile.nip }}</div>
               <!-- <div class="md-subhead">Kepala Badan kepegawaian dan pengembangan sukmber data manusia</div> -->
             </md-card-header-text>
 
@@ -118,7 +118,7 @@
         </md-card>
       </card>
     </div>
-    <div class="col-md-7" style="margin-bottom:5px;"><profil-pegawai ref="child"> </profil-pegawai></div>
+    <div class="col-md-7 content"><profil-pegawai ref="child"> </profil-pegawai></div>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <card class="font-weight-300">
-    <h4 class="card-title">Profile User</h4>
+    <h4 class="card-title">PROFIL</h4>
         <p class="card-text"><i class="fa fa-user"></i> NAMA LENGKAP</p>
         <p class="text-muted">{{ user.profile.nama_lengkap }}</p>
         <hr>

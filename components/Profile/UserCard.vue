@@ -8,9 +8,9 @@
       <div class="block block-four"></div>
       <a href="javascript:void(0)">
         <img class="avatar" :src="photoUrl" alt="..." />
-        <h5 class="title">{{nip}}</h5>
       </a>
-      <p class="description">{{namaLengkap}}</p> 
+      <p class="card-text" style="font-size:15px;">{{namaLengkap}}</p>
+      <p class="text-muted" style="font-size:11px; margin-top:-6px;">NIP. {{nip}}</p> 
     </div>
     
    
@@ -27,11 +27,6 @@ export default {
     return {
       title: "Profile",
     };
-  },
-  data(){
-    return{
-      simpegLink: `${process.env.simpegUrl}/oauth/authorize?client_id=${process.env.simpegClientId}&redirect_uri=${process.env.apiUrl}/login_simpeg&response_type=code&scope=profile+pegawai&state=profile`,
-    }
   },
   computed: { 
     ...mapGetters({

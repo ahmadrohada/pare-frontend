@@ -14,7 +14,7 @@
 <script>
 
 export default {
-  name: "dashoard",
+  name: "dashboard",
   layout: "dashboard",
   middleware: 'auth',
   data() {

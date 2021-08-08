@@ -1,14 +1,13 @@
 <template>
   <div>
-      {{roles}}
        <sidebar-item 
           :link="{
-            name: $t('sidebar.home'),
-            icon: 'fa fa-home',
+            name: $t('sidebar.dashboard'),
+            icon: 'fa fa-columns',
             path: '/home'
           }"
         >
-        </sidebar-item>
+      </sidebar-item>
         <div class="dropdown-divider"></div>
         <sidebar-item 
           v-if = "isPersonal === true "
@@ -29,12 +28,21 @@
           }"
         >
         </sidebar-item>
-         <sidebar-item 
+        <sidebar-item 
           v-if = "isAdminSkpd"
           :link="{
             name: $t('sidebar.adminSkpd'),
             icon: 'fa fa-users-cog',
             path: '/admin_skpd/dashboard'
+          }"
+        >
+        </sidebar-item>
+        <sidebar-item 
+          v-if = "isAdminSkpd"
+          :link="{
+            name: $t('sidebar.pegawai'),
+            icon: 'fa fa-users',
+            path: '/admin_skpd/pegawai'
           }"
         >
         </sidebar-item>

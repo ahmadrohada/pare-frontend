@@ -45,12 +45,14 @@ module.exports = {
     "home"              : "Home",
     "dailyActivity"     : "Daily Activity",
     "dashboard"         : "Dashboard",
-    "adminSkpd"         : "Admnin SKPD",
+    "adminSkpd"         : "Admin SKPD",
     "adminBkpsdm"       : "Admin BKPSDM",
-    "personalDashboard" : "Perrsonal",
+    "personalDashboard" : "Personal",
     "profile"           : "User Profile",
     "user"              : "User",
     "hirarki"           : "Hirarki",
+    "pegawai"           : "Pegawai",
+
 
 
 

@@ -2,8 +2,8 @@
   <div>
       <sidebar-item 
           :link="{
-            name: $t('sidebar.home'),
-            icon: 'fa fa-home',
+            name: $t('sidebar.user'),
+            icon: 'fa fa-user-circle',
             path: '/home'
           }"
         >

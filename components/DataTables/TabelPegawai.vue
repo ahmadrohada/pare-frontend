@@ -2,7 +2,6 @@
   <div>
     <div>
       <el-table :data="data">
-        <el-table-column min-width="50" type="index"></el-table-column>
         <el-table-column min-width="150" prop="username" label="Name"></el-table-column>
         <el-table-column min-width="200" prop="id" label="NIP"></el-table-column>
         <el-table-column min-width="150" header-align="right" label="Actions">
@@ -40,6 +39,9 @@
         :total="total"
         :layout="layout"
         @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+        :page-sizes="[100, 200, 300, 400]"
+        :page-size="100"
       />
     </div>
   </div>
@@ -55,8 +57,12 @@ export default {
   },
   methods: {
     handleCurrentChange: function(val) {
-      this.$emit("handlePaging", val);
+      this.$emit("handlePaging", "?page="+val);
     },
+    /* handleSizeChange: function(val) {
+        console.log(`${val} items per page`);
+        this.$emit("handleSizeChange", "?length="+val);
+    }, */
   },
 };
 </script>

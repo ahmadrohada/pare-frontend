@@ -1,5 +1,8 @@
 <template>
-  <card>
+  <card style="min-height:480px;">
+    <div class="loading-overlay" v-if="loading" :value="overlay">
+      <img src="~/static/img/loaders/loader.gif" style="height:80px" alt="">
+    </div>
     <template slot="header" class="d-inline">
       <h4 class="title d-inline">Pegawai</h4>
       <p class="card-category d-inline">Data</p>
@@ -8,12 +11,14 @@
       <tabel-pegawai
         :data="data"
         :total="total"
-        v-loading="loading"
         v-on:handleClick="onEnlargeText"
         v-on:handlePaging="paging"
+        v-on:handleSizeChange="paging"
         :current-page.sync="currentPage"
         :layout="layout"
-      ></tabel-pegawai>
+        
+      >
+      </tabel-pegawai>
     </div>
   </card>
 </template>
@@ -31,48 +36,59 @@ export default {
   },
   data() {
     return {
+      loading: false,
+	    overlay: false,
       data: [],
       total: 0,
       currentPage: 0,
       page: 1,
-      layout: "total ,prev, pager, next, jumper",
+      layout: "prev, next",
     };
   },
-  mounted() {
-    this.$nextTick(() => {
-        this.$nuxt.$loading.start()
-    }) 
-    this.$axios
-      .$get("/data_user")
-      .then((resp) => {
-        this.data = resp.data;
-        this.total = resp.total;
-        this.currentPage = resp.current_page;
-        setTimeout(() => this.$nuxt.$loading.finish(), 800)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
   methods: {
+    start() {
+      this.loading = true
+      this.overlay = true
+    },
+    finish() {
+      this.loading = false
+      this.overlay = false
+	  },
+    
+
     onEnlargeText: function(payload) {
       alert(payload.username);
     },
     paging: function(params) {
-      this.$nextTick(() => {
-        this.$nuxt.$loading.start()
-      }) 
+      this.start()
       this.$axios
-        .$get("/data_user?page=" + params)
+        .$get("/user" + params)
         .then((resp) => {
           this.data = resp.data;
-          setTimeout(() => this.$nuxt.$loading.finish(), 800)
-          this.currentPage = resp.current_page;
+          setTimeout(() => this.finish(), 800)
+          this.currentPage = resp.pagination['current_page'];
         })
         .catch((err) => {
           console.log(err);
         });
     },
   },
+  mounted() {
+    this.start() 
+    this.$axios
+      .$get("/user")
+      .then((resp) => {
+        this.data = resp.data;
+        this.total = resp.pagination['total'];
+        this.currentPage = resp.pagination['current_page'];
+        setTimeout(() => this.finish(), 1200)
+
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  
 };
 </script>

@@ -124,7 +124,7 @@
 
 
 <script>
-import ProfilPegawai from "../../components/Profile/ProfilPegawai.vue";
+import ProfilPegawai from "../../components/Profile/ProfilUserHirarki.vue";
 
 export default {
   name: "hirarki",

@@ -5,15 +5,14 @@
     </div>
     <template slot="header" class="d-inline">
       <h4 class="title d-inline">Pegawai</h4>
-      <p class="card-category d-inline">Data</p>
+      <p class="card-category d-inline">BKPSDM</p>
     </template>
     <div class="table-full-width table-responsive">
       <tabel-pegawai
         :data="data"
         :total="total"
-        v-on:handleClick="onEnlargeText"
+        v-on:viewPegawai="viewPegawai"
         v-on:handlePaging="paging"
-        v-on:handleSizeChange="paging"
         :current-page.sync="currentPage"
         :layout="layout"
         
@@ -29,7 +28,7 @@ import TabelPegawai from "~/components/DataTables/TabelPegawai.vue";
 
 
 export default {
-  layout: "skpdLayout",
+  layout: "bkpsdmLayout",
   middleware: "auth",
    components: {
     TabelPegawai
@@ -56,8 +55,9 @@ export default {
 	  },
     
 
-    onEnlargeText: function(payload) {
-      alert(payload.username);
+    viewPegawai: function(data) {
+      //alert(data.id);
+      this.$router.push("/pegawai/"+data.nip);
     },
     paging: function(params) {
       this.start()

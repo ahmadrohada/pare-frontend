@@ -3,17 +3,22 @@
     <div>
       <el-table :data="data">
         <el-table-column min-width="150" prop="username" label="Name"></el-table-column>
-        <el-table-column min-width="200" prop="id" label="NIP"></el-table-column>
+        <el-table-column min-width="200" prop="nip" label="NIP"></el-table-column>
         <el-table-column min-width="150" header-align="right" label="Actions">
           <template slot-scope="{ row }">
             <div class="text-right">
-              <el-tooltip content="info" :open-delay="300" placement="top">
-                <base-button type="info" size="sm" icon>
+              <el-tooltip content="detail" :open-delay="300" placement="top">
+                <base-button
+                  type="info"
+                  size="sm"
+                  icon
+                  v-on:click="$emit('viewPegawai', row)"
+                >
                   <i class="tim-icons icon-single-02"></i>
                 </base-button>
               </el-tooltip>
 
-              <el-tooltip content="Settings" :open-delay="300" placement="top">
+              <!-- <el-tooltip content="Settings" :open-delay="300" placement="top">
                 <base-button type="success" size="sm" icon>
                   <i class="tim-icons icon-settings"></i>
                 </base-button>
@@ -28,7 +33,7 @@
                 >
                   <i class="tim-icons icon-simple-remove"></i>
                 </base-button>
-              </el-tooltip>
+              </el-tooltip> -->
             </div>
           </template>
         </el-table-column>

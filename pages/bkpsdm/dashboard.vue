@@ -15,7 +15,10 @@ export default {
   name: "dashoard",
   layout: "dashboard",
   middleware: 'auth',
+  mounted() {
+    this.$router.push("/bkpsdm/pegawai");
+  },
 };
-</script>
+</script> 
 <style></style>
 

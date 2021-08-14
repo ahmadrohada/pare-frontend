@@ -2,50 +2,22 @@
   <div>
        <sidebar-item 
           :link="{
-            name: $t('sidebar.dashboard'),
+            name: $t('sidebar.adminBkpsdm'),
             icon: 'fa fa-columns',
-            path: '/home'
+            path: '/dashboard'
           }"
         >
       </sidebar-item>
         <div class="dropdown-divider"></div>
         <sidebar-item 
-          v-if = "isPersonal === true "
-          :link="{
-            name: $t('sidebar.personalDashboard'),
-            icon: 'fa fa-user-cog',
-            path: '/personal/dashboard'
-          }"
-        >
-        </sidebar-item>
-        <sidebar-item 
-        
-          v-if = "isAdminBkpsdm"
-          :link="{
-            name: $t('sidebar.adminBkpsdm'),
-            icon: 'fa fa-user-shield',
-            path: '/bkpsdm/dashboard'
-          }"
-        >
-        </sidebar-item>
-        <sidebar-item 
-          v-if = "isAdminSkpd"
-          :link="{
-            name: $t('sidebar.adminSkpd'),
-            icon: 'fa fa-users-cog',
-            path: '/skpd/dashboard'
-          }"
-        >
-        </sidebar-item>
-        <sidebar-item 
-          v-if = "isAdminSkpd"
           :link="{
             name: $t('sidebar.pegawai'),
             icon: 'fa fa-users',
-            path: '/skpd/pegawai'
+            path: '/bkpsdm/pegawai'
           }"
         >
         </sidebar-item>
+        
 
         
   </div>

@@ -9,13 +9,13 @@ export const getters = {
       return  ( state.auth.user ) ? ( state.auth.user.roles ) : null  
     },
     pegawai(state) {
-      return ( state.auth.user ) ? ( state.auth.user.profile ) : null 
+      return ( state.auth.user ) ? ( state.auth.user ) : null 
     },
     photo(state) {
-      return ( state.auth.user.profile ) ? ( state.auth.user.profile.photo ) : '/img/user.png' 
+      return ( state.auth.user.photo ) ? ( state.auth.user.photo ) : '/img/user.png' 
     },
     nama_lengkap(state) {
-      return ( state.auth.user.profile ) ? ( state.auth.user.profile.nama_lengkap ) : 'anonim' 
+      return ( state.auth.user.nama_lengkap ) ? ( state.auth.user.nama_lengkap ) : 'anonim' 
     },
     isLoggedIn(state) {
       return state.auth.loggedIn

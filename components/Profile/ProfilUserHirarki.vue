@@ -6,14 +6,14 @@
 
     <h4 class="card-title">{{contentHeader}}</h4>
         <p class="card-text"><i class="fa fa-user"></i> NAMA LENGKAP</p>
-        <p class="text-muted">{{ user.profile.nama_lengkap }}</p>
+        <p class="text-muted">{{ user.nama_lengkap }}</p>
         <hr>
         <p class="card-text"><i class="fa fa-id-badge"></i> NIP</p>
-        <p class="text-muted">{{ user.profile.nip }}</p>
+        <p class="text-muted">{{ user.nip }}</p>
         <hr>
 
-        <p class="card-text"><i class="fa fa-id-card"></i> JABATAN ( {{ user.jabatan.jenis}} )</p>
-        <p class="text-muted">{{ user.jabatan.nama}}</p>
+        <p class="card-text"><i class="fa fa-id-card"></i> JABATAN ( {{ user.jabatan[0].referensi.jenis}} )</p>
+        <p class="text-muted">{{ user.jabatan[0].nama}}</p>
         <hr>
 
         <p class="card-text"><i class="fa fa-university"></i> SKPD</p>
@@ -37,7 +37,11 @@ export default {
       user:{
         profile : [],
         skpd : [],
-        jabatan : [],
+        jabatan :{
+          0 : {
+            referensi : ''
+          }
+        },
         unit_kerja : []
       },
       nama_lengkap : null ,
@@ -56,34 +60,34 @@ export default {
       this.overlay = false
 	  },
 
-    detail_pegawai(){
+    detail_pegawai($nip){
       this.contentHeader = "DETAIL PEGAWAI"
       this.$axios
-        .$get("/me/hirarki")
+        .$get("/user/"+$nip)
         .then((response) => {
-          this.user = response["pegawai"];
+          this.user = response["data"];
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    detail_pejabat_penilai(){
+    detail_pejabat_penilai($nip){
       this.contentHeader = "DETAIL PEJABAT PENILAI"
       this.$axios
-        .$get("/me/hirarki")
+         .$get("/user/"+$nip)
         .then((response) => {
-          this.user = response["pejabat_penilai"];
+          this.user = response["data"];
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    detail_atasan_pejabat_penilai(){
+    detail_atasan_pejabat_penilai($nip){
       this.contentHeader = "DETAIL ATASAN PEJABAT PENILAI"
       this.$axios
-        .$get("/me/hirarki")
+        .$get("/user/"+$nip)
         .then((response) => {
-          this.user = response["atasan_pejabat_penilai"];
+          this.user = response["data"];
         })
         .catch((err) => {
           console.log(err);
@@ -91,7 +95,6 @@ export default {
     }
   },
   mounted() {
-   this.detail_pegawai()
   }
   
 };

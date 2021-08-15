@@ -7,7 +7,7 @@
 
 
 <script>
-import UserProfile from '../../components/Profile/UserProfile.vue';
+import ProfilUser from '../../components/Profile/ProfilUser.vue';
 import UserCard from '../../components/Profile/UserCard.vue';
 
 
@@ -22,7 +22,7 @@ export default {
     };
   },
   components: {
-    UserProfile,
+    ProfilUser,
     UserCard
   }
 };

@@ -9,16 +9,16 @@
           <md-card-header>
             <md-card-media>
               <img
-                :src="atasan_pejabat_penilai.profile.photo"
+                :src="atasan_pejabat_penilai.photo"
                 class="user_img"
               />
             </md-card-media>
             <md-card-header-text>
               <div class="md-title">
-                {{ atasan_pejabat_penilai.profile.nama_lengkap }}
+                {{ atasan_pejabat_penilai.nama_lengkap }}
               </div>
               <div class="md-subhead">
-                NIP. {{ atasan_pejabat_penilai.profile.nip }}
+                NIP. {{ atasan_pejabat_penilai.nip }}
               </div>
               <!-- <div class="md-subhead">Kepala Badan kepegawaian dan pengembangan sukmber data manusia</div> -->
             </md-card-header-text>
@@ -56,13 +56,13 @@
         <md-card class="md-primary md_user" v-if="pejabat_penilai !== null">
           <md-card-header>
             <md-card-media>
-              <img :src="pejabat_penilai.profile.photo" class="user_img" />
+              <img :src="pejabat_penilai.photo" class="user_img" />
             </md-card-media>
             <md-card-header-text>
               <div class="md-title">
-                {{ pejabat_penilai.profile.nama_lengkap }}
+                {{ pejabat_penilai.nama_lengkap }}
               </div>
-              <div class="md-subhead">NIP. {{ pejabat_penilai.profile.nip }}</div>
+              <div class="md-subhead">NIP. {{ pejabat_penilai.nip }}</div>
               <!-- <div class="md-subhead">Kepala Badan kepegawaian dan pengembangan sukmber data manusia</div> -->
             </md-card-header-text>
             <md-button
@@ -99,11 +99,11 @@
         <md-card class="md-primary md_user">
           <md-card-header>
             <md-card-media>
-              <img :src="pegawai.profile.photo" class="user_img" />
+              <img :src="pegawai.photo" class="user_img" />
             </md-card-media>
             <md-card-header-text>
-              <div class="md-title">{{ pegawai.profile.nama_lengkap }}</div>
-              <div class="md-subhead">NIP. {{ pegawai.profile.nip }}</div>
+              <div class="md-title">{{ pegawai.nama_lengkap }}</div>
+              <div class="md-subhead">NIP. {{ pegawai.nip }}</div>
               <!-- <div class="md-subhead">Kepala Badan kepegawaian dan pengembangan sukmber data manusia</div> -->
             </md-card-header-text>
 
@@ -118,13 +118,15 @@
         </md-card>
       </card>
     </div>
-    <div class="col-md-7 content"><profil-pegawai ref="child"> </profil-pegawai></div>
+     <div class="col-md-7 content">
+      <profil-user ref="child"></profil-user>
+    </div>
   </div>
 </template>
 
 
 <script>
-import ProfilPegawai from "../../components/Profile/ProfilUserHirarki.vue";
+import ProfilUser from "../../components/Profile/ProfilUserHirarki.vue";
 
 export default {
   name: "hirarki",
@@ -136,7 +138,7 @@ export default {
     };
   },
   components: {
-    ProfilPegawai,
+    ProfilUser,
   },
   data() {
     return {
@@ -156,53 +158,51 @@ export default {
       btnC:false,
     };
   },
+  async asyncData({ params, redirect ,$axios,$refs}) {
+   
+      
+      const user =  await $axios.$get("/me/hirarki")
+      
+      return { 
+          pegawai : user["pegawai"],
+          pejabat_penilai : user["pejabat_penilai"],
+          atasan_pejabat_penilai : user["atasan_pejabat_penilai"],
+       }
+
+  },
   methods: {
     clearBtnState(){
       this.btnA =false
       this.btnB =false
       this.btnC =false
     },
-    showDetailPegawai: function () {
+    showDetailPegawai: function ($nip) {
       this.$refs.child.start();
       this.clearBtnState()
       this.btnC = true
-      this.$refs.child.detail_pegawai();
-      setTimeout(() => this.$refs.child.finish(), 800)
+      this.$refs.child.detail_pegawai($nip);
+      setTimeout(() => this.$refs.child.finish(), 800) 
     },
     showDetailPejabatPenilai: function () {
       this.$refs.child.start();
       this.clearBtnState()
       this.btnB  = true
-      this.$refs.child.detail_pejabat_penilai();
+      this.$refs.child.detail_pejabat_penilai(this.pejabat_penilai.nip);
       setTimeout(() => this.$refs.child.finish(), 800)
     },
     showDetailAtasanPejabatPenilai: function () {
       this.$refs.child.start();
       this.clearBtnState()
       this.btnA = true
-      this.$refs.child.detail_atasan_pejabat_penilai();
+      this.$refs.child.detail_atasan_pejabat_penilai(this.atasan_pejabat_penilai.nip);
       setTimeout(() => this.$refs.child.finish(), 800)
     },
   },
   mounted() {
+    this.$refs.child.start();
     this.btnC =true
-    this.$nextTick(() => {
-      this.$nuxt.$loading.start();
-    });
-
-    this.$axios
-      .$get("/me/hirarki")
-      .then((response) => {
-        this.pegawai = response["pegawai"];
-        this.pejabat_penilai = response["pejabat_penilai"];
-        this.atasan_pejabat_penilai = response["atasan_pejabat_penilai"];
-
-        setTimeout(() => this.$nuxt.$loading.finish(), 800);
-      })
-      .catch((err) => {
-        console.log(err);
-        setTimeout(() => this.$nuxt.$loading.finish(), 800);
-      });
+    this.showDetailPegawai(this.pegawai.nip)
+    setTimeout(() => this.$refs.child.finish(), 800)
   },
 };
 </script>

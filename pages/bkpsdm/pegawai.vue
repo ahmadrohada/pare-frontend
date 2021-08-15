@@ -57,7 +57,7 @@ export default {
 
     viewPegawai: function(data) {
       //alert(data.id);
-      this.$router.push("/pegawai/"+data.nip);
+      this.$router.push("/user/"+data.nip);
     },
     paging: function(params) {
       this.start()

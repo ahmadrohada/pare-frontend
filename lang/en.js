@@ -10,7 +10,7 @@ module.exports = {
     "login": "Login",
     "register": "Register",
     "lock": "Lock Screen",
-    "userProfile": "User Profile",
+    "ProfilUser": "User Profile",
     "components": "Components",
     "multiLevelCollapse": "Multilevel Collapse",
     "example": "Example Page",

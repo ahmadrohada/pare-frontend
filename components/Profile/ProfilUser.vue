@@ -6,14 +6,14 @@
 
     <h4 class="card-title">DETAIL USER</h4>
         <p class="card-text"><i class="fa fa-user"></i> NAMA LENGKAP</p>
-        <p class="text-muted">{{ user.profile.nama_lengkap }}</p>
+        <p class="text-muted">{{ user.nama_lengkap }}</p>
         <hr>
         <p class="card-text"><i class="fa fa-id-badge"></i> NIP</p>
-        <p class="text-muted">{{ user.profile.nip }}</p>
+        <p class="text-muted">{{ user.nip }}</p>
         <hr>
 
-        <p class="card-text"><i class="fa fa-id-card"></i> JABATAN ( {{ user.jabatan.jenis}} )</p>
-        <p class="text-muted">{{ user.jabatan.nama}}</p>
+        <p class="card-text"><i class="fa fa-id-card"></i> JABATAN ( {{ user.jabatan[0].referensi.jenis}} )</p>
+        <p class="text-muted">{{ user.jabatan[0].nama}}</p>
         <hr>
 
         <p class="card-text"><i class="fa fa-university"></i> SKPD</p>
@@ -21,7 +21,7 @@
         <hr>
 
         <p class="card-text"><i class="fa fa-tags"></i> Unit Kerja</p>
-        <p class="text-muted">{{ user.unit_kerja.nama }}</p>
+        <p class="text-muted">{{ (user.unit_kerja)?(user.unit_kerja.nama):'' }}</p>
         <hr /> 
   </card>
 </template>

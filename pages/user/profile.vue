@@ -1,18 +1,30 @@
 <template>
-  <div class="row">
-    <div class="col-md-4 content"><user-card> </user-card></div>
-    <div class="col-md-8 content"><user-profile> </user-profile></div>
+  <div class="row" v-if = "user.data">
+    <div class="col-md-4 content">
+      <card-user 
+        :user="user.data"
+      > 
+        
+      </card-user>
+    </div>
+    <div class="col-md-8 content">
+      <profil-user 
+        :user="user.data"
+      >
+        
+      </profil-user>
+    </div>
   </div>
 </template>
 
 
 <script>
-import UserProfile from '../../components/Profile/UserProfile.vue';
-import UserCard from '../../components/Profile/UserCard.vue';
+import ProfilUser from '../../components/Profile/ProfilUser.vue';
+import CardUser from '../../components/Profile/CardUser.vue';
 
 
 export default {
-  name: 'profile',
+  name: 'user',
   middleware: 'auth',
   layout:'userLayout',
   head() {
@@ -21,9 +33,19 @@ export default {
       
     };
   },
+  data() {
+    return {
+      
+    };
+  },
   components: {
-    UserProfile,
-    UserCard
+    ProfilUser,
+    CardUser
+  },
+  async asyncData({ params, redirect ,$axios,$refs}) {
+      const user =  await $axios.$get("/me")
+      return { user }
+
   }
 };
 </script>

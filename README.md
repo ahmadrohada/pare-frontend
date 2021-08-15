@@ -155,7 +155,7 @@ Within the download you'll find the following directories and files:
     |   |   |-- SideBar.vue
     |   |   |-- SidebarItem.vue
     |   |   |-- index.js
-    |   |-- UserProfile
+    |   |-- ProfilUser
     |   |   |-- EditProfileForm.vue
     |   |   |-- UserCard.vue
     |-- lang

@@ -10,7 +10,7 @@ module.exports = {
     "login": " تسجيل الدخول ",
     "register": " تسجيل ",
     "lock": " اقفل الشاشة ",
-    "userProfile": " ملف تعريفي للمستخدم ",
+    "ProfilUser": " ملف تعريفي للمستخدم ",
     "components": "المكونات",
     "multiLevelCollapse": " انهيار متعدد المستويات",
     "example": "مثال",

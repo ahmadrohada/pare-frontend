@@ -1,15 +1,15 @@
 <template>
-  <div class="row" v-if = "user.data.pegawai">
+  <div class="row" v-if = "user.data">
     <div class="col-md-4 content">
       <card-user 
-        :user="user.data.pegawai"
+        :user="user.data"
       > 
         
       </card-user>
     </div>
     <div class="col-md-8 content">
       <profil-user 
-        :user="user.data.pegawai"
+        :user="user.data"
       >
         
       </profil-user>

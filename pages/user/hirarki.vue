@@ -109,7 +109,7 @@
 
             <md-button
               class="md-icon-button pegawai_btn"
-              @click="showDetailPegawai"
+              @click="showDetailPegawai(pegawai.nip)"
               v-bind:class="{ active_btn_detail: btnC }"
             >
               <md-icon>keyboard_arrow_right</md-icon>
@@ -177,25 +177,25 @@ export default {
       this.btnC =false
     },
     showDetailPegawai: function ($nip) {
-      this.$refs.child.start();
+      //this.$refs.child.start();
       this.clearBtnState()
       this.btnC = true
       this.$refs.child.detail_pegawai($nip);
-      setTimeout(() => this.$refs.child.finish(), 800) 
+      //setTimeout(() => this.$refs.child.finish(), 500) 
     },
     showDetailPejabatPenilai: function () {
-      this.$refs.child.start();
+      //this.$refs.child.start();
       this.clearBtnState()
       this.btnB  = true
       this.$refs.child.detail_pejabat_penilai(this.pejabat_penilai.nip);
-      setTimeout(() => this.$refs.child.finish(), 800)
+      //setTimeout(() => this.$refs.child.finish(), 500)
     },
     showDetailAtasanPejabatPenilai: function () {
-      this.$refs.child.start();
+      //this.$refs.child.start();
       this.clearBtnState()
       this.btnA = true
       this.$refs.child.detail_atasan_pejabat_penilai(this.atasan_pejabat_penilai.nip);
-      setTimeout(() => this.$refs.child.finish(), 800)
+      //setTimeout(() => this.$refs.child.finish(), 500)
     },
   },
   mounted() {

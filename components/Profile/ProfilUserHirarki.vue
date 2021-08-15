@@ -61,6 +61,7 @@ export default {
 	  },
 
     detail_pegawai($nip){
+      this.start();
       this.contentHeader = "DETAIL PEGAWAI"
       this.$axios
         .$get("/user/"+$nip)
@@ -70,8 +71,10 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+      setTimeout(() => this.finish(), 800) 
     },
     detail_pejabat_penilai($nip){
+      this.start();
       this.contentHeader = "DETAIL PEJABAT PENILAI"
       this.$axios
          .$get("/user/"+$nip)
@@ -81,8 +84,10 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+      setTimeout(() => this.finish(), 500) 
     },
     detail_atasan_pejabat_penilai($nip){
+      this.start();
       this.contentHeader = "DETAIL ATASAN PEJABAT PENILAI"
       this.$axios
         .$get("/user/"+$nip)
@@ -92,6 +97,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+      setTimeout(() => this.finish(), 500) 
     }
   },
   mounted() {

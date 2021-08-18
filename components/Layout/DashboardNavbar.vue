@@ -17,6 +17,7 @@
         </button>
       </div>
       <!-- <a class="navbar-brand ml-xl-3 ml-5" href="#pare">{{ routeName }}</a> -->
+      <span class="navbar-brand ml-xl-3 ml-5 fa fa-home" @click="goToHome" style="cursor:pointer;"></span>
     </div>
 
     <ul class="navbar-nav" :class="$rtl.isRTL ? 'mr-auto' : 'ml-auto'">
@@ -80,6 +81,9 @@ export default {
     };
   },
   methods: {
+    goToHome(){
+      this.$router.push("/");
+    },
     capitalizeFirstLetter(string) {
       if (!string || typeof string !== 'string') {
         return ''

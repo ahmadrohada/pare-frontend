@@ -17,23 +17,6 @@
                   <i class="tim-icons icon-single-02"></i>
                 </base-button>
               </el-tooltip>
-
-              <!-- <el-tooltip content="Settings" :open-delay="300" placement="top">
-                <base-button type="success" size="sm" icon>
-                  <i class="tim-icons icon-settings"></i>
-                </base-button>
-              </el-tooltip>
-
-              <el-tooltip content="Delete" :open-delay="300" placement="top">
-                <base-button
-                  type="danger"
-                  size="sm"
-                  icon
-                  v-on:click="$emit('handleClick', row)"
-                >
-                  <i class="tim-icons icon-simple-remove"></i>
-                </base-button>
-              </el-tooltip> -->
             </div>
           </template>
         </el-table-column>
@@ -64,10 +47,10 @@ export default {
     handleCurrentChange: function(val) {
       this.$emit("handlePaging", "?page="+val);
     },
-    /* handleSizeChange: function(val) {
+    handleSizeChange: function(val) {
         console.log(`${val} items per page`);
         this.$emit("handleSizeChange", "?length="+val);
-    }, */
+    }, 
   },
 };
 </script>

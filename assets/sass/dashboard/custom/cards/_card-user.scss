@@ -58,6 +58,16 @@
       position: relative;
     }
 
+    .sidemenu-avatar{
+      margin-top:-20px;
+      width: 80px;
+      height: 80px;
+      border: 3px solid lighten(#024737,5%);
+      border-bottom-color: $transparent-bg;
+      background-color: $transparent-bg;
+      position: relative;
+    }
+
     .card-body{
         min-height: 240px;
         

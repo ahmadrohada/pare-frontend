@@ -2,8 +2,8 @@
   <div>
        <sidebar-item 
           :link="{
-            name: $t('sidebar.dashboard'),
-            icon: 'fa fa-columns',
+            name: $t('sidebar.home'),
+            icon: 'fa fa-home',
             path: '/home'
           }"
         >
@@ -14,7 +14,7 @@
           :link="{
             name: $t('sidebar.personalDashboard'),
             icon: 'fa fa-user-cog',
-            path: '/personal/dashboard'
+            path: '/dashboard/personal'
           }"
         >
         </sidebar-item>
@@ -24,7 +24,7 @@
           :link="{
             name: $t('sidebar.adminBkpsdm'),
             icon: 'fa fa-user-shield',
-            path: '/bkpsdm/dashboard'
+            path: '/dashboard/bkpsdm'
           }"
         >
         </sidebar-item>
@@ -33,7 +33,7 @@
           :link="{
             name: $t('sidebar.adminSkpd'),
             icon: 'fa fa-users-cog',
-            path: '/skpd/dashboard'
+            path: '/dashboard/skpd'
           }"
         >
         </sidebar-item>

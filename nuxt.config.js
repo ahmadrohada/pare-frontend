@@ -23,13 +23,13 @@ export default {
     }
   },
   router: {
-    linkExactActiveClass: 'active'
+    //linkExactActiveClass: 'active'
   },
   /*
   ** Customize the progress-bar color
   */
   //loading: { color: '#fff' },
-  loading: '~/components/Loader/PareLoader.vue',
+  //loading: '~/components/Loader/PareLoader.vue',
   
   /*
    ** Global CSS

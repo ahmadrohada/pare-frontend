@@ -1,10 +1,8 @@
 <template>
   <card style="min-height:480px;">
-    <div class="loading-overlay" v-if="loading" :value="overlay">
-      <img src="~/static/img/loaders/loader.gif" style="height:80px" alt="">
-    </div>
+    <pare-loader ref="loader"></pare-loader>
     <template slot="header" class="d-inline">
-      <h4 class="title d-inline">Pegawai</h4>
+      <h4 class="title d-inline">USER PARE</h4>
       <p class="card-category d-inline">BKPSDM</p>
     </template>
     <div class="table-full-width table-responsive">
@@ -25,18 +23,17 @@
 <script>
 
 import TabelPegawai from "~/components/DataTables/TabelPegawai.vue";
-
+import PareLoader from '~/components/Loader/PareLoader.vue';
 
 export default {
   layout: "bkpsdmLayout",
   middleware: "auth",
    components: {
-    TabelPegawai
+    TabelPegawai,
+    PareLoader
   },
   data() {
     return {
-      loading: false,
-	    overlay: false,
       data: [],
       total: 0,
       currentPage: 0,
@@ -45,27 +42,18 @@ export default {
     };
   },
   methods: {
-    start() {
-      this.loading = true
-      this.overlay = true
-    },
-    finish() {
-      this.loading = false
-      this.overlay = false
-	  },
-    
 
     viewPegawai: function(data) {
       //alert(data.id);
       this.$router.push("/user/"+data.nip);
     },
     paging: function(params) {
-      this.start()
+      this.$refs.loader.start() 
       this.$axios
         .$get("/user" + params)
         .then((resp) => {
           this.data = resp.data;
-          setTimeout(() => this.finish(), 800)
+          setTimeout(() => this.$refs.loader.finish(), 700)
           this.currentPage = resp.pagination['current_page'];
         })
         .catch((err) => {
@@ -74,14 +62,15 @@ export default {
     },
   },
   mounted() {
-    this.start() 
+    this.$refs.loader.start() 
+    
     this.$axios
       .$get("/user")
       .then((resp) => {
         this.data = resp.data;
         this.total = resp.pagination['total'];
         this.currentPage = resp.pagination['current_page'];
-        setTimeout(() => this.finish(), 1200)
+        setTimeout(() => this.$refs.loader.finish(), 700)
 
 
       })

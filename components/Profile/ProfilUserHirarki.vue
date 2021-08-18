@@ -71,7 +71,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      setTimeout(() => this.finish(), 800) 
+      setTimeout(() => this.finish(), 500) 
     },
     detail_pejabat_penilai($nip){
       this.start();

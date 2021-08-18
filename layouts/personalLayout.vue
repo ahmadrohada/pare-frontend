@@ -7,7 +7,11 @@
       :short-title="$t('sidebar.shortTitle')"
       :title="$t('sidebar.title')"
     >
-    <bkpsdm-menu></bkpsdm-menu>
+    <personal-menu 
+          :nama_lengkap="namaLengkap"
+          :photo_url="photoUrl"
+          :nip_pegawai="nipPegawai"
+          ></personal-menu>
     </side-bar>
     
     <div class="main-panel" :data="sidebarBackground">
@@ -51,8 +55,9 @@
   import ContentFooter from '@/components/Layout/ContentFooter.vue';
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
-  import BkpsdmMenu from '~/components/Menu/BkpsdmMenu.vue';
+  import PersonalMenu from '~/components/Menu/PersonalMenu.vue';
 
+  import { mapGetters } from 'vuex'
 
   export default {
     
@@ -62,7 +67,7 @@
       DashboardContent,
       SlideYDownTransition,
       ZoomCenterTransition,
-      BkpsdmMenu,
+      PersonalMenu,
     },
     data() {
       return {
@@ -74,7 +79,12 @@
     computed: {
       isFullScreenRoute() {
         return this.$route.path === '/maps/full-screen'
-      }
+      },
+      ...mapGetters({
+        photoUrl: 'photo',
+        namaLengkap:'nama_lengkap',
+        nipPegawai:'nip',
+      })
     },
     methods: {
       toggleSidebar() {
@@ -137,4 +147,13 @@
     animation-name: zoomOut95;
   }
 
+  .swal2-popup {
+    width: 35em !important;
+    padding: 1.1em !important;
+    font-size: 0.8rem !important;
+    max-width: 80% !important;
+  }
+
+  
+  
 </style>

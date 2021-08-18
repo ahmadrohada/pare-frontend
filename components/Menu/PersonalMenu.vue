@@ -9,13 +9,13 @@
         />
         <img
           class="sidemenu-avatar"
-          src="~/static/img/icons/logo_bkpsdm.png"
+          :src="photo_url"
           alt="..."
         />
         <div>
-          <h4 style="font-size: 13px; color: rgb(252, 252, 252) !important;">BKPSDM KARAWANG</h4>
+          <h4 style="font-size: 13px; color: rgb(252, 252, 252) !important;">{{nama_lengkap}}</h4>
           <h5 style="font-size: 10px; margin-top: -13px; color: rgb(252, 252, 252) !important;">
-            Administrator
+            NIP. {{nip_pegawai}}
           </h5>
         </div>
       </div>
@@ -25,25 +25,14 @@
       background-color="transparent"
       text-color="#fff"
       active-text-color="#ffd04b"
-      :router="true" 
-      :default-active="activeLink"
     >
-      <el-menu-item 
-        index="/bkpsdm"
-        :route="{path: '/bkpsdm'}"
-       >
-       
-        <i class="el-icon-data-board"></i>
-        <span>Dashboard</span>
-      </el-menu-item>
-      <el-menu-item 
-        index="/bkpsdm/user"
-        :route="{path: '/bkpsdm/user'}"
-       >
-       
-        <i class="el-icon-user"></i>
-        <span>User</span>
-      </el-menu-item>
+      <el-submenu index="1" disabled>
+        <template slot="title"
+          ><i class="el-icon-document-copy"></i>SKP</template
+        >
+          <el-menu-item index="1-1">Tahunan</el-menu-item>
+          <el-menu-item index="1-2">Bulanan</el-menu-item>
+      </el-submenu>
       <el-submenu index="2" disabled>
         <template slot="title"
           ><i class="el-icon-notebook-2"></i>Capaian</template
@@ -68,19 +57,13 @@ export default {
   name: "PersonalMenu",
   data() {
     return {
-      activeLink: null,
     };
   },
   methods: {
     
   },
-  watch: {
-    $route (to, from) {
-      this.activeLink = to.path;
-    }
-  },
   mounted() {
-    this.activeLink = this.$route.path;
+
   },
 };
 </script>
@@ -97,7 +80,6 @@ export default {
   .el-menu-item, .el-submenu__title {
     height: 40px !important;
     line-height: 40px !important;
-    background-color: transparent !important;
   }
 
   .bg_photo{

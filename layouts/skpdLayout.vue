@@ -7,32 +7,22 @@
       :short-title="$t('sidebar.shortTitle')"
       :title="$t('sidebar.title')"
     >
-       <card
-        class="card-transparan card-user"
-      >
-      <div class="author">
-      <a href="javascript:void(0)">
-        <img class="avatar" src="~/static/img/logo-sim-asn.png" alt="..." />
-      </a>
-        <div class="text-center mb-3 mt-3 profile">
-        <h4>SKPD</h4>
-        <h5>25y98698326w25698</h5>
-      </div>
-    </div>
-    </card>
-      
+    <skpd-menu 
+          :user="user"
+          :photo_url="photoUrl"
+          :nip_pegawai="nipPegawai"
+          ></skpd-menu>
     </side-bar>
     
     <div class="main-panel" :data="sidebarBackground">
       <dashboard-navbar></dashboard-navbar>
       <router-view name="header"></router-view>
-
       <div
         :class="{ content: !isFullScreenRoute }"
         @click="toggleSidebar"
       >
+        
         <zoom-center-transition :duration="300" mode="out-in">
-          <!-- your content here -->
           <nuxt></nuxt>
         </zoom-center-transition>
       </div>
@@ -65,7 +55,9 @@
   import ContentFooter from '@/components/Layout/ContentFooter.vue';
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
-  import PersonalMenu from '~/components/Menu/PersonalMenu.vue';
+  import SkpdMenu from '~/components/Menu/SkpdMenu.vue';
+
+  import { mapGetters } from 'vuex'
 
   export default {
     
@@ -75,17 +67,24 @@
       DashboardContent,
       SlideYDownTransition,
       ZoomCenterTransition,
-      PersonalMenu,
+      SkpdMenu,
     },
     data() {
       return {
         sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
+        laoding:true,
+        overlay:true,
       };
     },
     computed: {
       isFullScreenRoute() {
         return this.$route.path === '/maps/full-screen'
-      }
+      },
+      ...mapGetters({
+        photoUrl: 'photo',
+        user:'user',
+        nipPegawai:'nip',
+      })
     },
     methods: {
       toggleSidebar() {
@@ -155,10 +154,6 @@
     max-width: 80% !important;
   }
 
- /*  .card-transparan{
-    background: transparent !important;
-  }
-  .white-content h4,.white-content h5{
-    color: rgb(252, 252, 252) !important;
-  } */
+  
+  
 </style>

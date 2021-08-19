@@ -1,10 +1,9 @@
 <template>
   <card class="font-weight-300">
-    <div class="loading-overlay" v-if="loading" :value="overlay">
-      <img src="~/static/img/loaders/loader.gif" style="height:80px" alt="">
-    </div>
-
-    <h4 class="card-title">DETAIL USER</h4>
+    <template slot="header" class="d-inline">
+      <h4 class="title d-inline">DETAIL</h4>
+      <p class="card-category d-inline">USER</p>
+    </template>
         <p class="card-text"><i class="fa fa-user"></i> NAMA LENGKAP</p>
         <p class="text-muted">{{ user.nama_lengkap }}</p>
         <hr>
@@ -31,19 +30,9 @@ export default {
   props: ["user"],
    data() {
     return {
-      loading: false,
-	    overlay: false,
     };
   },
   methods: {
-    start() {
-      this.loading = true
-      this.overlay = true
-    },
-    finish() {
-      this.loading = false
-      this.overlay = false
-	  },
   },
   mounted() {
     

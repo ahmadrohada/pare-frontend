@@ -27,7 +27,7 @@
       }"
     >
     </sidebar-item>
-    <!-- <sidebar-item
+    <sidebar-item
       v-if="isAdminSkpd"
       :link="{
         name: $t('sidebar.adminSkpd'),
@@ -36,7 +36,7 @@
       }"
       
     >
-    </sidebar-item> -->
+    </sidebar-item>
    
   </div>
 </template>

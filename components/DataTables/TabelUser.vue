@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>
-      <el-table :data="data">
-        <el-table-column min-width="150" prop="username" label="Name"></el-table-column>
+      <el-table :data="tableData">
+        <el-table-column min-width="150" prop="nama_lengkap" label="Name"></el-table-column>
         <el-table-column min-width="200" prop="nip" label="NIP"></el-table-column>
         <el-table-column min-width="150" header-align="right" label="Actions">
           <template slot-scope="{ row }">
@@ -12,7 +12,7 @@
                   type="info"
                   size="sm"
                   icon
-                  v-on:click="$emit('viewPegawai', row)"
+                  v-on:click="$emit('viewUser', row)"
                 >
                   <i class="tim-icons icon-single-02"></i>
                 </base-button>
@@ -37,11 +37,16 @@
 <script>
 import { Table, TableColumn, Pagination } from "element-ui";
 export default {
-  props: ["data", "currentPage", "total", "layout"],
+  props: ["tableData", "currentPage", "total", "layout"],
   components: {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
     [Pagination.name]: Pagination,
+  },
+  data() {
+      return {
+        search: '',
+      }
   },
   methods: {
     handleCurrentChange: function(val) {

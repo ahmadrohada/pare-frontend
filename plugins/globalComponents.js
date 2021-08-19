@@ -12,7 +12,6 @@ import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
-
 import { Input, InputNumber, Tooltip, Popover } from 'element-ui';
 import {Table, TableColumn } from 'element-ui'
 import {Aside,  Menu,Submenu,MenuItem,MenuItemGroup} from 'element-ui'
@@ -36,6 +35,7 @@ Vue.component(Modal.name, Modal)
 Vue.component(Input.name, Input);
 Vue.component(InputNumber.name, InputNumber);
 
+
 Vue.use(Tooltip);
 Vue.use(Popover);
 Vue.use(VueSweetalert2);
@@ -51,6 +51,7 @@ Vue.use(MenuItem)
 Vue.use(MenuItemGroup)
 Vue.use(Avatar)
 Vue.use(Progress)
+Vue.use(Input)
 
 
 

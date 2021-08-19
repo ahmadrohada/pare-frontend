@@ -1,6 +1,6 @@
 <template>
   <div>
-    <card class="card-user" style="height: 150px !important; background: transparent !important;">
+    <card class="card-user" style="margin-top:10px !important;height: 150px !important; background: transparent !important;">
       <div class="author">
          <img 
           src="~/static/img/bg_profile.png"
@@ -65,7 +65,7 @@
 <script>
 export default {
   props: ["nama_lengkap", "photo_url","nip_pegawai" ],
-  name: "PersonalMenu",
+  name: "bkpsdmMenu",
   data() {
     return {
       activeLink: null,

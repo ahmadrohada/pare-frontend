@@ -2,8 +2,8 @@
   <card style="min-height:480px;">
     <pare-loader ref="loader"></pare-loader>
     <template slot="header" class="d-inline">
-      <h4 class="title d-inline">USER PARE</h4>
-      <p class="card-category d-inline">BKPSDM</p>
+      <h4 class="title d-inline">USER</h4>
+      <p class="card-category d-inline">NAMA SKPD</p>
     </template>
     <div class="table-full-width table-responsive">
       <tabel-user
@@ -25,7 +25,7 @@ import TabelUser from "~/components/DataTables/TabelUser.vue";
 import PareLoader from "~/components/Loader/PareLoader.vue";
 
 export default {
-  layout: "bkpsdmLayout",
+  layout: "skpdLayout",
   middleware: "auth",
    components: {
     TabelUser,
@@ -50,7 +50,7 @@ export default {
     paging: function(params) {
       this.$refs.loader.start() 
       this.$axios
-        .$get("/user" + params)
+        .$get("/user" + params+"&id_skpd=28")
         .then((resp) => {
           this.data = resp.data;
           setTimeout(() => this.$refs.loader.finish(), 700)
@@ -65,7 +65,7 @@ export default {
     this.$refs.loader.start() 
     
     this.$axios
-      .$get("/user")
+      .$get("/user?id_skpd=28")
       .then((resp) => {
         this.data = resp.data;
         this.total = resp.pagination['total'];

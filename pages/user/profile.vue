@@ -1,13 +1,14 @@
 <template>
   <div class="row" v-if = "user.data">
+    
     <div class="col-md-4 content">
       <card-user 
         :user="user.data"
       > 
-        
       </card-user>
     </div>
     <div class="col-md-8 content">
+      <pare-loader ref="loader"></pare-loader>
       <profil-user 
         :user="user.data"
       >
@@ -46,6 +47,9 @@ export default {
       const user =  await $axios.$get("/me")
       return { user }
 
+  },
+  mounted(){
+    this.$refs.loader.start()
   }
 };
 </script>

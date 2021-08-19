@@ -9,13 +9,13 @@
         />
         <img
           class="sidemenu-avatar"
-          :src="photo_url"
+          src="~/static/img/icons/logo_bkpsdm.png"
           alt="..."
         />
         <div>
-          <h4 style="font-size: 13px; color: rgb(252, 252, 252) !important;">{{nama_lengkap}}</h4>
+          <h4 style="font-size: 13px; color: rgb(252, 252, 252) !important;">{{user.skpd.singkatan}}</h4>
           <h5 style="font-size: 10px; margin-top: -13px; color: rgb(252, 252, 252) !important;">
-            NIP. {{nip_pegawai}}
+            Admin
           </h5>
         </div>
       </div>
@@ -25,14 +25,25 @@
       background-color="transparent"
       text-color="#fff"
       active-text-color="#ffd04b"
+      :router="true" 
+      :default-active="activeLink"
     >
-      <el-submenu index="1" disabled>
-        <template slot="title"
-          ><i class="el-icon-document-copy"></i>SKP</template
-        >
-          <el-menu-item index="1-1">Tahunan</el-menu-item>
-          <el-menu-item index="1-2">Bulanan</el-menu-item>
-      </el-submenu>
+      <el-menu-item 
+        index="/skpd"
+        :route="{path: '/skpd'}"
+       >
+       
+        <i class="el-icon-data-board"></i>
+        <span>Dashboard</span>
+      </el-menu-item>
+      <el-menu-item 
+        index="/skpd/user"
+        :route="{path: '/skpd/user'}"
+       >
+       
+        <i class="el-icon-user"></i>
+        <span>User</span>
+      </el-menu-item>
       <el-submenu index="2" disabled>
         <template slot="title"
           ><i class="el-icon-notebook-2"></i>Capaian</template
@@ -53,17 +64,23 @@
 
 <script>
 export default {
-  props: ["nama_lengkap", "photo_url","nip_pegawai" ],
-  name: "PersonalMenu",
+  props: ["user", "photo_url","nip_pegawai" ],
+  name: "skpdMenu",
   data() {
     return {
+      activeLink: null,
     };
   },
   methods: {
     
   },
+  watch: {
+    $route (to, from) {
+      this.activeLink = to.path;
+    }
+  },
   mounted() {
-
+    this.activeLink = this.$route.path;
   },
 };
 </script>
@@ -80,6 +97,7 @@ export default {
   .el-menu-item, .el-submenu__title {
     height: 40px !important;
     line-height: 40px !important;
+    background-color: transparent !important;
   }
 
   .bg_photo{

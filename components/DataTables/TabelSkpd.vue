@@ -2,8 +2,15 @@
   <div>
     <div>
       <el-table :data="tableData">
-        <el-table-column min-width="150" prop="nama_lengkap" label="NAMA USER"></el-table-column>
-        <el-table-column min-width="200" prop="nip" label="NIP"></el-table-column>
+        <el-table-column min-width="160" label="NAMA SKPD">
+          <template slot-scope="props">
+            <div style="padding:0px !important;">
+              <h4 class="card-title">{{props.row.singkatan}}</h4>
+              <h6 class="card-subtitle mb-2 text-muted">{{props.row.nama}}</h6>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="80" prop="total_user" label="TOTAL USER"></el-table-column>
         <el-table-column min-width="150" header-align="right" label="Actions">
           <template slot-scope="{ row }">
             <div class="text-right">
@@ -12,9 +19,9 @@
                   type="info"
                   size="sm"
                   icon
-                  v-on:click="$emit('viewUser', row)"
+                  v-on:click="$emit('viewSkpd', row)"
                 >
-                  <i class="tim-icons icon-single-02"></i>
+                  <i class="el-icon-right"></i>
                 </base-button>
               </el-tooltip>
             </div>
@@ -29,7 +36,7 @@
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
         :page-sizes="[10, 20, 50, 100]"
-        :page-size="limit"
+        :page-size="10"
       />
     </div>
   </div>
@@ -59,3 +66,7 @@ export default {
   },
 };
 </script>
+<style>
+
+ 
+</style>

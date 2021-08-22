@@ -11,12 +11,12 @@
         <p class="text-muted">{{ user.nip }}</p>
         <hr>
 
-        <p class="card-text"><i class="fa fa-id-card"></i> JABATAN ( {{ user.jabatan[0].referensi.jenis}} )</p>
-        <p class="text-muted">{{ user.jabatan[0].nama}}</p>
+        <p class="card-text"><i class="fa fa-id-card"></i> JABATAN ( {{ (user.jabatan)?user.jabatan[0].referensi.jenis:'-'}} )</p>
+        <p class="text-muted">{{ (user.jabatan)?user.jabatan[0].nama:'-'}}</p>
         <hr>
 
         <p class="card-text"><i class="fa fa-university"></i> SKPD</p>
-        <p class="text-muted">{{ user.skpd.nama}}</p>
+        <p class="text-muted">{{ (user.skpd)?user.skpd.nama:'-'}}</p>
         <hr>
 
         <p class="card-text"><i class="fa fa-tags"></i> Unit Kerja</p>
@@ -24,7 +24,7 @@
         <hr /> 
   </card>
 </template>
-<script>
+<script> 
 
 export default {
   props: ["user"],

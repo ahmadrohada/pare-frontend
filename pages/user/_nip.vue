@@ -42,7 +42,7 @@ export default {
     ProfilUser,
     CardUser
   },
-  async asyncData({ params, redirect ,$axios,$refs}) {
+  async asyncData({ params ,$axios }) {
       const user =  await $axios.$get("/user/"+params.nip)
       return { user }
 

@@ -109,7 +109,7 @@
     },
     watch: {
       '$route.path': function() {
-        //console.log(this.$route.fullPath); // path is /users
+        console.log(this.$route); 
       }
     },
     mounted() {

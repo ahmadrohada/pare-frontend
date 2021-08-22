@@ -37,6 +37,14 @@
         <span>Dashboard</span>
       </el-menu-item>
       <el-menu-item 
+        index="/bkpsdm/skpd"
+        :route="{path: '/bkpsdm/skpd'}"
+       >
+       
+        <i class="el-icon-data-board"></i>
+        <span>SKPD</span>
+      </el-menu-item>
+      <el-menu-item 
         index="/bkpsdm/user"
         :route="{path: '/bkpsdm/user'}"
        >

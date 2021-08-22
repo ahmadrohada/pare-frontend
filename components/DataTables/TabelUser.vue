@@ -30,6 +30,7 @@
         @size-change="handleSizeChange"
         :page-sizes="[10, 20, 50, 100]"
         :page-size="limit"
+        :pager-count="4"
       />
     </div>
   </div>

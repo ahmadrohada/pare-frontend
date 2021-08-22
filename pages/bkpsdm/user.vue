@@ -38,15 +38,14 @@ export default {
       total: 0,
       limit: 10,
       page: 1,
-      layout: "prev, next,jumper",
+      layout: "total, prev, pager, next",
     };
   },
   methods: {
 
     viewUser: function(data) {
       this.$refs.loader.start()
-      //this.$router.push("/user/"+data.nip);
-      this.$axios.$get("/user/"+data.nip)
+      this.$router.push("/user/"+data.nip);
       setTimeout(() => this.$refs.loader.finish(), 700)
 
     },
@@ -56,15 +55,6 @@ export default {
         .$get("/user" + params)
         .then((resp) => {
           this.data = resp.data;
-
-          //sementara
-          resp.data.forEach(doc => {
-            this.$axios.$get("/user/"+doc.nip)
-          })    
-
-          //--- //
-          
-
           setTimeout(() => this.$refs.loader.finish(), 700)
           this.page = resp.pagination['current_page'];
         })

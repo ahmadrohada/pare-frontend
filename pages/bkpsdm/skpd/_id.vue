@@ -50,27 +50,57 @@ export default {
     return {
       activeName: 'first',
 
+
       data: [],
       total: 0,
       limit: 10,
       page: 1,
-      layout: "prev, next",
+      layout: "total, prev, pager, next",
 
     };
   },
   methods: {
     handleClick(tab, event) {
       //console.log(tab, event);
-    }
+    },
+    paging: function(params) {
+      this.$refs.loader.start() 
+      this.$axios
+        .$get("/user" + params +"&id_skpd="+this.skpd.id)
+        .then((resp) => {
+          this.data = resp.data;
+          setTimeout(() => this.$refs.loader.finish(), 700)
+          this.page = resp.pagination['current_page'];
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     
   },
   async asyncData({ params ,$axios }) {
+
       const skpd =  await $axios.$get("/skpd/"+params.id)
       return { skpd }
 
   },
   mounted() {
     this.$refs.loader.start() 
+    this.$axios
+      .$get("/user?id_skpd="+this.skpd.id)
+      .then((resp) => {
+        this.data = resp.data;
+        this.total = resp.pagination['total'];
+        this.page = resp.pagination['page'];
+        this.limit = parseInt(resp.pagination['limit']);
+        setTimeout(() => this.$refs.loader.finish(), 700)
+
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     setTimeout(() => this.$refs.loader.finish(), 1200)
     
   },

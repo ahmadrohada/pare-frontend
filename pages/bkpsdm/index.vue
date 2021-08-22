@@ -6,7 +6,7 @@
       <p class="card-category d-inline">BKPSDM</p>
     </template>
     
-    Progress Sikronisasi Data User PARE - SIMPEG
+    Progress Sinkronisasi Data User PARE - SIMPEG
     <el-progress :text-inside="true" :stroke-width="24" :percentage="persentase" status="success"></el-progress>
   </card>
 </template>

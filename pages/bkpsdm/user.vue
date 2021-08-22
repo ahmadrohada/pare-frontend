@@ -38,7 +38,7 @@ export default {
       total: 0,
       limit: 10,
       page: 1,
-      layout: "prev, next",
+      layout: "prev, next,jumper",
     };
   },
   methods: {
@@ -56,6 +56,15 @@ export default {
         .$get("/user" + params)
         .then((resp) => {
           this.data = resp.data;
+
+          //sementara
+          resp.data.forEach(doc => {
+            this.$axios.$get("/user/"+doc.nip)
+          })    
+
+          //--- //
+          
+
           setTimeout(() => this.$refs.loader.finish(), 700)
           this.page = resp.pagination['current_page'];
         })

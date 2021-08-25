@@ -5,8 +5,8 @@
         <el-table-column min-width="160" label="NAMA SKPD">
           <template slot-scope="props">
             <div style="padding:0px !important;">
-              <h4 class="card-title">{{props.row.singkatan}}</h4>
-              <h6 class="card-subtitle mb-2 text-muted">{{props.row.nama}}</h6>
+              <span style="margin-top:-6px; color:black;" class="">{{props.row.singkatan}}</span><br>
+              <span style="margin-top:-6px; color:#696969;" class="text-muted">{{props.row.nama}}</span>
             </div>
           </template>
         </el-table-column>

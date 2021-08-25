@@ -3,7 +3,7 @@
     <pare-loader ref="loader"></pare-loader>
     <template slot="header" class="d-inline">
       <h4 class="title d-inline">USER PARE</h4>
-      <p class="card-category d-inline">BKPSDM</p>
+      <p class="card-category d-inline"></p>
     </template>
     <div class="table-full-width table-responsive">
       <tabel-user
@@ -52,7 +52,7 @@ export default {
     paging: function(params) {
       this.$refs.loader.start() 
       this.$axios
-        .$get("/user" + params)
+        .$get("/user" + params+"&id_skpd="+this.id_skpd)
         .then((resp) => {
           this.data = resp.data;
           setTimeout(() => this.$refs.loader.finish(), 700)
@@ -63,11 +63,20 @@ export default {
         });
     },
   },
+  async asyncData({ params ,$axios }) {
+      //const user =  await $axios.$get("/user/"+params.nip)
+      //return { user }
+      const id_skpd = params.id
+      return { id_skpd }
+      //console.log(params.id)
+
+  },
   mounted() {
+   
     this.$refs.loader.start() 
     
     this.$axios
-      .$get("/user")
+      .$get("/user?id_skpd="+this.id_skpd)
       .then((resp) => {
         this.data = resp.data;
         this.total = resp.pagination['total'];

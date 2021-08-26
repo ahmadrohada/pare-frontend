@@ -74,6 +74,7 @@ export default {
   mounted() {
    
     this.$refs.loader.start() 
+
     
     this.$axios
       .$get("/user?id_skpd="+this.id_skpd)

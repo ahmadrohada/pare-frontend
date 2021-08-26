@@ -16,7 +16,7 @@
 import PareLoader from '~/components/Loader/PareLoader.vue';
 
 export default {
-  name: "tes",
+  name: "dashboard",
   middleware: ['auth'],
   layout: "bkpsdmSkpdLayout",
   components:{

@@ -5,13 +5,12 @@
       <img 
           src="~/static/img/dashboard_bg.jpg"
           alt="..."
-          style="width:100%; height:125px; border-radius:4px 4px 0px 0px;"
+          style="width:100%; height:135px; border-radius:4px 4px 0px 0px;"
         />
         <h4 style="font-size: 13px; color: rgb(252, 252, 252) !important; margin-top:-40px; margin-left:20px;">
  
         </h4>
     </div>
-          
     <el-menu
       background-color="#fff"
       active-text-color="#069c8f"
@@ -20,28 +19,28 @@
       mode="horizontal"
     >
        <el-menu-item 
-        index="/dashboard"
+        :index="index_1"
         :route="{path: `/bkpsdm/skpd/${id_skpd}/dashboard` }"
        >
         <i class="el-icon-data-board"></i>
         <span>Dashboard</span>
       </el-menu-item>
       <el-menu-item 
-        index="/bkpsdm/skpd/:id_skpd/user"
+        :index="index_2"
         :route="{path: `/bkpsdm/skpd/${id_skpd}/user`}"
        >
        
         <i class="el-icon-user"></i>
         <span>User</span>
       </el-menu-item>
-      <el-menu-item index="3" disabled>SKP</el-menu-item>
+      <el-menu-item :index="index_3" disabled>SKP</el-menu-item>
     </el-menu>
   </div>
 </template>
 
 <script>
 export default {
- 
+  props: ["index_1", "index_2", "index_3"],
   name: "bkpsdmSubMenu",
   data() {
     return {
@@ -56,9 +55,8 @@ export default {
     },
   },
   mounted() {
-    this.activeLink = this.$route.path;
-    console.log(this.activeLink)
     this.id_skpd = this.$route.params.id;
+    this.activeLink = this.$route.fullPath;
   },
 };
 </script>

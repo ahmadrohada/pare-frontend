@@ -18,8 +18,11 @@
       >
       {{skpd}}
         
-       <bkpsdm-sub-menu 
-        ></bkpsdm-sub-menu>
+       <bkpsdm-sub-menu
+          :index_1 = "index_1"
+          :index_2 = "index_2"
+          :index_3 = "index_3"
+          ></bkpsdm-sub-menu>
 
 
         <zoom-center-transition :duration="300" mode="out-in">
@@ -73,14 +76,12 @@
     data() {
       return {
         sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
-        //laoding:true,
-        //overlay:true,
       };
     },
     computed: {
       isFullScreenRoute() {
         return this.$route.path === '/maps/full-screen'
-      }
+      },
     },
     methods: {
       toggleSidebar() {
@@ -103,13 +104,18 @@
         }
       }
     },
-    watch: {
-      '$route.path': function() {
-        //console.log(this.$route.fullPath); // path is /users
-      }
+    async fetch() {
+      /* this.mountains = await fetch(
+        'https://api.nuxtjs.dev/mountains'
+      ).then(res => res.json()) */
+      //console.log(this.$route.params.id);
+      this.index_2 = "/bkpsdm/skpd/"+this.$route.params.id+"/user";
+      this.index_3 = "/bkpsdm/skpd/"+this.$route.params.id+"/skp";
+      this.index_1 = "/bkpsdm/skpd/"+this.$route.params.id+"/dashboard";
     },
     mounted() {
       this.initScrollbar();
+      
       
     }
   };

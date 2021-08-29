@@ -10,6 +10,7 @@
         :tableData="data"
         :total="total"
         :limit="limit"
+        v-on:addToAdmin="addToAdmin"
         v-on:viewUser="viewUser"
         v-on:handlePaging="paging"
         :current-page.sync="page"
@@ -48,6 +49,11 @@ export default {
       this.$router.push("/user/"+data.nip);
       setTimeout(() => this.$refs.loader.finish(), 700)
 
+    },
+    addToAdmin: function(data) {
+      /* this.$refs.loader.start()
+      console.log(data.is_admin)
+      setTimeout(() => this.$refs.loader.finish(), 700) */
     },
     paging: function(params) {
       this.$refs.loader.start() 

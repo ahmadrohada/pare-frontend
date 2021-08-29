@@ -9,8 +9,8 @@
     >
     <skpd-menu 
           :user="user"
-          :photo_url="photoUrl"
           :nip_pegawai="nipPegawai"
+          :id_skpd="id_skpd"
           ></skpd-menu>
     </side-bar>
     
@@ -73,7 +73,7 @@
       return {
         sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
         laoding:true,
-        overlay:true,
+        overlay:true
       };
     },
     computed: {
@@ -84,6 +84,7 @@
         photoUrl: 'photo',
         user:'user',
         nipPegawai:'nip',
+        id_skpd:'id_skpd',
       })
     },
     methods: {

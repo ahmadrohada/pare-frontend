@@ -9,13 +9,13 @@
         />
         <img
           class="sidemenu-avatar"
-          src="~/static/img/icons/logo_bkpsdm.png"
+          :src="logo"
           alt="..."
         />
         <div>
           <h4 style="font-size: 13px; color: rgb(252, 252, 252) !important;">{{user.skpd.singkatan}}</h4>
           <h5 style="font-size: 10px; margin-top: -13px; color: rgb(252, 252, 252) !important;">
-            Admin
+            Admin 
           </h5>
         </div>
       </div>
@@ -64,7 +64,7 @@
 
 <script>
 export default {
-  props: ["user", "photo_url","nip_pegawai" ],
+  props: ["user","nip_pegawai","id_skpd" ],
   name: "skpdMenu",
   data() {
     return {
@@ -80,7 +80,15 @@ export default {
     }
   },
   mounted() {
-    this.activeLink = this.$route.path;
+    this.$axios
+        .$get("/skpd/"+this.id_skpd)
+        .then((resp) => {
+          this.logo = resp.logo;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    this.activeLink = this.$route.path; 
   },
 };
 </script>

@@ -3,7 +3,7 @@
     <pare-loader ref="loader"></pare-loader>
     <template slot="header" class="d-inline">
       <h4 class="title d-inline">USER</h4>
-      <p class="card-category d-inline">NAMA SKPD</p>
+      <p class="card-category d-inline">{{user.skpd.singkatan}}</p>
     </template>
     <div class="table-full-width table-responsive">
       <tabel-user
@@ -23,6 +23,7 @@
 
 import TabelUser from "~/components/DataTables/TabelUser.vue";
 import PareLoader from "~/components/Loader/PareLoader.vue";
+import { mapGetters } from 'vuex'
 
 export default {
   layout: "skpdLayout",
@@ -40,17 +41,24 @@ export default {
       layout: "prev, next",
     };
   },
+  computed: {
+      
+      ...mapGetters({
+        id_skpd:'id_skpd',
+        user:'user',
+      })
+    },
   methods: {
 
     viewUser: function(data) {
       //alert(data.id);
       this.$refs.loader.start()
-      this.$router.push("/user/"+data.nip);
+      this.$router.push("/skpd/user/"+data.nip);
     },
     paging: function(params) {
       this.$refs.loader.start() 
       this.$axios
-        .$get("/user" + params+"&id_skpd=28")
+        .$get("/user" + params+"&id_skpd="+this.id_skpd)
         .then((resp) => {
           this.data = resp.data;
           setTimeout(() => this.$refs.loader.finish(), 700)
@@ -65,7 +73,7 @@ export default {
     this.$refs.loader.start() 
     
     this.$axios
-      .$get("/user?id_skpd=28")
+      .$get("/user?id_skpd="+this.id_skpd)
       .then((resp) => {
         this.data = resp.data;
         this.total = resp.pagination['total'];

@@ -1,10 +1,36 @@
 <template>
   <div>
     <div>
-      <el-table :data="tableData">
-        <el-table-column min-width="150" prop="nama_lengkap" label="NAMA USER"></el-table-column>
-        <el-table-column min-width="200" prop="nip" label="NIP"></el-table-column>
-        <el-table-column min-width="150" header-align="right" label="Actions">
+      <el-table  
+        :data="tableData"
+        :default-sort = "{prop: 'jabatan_referensi_id', order: 'asc'}"
+        >
+        <el-table-column min-width="160" label="NAMA USER">
+          <template slot-scope="props">
+            <div style="padding:0px !important;">
+              <span style="margin-top:-6px; color:black;" class="">{{props.row.nama_lengkap}}</span><br>
+              <span style="font-size:11px; margin-top:-6px; color:#696969;" class="text-muted">{{props.row.nip}}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="60" prop="jabatan_eselon" label="ESELON"></el-table-column>
+        <el-table-column min-width="250" prop="jabatan" label="JABATAN"></el-table-column>
+        <el-table-column min-width="60" header-align="right" label="Is Admin">
+          <template slot-scope="{ row }">
+            <div class="text-right">
+              <el-tooltip content="admin SKPD" :open-delay="300" placement="top">
+                <el-switch
+                  v-model="row.is_admin"
+                  active-color="#13ce66"
+                  v-on:change="$emit('addToAdmin', row)"
+                  disabled
+                  >
+                </el-switch>
+              </el-tooltip>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="60" header-align="right" label="Actions">
           <template slot-scope="{ row }">
             <div class="text-right">
               <el-tooltip content="detail" :open-delay="300" placement="top">
@@ -57,6 +83,9 @@ export default {
         console.log(`${val} items per page`);
         this.$emit("handleSizeChange", "?limit="+val);
     }, 
+    formatter(row, column) {
+        return row.nip;
+    }
   },
 };
 </script>

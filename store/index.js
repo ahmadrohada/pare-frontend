@@ -11,6 +11,9 @@ export const getters = {
     pegawai(state) {
       return ( state.auth.user ) ? ( state.auth.user ) : null 
     },
+    id_skpd(state) {
+      return ( state.auth.user.skpd ) ? ( state.auth.user.skpd.id ) : null  
+    },
     photo(state) {
       return ( state.auth.user.photo ) ? ( state.auth.user.photo ) : '/img/user.png' 
     },

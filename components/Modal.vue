@@ -12,7 +12,7 @@
       v-show="show"
       tabindex="-1"
       role="dialog"
-      :aria-hidden="!show"
+      :aria-hidden="!show" 
     >
       <div
         class="modal-dialog"

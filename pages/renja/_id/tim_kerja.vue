@@ -1,6 +1,8 @@
 <template>
   <div class="row">
-    <add-tim-kerja ref="addTimeKerja"></add-tim-kerja>
+    <add-tim-kerja ref="addTimKerja"></add-tim-kerja>
+
+   
 
     <div class="col-md-4 content">
       <card style="min-height:340px;">
@@ -219,7 +221,8 @@ export default {
         data.children.push(newChild); */
 
 
-        this.$refs.addTimeKerja.showDialog(data);
+        this.$refs.addTimKerja.showModal(data);
+
     },
 
     remove(node, data) {

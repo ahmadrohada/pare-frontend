@@ -32,7 +32,7 @@ export default {
     
   },
   mounted() {
-    this.$router.push(`/renja/${this.$route.params.id}/kegiatan`);
+    this.$router.push(`/renja/${this.$route.params.id}/tim_kerja`);
     
   },
 };

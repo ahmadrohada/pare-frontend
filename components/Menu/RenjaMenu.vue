@@ -46,6 +46,7 @@ export default {
   data() {
     return {
       activeLink: null,
+      logo:null,
     };
   },
   methods: {
@@ -57,14 +58,14 @@ export default {
     }
   },
   mounted() {
-    this.$axios
+    /* this.$axios
         .$get("/skpd/"+this.id_skpd)
         .then((resp) => {
           this.logo = resp.logo;
         })
         .catch((err) => {
           console.log(err);
-        });
+        }); */
     this.activeLink = this.$route.path; 
   },
 };

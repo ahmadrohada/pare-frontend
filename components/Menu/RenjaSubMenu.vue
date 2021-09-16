@@ -20,34 +20,28 @@
     >
        <el-menu-item 
         :index="index_1"
-        :route="{path: `/renja/${renja_id}/kegiatan` }"
+        :route="{path: `/renja/${renja_id}/tim_kerja` }"
        >
-        <i class="el-icon-data-board"></i>
-        <span>Kegiatan</span>
+        <i class="fa fa-sitemap"></i>
+        
+        <span>Tim Kerja</span>
       </el-menu-item>
       <el-menu-item 
         :index="index_2"
-        :route="{path: `/renja/${renja_id}/tim_kerja`}"
-       >
-       
-        <i class="fa fa-sitemap"></i>
-        <span>Tim Kerja</span>
-      </el-menu-item>
-       <el-menu-item 
-        :index="index_3"
         :route="{path: `/renja/${renja_id}/skp`}"
        >
        
-        <i class="el-icon-eye"></i>
+        <i class="el-icon-data-board"></i>
         <span>SKP</span>
       </el-menu-item>
+       
     </el-menu>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["index_1", "index_2", "index_3"],
+  props: ["index_1", "index_2"],
   name: "bkpsdmSubMenu",
   data() {
     return {

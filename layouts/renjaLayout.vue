@@ -16,12 +16,10 @@
         :class="{ content: !isFullScreenRoute }"
         @click="toggleSidebar"
       >
-      {{skpd}}
         
        <renja-sub-menu
           :index_1 = "index_1"
           :index_2 = "index_2"
-          :index_3 = "index_3"
           ></renja-sub-menu>
 
 
@@ -105,9 +103,8 @@
       }
     },
     async fetch() {
-      this.index_2 = "/renja/"+this.$route.params.id+"/tim_kerja";
-      this.index_3 = "/renja/"+this.$route.params.id+"/skp";
-      this.index_1 = "/renja/"+this.$route.params.id+"/kegiatan";
+      this.index_2 = "/renja/"+this.$route.params.id+"/skp";
+      this.index_1 = "/renja/"+this.$route.params.id+"/tim_kerja";
     },
     mounted() {
       this.initScrollbar();

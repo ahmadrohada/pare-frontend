@@ -174,11 +174,11 @@ export default {
     PareLoader,
     AddTimKerja
   },
-  async asyncData({ params ,$axios }) {
+  /* async asyncData({ params ,$axios }) {
       const renja_id = params.id
       return { renja_id }
 
-  },
+  }, */
   methods: {
     loadNode(node,resolve) {
       
@@ -250,6 +250,7 @@ export default {
   },
   mounted() {
     //this.initData();
+    console.log(this.$route.params.id)
      
   },
 };

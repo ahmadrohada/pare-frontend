@@ -1,44 +1,61 @@
 <template>
-  <div>
-    {{user}}
+  <div class="row">
+    <div class="col-md-4 content">
+      <card-user 
+        :user="user.data"
+      > 
+        
+      </card-user>
+    </div>
+    <div class="col-md-8 content">
+      <profil-user 
+        :user="user.data"
+      >
+        
+      </profil-user>
+      </div>
   </div>
-  
 </template>
 
 
 <script>
+import ProfilUser from '../../components/Profile/ProfilUser.vue';
 import CardUser from '../../components/Profile/CardUser.vue';
+
 
 export default {
   name: 'user',
+  middleware: 'auth',
+  layout:'bkpsdmLayout',
+  components: {
+    ProfilUser,
+    CardUser
+  },
   head() {
     return {
       title: "Profile User",
     };
   },
-  components: {
-    CardUser
-  },
   data() {
     return {
-      user:[],
-      loaded:false
+      user:{
+        data:[]
+      }
+      
     };
   },
   computed: {
-  },
-  mounted() {
 
-    console.log("tes")
-    this.$axios
-        .$get("/user/197805211997111001")
-        .then((resp) => {
-          this.user = resp;
-          this.loaded = true
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  },
+  async asyncData({ params,$axios }) {
+      const nip = params.nip
+      //console.log(nip)
+      const user =  await $axios.$get(`/user/${nip}`)
+      return { user } 
+
+  }, 
+  mounted() {
+    
   },
 };
 </script>

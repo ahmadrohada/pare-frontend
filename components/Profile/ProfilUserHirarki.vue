@@ -1,9 +1,6 @@
 <template>
   <card class="font-weight-300">
-    <div class="loading-overlay" v-if="loading" :value="overlay">
-      <img src="~/static/img/loaders/loader.gif" style="height:80px" alt="">
-    </div>
-
+    <pare-loader ref="loader"></pare-loader>
     <h4 class="card-title">{{contentHeader}}</h4>
         <p class="card-text"><i class="fa fa-user"></i> NAMA LENGKAP</p>
         <p class="text-muted">{{ user.nama_lengkap }}</p>
@@ -26,10 +23,11 @@
   </card>
 </template>
 <script>
+import PareLoader from '~/components/Loader/PareLoader.vue';
 
 export default {
-  components: {
-    
+  components:{
+    PareLoader,
   },
   data() {
     return {
@@ -51,30 +49,22 @@ export default {
     };
   },
   methods: {
-    start() {
-      this.loading = true
-      this.overlay = true
-    },
-    finish() {
-      this.loading = false
-      this.overlay = false
-	  },
-
     detail_pegawai($nip){
-      this.start();
+      this.$refs.loader.start() 
+    
       this.contentHeader = "DETAIL PEGAWAI"
       this.$axios
         .$get("/user/"+$nip)
         .then((response) => {
           this.user = response["data"];
+          setTimeout(() => this.$refs.loader.finish(), 700)
         })
         .catch((err) => {
           console.log(err);
         });
-      setTimeout(() => this.finish(), 500) 
     },
     detail_pejabat_penilai($nip){
-      this.start();
+      this.$refs.loader.start() 
       this.contentHeader = "DETAIL PEJABAT PENILAI"
       this.$axios
          .$get("/user/"+$nip)
@@ -84,10 +74,10 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      setTimeout(() => this.finish(), 500) 
+      setTimeout(() => this.$refs.loader.finish(), 700)
     },
     detail_atasan_pejabat_penilai($nip){
-      this.start();
+      this.$refs.loader.start() 
       this.contentHeader = "DETAIL ATASAN PEJABAT PENILAI"
       this.$axios
         .$get("/user/"+$nip)
@@ -97,7 +87,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      setTimeout(() => this.finish(), 500) 
+      setTimeout(() => this.$refs.loader.finish(), 700)
     }
   },
   mounted() {

@@ -72,22 +72,17 @@
 <script>
 export default {
   props: ["nama_lengkap", "photo_url","nip_pegawai" ],
-  name: "PersonalMenu",
+  name: "PersonalProfileMenu",
   data() {
     return {
-      activeLink: null,
+      activeLink: "/personal/profile",
     };
-  },
-  watch: {
-    $route (to, from) {
-      this.activeLink = to.path;
-    }
   },
   methods: {
     
   },
   mounted() {
-    this.activeLink = this.$route.path; 
+    this.activeLink = "/personal/profile"; 
   },
 };
 </script>

@@ -4,14 +4,12 @@
       <card-user 
         :user="user.data"
       > 
-        
       </card-user>
     </div>
     <div class="col-md-8 content">
       <profil-user 
         :user="user.data"
       >
-        
       </profil-user>
       </div>
   </div>
@@ -19,14 +17,13 @@
 
 
 <script>
-import ProfilUser from '../../components/Profile/ProfilUser.vue';
-import CardUser from '../../components/Profile/CardUser.vue';
-
+import ProfilUser from '@/components/Profile/ProfilUser.vue';
+import CardUser from '@/components/Profile/CardUser.vue';
 
 export default {
-  name: 'user',
-  middleware: 'auth',
-  layout:'bkpsdmLayout',
+  name: "personalProfile",
+  middleware: ['auth'],
+  layout: 'personalProfileLayout',
   components: {
     ProfilUser,
     CardUser
@@ -41,22 +38,21 @@ export default {
       user:{
         data:[]
       }
-      
     };
   },
-  computed: {
+  async asyncData({$axios}) {
+      const nip = '199211222015072002'
+      const user =  await $axios.$get(`/me`)
+      return { user } 
+  },
+  methods: {
+   
     
   },
-  async asyncData({ params,$axios }) {
-      const nip = params.nip
-      //console.log(nip)
-      const user =  await $axios.$get(`/user/${nip}`)
-      return { user } 
-
-  }, 
   mounted() {
-    
+
   },
 };
 </script>
 <style></style>
+

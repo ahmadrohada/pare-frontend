@@ -1,15 +1,5 @@
 <template>
-  <div class="row" v-if="loaded">
-    <div class="col-md-4 content">
-      <card-user 
-        :user="user.data"
-      > 
-        
-      </card-user>
-    </div>
-
-    
-  </div>
+  {{user}}
 </template>
 
 

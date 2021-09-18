@@ -108,8 +108,8 @@
               <img src="~/static/img/not_user.png" class="user_img" />
             </md-card-media>
             <md-card-header-text style="text-align: center; margin-top: 15px">
-              <div class="md-title">Atasan Pejabat Penilai tidak ditemukan</div>
-              <div class="md-subhead">Sinkronisasi dengan SIMPEG</div>
+              <div class="md-title">Detail Pejabat tidak ditemukan</div>
+              <div class="md-subhead"></div>
             </md-card-header-text>
           </md-card-header>
         </md-card>
@@ -174,11 +174,11 @@ export default {
     PareLoader,
     AddTimKerja
   },
-  /* async asyncData({ params ,$axios }) {
+  async asyncData({ params ,$axios }) {
       const renja_id = params.id
       return { renja_id }
 
-  }, */
+  }, 
   methods: {
     loadNode(node,resolve) {
       

@@ -1,5 +1,8 @@
 <template>
-  {{user}}
+  <div>
+    {{user}}
+  </div>
+  
 </template>
 
 

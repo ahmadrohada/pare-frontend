@@ -23,7 +23,7 @@
         <p class="text-muted">{{ (user.unit_kerja)?(user.unit_kerja.nama):'' }}</p>
         <hr /> 
   </card>
-</template>
+</template> 
 <script> 
 
 export default {

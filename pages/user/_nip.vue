@@ -30,6 +30,10 @@ export default {
   head() {
     return {
       title: "Profile User",
+      user:{
+        data:null
+      }
+        
       
     };
   },
@@ -43,9 +47,11 @@ export default {
     ProfilUser,
     CardUser
   },
-  async asyncData({ params ,$axios }) {
-      const user =  await $axios.$get("/user/"+params.nip)
-      return { user }
+  async asyncData({ params,$axios }) {
+      const nip = params.nip
+      //console.log(nip)
+      const user =  await $axios.$get(`/user/${nip}`)
+      return { user } 
 
   }
 };

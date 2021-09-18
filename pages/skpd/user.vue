@@ -53,7 +53,7 @@ export default {
     viewUser: function(data) {
       //alert(data.id);
       this.$refs.loader.start()
-      this.$router.push("/skpd/user/"+data.nip);
+      this.$router.push("/user/"+data.nip);
     },
     paging: function(params) {
       this.$refs.loader.start() 

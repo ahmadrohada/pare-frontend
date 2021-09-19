@@ -2,7 +2,7 @@
   <card style="min-height:480px;">
     <pare-loader ref="loader"></pare-loader>
     <template slot="header" class="d-inline">
-      <h4 class="title d-inline">USER</h4>
+      <h4 class="title d-inline">USER LIST</h4>
       <p class="card-category d-inline">{{user.skpd.singkatan}}</p>
     </template>
     <div class="table-full-width table-responsive">

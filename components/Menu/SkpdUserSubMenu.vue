@@ -3,13 +3,10 @@
      
     <div class="demo-image__lazy">
       <img 
-          src="~/static/img/dashboard_bg.jpg"
+          src="~/static/img/dashboard_bg.png"
           alt="..."
           style="width:100%; height:135px; border-radius:4px 4px 0px 0px;"
         />
-        <h4 style="font-size: 13px; color: rgb(252, 252, 252) !important; margin-top:-40px; margin-left:20px;">
- 
-        </h4>
     </div>
     <el-menu
       background-color="#fff"
@@ -18,45 +15,46 @@
       :default-active="activeLink"
       mode="horizontal"
     >
-       <el-menu-item 
-        :index="index_1"
-        :route="{path: `/bkpsdm/skpd/${id_skpd}/dashboard` }"
-       >
-        <i class="el-icon-data-board"></i>
-        <span>Dashboard</span>
-      </el-menu-item>
       <el-menu-item 
-        :index="index_2"
-        :route="{path: `/bkpsdm/skpd/${id_skpd}/user`}"
+        :index="indexDetail"
+        :route="{path: `/skpd/user/${nip}/detail`}"
        >
        
         <i class="el-icon-user"></i>
-        <span>User</span>
+        <span>Detail</span>
       </el-menu-item>
-      <el-menu-item :index="index_3" disabled>SKP</el-menu-item>
+       <el-menu-item 
+        :index="indexHirarki"
+        :route="{path: `/skpd/user/${nip}/hirarki` }"
+       >
+        <i class="fa fa-sitemap"></i>
+        
+        <span>Hirarki</span>
+      </el-menu-item>
+      
+       
     </el-menu>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["index_1", "index_2", "index_3"],
-  name: "bkpsdmSubMenu",
+  props: ['nip'],
+  name: "personalSubMenu",
   data() {
     return {
       activeLink: null,
-      id_skpd:null,
+      indexDetail:`/skpd/user/${this.nip}/detail`,
+      indexHirarki:`/skpd/user/${this.nip}/hirarki`,
     };
   },
-  methods: {},
   watch: {
     $route(to, from) {
       this.activeLink = to.path;
     },
   },
   mounted() {
-    this.id_skpd = this.$route.params.id;
-    this.activeLink = this.$route.fullPath;
+    this.activeLink = this.$route.path; 
   },
 };
 </script>

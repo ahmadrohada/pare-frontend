@@ -8,9 +8,8 @@
       :title="$t('sidebar.title')"
     >
     <skpd-menu 
-          :user="user"
-          :nip_pegawai="nipPegawai"
-          :id_skpd="id_skpd"
+          :skpdLogo="dataUser.skpd.logo"
+          :skpdSingkatan="dataUser.skpd.singkatan"
           ></skpd-menu>
     </side-bar>
     
@@ -71,9 +70,9 @@
     },
     data() {
       return {
-        sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
-        laoding:true,
-        overlay:true
+        //sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
+        //laoding:true,
+        //overlay:true,
       };
     },
     computed: {
@@ -81,10 +80,7 @@
         return this.$route.path === '/maps/full-screen'
       },
       ...mapGetters({
-        photoUrl: 'photo',
-        user:'user',
-        nipPegawai:'nip',
-        id_skpd:'id_skpd',
+        dataUser:'user',
       })
     },
     methods: {
@@ -143,18 +139,7 @@
       transform: scale3d($scaleSize, $scaleSize, $scaleSize);
     }
   }
-
   .main-panel .zoomOut {
     animation-name: zoomOut95;
   }
-
-  .swal2-popup {
-    width: 35em !important;
-    padding: 1.1em !important;
-    font-size: 0.8rem !important;
-    max-width: 80% !important;
-  }
-
-  
-  
 </style>

@@ -2,63 +2,67 @@
   <card style="min-height:480px;">
     <pare-loader ref="loader"></pare-loader>
     <template slot="header" class="d-inline">
-      <h4 class="title d-inline">DAFTAR SKPD</h4>
-      <p class="card-category d-inline"></p>
+      <h4 class="title d-inline">USER</h4>
+      <p class="card-category d-inline">{{user.skpd.singkatan}}</p>
     </template>
     <div class="table-full-width table-responsive">
-      <tabel-skpd
+      <tabel-user
         :tableData="data"
         :total="total"
-        :limit="limit"
-        v-on:viewSkpd="viewSkpd"
+        v-on:viewUser="viewUser"
         v-on:handlePaging="paging"
-        :current-page.sync="page"
+        :current-page.sync="currentPage"
         :layout="layout"
       >
-      </tabel-skpd>
+      </tabel-user>
     </div>
   </card>
 </template>
 
 <script>
 
-import TabelSkpd from "~/components/DataTables/TabelSkpd.vue";
+import TabelUser from "~/components/DataTables/TabelUser.vue";
 import PareLoader from "~/components/Loader/PareLoader.vue";
+import { mapGetters } from 'vuex'
 
 export default {
-  layout: "bkpsdmLayout",
+  layout: "skpdLayout",
   middleware: "auth",
    components: {
-    TabelSkpd,
+    TabelUser,
     PareLoader
   },
   data() {
     return {
       data: [],
       total: 0,
-      limit: 10,
+      currentPage: 0,
       page: 1,
       layout: "prev, next",
     };
   },
+  computed: {
+      
+      ...mapGetters({
+        id_skpd:'id_skpd',
+        user:'user',
+      })
+    },
   methods: {
 
-    viewSkpd: function(data) {
+    viewUser: function(data) {
       //alert(data.id);
       this.$refs.loader.start()
-      this.$router.push("skpd/"+data.id);
+      this.$router.push("/skpd/user/"+data.nip);
     },
     paging: function(params) {
       this.$refs.loader.start() 
       this.$axios
-        .$get("/skpd" + params)
+        .$get("/user" + params+"&id_skpd="+this.id_skpd)
         .then((resp) => {
           this.data = resp.data;
-          this.total = resp.pagination['total'];
-          this.page = resp.pagination['page'];
-          this.limit = resp.pagination['limit'];
+          this.currentPage = resp.pagination['current_page'];
           setTimeout(() => this.$refs.loader.finish(), 700)
-          
         })
         .catch((err) => {
           console.log(err);
@@ -69,15 +73,12 @@ export default {
     this.$refs.loader.start() 
     
     this.$axios
-      .$get("/skpd")
+      .$get("/user?id_skpd="+this.id_skpd)
       .then((resp) => {
         this.data = resp.data;
         this.total = resp.pagination['total'];
-        this.page = resp.pagination['page'];
-        this.limit = parseInt(resp.pagination['limit']);
+        this.currentPage = resp.pagination['current_page'];
         setTimeout(() => this.$refs.loader.finish(), 700)
-
-
       })
       .catch((err) => {
         console.log(err);

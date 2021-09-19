@@ -29,42 +29,13 @@
       :default-active="activeLink"
     >
       <el-menu-item 
-        index="/skpd"
-        :route="{path: '/skpd'}"
-       >
-       
-        <i class="el-icon-data-board"></i>
-        <span>Dashboard</span>
-      </el-menu-item>
-      <el-menu-item 
         index="/skpd/user"
         :route="{path: '/skpd/user'}"
        >
        
         <i class="el-icon-user"></i>
-        <span>User</span>
+        <span>User List</span>
       </el-menu-item>
-      <el-menu-item 
-        index="/skpd/renja"
-        :route="{path: '/skpd/renja'}"
-       >
-        <i class="el-icon-data-board"></i>
-        <span>Renja</span>
-      </el-menu-item>
-      <el-submenu index="2" disabled>
-        <template slot="title"
-          ><i class="el-icon-notebook-2"></i>Capaian</template
-        >
-          <el-menu-item index="2-1">Tahunan</el-menu-item>
-          <el-menu-item index="2-2">Bulanan</el-menu-item>
-      </el-submenu>
-      <el-submenu index="3" disabled>
-        <template slot="title"
-          ><i class="el-icon-money"></i>TPP</template
-        >
-          <el-menu-item index="3-1">Report</el-menu-item>
-        </el-submenu>
-      </el-submenu>
     </el-menu>
   </div>
 </template>

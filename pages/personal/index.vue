@@ -6,7 +6,6 @@
       <p class="card-category d-inline">PERSONAL</p>
     </template>
     
-    
   </card>
 </template>
 

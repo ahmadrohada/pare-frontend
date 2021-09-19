@@ -32,7 +32,7 @@ export default {
     
   },
   mounted() {
-    this.$router.push(`/bkpsdm/skpd/${this.$route.params.id}/dashboard`);
+    this.$router.push(`/skpd/${this.$route.params.id}/user`);
     
   },
 };

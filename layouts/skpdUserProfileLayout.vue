@@ -7,22 +7,23 @@
       :short-title="$t('sidebar.shortTitle')"
       :title="$t('sidebar.title')"
     >
-    <bkpsdm-skpd-menu></bkpsdm-skpd-menu>
+    <skpd-user-menu 
+          :skpdLogo="dataUser.skpd.logo"
+          :skpdSingkatan="dataUser.skpd.singkatan"
+          ></skpd-user-menu>
     </side-bar>
     
     <div class="main-panel" :data="sidebarBackground">
       <dashboard-navbar></dashboard-navbar>
+      <router-view name="header"></router-view>
       <div
         :class="{ content: !isFullScreenRoute }"
         @click="toggleSidebar"
       >
-      {{skpd}}
+        <skpd-user-sub-menu
+          :nip="nipUser"
+        ></skpd-user-sub-menu>
         
-       <bkpsdm-skpd-sub-menu
-          :id="idSkpd"
-          ></bkpsdm-skpd-sub-menu>
-
-
         <zoom-center-transition :duration="300" mode="out-in">
           <nuxt></nuxt>
         </zoom-center-transition>
@@ -56,9 +57,10 @@
   import ContentFooter from '@/components/Layout/ContentFooter.vue';
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
-  import BkpsdmSkpdMenu from '~/components/Menu/BkpsdmSkpdMenu.vue';
-  import BkpsdmSkpdSubMenu from '~/components/Menu/BkpsdmSkpdSubMenu.vue';
+  import SkpdUserMenu from '~/components/Menu/SkpdUserMenu.vue';
+  import SkpdUserSubMenu from '~/components/Menu/SkpdUserSubMenu.vue';
 
+  import { mapGetters } from 'vuex'
 
   export default {
     
@@ -68,18 +70,23 @@
       DashboardContent,
       SlideYDownTransition,
       ZoomCenterTransition,
-      BkpsdmSkpdMenu,
-      BkpsdmSkpdSubMenu,
+      SkpdUserMenu,
+      SkpdUserSubMenu
     },
     data() {
       return {
-        sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
+        //sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
+        //laoding:true,
+        //overlay:true,
       };
     },
     computed: {
       isFullScreenRoute() {
         return this.$route.path === '/maps/full-screen'
       },
+      ...mapGetters({
+        dataUser:'user',
+      })
     },
     methods: {
       toggleSidebar() {
@@ -102,8 +109,13 @@
         }
       }
     },
+    watch: {
+      '$route.path': function() {
+        //console.log(this.$route.fullPath); // path is /users
+      }
+    },
     async fetch() {
-      this.idSkpd = this.$route.params.id;
+      this.nipUser = this.$route.params.nip;
     },
     mounted() {
       this.initScrollbar();
@@ -135,9 +147,7 @@
       transform: scale3d($scaleSize, $scaleSize, $scaleSize);
     }
   }
-
   .main-panel .zoomOut {
     animation-name: zoomOut95;
   }
-
 </style>

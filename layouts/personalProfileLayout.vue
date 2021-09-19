@@ -21,10 +21,7 @@
         :class="{ content: !isFullScreenRoute }"
         @click="toggleSidebar"
       >
-        <personal-sub-menu
-          :index_1 = "index_1"
-          :index_2 = "index_2"
-        ></personal-sub-menu>
+        <personal-sub-menu></personal-sub-menu>
         
         <zoom-center-transition :duration="300" mode="out-in">
           <nuxt></nuxt>

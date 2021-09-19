@@ -14,11 +14,11 @@
         <hr>
 
         <p class="card-text"><i class="fa fa-university"></i> SKPD</p>
-        <p class="text-muted">{{ user.skpd.nama}}</p>
+        <p class="text-muted">{{ (user.skpd)?user.skpd.nama:'-' }}</p>
         <hr>
 
         <p class="card-text"><i class="fa fa-tags"></i> Unit Kerja</p>
-        <p class="text-muted">{{ user.unit_kerja.nama }}</p>
+        <p class="text-muted">{{ (user.unit_kerja)?(user.unit_kerja.nama):'' }}</p>
         <hr /> 
   </card>
 </template>

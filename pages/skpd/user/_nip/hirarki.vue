@@ -126,12 +126,12 @@
 
 
 <script>
-import ProfilUser from "../../components/Profile/ProfilUserHirarki.vue";
+import ProfilUser from "~/components/Profile/ProfilUserHirarki.vue";
 
 export default {
   name: "hirarki",
   middleware: "auth",
-  layout: "userLayout",
+  layout: 'skpdUserProfileLayout',
   head() {
     return {
       title: "hirarki",
@@ -159,10 +159,7 @@ export default {
     };
   },
   async asyncData({ params, redirect ,$axios,$refs}) {
-   
-      
-      const user =  await $axios.$get("/me/hirarki")
-      
+      const user =  await $axios.$get(`/user/${params.nip}/hirarki`)
       return { 
           pegawai : user["pegawai"],
           pejabat_penilai : user["pejabat_penilai"],
@@ -177,32 +174,24 @@ export default {
       this.btnC =false
     },
     showDetailPegawai: function ($nip) {
-      //this.$refs.child.start();
       this.clearBtnState()
       this.btnC = true
       this.$refs.child.detail_pegawai($nip);
-      //setTimeout(() => this.$refs.child.finish(), 500) 
     },
     showDetailPejabatPenilai: function () {
-      //this.$refs.child.start();
       this.clearBtnState()
       this.btnB  = true
       this.$refs.child.detail_pejabat_penilai(this.pejabat_penilai.nip);
-      //setTimeout(() => this.$refs.child.finish(), 500)
     },
     showDetailAtasanPejabatPenilai: function () {
-      //this.$refs.child.start();
       this.clearBtnState()
       this.btnA = true
       this.$refs.child.detail_atasan_pejabat_penilai(this.atasan_pejabat_penilai.nip);
-      //setTimeout(() => this.$refs.child.finish(), 500)
     },
   },
   mounted() {
-    this.$refs.child.start();
     this.btnC =true
     this.showDetailPegawai(this.pegawai.nip)
-    setTimeout(() => this.$refs.child.finish(), 800)
   },
 };
 </script>

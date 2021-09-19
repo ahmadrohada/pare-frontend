@@ -5,8 +5,7 @@
       <p class="card-category d-inline"></p>
     </template>
 
-     index
-    
+    tes
   </card>
 </template>
 
@@ -14,15 +13,12 @@
 <script>
 
 export default {
-  name: "personalProfileIndex",
-  middleware: ['auth'],
-  layout: "personalProfileLayout",
-  /* asyncData ({ redirect,params }) {
-    return redirect(`/personal/profile/detail`)
-  }, */
+  asyncData ({ redirect,params }) {
+    return redirect(`/skpd/${params.id}/user/${params.nip}/detail`)
+  },
   mounted() {
-    this.$router.push(`/personal/profile/detail`);
-    
+    //console.log(this.$route.params.nip)
+    //this.$router.push(`/skpd/user/${this.$route.params.nip}/detail`); 
   },
 };
 </script>

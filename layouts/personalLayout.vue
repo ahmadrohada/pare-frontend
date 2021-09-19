@@ -12,7 +12,7 @@
           :photo_url="photoUrl"
           :nip_pegawai="nipPegawai"
           ></personal-menu>
-    </side-bar>
+    </side-bar> 
     
     <div class="main-panel" :data="sidebarBackground">
       <dashboard-navbar></dashboard-navbar>

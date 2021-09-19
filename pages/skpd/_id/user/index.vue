@@ -46,7 +46,7 @@ export default {
 
     viewUser: function(data) {
       this.$refs.loader.start()
-      this.$router.push("/user/"+data.nip);
+      this.$router.push(`/skpd/${this.id_skpd}/user/${data.nip}`);
       setTimeout(() => this.$refs.loader.finish(), 700)
 
     },

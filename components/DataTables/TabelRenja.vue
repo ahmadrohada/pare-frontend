@@ -5,17 +5,18 @@
         :data="tableData"
         :default-sort = "{prop: 'jabatan_referensi_id', order: 'asc'}"
         >
-        <el-table-column min-width="60" prop="periode" label="PERIODE"></el-table-column>
+        <el-table-column min-width="110" prop="periode" label="PERIODE"></el-table-column>
         <el-table-column min-width="340" prop="nama_skpd" label="NAMA SKPD"></el-table-column>
-        <el-table-column min-width="" prop="status" label="STATUS"></el-table-column>
-        <el-table-column min-width="100" label="CREATED AT">
+        <el-table-column min-width="110" label="CREATED AT">
           <template slot-scope="props">
             <div style="padding:0px !important;">
               <span style="margin-top:-6px;" class="">{{moment(props.row.created_at).format('DD-MM-YYYY hh:mm')}}</span><br>
             </div>
           </template>
         </el-table-column>
-        <el-table-column min-width="40" header-align="right" label="">
+        <el-table-column min-width="" prop="status" label="STATUS"></el-table-column>
+        
+        <el-table-column min-width="60" header-align="right" label="">
           <template slot-scope="{ row }">
             <div class="text-right">
               <el-tooltip content="Lihat Data" :open-delay="300" placement="top">

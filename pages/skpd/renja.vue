@@ -68,10 +68,20 @@ export default {
           console.log(err);
         });
     },
+    notifyVue(verticalAlign, horizontalAlign, alertType, alertMessage) {
+      this.$notify({
+        message: alertMessage,
+        timeout: 60000,
+        closeOnClick:false,
+        icon: 'fa fa-info',
+        horizontalAlign: horizontalAlign,
+        verticalAlign: verticalAlign,
+        type: alertType,
+      });
+    }
   },
   mounted() {
     this.$refs.loader.start() 
-    
     this.$axios
       .$get("/renja?skpd_id="+this.skpd_id)
       .then((resp) => {
@@ -79,12 +89,11 @@ export default {
         this.total = resp.pagination['total'];
         this.currentPage = resp.pagination['current_page'];
         setTimeout(() => this.$refs.loader.finish(), 700)
-
-
       })
       .catch((err) => {
         console.log(err);
       });
+    //this.notifyVue('top', 'center','danger',"Belum memiliki renja pada periode ini");
   },
   
 };

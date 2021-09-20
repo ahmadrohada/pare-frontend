@@ -1,9 +1,6 @@
 <template>
   <div class="row">
     <add-tim-kerja ref="addTimKerja"></add-tim-kerja>
-
-   
-
     <div class="col-md-4 content">
       <card style="min-height:340px;">
         <template slot="header" class="d-inline">
@@ -25,7 +22,7 @@
           <span>{{ node.label }}</span>
          
         <span>
-          <el-tooltip content="Tambah Bawahan" :open-delay="300" placement="top">
+          <el-tooltip content="Tambah Bawahan" :open-delay="50" placement="left">
             <el-button
               type="text"
               size="mini"
@@ -34,7 +31,7 @@
             </el-button>
           </el-tooltip>
         
-          <el-tooltip  content="Hapus Node" :open-delay="300" placement="top">
+          <el-tooltip  content="Hapus Node" :open-delay="50" placement="right">
             <el-button
               type="text"
               size="mini"
@@ -214,15 +211,7 @@ export default {
       this.getPejabatList(data.id)
     },
     append(data) {
-        /* const newChild = { id: 120, label: 'testtest', children: [] };
-        if (!data.children) {
-          this.$set(data, 'children', []);
-        }
-        data.children.push(newChild); */
-
-
-        this.$refs.addTimKerja.showModal(data);
-
+        this.$refs.addTimKerja.showModal(data.id); 
     },
 
     remove(node, data) {

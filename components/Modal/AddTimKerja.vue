@@ -1,5 +1,6 @@
 <template>
-  <modal :show.sync="modalFormVisible">
+    <modal :show.sync="modalFormVisible">
+    <pare-loader ref="loader"></pare-loader>
     <template slot="header">
       <h4 class="modal-title" id="exampleModalLabel">Tambah Tim Kerja</h4>
     </template>
@@ -18,7 +19,7 @@
         </el-form-item>
         <label for="tes">Child Label</label>
         <el-form-item  prop="label" >
-          <el-select v-model="TimKerjaForm.label" v-on:change="resetSelect()"  placeholder="Select">
+          <el-select v-model="TimKerjaForm.label" v-on:change="onSelect($event)"  placeholder="Select">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -42,26 +43,21 @@
 </template>
 
 <script>
+import PareLoader from '~/components/Loader/PareLoader.vue';
+
 export default {
+  components:{
+    PareLoader,
+  },
   data() {
     return {
       modalFormVisible: false,
       TimKerjaForm: {
-        label: "",
         parentLabel: "",
         parentId: "",
         renjaId: "",
       },
-      options: [{
-          value: 'KOORDINATOR',
-          label: 'KOORDINATOR'
-        }, {
-          value: 'SUB KOORDINATOR',
-          label: 'SUB KOORDINATOR'
-        }, {
-          value: 'ANGGOTA',
-          label: 'ANGGOTA'
-        }],
+      options: [],
         value: '',
         rules: {
           label: [
@@ -71,20 +67,29 @@ export default {
     };
   },
   methods: {
-    showModal: function (data) {
-      console.log(data);
-      this.TimKerjaForm.parentLabel = data.label;
-      this.TimKerjaForm.parentId = data.id;
-      this.TimKerjaForm.renjaId = data.renja_id;
+    showModal: function (tim_kerja_id) {
+      this.$refs.loader.start() 
       this.modalFormVisible = true;
+
+      //console.log(data);
+      this.$axios
+          .$get("/add_tim_kerja_referensi?id="+tim_kerja_id)
+          .then((resp) => {
+            console.log(resp)
+            this.TimKerjaForm.parentLabel = resp.tim_kerja.label;
+            this.TimKerjaForm.parentId = resp.tim_kerja.id;
+            this.TimKerjaForm.renjaId = resp.tim_kerja.renja_id;
+            this.options =  resp.child_ref;
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 500);
+          })
     },
     submitForm(formName) {
        this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$axios
-                    .$post("/add_tim_kerja", {
-                      data: this.TimKerjaForm
-                    })
+                    .$post("/add_tim_kerja", this.TimKerjaForm )
                     .then((response) => {
                       console.log(response);
                     })
@@ -103,11 +108,15 @@ export default {
       this.$refs[formName].resetFields();
       this.modalFormVisible = false;
     },
-    resetSelect(){
+    onSelect($event){
+      console.log($event)
       this.$refs.TimKerjaForm.clearValidate()
     }
   },
 };
 </script>
 <style>
+.el-select {
+    width: 100%;
+}
 </style>

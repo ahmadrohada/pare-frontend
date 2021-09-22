@@ -1,57 +1,91 @@
 <template>
   <div class="row">
-    <add-tim-kerja ref="addTimKerja"></add-tim-kerja>
+    <add-tim-kerja 
+        ref="addTimKerja"
+        @reloadTree="reloadTree"
+        >
+    </add-tim-kerja>
     <div class="col-md-4 content">
+      <pare-loader ref="loaderLeft"></pare-loader>
       <card style="min-height:340px;">
         <template slot="header" class="d-inline">
-          <h4 class="title d-inline"></h4>
+          <h4 class="title d-inline">TIM KERJA</h4>
           <p class="card-category d-inline"></p>
+          <el-tooltip content="Reload Data" :open-delay="50" placement="right">
+            <el-button 
+              type="text"
+              @click="() => refreshTree()"
+              >
+              <span class="el-icon-refresh"></span>
+            </el-button>
+          </el-tooltip>
         </template>
 
         <el-tree
+          :key="showTree"
           :props="defaultProps"
           :load="loadNode"
           node-key="id"
-          @node-click="handleNodeClick"
+          @node-click="lihatPejabat"
           default-expand-all
           :expand-on-click-node="false"
           lazy
           >
           <span class="custom-tree-node" slot-scope="{ node, data }">
           
-          <span>{{ node.label }}</span>
+            <span>{{ data.label }}</span>
          
-        <span>
-          <el-tooltip content="Tambah Bawahan" :open-delay="50" placement="left">
-            <el-button
-              type="text"
-              size="mini"
-              @click="() => append(data)">
-                <i class="fa fa-plus"></i>
-            </el-button>
-          </el-tooltip>
-        
-          <el-tooltip  content="Hapus Node" :open-delay="50" placement="right">
-            <el-button
-              type="text"
-              size="mini"
-              @click="() => remove(node, data)"
-              v-if="node.isLeaf == true"
-              >
-                <i class="fa fa-times"></i>
-            </el-button>
-            <el-button
-              type="text"
-              size="mini"
-              @click="() => remove(node, data)"
-              v-else="node.isLeaf == true"
-              disabled
-              >
-                <i class="fa fa-times"></i>
-            </el-button>
-          </el-tooltip>
-        </span>
-      </span>
+            <span>
+              <el-tooltip content="Tambah Bawahan" :open-delay="50" placement="left">
+                <el-button
+                  type="text"
+                  size="mini"
+                  style="color:#20B2AA"
+                  @click="() => addTimKerja(data)"
+                  v-if="data.anggota == false"
+                  
+                  >
+                    <i class="fa fa-arrow-down"></i>
+                </el-button>
+                <el-button
+                  type="text"
+                  size="mini"
+                  v-else
+                  disabled
+                  >
+                </el-button>
+              </el-tooltip>
+            
+              <el-tooltip  content="Hapus Node" :open-delay="50" placement="right">
+                <el-button
+                  type="text"
+                  size="mini"
+                  style="color:#F08080"
+                  @click="() => remove(node, data)"
+                  v-if="node.isLeaf == true"
+                  
+                  >
+                    <i class="fa fa-times"></i>
+                </el-button>
+                <el-button
+                  type="text"
+                  size="mini"
+                  v-else
+                  disabled
+                  >
+                </el-button>
+              </el-tooltip>
+              <!-- <el-button
+                  type="text"
+                  size="mini"
+                  style="color:#20B2AA"
+                  @click="() => lihatPejabat(data)"
+                  
+                  >
+                    <i class="fa fa-arrow-circle-right"></i>
+                </el-button> -->
+            </span>
+          </span>
 
         </el-tree>
     
@@ -60,15 +94,30 @@
     <div class="col-md-8 content">
       <card style="min-height:340px;">
 
-        <pare-loader ref="loader"></pare-loader>
+        <pare-loader ref="loaderRight"></pare-loader>
 
         <template slot="header" class="d-inline">
-          <h4 class="title d-inline"></h4>
+          <h4 class="title d-inline"><i class="fa fa-user"></i>  &nbsp; {{timKerja.label}}</h4>
           <p class="card-category d-inline"></p>
         </template>
 
+         
+          <el-button-group style="margin-bottom:5px;">
+            <el-tooltip content="Tambah Pejabat" :open-delay="50" placement="top">
+              <el-button size="mini" type="primary" icon="fa fa-user-plus" ></el-button>
+            </el-tooltip>
+            <el-tooltip content="Rencana Kerja" :open-delay="50" placement="top">
+              <el-button size="mini" type="primary" icon="el-icon-document" ></el-button>
+            </el-tooltip>
+            <el-tooltip content="Ubah Data Tim Kerja" :open-delay="50" placement="top">
+              <el-button size="mini" type="primary" icon="fa fa-cog" ></el-button>
+            </el-tooltip>
+          </el-button-group>
+
+
 
         <md-card
+          
           class="md-primary md_user"
           md-with-hover
           v-for="{id, jabatan, nama_lengkap,nip,photo} in pejabatList" :key="id"
@@ -157,7 +206,7 @@ export default {
         id: 'id',
         label: 'label',
         renja_id: 'renja_id',
-        attribute: 'attribute',
+        anggota:'anggota',
         isLeaf: 'leaf'
       },
       pejabatList:[],
@@ -165,6 +214,12 @@ export default {
       loading: false,
 	    overlay: false,
       itemsLoaded:false,
+      showTree:true,
+      timKerja:{
+        label:null
+      }
+        
+      
     };
   },
   components:{
@@ -177,8 +232,24 @@ export default {
 
   }, 
   methods: {
-    loadNode(node,resolve) {
+    reloadTree(nodeData){
+      //console.log(nodeData.new)
+      const data = nodeData.old
+      if (!data.child) {
+        this.$set(data, 'child', []);
+      } 
+      data.child.push(nodeData.new);
+    },
+    refreshTree(nodeData){
       
+      this.showTree = false;
+      this.$nextTick(() => {
+          this.showTree = true
+      })
+      
+    },
+    loadNode(node,resolve) {
+        this.$refs.loaderLeft.start()
         if (node.level === 0) {
           this.$axios
           .$get("/tim_kerja_level_0?renja_id="+this.renja_id)
@@ -194,24 +265,30 @@ export default {
         }
         if (node.level >= 1) {
           //console.log(node.data.id);
+          
           this.$axios
           .$get("/tim_kerja_child?renja_id="+this.renja_id+"&parent_id="+node.data.id)
           .then((resp) => {
-            setTimeout(() => {
               return resolve(resp)
-            }, 500);
           })
         }
-       
+        setTimeout(() => {
+            this.$refs.loaderLeft.finish() 
+        }, 2000);
 
         
     },
-    handleNodeClick(data) {
+    /* handleNodeClick(data) {
       //console.log(data.id);
       this.getPejabatList(data.id)
-    },
-    append(data) {
-        this.$refs.addTimKerja.showModal(data.id); 
+    }, */
+    lihatPejabat(data) {
+      //console.log(data.id);
+      this.getPejabatList(data.id)
+    }, 
+    addTimKerja(data) {
+        //console.log(data);
+        this.$refs.addTimKerja.showModal(data); 
     },
 
     remove(node, data) {
@@ -224,14 +301,15 @@ export default {
     },
 
     getPejabatList(tim_kerja_id){
-        this.$refs.loader.start()
+        this.$refs.loaderRight.start()
         this.$axios
           .$get("/tim_kerja?id="+tim_kerja_id)
           .then((resp) => {
+            this.timKerja = resp.tim_kerja;
             this.pejabatList = resp.pejabat;
             this.rencanaKinerjaList = resp.rencana_kinerja;
             setTimeout(() => {
-              this.$refs.loader.finish() 
+              this.$refs.loaderRight.finish() 
             }, 500);
           })
     }

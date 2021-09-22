@@ -51,6 +51,10 @@ export default {
   },
   data() {
     return {
+      nodeData:{
+        old:null,
+        new:null
+      },
       modalFormVisible: false,
       TimKerjaForm: {
         parentLabel: "",
@@ -67,7 +71,9 @@ export default {
     };
   },
   methods: {
-    showModal: function (tim_kerja_id) {
+    showModal: function (data) {
+      this.nodeData.old = data
+      const tim_kerja_id = data.id
       this.$refs.loader.start() 
       this.modalFormVisible = true;
 
@@ -86,12 +92,17 @@ export default {
           })
     },
     submitForm(formName) {
-       this.$refs[formName].validate((valid) => {
+
+        
+        this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$axios
                     .$post("/add_tim_kerja", this.TimKerjaForm )
                     .then((response) => {
-                      console.log(response);
+                      //console.log(response);
+                      this.nodeData.new = response
+                      this.$emit('reloadTree', this.nodeData )
+                      this.modalFormVisible = false;
                     })
                     .catch((errors) => {
                       console.log(errors);
@@ -102,7 +113,7 @@ export default {
             console.log('error submit!!');
             return false;
           }
-        });
+        }); 
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

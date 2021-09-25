@@ -7,13 +7,19 @@ import BaseButton from '@/components/BaseButton.vue';
 import BaseCheckbox from '@/components/Inputs/BaseCheckbox.vue';
 import Modal from '@/components/Modal.vue';
 import VueSweetalert2 from 'vue-sweetalert2';
+
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
+
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 
 import moment from 'moment'
+
+
+
+
 
 
 
@@ -25,11 +31,14 @@ import {Progress} from 'element-ui'
 import {Tabs,TabPane} from 'element-ui'
 import {Switch} from 'element-ui'
 import {Col,Row,Tree,Button} from 'element-ui'
-import {Dialog,Form,FormItem , Select,Option ,Divider,ButtonGroup} from 'element-ui'
+import {Dialog,Form,FormItem , Select,Option ,Divider,ButtonGroup,MessageBox,Message} from 'element-ui'
 /**
  * You can register global components here and use them as a plugin in your main Vue instance
  */
 import 'sweetalert2/dist/sweetalert2.min.css';
+
+Vue.use(VueMaterial)
+
 
 Vue.component(BaseInput.name, BaseInput);
 Vue.component(BaseDropdown.name, BaseDropdown);
@@ -49,7 +58,6 @@ Vue.use(Tooltip);
 Vue.use(Popover);
 Vue.use(VueSweetalert2);
 
-Vue.use(VueMaterial)
 
 Vue.use(Table)
 Vue.use(TableColumn)
@@ -78,6 +86,13 @@ Vue.use(ButtonGroup)
 
 
 
+
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$prompt = MessageBox.prompt;
+//Vue.prototype.$notify = Notification;
+Vue.prototype.$message = Message;
 
 
 

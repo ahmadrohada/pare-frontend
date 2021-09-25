@@ -2,7 +2,7 @@
     <modal :show.sync="modalFormVisible">
     <pare-loader ref="loader"></pare-loader>
     <template slot="header">
-      <h4 class="modal-title" id="exampleModalLabel">Tambah Tim Kerja</h4>
+      <h4 class="modal-title" id="exampleModalLabel">Tambah Tim Kerja ( Child )</h4>
     </template>
       <el-form
         ref="TimKerjaForm"
@@ -12,6 +12,8 @@
       >
         <input v-model="TimKerjaForm.parentId" hidden></input>
         <input v-model="TimKerjaForm.renjaId" hidden></input>
+
+        
 
         <label for="tes">Parent Label</label>
         <el-form-item>
@@ -102,6 +104,7 @@ export default {
                       //console.log(response);
                       this.nodeData.new = response
                       this.$emit('reloadTree', this.nodeData )
+                      this.$refs[formName].resetFields();
                       this.modalFormVisible = false;
                     })
                     .catch((errors) => {

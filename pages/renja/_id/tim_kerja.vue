@@ -11,14 +11,18 @@
         <template slot="header" class="d-inline">
           <h4 class="title d-inline">TIM KERJA</h4>
           <p class="card-category d-inline"></p>
-          <el-tooltip content="Reload Data" :open-delay="50" placement="right">
+          <!-- <el-tooltip content="Reload Data" :open-delay="50" placement="right"> -->
             <el-button 
               type="text"
               @click="() => refreshTree()"
               >
-              <span class="el-icon-refresh"></span>
+              <span class="el-icon-refresh">
+                <md-tooltip md-direction="right">Refresh</md-tooltip>
+              </span>
+              
             </el-button>
-          </el-tooltip>
+            
+          <!-- </el-tooltip> -->
         </template>
 
         <el-tree
@@ -36,7 +40,6 @@
             <span>{{ data.label }}</span>
          
             <span>
-              <el-tooltip content="Tambah Bawahan" :open-delay="50" placement="left">
                 <el-button
                   type="text"
                   size="mini"
@@ -45,7 +48,9 @@
                   v-if="data.anggota == false"
                   
                   >
-                    <i class="fa fa-arrow-down"></i>
+                  <md-tooltip md-direction="left">Tambah Tim Kerja ( Child )</md-tooltip>
+                  <i class="fa fa-arrow-down"></i>
+                    
                 </el-button>
                 <el-button
                   type="text"
@@ -54,10 +59,10 @@
                   disabled
                   >
                 </el-button>
-              </el-tooltip>
+
+                
             
-              <el-tooltip  content="Hapus Node" :open-delay="50" placement="right">
-                <el-button
+              <el-button
                   type="text"
                   size="mini"
                   style="color:#F08080"
@@ -65,6 +70,7 @@
                   v-if="node.isLeaf == true"
                   
                   >
+                    <md-tooltip md-direction="right">Hapus Tim Kerja</md-tooltip>
                     <i class="fa fa-times"></i>
                 </el-button>
                 <el-button
@@ -74,16 +80,6 @@
                   disabled
                   >
                 </el-button>
-              </el-tooltip>
-              <!-- <el-button
-                  type="text"
-                  size="mini"
-                  style="color:#20B2AA"
-                  @click="() => lihatPejabat(data)"
-                  
-                  >
-                    <i class="fa fa-arrow-circle-right"></i>
-                </el-button> -->
             </span>
           </span>
 
@@ -101,81 +97,79 @@
           <p class="card-category d-inline"></p>
         </template>
 
-         
-          <el-button-group style="margin-bottom:5px;">
-            <el-tooltip content="Tambah Pejabat" :open-delay="50" placement="top">
-              <el-button size="mini" type="primary" icon="fa fa-user-plus" ></el-button>
-            </el-tooltip>
-            <el-tooltip content="Rencana Kerja" :open-delay="50" placement="top">
-              <el-button size="mini" type="primary" icon="el-icon-document" ></el-button>
-            </el-tooltip>
-            <el-tooltip content="Ubah Data Tim Kerja" :open-delay="50" placement="top">
-              <el-button size="mini" type="primary" icon="fa fa-cog" ></el-button>
-            </el-tooltip>
-          </el-button-group>
+        <md-tabs class="md-vue md_user">
+          <md-tab id="tab-pejabat" md-label="Pejabat">
+
+            <md-button style="height:28px;margin-left:-1px; font-size:11px; background:#009168;" class="md-dense  btn-block md-raised md-primary"><span class="fa fa-plus"></span> Tambah Pejabat</md-button>
+
+            <md-card
+              class="md-primary md_user"
+              v-for="{id, jabatan, nama_lengkap,nip,photo} in pejabatList" :key="id"
+            >
+              <md-card-header>
+                <md-card-media>
+                  <img
+                    :src="photo"
+                    class="user_img"
+                  />
+                  
+                </md-card-media>
+                <md-card-header-text>
+                  <div class="md-title">
+                    {{ nama_lengkap }}
+                  </div>
+                  <div class="md-subhead">
+                    NIP. {{ nip }}
+                  </div>
+                  <div class="md-subhead">
+                    {{ jabatan }}
+                  </div>
+                </md-card-header-text>
+                <md-button
+                  class="md-icon-button md-raised md-accent pegawai_btn"
+                  @click="hapusPejabatRenja(id)"
+                  
+                >
+                  <span class="fa fa-user-times"></span>
+                </md-button>
+              </md-card-header>
+            </md-card>
 
 
-
-        <md-card
-          
-          class="md-primary md_user"
-          md-with-hover
-          v-for="{id, jabatan, nama_lengkap,nip,photo} in pejabatList" :key="id"
-        >
-          <md-card-header>
-            <md-card-media>
-              <img
-                :src="photo"
-                class="user_img"
-              />
-            </md-card-media>
-            <md-card-header-text>
-              <div class="md-title">
-                {{ nama_lengkap }}
-              </div>
-              <div class="md-subhead">
-                NIP. {{ nip }}
-              </div>
-              <div class="md-subhead">
-                {{ jabatan }}
-              </div>
-            </md-card-header-text>
-          </md-card-header>
-        </md-card>
-
-
-        <md-card
-          class="md-primary red_card"
-          md-with-hover
-          v-if="( pejabatList.length == 0 ) & itemsLoaded"
-        >
-          <md-card-header>
-            <md-card-media>
-              <img src="~/static/img/not_user.png" class="user_img" />
-            </md-card-media>
-            <md-card-header-text style="text-align: center; margin-top: 15px">
-              <div class="md-title">Detail Pejabat tidak ditemukan</div>
-              <div class="md-subhead"></div>
-            </md-card-header-text>
-          </md-card-header>
-        </md-card>
-
-        <el-table
-          :data="rencanaKinerjaList"
-          highlight-current-row
-          style="width: 100%">
-          <el-table-column
-            prop="label"
-            label="Rencana Kinerja"
-            width="">
-          </el-table-column>
-          <el-table-column
-            prop="added_by"
-            label="Added By"
-            width="120">
-          </el-table-column>
-        </el-table>
-
+            <md-card
+              class="md-primary red_card"
+              v-if="( pejabatList.length == 0 ) & itemsLoaded"
+            >
+              <md-card-header>
+                <md-card-media>
+                  <img src="~/static/img/not_user.png" class="user_img" />
+                </md-card-media>
+                <md-card-header-text style="text-align: center; margin-top: 15px">
+                  <div class="md-title">Detail Pejabat tidak ditemukan</div>
+                  <div class="md-subhead"></div>
+                </md-card-header-text>
+              </md-card-header>
+            </md-card>
+          </md-tab>
+          <md-tab id="tab-rencana_kerja" md-label="Rencana Kerja">
+            <md-button style="height:28px;margin-left:-1px; font-size:11px;background:#009168;" class="md-dense  btn-block md-raised md-primary"><span class="fa fa-plus"></span> Tambah Rencana Kinerja</md-button>
+            <el-table
+                      :data="rencanaKinerjaList"
+                      highlight-current-row
+                      style="width: 100%">
+                      <el-table-column
+                        prop="label"
+                        label="Rencana Kinerja"
+                        width="">
+                      </el-table-column>
+                      <el-table-column
+                        prop="added_by"
+                        label="Added By"
+                        width="120">
+                      </el-table-column>
+                    </el-table>
+          </md-tab>
+        </md-tabs>
 
 
       </card>
@@ -292,14 +286,35 @@ export default {
     },
 
     remove(node, data) {
-       
-        const parent = node.parent;
-        const children = parent.data.children || parent.data;
-        console.log(node.data.leaf)
+        //const parent = node.parent;
+        //const child = parent.data.child || parent.data;
         
-       
-    },
+        this.$confirm('Ini akan menghapus Tim Kerja,  lanjutkan?', 'Konfirmasi', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Batal',
+          type: 'warning'
+        }).then(() => {
+          this.$axios
+            .$delete("/hapus_tim_kerja?id="+node.data.id)
+            .then((resp) => {
+               this.showTree = false;
+                this.$nextTick(() => {
+                    this.showTree = true
+                })
+                this.$message({
+                  type: 'success',
+                  message: 'Berhasil dihapus'
+                });
+            })
 
+          
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled'
+          });          
+        });
+    },
     getPejabatList(tim_kerja_id){
         this.$refs.loaderRight.start()
         this.$axios
@@ -395,5 +410,22 @@ export default {
 
 .active_btn_detail {
   background: rgba(247, 247, 247, 0.521);
+}
+
+.md-tab {
+    padding: 10px 5px 16px 5px;
+}
+
+.md-tabs.md-theme-default .md-tabs-navigation {
+    height: 30px;
+    background: rgba(245, 247, 246, 0.753);
+}
+.md-tabs-navigation .md-button {
+    height: 30px;
+    font-size: 12px;
+}
+
+.md-tabs.md-theme-default .md-tabs-navigation .md-button.md-active {
+    color: #069c8f;
 }
 </style>

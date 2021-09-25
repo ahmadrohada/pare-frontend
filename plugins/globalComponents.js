@@ -23,7 +23,7 @@ import moment from 'moment'
 
 
 
-import { Input, InputNumber, Tooltip, Popover } from 'element-ui';
+import { Input, InputNumber, Tooltip, Popover,Radio, RadioGroup,RadioButton } from 'element-ui';
 import {Table, TableColumn } from 'element-ui'
 import {Aside,  Menu,Submenu,MenuItem,MenuItemGroup} from 'element-ui'
 import {Avatar} from 'element-ui'
@@ -32,6 +32,7 @@ import {Tabs,TabPane} from 'element-ui'
 import {Switch} from 'element-ui'
 import {Col,Row,Tree,Button} from 'element-ui'
 import {Dialog,Form,FormItem , Select,Option ,Divider,ButtonGroup,MessageBox,Message} from 'element-ui'
+import {Autocomplete} from 'element-ui'
 /**
  * You can register global components here and use them as a plugin in your main Vue instance
  */
@@ -83,6 +84,10 @@ Vue.use(Select)
 Vue.use(Option)
 Vue.use(Divider)
 Vue.use(ButtonGroup)
+Vue.use(Autocomplete)
+Vue.use(Radio)
+Vue.use(RadioGroup)
+Vue.use(RadioButton)
 
 
 

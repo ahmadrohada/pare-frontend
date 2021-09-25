@@ -64,8 +64,8 @@ export default {
         renjaId: "",
       },
       options: [],
-        value: '',
-        rules: {
+      value: '',
+      rules: {
           label: [
             { required: true, message: 'Please input Label name', trigger: 'blur' }
           ]

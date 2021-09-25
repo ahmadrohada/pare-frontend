@@ -5,6 +5,11 @@
         @reloadTree="reloadTree"
         >
     </add-tim-kerja>
+    <add-pejabat 
+        ref="addPejabatTimKerja"
+        @reloadTree="reloadTree"
+        >
+    </add-pejabat>
     <div class="col-md-4 content">
       <pare-loader ref="loaderLeft"></pare-loader>
       <card style="min-height:340px;">
@@ -100,7 +105,12 @@
         <md-tabs class="md-vue md_user">
           <md-tab id="tab-pejabat" md-label="Pejabat">
 
-            <md-button style="height:28px;margin-left:-1px; font-size:11px; background:#009168;" class="md-dense  btn-block md-raised md-primary"><span class="fa fa-plus"></span> Tambah Pejabat</md-button>
+            <md-button 
+                style="height:28px;margin-left:-1px; font-size:11px; background:#009168;" 
+                class="md-dense  btn-block md-raised md-primary"
+                @click="addPejabatTimKerja(timKerja)"
+            ><span class="fa fa-plus"></span> Tambah Pejabat ( {{timKerja.label}} )
+            </md-button>
 
             <md-card
               class="md-primary md_user"
@@ -182,11 +192,17 @@
 
 import PareLoader from '~/components/Loader/PareLoader.vue';
 import AddTimKerja from '~/components/Modal/AddTimKerja.vue';
+import AddPejabat from '~/components/Modal/AddPejabatTimKerja.vue';
 
 export default {
   name: 'tim_kerja',
   middleware: 'auth',
   layout:'renjaLayout',
+  components:{
+    PareLoader,
+    AddTimKerja,
+    AddPejabat
+  },
   head() {
     return {
       title: "Tim Kerja",
@@ -215,10 +231,6 @@ export default {
         
       
     };
-  },
-  components:{
-    PareLoader,
-    AddTimKerja
   },
   async asyncData({ params ,$axios }) {
       const renja_id = params.id
@@ -327,7 +339,11 @@ export default {
               this.$refs.loaderRight.finish() 
             }, 500);
           })
-    }
+    },
+    addPejabatTimKerja(data) {
+        console.log(data);
+        this.$refs.addPejabatTimKerja.showModal(data); 
+    },
     
   },
   mounted() {

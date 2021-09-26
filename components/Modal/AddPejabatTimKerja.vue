@@ -1,5 +1,5 @@
 <template>
-    <modal :show.sync="modalFormVisible">
+    <modal :show.sync="modalFormVisible" >
     <pare-loader ref="loader"></pare-loader>
     <template slot="header">
       <h4 class="modal-title" id="exampleModalLabel">Add Pejabat Tim Kerja</h4>
@@ -22,10 +22,10 @@
         </el-form-item>
 
         <label>Pejabat</label>
-        <el-form-item  prop="pejabat" >
+        <el-form-item  prop="namaPejabat" >
           <el-autocomplete
             class="inline-input"
-            v-model="PejabatTimKerjaForm.pejabat"
+            v-model="PejabatTimKerjaForm.namaPejabat"
             :fetch-suggestions="querySearch"
             placeholder="Input nama pejabat"
             :trigger-on-focus="false"
@@ -36,10 +36,10 @@
         </el-form-item>
 
         <label>Jabatan</label>
-        <el-form-item  prop="jabatan" >
+        <el-form-item  prop="jabatanId" >
           <el-select 
-            v-model="PejabatTimKerjaForm.jabatan" 
-            v-on:change="onPilihJabatan($event)"  
+            v-model="PejabatTimKerjaForm.jabatanId" 
+            @change="onPilihJabatan($event)"  
             placeholder="Pilih Jabatan"
             :disabled="disabledSelect"
             >
@@ -83,15 +83,15 @@ export default {
         timKerjaId: "",
         renjaId: "",
         userId: "",
-        jabatan:"",
+        jabatanId:"",
       },
       jabatans: [],
         value: '',
         rules: {
-          pejabat: [
+          namaPejabat: [
             { required: true, message: 'Silakan pilih pejabat', trigger: 'blur' }
           ],
-          jabatan: [
+          jabatanId: [
             { required: true, message: 'Silakan pilih jabatan', trigger: 'blur' }
           ]
       },
@@ -100,6 +100,7 @@ export default {
   },
   methods: {
     showModal: function (data) {
+      this.clearPejabatJabatan()
       const tim_kerja= data
       this.$refs.loader.start() 
       this.modalFormVisible = true;
@@ -134,12 +135,14 @@ export default {
             if ( resp.length == 0 ){
               this.$message({
                 type: 'warning',
-                message: 'Data Jabatan tidak ditemukan'
+                message: 'Data Jabatan tidak ditemukan',
+                duration:2300,
               });   
             }else{
+              this.$refs.PejabatTimKerjaForm.clearValidate()
               this.disabledSelect = false
               this.jabatans =  resp;
-              this.PejabatTimKerjaForm.jabatan = resp[0].value
+              this.PejabatTimKerjaForm.jabatanId = resp[0].value
             }
 
            
@@ -155,12 +158,13 @@ export default {
     },
     clearPejabatJabatan(){
       this.$refs.PejabatTimKerjaForm.clearValidate()
-      this.PejabatTimKerjaForm.jabatan = null;
+      this.PejabatTimKerjaForm.jabatanId = null;
       this.jabatans = null;
       this.disabledSelect = true
       
     },
     onPilihJabatan(data){
+      console.log(data)
 
     },
     submitForm(formName) {
@@ -168,11 +172,15 @@ export default {
         
         this.$refs[formName].validate((valid) => {
           if (valid) {
-           this.$axios
+            this.$refs.loader.start() 
+            this.$axios
                     .$post("/add_pejabat_tim_kerja", this.PejabatTimKerjaForm )
                     .then((response) => {
-                      this.$refs[formName].resetFields();
-                      this.modalFormVisible = false;
+                      this.$emit('getPejabatList', this.PejabatTimKerjaForm.timKerjaId )
+                      this.$refs.loader.finish()
+                      setTimeout(() => {
+                        this.resetForm('PejabatTimKerjaForm')
+                      }, 200);
                     })
                     .catch((errors) => {
                       console.log(errors);
@@ -199,5 +207,9 @@ export default {
 <style>
 .el-select .el-input:hover .el-input__icon, .el-select .el-input:hover input {
     color: rgb(90, 99, 100);
+}
+
+.modal .modal-header .close {
+    visibility: hidden;
 }
 </style>

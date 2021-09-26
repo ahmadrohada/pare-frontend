@@ -7,9 +7,13 @@
     </add-tim-kerja>
     <add-pejabat 
         ref="addPejabatTimKerja"
-        @reloadTree="reloadTree"
+        @getPejabatList="getPejabatList"
         >
     </add-pejabat>
+    <add-rencana-kinerja 
+        ref="addRencanaKinerja"
+        >
+    </add-rencana-kinerja>
     <div class="col-md-4 content">
       <pare-loader ref="loaderLeft"></pare-loader>
       <card style="min-height:340px;">
@@ -111,7 +115,7 @@
                 @click="addPejabatTimKerja(timKerja)"
             ><span class="fa fa-plus"></span> Tambah Pejabat ( {{timKerja.label}} )
             </md-button>
-
+            <hr>
             <md-card
               class="md-primary md_user"
               v-for="{id, jabatan, nama_lengkap,nip,photo} in pejabatList" :key="id"
@@ -137,7 +141,7 @@
                 </md-card-header-text>
                 <md-button
                   class="md-icon-button md-raised md-accent pegawai_btn"
-                  @click="hapusPejabatRenja(id)"
+                  @click="hapusPejabatTimKerja(id)"
                   
                 >
                   <span class="fa fa-user-times"></span>
@@ -155,29 +159,51 @@
                   <img src="~/static/img/not_user.png" class="user_img" />
                 </md-card-media>
                 <md-card-header-text style="text-align: center; margin-top: 15px">
-                  <div class="md-title">Detail Pejabat tidak ditemukan</div>
+                  <div class="md-title">Pejabat Belum Ditambahkan pada Tim Kerja Ini</div>
                   <div class="md-subhead"></div>
                 </md-card-header-text>
               </md-card-header>
             </md-card>
           </md-tab>
-          <md-tab id="tab-rencana_kerja" md-label="Rencana Kerja">
-            <md-button style="height:28px;margin-left:-1px; font-size:11px;background:#009168;" class="md-dense  btn-block md-raised md-primary"><span class="fa fa-plus"></span> Tambah Rencana Kinerja</md-button>
+          <md-tab id="tab-rencana_kinerja" md-label="Rencana Kinerja">
+            <md-button 
+                style="height:28px;margin-left:-1px; font-size:11px; background:#009168;" 
+                class="md-dense  btn-block md-raised md-primary"
+                @click="addRencanaKinerjaTimKerja(timKerja)"
+            ><span class="fa fa-plus"></span> Tambah Rencana Kinerja ( {{timKerja.label}} )
+            </md-button>
+            <hr>
             <el-table
-                      :data="rencanaKinerjaList"
-                      highlight-current-row
-                      style="width: 100%">
-                      <el-table-column
-                        prop="label"
-                        label="Rencana Kinerja"
-                        width="">
-                      </el-table-column>
-                      <el-table-column
-                        prop="added_by"
-                        label="Added By"
-                        width="120">
-                      </el-table-column>
-                    </el-table>
+              :data="rencanaKinerjaList"
+              highlight-current-row
+              style="width: 100%"
+              >
+              <el-table-column
+                prop="label"
+                label="Rencana Kinerja"
+              >
+              </el-table-column>
+
+              <el-table-column width="150" header-align="right" label="Actions">
+                <template slot-scope="scope">
+                  <div class="text-right">
+                    <el-button-group >
+                      <el-button size="mini" type="success" @click="editRencanaKinerja(scope.row.id)">
+                        <span class="el-icon-edit">
+                           <md-tooltip md-direction="top">Edit Rencana Kinerja</md-tooltip>
+                        </span>
+                      </el-button>
+                      
+                      <el-button size="mini" type="success" @click="hapusRencanaKinerja(scope.row)">
+                        <span class="el-icon-delete">
+                           <md-tooltip md-direction="top">Hapus Rencana Kinerja</md-tooltip>
+                        </span>
+                      </el-button>
+                    </el-button-group>
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
           </md-tab>
         </md-tabs>
 
@@ -193,6 +219,7 @@
 import PareLoader from '~/components/Loader/PareLoader.vue';
 import AddTimKerja from '~/components/Modal/AddTimKerja.vue';
 import AddPejabat from '~/components/Modal/AddPejabatTimKerja.vue';
+import AddRencanaKinerja from '~/components/Modal/addRencanaKinerjaTimKerja.vue';
 
 export default {
   name: 'tim_kerja',
@@ -201,7 +228,8 @@ export default {
   components:{
     PareLoader,
     AddTimKerja,
-    AddPejabat
+    AddPejabat,
+    AddRencanaKinerja
   },
   head() {
     return {
@@ -341,9 +369,70 @@ export default {
           })
     },
     addPejabatTimKerja(data) {
-        console.log(data);
+        
         this.$refs.addPejabatTimKerja.showModal(data); 
     },
+    hapusPejabatTimKerja(id) {
+
+      this.$confirm('Ini akan menghapus Pejabat Tim Kerja,  lanjutkan?', 'Konfirmasi', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Batal',
+          type: 'warning'
+        }).then(() => {
+          this.$axios
+            .$delete("/hapus_pejabat_tim_kerja?id="+id)
+            .then((resp) => {
+               
+                this.getPejabatList(resp.tim_kerja_id)
+                //console.log(resp)
+                this.$message({
+                  type: 'success',
+                  message: 'Berhasil dihapus'
+                });
+            })
+
+          
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled'
+          });          
+        });
+
+    },
+    addRencanaKinerjaTimKerja(data) {
+      this.$refs.addRencanaKinerja.headerText = 'Create Rencana Kinerja';
+      this.$refs.addRencanaKinerja.showModal(data); 
+    },
+    editRencanaKinerja(id){
+      //console.log(id)
+      this.$refs.addRencanaKinerja.headerText = 'Edit Rencana Kinerja';
+      this.$refs.addRencanaKinerja.showModal(id); 
+    },
+    hapusRencanaKinerja(data){
+      console.log(data)
+      /* this.$confirm('Hapus Rencana Kinerja,  lanjutkan?', 'Konfirmasi', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Batal',
+          type: 'warning'
+        }).then(() => {
+          this.$axios
+            .$delete("/hapus_rencana_kinerja?id="+id)
+            .then((resp) => {
+                //console.log(resp)
+                this.$message({
+                  type: 'success',
+                  message: 'Berhasil dihapus'
+                });
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled'
+          });          
+        }); */
+    }
+    
     
   },
   mounted() {

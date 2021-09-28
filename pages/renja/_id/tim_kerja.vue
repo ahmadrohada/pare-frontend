@@ -12,6 +12,7 @@
     </add-pejabat>
     <add-rencana-kinerja 
         ref="addRencanaKinerja"
+        @getPejabatList="getPejabatList"
         >
     </add-rencana-kinerja>
     <div class="col-md-4 content">
@@ -402,6 +403,8 @@ export default {
     },
     addRencanaKinerjaTimKerja(data) {
       this.$refs.addRencanaKinerja.headerText = 'Create Rencana Kinerja';
+      this.$refs.addRencanaKinerja.timKerjaLabel = this.timKerja.label;
+      
       this.$refs.addRencanaKinerja.showModal(data); 
     },
     editRencanaKinerja(id){

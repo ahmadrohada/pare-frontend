@@ -30,7 +30,7 @@
             placeholder="Input nama pejabat"
             :trigger-on-focus="false"
             @select="handleSelect"
-            clearable="true"
+            :clearable="true"
             @clear="clearPejabatJabatan"
           ></el-autocomplete>
         </el-form-item>

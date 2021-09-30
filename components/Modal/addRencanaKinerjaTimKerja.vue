@@ -12,25 +12,29 @@
         size="mini"
       >
         <input v-model="RencanaKinerjaTimKerjaForm.timKerjaId" hidden></input>
+         <input v-model="RencanaKinerjaTimKerjaForm.rencanaKinerjaId" hidden></input>
        
-        <label>Rencana Kinerja Atasan</label>
-        <el-form-item  prop="rencanaKinerjaAtasanId" >
-          <el-select 
-            v-model="RencanaKinerjaTimKerjaForm.rencanaKinerjaAtasanId" 
-            placeholder="Pilih Rencana Kinerja Atasan"
-            >
-            <el-option
-              v-for="item in rencanaKinerjaAtasan"
-              :selected="item.id"
-              :key="item.value"
-              :label="item.label"
-              :value="item.id"
-              
-             
+        <div v-if="selectVisible">
+          <label>Rencana Kinerja Atasan</label>
+          <el-form-item  prop="rencanaKinerjaAtasanId" >
+            <el-select 
+              v-model="RencanaKinerjaTimKerjaForm.rencanaKinerjaAtasanId" 
+              placeholder="Pilih Rencana Kinerja Atasan"
               >
-            </el-option>
-          </el-select>
-        </el-form-item>
+              <el-option
+                v-for="item in rencanaKinerjaAtasan"
+                :selected="item.id"
+                :key="item.label"
+                :label="item.label"
+                :value="item.id"
+                
+              
+                >
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </div>
+        
 
         <label>Rencana Kinerja -  {{timKerjaLabel}}</label>
         <el-form-item     prop="rencanaKinerjaLabel">
@@ -40,8 +44,11 @@
 
 
         <el-form-item size="mini" style="margin-top:20px;">
-          <el-button type="primary"  :loading="submitLoader" @click="submitForm('RencanaKinerjaTimKerjaForm')"
-            >Submit</el-button
+          <el-button v-if="formType=='create'" type="primary"  :loading="submitLoader" @click="saveForm('RencanaKinerjaTimKerjaForm')"
+            >Save</el-button
+          >
+          <el-button v-if="formType=='edit'" type="primary"  :loading="submitLoader" @click="updateForm('RencanaKinerjaTimKerjaForm')"
+            >Update</el-button
           >
           <el-button @click="resetForm('RencanaKinerjaTimKerjaForm')">Tutup</el-button>
         </el-form-item>
@@ -59,6 +66,9 @@ export default {
   },
   data() {
     return {
+
+      formType: 'create',
+      selectVisible:true,
       submitLoader:false,
       headerText:'Rencana Kinerja Form',
       timKerjaLabel:'',
@@ -66,6 +76,7 @@ export default {
       rencanaKinerjaAtasan:[],
       RencanaKinerjaTimKerjaForm: {
         rencanaKinerjaAtasanId: "",
+        rencanaKinerjaId:"",
         rencanaKinerjaLabel:"",
         timKerjaId: ""
       },
@@ -81,26 +92,73 @@ export default {
     };
   },
   methods: {
-    showModal(data) {
-        this.$axios
-          .$get("/tim_kerja_rencana_kinerja_parent?parent_id="+data.parent_id)
-          .then((resp) => {
-            this.rencanaKinerjaAtasan =  resp.rencana_kinerja;
-            this.RencanaKinerjaTimKerjaForm.rencanaKinerjaAtasanId = resp.rencana_kinerja[0].id // pilih data ke 1
-            this.RencanaKinerjaTimKerjaForm.timKerjaId = data.id;
-            this.modalFormVisible = true;
-           setTimeout(() => {
-             this.$refs.loader.finish() 
-          }, 200);
-        }) 
-    
+    rencanaKinerjaAtasanList(id,selectedId){
+        //jika ketua , maka list rencana kinerja atasan nya null
+        if ( id == 0 ){
+          this.rencanaKinerjaAtasan = [{ id: 0, label: null }]
+          this.RencanaKinerjaTimKerjaForm.rencanaKinerjaAtasanId = 0 // pilih data ke 1
+          this.selectVisible = false
+          
+        }else{
+          const isSelect = selectedId
+          this.$axios
+            .$get("/tim_kerja_rencana_kinerja_parent?parent_id="+id)
+            .then((resp) => {
+              this.selectVisible = true
+              this.rencanaKinerjaAtasan =  resp.rencana_kinerja;
+              if ( isSelect == 0 ){
+                this.RencanaKinerjaTimKerjaForm.rencanaKinerjaAtasanId = resp.rencana_kinerja[0].id // pilih data ke 1
+              }else{
+                this.RencanaKinerjaTimKerjaForm.rencanaKinerjaAtasanId = isSelect
+              }
+              
+              
+              
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 200);
+          }) 
+        }
     },
-    submitForm(formName) {
+    showModalAdd(data) {
+        this.rencanaKinerjaAtasanList(data.parent_id,0)
+        this.RencanaKinerjaTimKerjaForm.timKerjaId = data.id;
+        this.modalFormVisible = true;
+    },
+    showModalEdit(id) {
+
+      this.$axios
+          .$get("/rencana_kinerja?id="+id )
+          .then((resp) => {
+            //console.log(resp)
+            if ( resp.parent == null ){
+              this.rencanaKinerjaAtasanList(0,0)
+              
+            }else{
+              this.rencanaKinerjaAtasanList(resp.parent.tim_kerja_id,resp.parent.id)
+            }
+            this.RencanaKinerjaTimKerjaForm.rencanaKinerjaLabel = resp.label
+            this.RencanaKinerjaTimKerjaForm.rencanaKinerjaId = id
+            this.RencanaKinerjaTimKerjaForm.timKerjaId = resp.tim_kerja_id
+            this.modalFormVisible = true;
+            
+          })
+          .catch((errors) => {
+            this.$message({
+              type: 'warning',
+              message: 'terjadi kesalahan'
+            }); 
+          }); 
+
+      //this.modalFormVisible = true;
+       
+    },
+    saveForm(formName) {
       this.$refs[formName].validate((valid) => {
           if (valid) {
             this.submitLoader = true
             this.$axios
-                    .$post("/create_rencana_kinerja", this.RencanaKinerjaTimKerjaForm )
+                    .$post("/rencana_kinerja", this.RencanaKinerjaTimKerjaForm )
                     .then((response) => {
                       this.$emit('getPejabatList', this.RencanaKinerjaTimKerjaForm.timKerjaId )
                       setTimeout(() => {
@@ -108,6 +166,39 @@ export default {
                         this.$message({
                           type: 'info',
                           message: 'berhasil menyimpan data'
+                        }); 
+                      }, 200);
+                    })
+                    .catch((errors) => {
+                      this.submitLoader = false
+                      console.log(errors);
+                      this.$message({
+                        type: 'warning',
+                        message: 'terjadi kesalahan'
+                      }); 
+                    }); 
+
+
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+      });
+        
+    },
+    updateForm(formName) {
+      this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.submitLoader = true
+            this.$axios
+                    .$put("/rencana_kinerja", this.RencanaKinerjaTimKerjaForm )
+                    .then((response) => {
+                      this.$emit('getPejabatList', this.RencanaKinerjaTimKerjaForm.timKerjaId )
+                      setTimeout(() => {
+                        this.resetForm('RencanaKinerjaTimKerjaForm')
+                        this.$message({
+                          type: 'info',
+                          message: 'Rencana Kinerja berhasil diubah'
                         }); 
                       }, 200);
                     })

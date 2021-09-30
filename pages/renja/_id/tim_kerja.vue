@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+    <pare-loader ref="loaderPage"></pare-loader>
     <add-tim-kerja 
         ref="addTimKerja"
         @reloadTree="reloadTree"
@@ -189,13 +190,13 @@
                 <template slot-scope="scope">
                   <div class="text-right">
                     <el-button-group >
-                      <el-button size="mini" type="success" @click="editRencanaKinerja(scope.row.id)">
+                      <el-button size="mini" type="success" @click="editRencanaKinerja(scope.row)">
                         <span class="el-icon-edit">
                            <md-tooltip md-direction="top">Edit Rencana Kinerja</md-tooltip>
                         </span>
                       </el-button>
                       
-                      <el-button size="mini" type="success" @click="hapusRencanaKinerja(scope.row)">
+                      <el-button v-if="scope.row.child_count < 1" size="mini" type="success" @click="hapusRencanaKinerja(scope.row)">
                         <span class="el-icon-delete">
                            <md-tooltip md-direction="top">Hapus Rencana Kinerja</md-tooltip>
                         </span>
@@ -402,27 +403,44 @@ export default {
 
     },
     addRencanaKinerjaTimKerja(data) {
+      //console.log(data)
+      this.$refs.loaderPage.start()
+      this.$refs.addRencanaKinerja.resetForm('RencanaKinerjaTimKerjaForm')
       this.$refs.addRencanaKinerja.headerText = 'Create Rencana Kinerja';
-      this.$refs.addRencanaKinerja.timKerjaLabel = this.timKerja.label;
+      this.$refs.addRencanaKinerja.timKerjaLabel = data.label;
+      this.$refs.addRencanaKinerja.formType = 'create';
+      setTimeout(() => {
+        this.$refs.loaderPage.finish() 
+        this.$refs.addRencanaKinerja.showModalAdd(data); 
+      }, 800);
       
-      this.$refs.addRencanaKinerja.showModal(data); 
     },
-    editRencanaKinerja(id){
-      //console.log(id)
+    editRencanaKinerja(data){
+      //console.log(data)
+      this.$refs.loaderPage.start()
+      this.$refs.addRencanaKinerja.resetForm('RencanaKinerjaTimKerjaForm')
       this.$refs.addRencanaKinerja.headerText = 'Edit Rencana Kinerja';
-      this.$refs.addRencanaKinerja.showModal(id); 
+      this.$refs.addRencanaKinerja.timKerjaLabel = data.tim_kerja.label;
+      this.$refs.addRencanaKinerja.formType = 'edit';
+      
+      setTimeout(() => {
+        this.$refs.loaderPage.finish() 
+        
+      }, 800);
+      this.$refs.addRencanaKinerja.showModalEdit(data.id); 
+      
     },
     hapusRencanaKinerja(data){
       console.log(data)
-      /* this.$confirm('Hapus Rencana Kinerja,  lanjutkan?', 'Konfirmasi', {
+      this.$confirm('Hapus Rencana Kinerja,  lanjutkan?', 'Konfirmasi', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Batal',
           type: 'warning'
         }).then(() => {
           this.$axios
-            .$delete("/hapus_rencana_kinerja?id="+id)
+            .$delete("/rencana_kinerja?id="+data.id)
             .then((resp) => {
-                //console.log(resp)
+                this.getPejabatList(data.tim_kerja.id )
                 this.$message({
                   type: 'success',
                   message: 'Berhasil dihapus'
@@ -433,7 +451,7 @@ export default {
             type: 'info',
             message: 'Delete canceled'
           });          
-        }); */
+        }); 
     }
     
     

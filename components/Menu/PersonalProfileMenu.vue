@@ -44,6 +44,15 @@
         <i class="el-icon-user"></i>
         <span>Profile</span>
       </el-menu-item>
+       <el-badge :value="notifikasi_renja" class="item" type="warning">
+        <el-menu-item 
+        index="/personal/renja"
+        :route="{path: '/personal/renja'}"
+       >
+          <i class="el-icon-data-board"></i>
+          <span>Renja</span>
+      </el-menu-item>
+       </el-badge>
       <el-submenu index="1" disabled>
         <template slot="title"
           ><i class="el-icon-document-copy"></i>SKP</template
@@ -71,7 +80,7 @@
 
 <script>
 export default {
-  props: ["nama_lengkap", "photo_url","nip_pegawai" ],
+  props: ["nama_lengkap", "photo_url","nip_pegawai","notifikasi_renja" ],
   name: "PersonalProfileMenu",
   data() {
     return {

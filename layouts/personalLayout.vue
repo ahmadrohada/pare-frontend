@@ -11,6 +11,7 @@
           :nama_lengkap="namaLengkap"
           :photo_url="photoUrl"
           :nip_pegawai="nipPegawai"
+          :notifikasi_renja="notifikasiRenja"
           ></personal-menu>
     </side-bar> 
     
@@ -74,6 +75,7 @@
         sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
         laoding:true,
         overlay:true,
+        notifikasiRenja:'-',
       };
     },
     computed: {

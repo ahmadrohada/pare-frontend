@@ -69,6 +69,7 @@
                   v-else
                   disabled
                   >
+                  <i class="fa fa-arrow-down"></i>
                 </el-button>
 
                 
@@ -90,6 +91,7 @@
                   v-else
                   disabled
                   >
+                  <i class="fa fa-times"></i>
                 </el-button>
             </span>
           </span>
@@ -269,7 +271,7 @@ export default {
   }, 
   methods: {
     reloadTree(nodeData){
-      //console.log(nodeData.new)
+      console.log(nodeData.old)
       const data = nodeData.old
       if (!data.child) {
         this.$set(data, 'child', []);
@@ -348,12 +350,19 @@ export default {
                   message: 'Berhasil dihapus'
                 });
             })
+            .catch((error) => {
+              //console.log(error.response.data.message)
+              this.$message({
+                type: 'error',
+                message: error.response.data.message
+              });          
+            });
 
           
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: 'Delete canceled'
+            message: 'Proses Hapus Dibatalkan'
           });          
         });
     },
@@ -397,7 +406,7 @@ export default {
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: 'Delete canceled'
+            message: 'Proses Hapus Dibatalkan'
           });          
         });
 
@@ -446,6 +455,13 @@ export default {
                   message: 'Berhasil dihapus'
                 });
             })
+            .catch((error) => {
+              //console.log(error.response.data.message)
+              this.$message({
+                type: 'error',
+                message: error.response.data.message
+              });          
+            });
         }).catch(() => {
           this.$message({
             type: 'info',

@@ -2,6 +2,9 @@ export const getters = {
     user(state) {
       return state.auth.user
     },
+    user_id(state) {
+      return state.auth.user.id
+    },
     nip(state) {
       return ( state.auth.user ) ? ( state.auth.user.nip ) : null  
     },

@@ -28,11 +28,21 @@ export default {
     };
   },
   methods: {
+    routing(renja_id){
+      if ( renja_id != 'undefined'){
+        this.$router.push(`/renja/${renja_id}/tim_kerja`);
+      }else{
+        this.$router.push(`/error`);
+      }
+      
+
+    }
     
     
   },
   mounted() {
-    this.$router.push(`/renja/${this.$route.params.id}/tim_kerja`);
+    this.routing(this.$route.params.id)
+    //this.$router.push(`/renja/${this.$route.params.id}/tim_kerja`);
     
   },
 };

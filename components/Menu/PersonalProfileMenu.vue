@@ -46,11 +46,11 @@
       </el-menu-item>
        <el-badge :value="notifikasi_renja" class="item" type="warning">
         <el-menu-item 
-        index="/personal/renja"
-        :route="{path: '/personal/renja'}"
+        index="/personal/tim_kerja"
+        :route="{path: '/personal/tim_kerja'}"
        >
           <i class="el-icon-data-board"></i>
-          <span>Renja</span>
+          <span>Tim Kerja</span>
       </el-menu-item>
        </el-badge>
       <el-submenu index="1" disabled>

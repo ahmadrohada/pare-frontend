@@ -1,14 +1,5 @@
 <template>
-  <card style="min-height:500px;">
-    <pare-loader ref="loader"></pare-loader>
-    <template slot="header" class="d-inline">
-      <h4 class="title d-inline">Personal Renja</h4>
-      <p class="card-category d-inline"></p>
-    </template>
 
-     index
-    
-  </card>
 </template>
 
 
@@ -18,7 +9,7 @@ import PareLoader from '~/components/Loader/PareLoader.vue';
 export default {
   name: "renjaIndex",
   middleware: ['auth'],
-  layout: "personalLayout",
+  layout: "personalRenjaLayout",
   components:{
     PareLoader,
   },
@@ -28,10 +19,20 @@ export default {
     };
   },
   methods: {
+    routing(renja_id){
+      if ( renja_id != 'undefined'){
+        this.$router.push(`/personal/tim_kerja/${renja_id}/bawahan`);
+      }else{
+        this.$router.push(`/error`);
+      }
+      
+
+    }
     
     
   },
   mounted() {
+    this.routing(this.$route.params.id)
     //this.$router.push(`/renja/${this.$route.params.id}/tim_kerja`);
     
   },

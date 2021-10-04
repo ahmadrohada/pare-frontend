@@ -2,20 +2,20 @@
   <card style="min-height:500px;">
     <pare-loader ref="loader"></pare-loader>
     <template slot="header" class="d-inline">
-      <h4 class="title d-inline">RENJA</h4>
-      <p class="card-category d-inline">PERSONAL</p>
+      <h4 class="title d-inline">TIM KERJA</h4>
+      <p class="card-category d-inline">PERSONAL RENJA</p>
     </template>
 
      <div class="table-full-width table-responsive">
-      <tabel-renja
+      <tabel-tim-kerja
         :tableData="data"
         :total="total"
-        v-on:viewRenja="viewRenja"
+        v-on:viewPersonalTimKerja="viewPersonalTimKerja"
         v-on:handlePaging="paging"
         :current-page.sync="currentPage"
         :layout="layout"
       >
-      </tabel-renja>
+      </tabel-tim-kerja>
     </div>
   </card>
 </template>
@@ -23,7 +23,7 @@
 
 <script>
 import PareLoader from '~/components/Loader/PareLoader.vue';
-import TabelRenja from "~/components/DataTables/TabelPersonalRenja.vue";
+import TabelTimKerja from "~/components/DataTables/TabelTimKerja.vue";
 import { mapGetters } from 'vuex'
 
 export default {
@@ -32,7 +32,7 @@ export default {
   layout: 'personalLayout',
   components:{
     PareLoader,
-    TabelRenja  
+    TabelTimKerja  
   },
   data() {
     return {
@@ -53,10 +53,10 @@ export default {
       })
   },
   methods: {
-    viewRenja: function(data) {
+    viewPersonalTimKerja: function(id) {
       //alert(data.id);
       this.$refs.loader.start()
-      this.$router.push("/renja/"+data.renja_id);
+      this.$router.push("/personal/tim_kerja/"+id);
     },
     paging: function(params) {
       this.$refs.loader.start() 

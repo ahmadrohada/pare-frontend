@@ -5,20 +5,27 @@
         :data="tableData"
         :default-sort = "{prop: 'jabatan_referensi_id', order: 'asc'}"
         >
-        <el-table-column min-width="60" prop="tim_kerja.renja.periode" label="PERIODE"></el-table-column>
-        <el-table-column min-width="340" prop="jabatan" label="JABATAN"></el-table-column>
-        <el-table-column min-width="120" prop="tim_kerja.label" label="TIM KERJA"></el-table-column>
-        <el-table-column min-width="" prop="tim_kerja.renja.status" label="STATUS"></el-table-column>
+        <el-table-column min-width="87" prop="tim_kerja.renja.periode" label="PERIODE"></el-table-column>
+        <el-table-column min-width="350" label="PERAN DAN JABATAN">
+          <template slot-scope="props">
+            <div style="padding:0px !important;">
+              <span style="margin-top:-6px; color:black;" class="">{{props.row.tim_kerja.label}}</span><br>
+              <span style="margin-top:-6px; color:#696969;" class="text-muted">{{props.row.jabatan}}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="320" prop="tim_kerja.renja.nama_skpd" label="SKPD"></el-table-column>
         
-        <el-table-column min-width="60" header-align="right" label="">
+        
+        <el-table-column min-width="80" header-align="center" label="AKSI">
           <template slot-scope="{ row }">
-            <div class="text-right">
+            <div class="text-center">
               <el-tooltip content="Lihat Data" :open-delay="300" placement="top">
                 <base-button
                   type="info"
                   size="sm"
                   icon
-                  v-on:click="$emit('viewRenja', row)"
+                  v-on:click="$emit('viewPersonalTimKerja', row.tim_kerja.id)"
                 >
                   <i class="el-icon-right"></i>
                 </base-button>
@@ -64,7 +71,7 @@ export default {
         this.$emit("handleSizeChange", "?limit="+val);
     }, 
     formatter(row, column) {
-        return row.nip;
+        //return row.nip;
     }
   },
 };

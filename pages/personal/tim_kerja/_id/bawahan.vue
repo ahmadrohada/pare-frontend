@@ -265,8 +265,8 @@ export default {
     };
   },
   async asyncData({ params ,$axios }) {
-      const renja_id = params.id
-      return { renja_id }
+      const tim_kerja_id = params.id
+      return { tim_kerja_id }
 
   }, 
   methods: {
@@ -290,7 +290,7 @@ export default {
         this.$refs.loaderLeft.start()
         if (node.level === 0) {
           this.$axios
-          .$get("/tim_kerja_child?renja_id=1&parent_id=2")
+          .$get(`/tim_kerja_self?id=${this.tim_kerja_id}`)
           .then((resp) => {
             this.getPejabatList(resp[0].id)
             setTimeout(() => {
@@ -305,7 +305,7 @@ export default {
           //console.log(node.data.id);
           
           this.$axios
-          .$get("/tim_kerja_child?renja_id=1&parent_id="+node.data.id)
+          .$get("/tim_kerja_child?parent_id="+node.data.id)
           .then((resp) => {
               return resolve(resp)
           })

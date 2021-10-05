@@ -22,10 +22,10 @@
         @click="toggleSidebar"
       >
         
-       <renja-sub-menu
+       <personal-renja-sub-menu
           :index_1 = "index_1"
           :index_2 = "index_2"
-          ></renja-sub-menu>
+          ></personal-renja-sub-menu>
 
 
         <zoom-center-transition :duration="300" mode="out-in">
@@ -62,7 +62,7 @@
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
   import PersonalMenu from '~/components/Menu/PersonalMenu.vue';
-  import RenjaSubMenu from '~/components/Menu/RenjaSubMenu.vue';
+  import PersonalRenjaSubMenu from '~/components/Menu/PersonalRenjaSubMenu.vue';
 
   import { mapGetters } from 'vuex'
 
@@ -74,8 +74,8 @@
       DashboardContent,
       SlideYDownTransition,
       ZoomCenterTransition,
+      PersonalRenjaSubMenu,
       PersonalMenu,
-      RenjaSubMenu,
     },
     data() {
       return {
@@ -115,8 +115,8 @@
       }
     },
     async fetch() {
-      this.index_2 = "/renja/"+this.$route.params.id+"/skp";
-      this.index_1 = "/renja/"+this.$route.params.id+"/tim_kerja";
+      this.index_2 = "/personal/tim_kerja/"+this.$route.params.id+"/skp";
+      this.index_1 = "/personal/tim_kerja/"+this.$route.params.id+"/bawahan";
     },
     mounted() {
       this.initScrollbar();

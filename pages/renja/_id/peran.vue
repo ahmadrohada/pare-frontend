@@ -9,7 +9,7 @@
     <add-pejabat 
         ref="addPejabatTimKerja"
         @getPejabatList="getPejabatList"
-        >
+        > 
     </add-pejabat>
     <add-rencana-kinerja 
         ref="addRencanaKinerja"
@@ -17,6 +17,13 @@
         >
     </add-rencana-kinerja>
     <div class="col-md-4 content">
+
+        <v-treeview
+    activatable
+    :items="items"
+  ></v-treeview>
+
+
       <pare-loader ref="loaderLeft"></pare-loader>
       <card style="min-height:340px;">
         <template slot="header" class="d-inline">
@@ -114,10 +121,10 @@
           <md-tab id="tab-pejabat" md-label="Pejabat">
 
             <md-button 
-                style="height:28px;margin-left:-1px; font-size:11px; background:#009168;" 
-                class="md-dense  btn-block md-raised md-primary"
+                style="height:28px;margin-left:-1px; font-size:11px;" 
+                class="md-dense md-raised md-primary"
                 @click="addPejabatTimKerja(timKerja)"
-            ><span class="fa fa-plus"></span> Tambah Pejabat ( {{timKerja.label}} )
+            ><span class="fa fa-user-plus"></span> Tambah Pejabat ( {{timKerja.label}} )
             </md-button>
             <hr>
             <md-card
@@ -171,8 +178,8 @@
           </md-tab>
           <md-tab id="tab-rencana_kinerja" md-label="Rencana Kinerja">
             <md-button 
-                style="height:28px;margin-left:-1px; font-size:11px; background:#009168;" 
-                class="md-dense  btn-block md-raised md-primary"
+                style="height:28px;margin-left:-1px; font-size:11px;" 
+                class="md-dense md-raised md-primary"
                 @click="addRencanaKinerjaTimKerja(timKerja)"
             ><span class="fa fa-plus"></span> Tambah Rencana Kinerja ( {{timKerja.label}} )
             </md-button>

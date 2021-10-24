@@ -30,7 +30,7 @@ export default {
   methods: {
     routing(renja_id){
       if ( renja_id != 'undefined'){
-        this.$router.push(`/renja/${renja_id}/tim_kerja`);
+        this.$router.push(`/renja/${renja_id}/peran`);
       }else{
         this.$router.push(`/error`);
       }
@@ -42,7 +42,7 @@ export default {
   },
   mounted() {
     this.routing(this.$route.params.id)
-    //this.$router.push(`/renja/${this.$route.params.id}/tim_kerja`);
+    //this.$router.push(`/renja/${this.$route.params.id}/peran`);
     
   },
 };

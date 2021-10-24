@@ -20,21 +20,20 @@
     >
        <el-menu-item 
         :index="index_1"
-        :route="{path: `/personal/tim_kerja/${tim_kerja_id}/bawahan` }"
+        :route="{path: `/personal/tim_kerja/${tim_kerja_id}/peran` }"
        >
         <i class="fa fa-sitemap"></i>
         
-        <span>Bawahan</span>
+        <span>Peran</span>
       </el-menu-item>
-      <el-menu-item 
-        disabled
+     <!--  <el-menu-item 
         :index="index_2"
-        :route="{path: `/tim_kerja/${tim_kerja_id}/skp`}"
+        :route="{path: `/personal/tim_kerja/${tim_kerja_id}/matrik`}"
        >
        
         <i class="el-icon-data-board"></i>
-        <span>SKP</span>
-      </el-menu-item>
+        <span>MATRIK</span>
+      </el-menu-item> -->
        
     </el-menu>
   </div>

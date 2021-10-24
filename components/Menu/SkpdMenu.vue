@@ -28,14 +28,14 @@
       :router="true" 
       :default-active="activeLink"
     >
-      <el-menu-item 
+      <!-- <el-menu-item 
         index="/skpd"
         :route="{path: '/skpd'}"
        >
        
         <i class="el-icon-data-board"></i>
         <span>Dashboard</span>
-      </el-menu-item>
+      </el-menu-item> -->
       <el-menu-item 
         index="/skpd/user"
         :route="{path: '/skpd/user'}"

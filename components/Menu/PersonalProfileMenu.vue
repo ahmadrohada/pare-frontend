@@ -28,14 +28,14 @@
       :router="true" 
       :default-active="activeLink"
     >
-      <el-menu-item 
+      <!-- <el-menu-item 
         index="/personal"
         :route="{path: '/personal'}"
        >
        
         <i class="el-icon-data-board"></i>
         <span>Dashboard</span>
-      </el-menu-item>
+      </el-menu-item> -->
       <el-menu-item 
         index="/personal/profile"
         :route="{path: '/personal/profile'}"
@@ -46,11 +46,11 @@
       </el-menu-item>
        <el-badge :value="notifikasi_renja" class="item" type="warning">
         <el-menu-item 
-        index="/personal/tim_kerja"
-        :route="{path: '/personal/tim_kerja'}"
+        index="/personal/rencana_skp"
+        :route="{path: '/personal/rencana_skp'}"
        >
-          <i class="el-icon-data-board"></i>
-          <span>Tim Kerja</span>
+          <i class="el-icon-office-building"></i>
+          <span>Rencana SKP</span>
       </el-menu-item>
        </el-badge>
       <el-submenu index="1" disabled>

@@ -1,21 +1,27 @@
 <template>
   <card style="min-height:500px;">
+    <create-rencana-skp 
+      ref="ModalRencanaSKP"
+      style="min-height:450px;"
+    >
+    </create-rencana-skp>
+    
     <pare-loader ref="loader"></pare-loader>
     <template slot="header" class="d-inline">
-      <h4 class="title d-inline">TIM KERJA</h4>
-      <p class="card-category d-inline">PERSONAL RENJA</p>
+      <h4 class="title d-inline">Rencana SKP</h4>
+      <p class="card-category d-inline">PERSONAL</p>
     </template>
 
      <div class="table-full-width table-responsive">
-      <tabel-tim-kerja
+      <tabel-rencana-skp
         :tableData="data"
         :total="total"
-        v-on:viewPersonalTimKerja="viewPersonalTimKerja"
+        v-on:createRencanaSkp="createRencanaSkp"
         v-on:handlePaging="paging"
         :current-page.sync="currentPage"
         :layout="layout"
       >
-      </tabel-tim-kerja>
+      </tabel-rencana-skp>
     </div>
   </card>
 </template>
@@ -23,7 +29,8 @@
 
 <script>
 import PareLoader from '~/components/Loader/PareLoader.vue';
-import TabelTimKerja from "~/components/DataTables/TabelTimKerja.vue";
+import TabelRencanaSkp from "~/components/DataTables/TabelRencanaSkp.vue";
+import CreateRencanaSkp from '~/components/Modal/CreateRencanaSkp.vue';
 import { mapGetters } from 'vuex'
 
 export default {
@@ -32,7 +39,8 @@ export default {
   layout: 'personalLayout',
   components:{
     PareLoader,
-    TabelTimKerja  
+    TabelRencanaSkp,
+    CreateRencanaSkp
   },
   data() {
     return {
@@ -53,10 +61,17 @@ export default {
       })
   },
   methods: {
-    viewPersonalTimKerja: function(id) {
-      //alert(data.id);
-      this.$refs.loader.start()
-      this.$router.push("/personal/tim_kerja/"+id);
+    createRencanaSkp: function(id) {
+      
+      this.$axios
+        .$get("/create_rencana_skp?renja_pejabat_id="+id)
+        .then((resp) => {
+          this.$refs.ModalRencanaSKP.showModal(resp); 
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
     },
     paging: function(params) {
       this.$refs.loader.start() 

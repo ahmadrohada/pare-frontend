@@ -5,6 +5,14 @@
       <h4 class="title d-inline">Renja</h4>
       <p class="card-category d-inline">{{user.skpd.singkatan}}</p>
     </template>
+
+    <md-button 
+      style="height:28px;margin-left:-1px; font-size:11px;" 
+      class="md-dense md-raised md-primary"
+     
+    ><span class="fa fa-plus"></span> Create Renja
+    </md-button>
+
     <div class="table-full-width table-responsive">
       <tabel-renja
         :tableData="data"

@@ -17,10 +17,10 @@
         @click="toggleSidebar"
       >
         
-       <renja-sub-menu
+      <!--  <renja-sub-menu
           :index_1 = "index_1"
           :index_2 = "index_2"
-          ></renja-sub-menu>
+          ></renja-sub-menu> -->
 
 
         <zoom-center-transition :duration="300" mode="out-in">
@@ -103,8 +103,8 @@
       }
     },
     async fetch() {
-      this.index_2 = "/renja/"+this.$route.params.id+"/skp";
-      this.index_1 = "/renja/"+this.$route.params.id+"/tim_kerja";
+      this.index_2 = "/renja/"+this.$route.params.id+"/matrik";
+      this.index_1 = "/renja/"+this.$route.params.id+"/peran";
     },
     mounted() {
       this.initScrollbar();

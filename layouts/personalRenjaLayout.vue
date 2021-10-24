@@ -115,8 +115,8 @@
       }
     },
     async fetch() {
-      this.index_2 = "/personal/tim_kerja/"+this.$route.params.id+"/skp";
-      this.index_1 = "/personal/tim_kerja/"+this.$route.params.id+"/bawahan";
+      this.index_2 = "/personal/tim_kerja/"+this.$route.params.id+"/matrik";
+      this.index_1 = "/personal/tim_kerja/"+this.$route.params.id+"/peran";
     },
     mounted() {
       this.initScrollbar();

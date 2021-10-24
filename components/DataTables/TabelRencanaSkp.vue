@@ -6,7 +6,7 @@
         :default-sort = "{prop: 'jabatan_referensi_id', order: 'asc'}"
         >
         <el-table-column min-width="87" prop="tim_kerja.renja.periode" label="PERIODE"></el-table-column>
-        <el-table-column min-width="350" label="PERAN DAN JABATAN">
+        <el-table-column min-width="250" label="PERAN DAN JABATAN">
           <template slot-scope="props">
             <div style="padding:0px !important;">
               <span style="margin-top:-6px; color:black;" class="">{{props.row.tim_kerja.label}}</span><br>
@@ -14,22 +14,21 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column min-width="320" prop="tim_kerja.renja.nama_skpd" label="SKPD"></el-table-column>
+        <el-table-column min-width="380" prop="tim_kerja.renja.nama_skpd" label="SKPD"></el-table-column>
         
         
-        <el-table-column min-width="80" header-align="center" label="AKSI">
+        <el-table-column min-width="80" header-align="center" label="SKP">
           <template slot-scope="{ row }">
             <div class="text-center">
-              <el-tooltip content="Lihat Data" :open-delay="300" placement="top">
                 <base-button
                   type="info"
                   size="sm"
                   icon
-                  v-on:click="$emit('viewPersonalTimKerja', row.tim_kerja.id)"
+                  v-on:click="$emit('createRencanaSkp', row.id)"
                 >
-                  <i class="el-icon-right"></i>
+                  <md-tooltip md-direction="top">Create Rencana SKP</md-tooltip>
+                  <i class="el-icon-document-add"></i>
                 </base-button>
-              </el-tooltip>
             </div>
           </template>
         </el-table-column>

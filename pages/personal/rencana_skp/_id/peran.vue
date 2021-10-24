@@ -20,7 +20,8 @@
       <pare-loader ref="loaderLeft"></pare-loader>
       <card style="min-height:340px;">
         <template slot="header" class="d-inline">
-          <h4 class="title d-inline">TIM KERJA</h4>
+          <span class="fa fa-sitemap"></span>
+          <h4 class="title d-inline">Pembagian Peran</h4>
           <p class="card-category d-inline"></p>
           <!-- <el-tooltip content="Reload Data" :open-delay="50" placement="right"> -->
             <el-button 
@@ -226,7 +227,7 @@ import AddPejabat from '~/components/Modal/AddPejabatTimKerja.vue';
 import AddRencanaKinerja from '~/components/Modal/addRencanaKinerjaTimKerja.vue';
 
 export default {
-  name: 'tim_kerja',
+  name: 'peran',
   middleware: 'auth',
   layout:'personalRenjaLayout',
   components:{
@@ -237,7 +238,7 @@ export default {
   },
   head() {
     return {
-      title: "Tim Kerja",
+      title: "Tim Kerja - Peran",
       
     };
   },

@@ -21,7 +21,7 @@ export default {
   methods: {
     routing(renja_id){
       if ( renja_id != 'undefined'){
-        this.$router.push(`/personal/tim_kerja/${renja_id}/bawahan`);
+        this.$router.push(`/personal/tim_kerja/${renja_id}/peran`);
       }else{
         this.$router.push(`/error`);
       }

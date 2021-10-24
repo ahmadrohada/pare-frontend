@@ -1,6 +1,28 @@
 <template>
   <div>
-    <card class="card-user" style="margin-top:10px !important;height: 150px !important; background: transparent !important;">
+
+    <el-menu
+      background-color="transparent"
+      text-color="#fff"
+      active-text-color="#a38068"
+      :router="true" 
+      style="margin-top:10px;"
+    >
+      <el-menu-item 
+        index="/skpd/renja"
+        :route="{path: '/skpd/renja'}"
+       >
+       <strong>
+        <i class="el-icon-back"></i>
+        <span>List Renja</span>
+       </strong>
+       
+      </el-menu-item>
+      
+      <el-divider></el-divider>
+    </el-menu>
+    
+    <!-- <card class="card-user" style="margin-top:10px !important;height: 150px !important; background: transparent !important;">
       <div class="author">
          <img 
           src="~/static/img/bg_profile.png"
@@ -19,7 +41,10 @@
           </h5>
         </div>
       </div>
-    </card>
+    </card> -->
+
+   
+
     <el-menu
       :default-openeds="[]"
       background-color="transparent"
@@ -28,12 +53,26 @@
       :router="true" 
       :default-active="activeLink"
     >
-      <el-menu-item 
+      <!-- <el-menu-item 
         index="/skpd/renja"
         :route="{path: '/skpd/renja'}"
        >
         <i class="el-icon-data-board"></i>
         <span>List Renja</span>
+      </el-menu-item> -->
+      <el-menu-item 
+        index= "renja-id-peran___en"
+        :route="{path:`/renja/${renjaId}/peran`, name:'renja-id-peran___en'}"
+       >
+        <i class="el-icon-user"></i>
+        <span>Peran</span>
+      </el-menu-item>
+      <el-menu-item 
+        index= "renja-id-rencana_skp___en"
+        :route="{path:`/renja/${renjaId}/rencana_skp`, name:'renja-id-rencana_skp___en'}"
+       >
+        <i class="el-icon-data-board"></i>
+        <span>Rencana SKP</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -46,6 +85,7 @@ export default {
   data() {
     return {
       activeLink: null,
+      renjaId: null,
       logo:null,
     };
   },
@@ -54,7 +94,7 @@ export default {
   },
   watch: {
     $route (to, from) {
-      this.activeLink = to.path;
+      this.activeLink = to.name;
     }
   },
   mounted() {
@@ -66,12 +106,15 @@ export default {
         .catch((err) => {
           console.log(err);
         }); */
-    this.activeLink = this.$route.path; 
+    this.activeLink = this.$route.name; 
+    console.log(this.$route.name) 
+    this.renjaId = this.$route.params.id;
+
   },
 };
 </script>
 
-<style lang="scss">
+<style scoped>
  
   .el-menu{
     border-right: none !important;
@@ -84,6 +127,13 @@ export default {
     height: 40px !important;
     line-height: 40px !important;
     background-color: transparent !important;
+  }
+
+  .el-divider--horizontal {
+    margin: 5px -10px 5px 10px !important;
+    width: 90% !important;
+    height: 3px !important;
+    background-color: #34795F !important;
   }
 
   .bg_photo{

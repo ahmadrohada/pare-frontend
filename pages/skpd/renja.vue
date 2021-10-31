@@ -1,5 +1,11 @@
 <template>
   <card style="min-height:480px;">
+    <create-renja 
+      ref="ModalRenja"
+      style="min-height:350px;"
+    >
+    </create-renja>
+
     <pare-loader ref="loader"></pare-loader>
     <template slot="header" class="d-inline">
       <h4 class="title d-inline">Renja</h4>
@@ -9,6 +15,8 @@
     <md-button 
       style="height:28px;margin-left:-1px; font-size:11px;" 
       class="md-dense md-raised md-primary"
+      v-on:click="createRenja($event)"
+      value="0"
      
     ><span class="fa fa-plus"></span> Create Renja
     </md-button>
@@ -31,14 +39,17 @@
 
 import TabelRenja from "~/components/DataTables/TabelRenja.vue";
 import PareLoader from "~/components/Loader/PareLoader.vue";
-import { mapGetters } from 'vuex'
+import CreateRenja from '~/components/Modal/CreateRenja.vue';
+import { mapGetters } from 'vuex' 
+
 
 export default {
   layout: "skpdLayout",
   middleware: "auth",
    components: {
     TabelRenja,
-    PareLoader
+    PareLoader,
+    CreateRenja
   },
   data() {
     return {
@@ -62,6 +73,20 @@ export default {
       //alert(data.id);
       this.$refs.loader.start()
       this.$router.push("/renja/"+data.renja_id);
+    },
+    createRenja: function(e) {
+      //alert(this.skpd_id);
+
+      
+      this.$axios
+        .$get("/create_renja?skpd_id="+this.skpd_id)
+        .then((data) => {
+          this.$refs.ModalRenja.showModal(data); 
+        })
+        .catch((err) => {
+          console.log(err);
+        }); 
+
     },
     paging: function(params) {
       this.$refs.loader.start() 

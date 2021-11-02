@@ -19,8 +19,8 @@
         :rules="rules"
         size="mini"
       >
-        <input v-model="RenjaForm.timKerjaId" hidden></input>
-        <input v-model="RenjaForm.rencanaKinerjaId" hidden></input>
+        <input v-model="RenjaForm.skpdId" hidden></input>
+        <input v-model="RenjaForm.userId" hidden></input>
        
         <div>
           <label>Periode Renja</label>
@@ -72,15 +72,10 @@ export default {
       submitLoader:false,
       periodeList:[],
       detailRenja:[],
-      data:{
-          detailRencanaSKP:null,
-          pegawai:null,
-          pejabatPenilai:null
-      },
       RenjaForm: {
-        renjaPejabatId: "",
-        periodeRenja:"",
-        userId:"",
+        skpdId: "",
+        periodeId:"",
+        userId:""
       },
        rules: {
           periodeId: [
@@ -95,6 +90,8 @@ export default {
         this.submitLoader = false
         this.periodeList = data.periodeList
         this.RenjaForm.periodeId = data.periodeAktifId
+        this.RenjaForm.skpdId = data.skpdId
+        this.RenjaForm.userId = data.userId
         this.detailRenja = data.detailRenja
         this.modalFormVisible = true;
     },
@@ -104,13 +101,13 @@ export default {
           if (valid) {
             this.submitLoader = true
             this.$axios
-                    .$post("/create_renja", this.RenjaForm )
+                    .$post("/renja", this.RenjaForm )
                     .then((response) => {
                       //console.log(response);
                       //this.nodeData.new = response
-                      //this.$emit('reloadTree', this.nodeData )
+                      this.$emit('reloadTable')
                       //this.$refs[formName].resetFields();
-                      //this.modalFormVisible = false;
+                      this.modalFormVisible = false;
                       setTimeout(() => {
                         this.submitLoader = false
                         this.$message({

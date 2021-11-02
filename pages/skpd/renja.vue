@@ -3,6 +3,7 @@
     <create-renja 
       ref="ModalRenja"
       style="min-height:350px;"
+      @reloadTable="reloadTable"
     >
     </create-renja>
 
@@ -68,7 +69,20 @@ export default {
       })
     },
   methods: {
-
+    reloadTable(){
+      this.$axios
+      .$get("/renja?skpd_id="+this.skpd_id)
+      .then((resp) => {
+        this.data = resp.data;
+        this.total = resp.pagination['total'];
+        this.currentPage = resp.pagination['current_page'];
+        setTimeout(() => this.$refs.loader.finish(), 700)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+   
+    },
     viewRenja: function(data) {
       //alert(data.id);
       this.$refs.loader.start()

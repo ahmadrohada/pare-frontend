@@ -29,7 +29,6 @@
         <template slot="header" class="d-inline">
           <h4 class="title d-inline">TIM KERJA</h4>
           <p class="card-category d-inline"></p>
-          <!-- <el-tooltip content="Reload Data" :open-delay="50" placement="right"> -->
             <el-button 
               type="text"
               @click="() => refreshTree()"
@@ -37,11 +36,9 @@
               <span class="el-icon-refresh">
                 <md-tooltip md-direction="right">Refresh</md-tooltip>
               </span>
-              
             </el-button>
-            
-          <!-- </el-tooltip> -->
         </template>
+
 
         <el-tree
           :key="showTree"
@@ -52,6 +49,7 @@
           default-expand-all
           :expand-on-click-node="false"
           lazy
+          v-show="timKerja.label != null "
           >
           <span class="custom-tree-node" slot-scope="{ node, data }">
           
@@ -108,16 +106,16 @@
       </card>
     </div>
     <div class="col-md-8 content">
-      <card style="min-height:340px;">
+      <card style="min-height:340px;" >
 
         <pare-loader ref="loaderRight"></pare-loader>
 
-        <template slot="header" class="d-inline">
-          <h4 class="title d-inline"><i class="fa fa-user"></i>  &nbsp; {{timKerja.label}}</h4>
+        <template slot="header" class="d-inline" >
+          <h4 class="title d-inline"><i class="fa fa-user" v-show="timKerja.label != null " ></i>  &nbsp; {{timKerja.label}}</h4>
           <p class="card-category d-inline"></p>
         </template>
 
-        <md-tabs class="md-vue md_user">
+        <md-tabs class="md-vue md_user" v-show="timKerja.label != null ">
           <md-tab id="tab-pejabat" md-label="Pejabat">
 
             <md-button 
@@ -266,7 +264,8 @@ export default {
       showTree:true,
       timKerja:{
         label:null
-      }
+      },
+      dataTimKerja:1,
         
       
     };
@@ -285,7 +284,7 @@ export default {
       } 
       data.child.push(nodeData.new);
     },
-    refreshTree(nodeData){
+    refreshTree(){
       
       this.showTree = false;
       this.$nextTick(() => {
@@ -466,6 +465,7 @@ export default {
               //console.log(error.response.data.message)
               this.$message({
                 type: 'error',
+                duration: 3000,
                 message: error.response.data.message
               });          
             });

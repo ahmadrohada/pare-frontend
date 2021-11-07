@@ -15,22 +15,23 @@
           </template>
         </el-table-column>
         <el-table-column min-width="" prop="status" label="STATUS"></el-table-column>
-        
-        <el-table-column min-width="60" header-align="right" label="">
-          <template slot-scope="{ row }">
-            <div class="text-right">
-              <el-tooltip content="Lihat Data" :open-delay="300" placement="top">
-                <base-button
-                  type="info"
-                  size="sm"
-                  icon
-                  v-on:click="$emit('viewRenja', row)"
-                >
-                  <i class="el-icon-right"></i>
-                </base-button>
-              </el-tooltip>
-            </div>
-          </template>
+        <el-table-column width="150" header-align="center" label="AKSI">
+                <template slot-scope="{ row }">
+                  <div class="text-right">
+                    <el-button-group >
+                      <el-button size="mini" type="success" @click="$emit('viewRenja', row)">
+                        <span class="el-icon-edit-outline">
+                           <md-tooltip md-direction="top">Lihat Data</md-tooltip>
+                        </span>
+                      </el-button>
+                      <el-button size="mini" type="success" @click="$emit('hapusRenja', row)">
+                        <span class="el-icon-delete">
+                           <md-tooltip md-direction="top">Hapus Data</md-tooltip>
+                        </span>
+                      </el-button>
+                    </el-button-group>
+                  </div>
+                </template>
         </el-table-column>
       </el-table>
     </div>

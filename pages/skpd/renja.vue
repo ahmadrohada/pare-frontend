@@ -27,6 +27,7 @@
         :tableData="data"
         :total="total"
         v-on:viewRenja="viewRenja"
+        v-on:hapusRenja="hapusRenja"
         v-on:handlePaging="paging"
         :current-page.sync="currentPage"
         :layout="layout"
@@ -83,23 +84,44 @@ export default {
       });
    
     },
+    hapusRenja(data){
+      console.log(data)
+      this.$confirm('Hapus Renja,  lanjutkan?', 'Konfirmasi', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Batal',
+          type: 'warning'
+        }).then(() => {
+          this.$axios
+            .$delete("/renja?id="+data.renja_id)
+            .then((resp) => {
+                this.$message({
+                  type: 'success',
+                  message: 'Berhasil dihapus'
+                });
+                this.reloadTable()
+            })
+            .catch((error) => {
+              this.$message({
+                type: 'error',
+                duration: 3000,
+                message: error.response.data.message
+              });          
+            });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled'
+          });          
+        }); 
+    },
     viewRenja: function(data) {
       //alert(data.id);
       this.$refs.loader.start()
       this.$router.push("/renja/"+data.renja_id);
     },
     createRenja: function(e) {
-      //alert(this.skpd_id);
-
       
-      this.$axios
-        .$get("/create_renja?skpd_id="+this.skpd_id)
-        .then((data) => {
-          this.$refs.ModalRenja.showModal(data); 
-        })
-        .catch((err) => {
-          console.log(err);
-        }); 
+      this.$refs.ModalRenja.showModal(this.skpd_id);
 
     },
     paging: function(params) {

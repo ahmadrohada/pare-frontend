@@ -25,9 +25,20 @@
                   size="sm"
                   icon
                   v-on:click="$emit('createRencanaSkp', row.id)"
+                  v-show = "row.rencana_skp == null"
                 >
                   <md-tooltip md-direction="top">Create Rencana SKP</md-tooltip>
                   <i class="el-icon-document-add"></i>
+                </base-button>
+                <base-button
+                  type="info"
+                  size="sm"
+                  icon
+                  v-on:click="$emit('lihatRencanaSkp', row.rencana_skp.id)"
+                  v-show = "row.rencana_skp != null"
+                >
+                  <md-tooltip md-direction="top">Lihat Rencana SKP</md-tooltip>
+                  <i class="el-icon-edit-outline"></i>
                 </base-button>
             </div>
           </template>

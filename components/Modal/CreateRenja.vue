@@ -24,7 +24,7 @@
        
         <div>
           <label>Periode Renja</label>
-          <el-form-item  prop="renjaId" >
+          <el-form-item  prop="periodeId" >
             <el-select 
               v-model="RenjaForm.periodeId" 
               placeholder="Pilih Periode Renja"
@@ -42,6 +42,42 @@
             </el-select>
           </el-form-item>
         </div>
+
+        <label>Kepala SKPD</label>
+        <el-form-item  prop="namaPejabat" >
+          <el-autocomplete
+            class="inline-input"
+            v-model="RenjaForm.namaPejabat"
+            :fetch-suggestions="querySearch"
+            placeholder="Input nama pejabat"
+            :trigger-on-focus="false"
+            @select="handleSelect"
+            :clearable="true"
+            @clear="clearPejabatJabatan"
+          ></el-autocomplete>
+        </el-form-item>
+
+        <label>Jabatan</label>
+        <el-form-item  prop="jabatanId" >
+          <el-select 
+          
+            v-model="RenjaForm.jabatanId" 
+            @change="onPilihJabatan($event)"  
+            placeholder="Pilih Jabatan"
+            :disabled="disabledSelect"
+            >
+            <el-option
+              v-for="item in jabatans"
+              :selected="item.value"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              
+             
+              >
+            </el-option>
+          </el-select>
+        </el-form-item>
         
 
 
@@ -75,25 +111,130 @@ export default {
       RenjaForm: {
         skpdId: "",
         periodeId:"",
-        userId:""
+        userId:"",
+        jabatanId:"",
       },
-       rules: {
+      jabatans: [],
+      rules: {
           periodeId: [
             { required: true, message: 'Silakan pilih Periode', trigger: 'blur' }
           ],
+          namaPejabat: [
+            { required: true, message: 'Silakan pilih pejabat', trigger: 'blur' }
+          ],
+          jabatanId: [
+            { required: true, message: 'Silakan pilih jabatan', trigger: 'blur' }
+          ]
       },
-   
+      disabledSelect:true,
     };
   },
   methods: {
-    showModal(data) {
-        this.submitLoader = false
-        this.periodeList = data.periodeList
-        this.RenjaForm.periodeId = data.periodeAktifId
-        this.RenjaForm.skpdId = data.skpdId
-        this.RenjaForm.userId = data.userId
-        this.detailRenja = data.detailRenja
-        this.modalFormVisible = true;
+    showModal(skpd_id) {
+      this.submitLoader = false
+      this.$refs.loader.start() 
+      this.modalFormVisible = true; 
+
+      this.$axios
+        .$get("/create_renja?skpd_id="+skpd_id)
+        .then((data) => {
+            
+            this.periodeList = data.periodeList
+            this.RenjaForm.periodeId = data.periodeAktifId
+            this.RenjaForm.skpdId = data.skpdId
+            this.RenjaForm.userId = data.userId
+            this.detailRenja = data.detailRenja
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 700);
+            
+        })
+        .catch((error) => {
+          this.$message({
+            type: 'error',
+            message: error.response.data.message
+          });    
+          setTimeout(() => {
+            this.$refs.loader.finish() 
+          }, 700);
+        }); 
+
+       
+    },
+    querySearch(queryString, cb) {
+        //console.log(queryString)
+        this.$axios
+          .$get("/select_user?search="+queryString)
+          .then((resp) => {
+            //console.log(resp)
+            cb(resp);
+          })
+    },
+    handleSelect(queryString) {
+        this.$refs.loader.start() 
+        this.RenjaForm.userId = queryString.id
+        this.$axios
+          .$get("/user_jabatan_list?id="+queryString.id)
+          .then((resp) => {
+           
+            if ( resp.length == 0 ){
+              this.$message({
+                type: 'warning',
+                message: 'Data Jabatan tidak ditemukan',
+                duration:2300,
+              });   
+            }else{
+              this.$refs.RenjaForm.clearValidate()
+              this.disabledSelect = false
+              this.jabatans =  resp;
+              this.RenjaForm.jabatanId = resp[0].value
+            }
+
+           
+           setTimeout(() => {
+             this.$refs.loader.finish() 
+          }, 200);
+          
+
+        })
+
+
+        
+    },
+    clearPejabatJabatan(){
+      this.$refs.RenjaForm.clearValidate()
+      this.RenjaForm.jabatanId = null;
+      this.jabatans = null;
+      this.disabledSelect = true
+      
+    },
+    onPilihJabatan(data){
+      console.log(data)
+
+    },
+    addKetua(renjaId){
+      this.$axios
+        .$post("/add_tim_kerja", { 
+          renjaId : renjaId,
+          label : 'KETUA',
+          parentId : 0
+        } )
+        .then((response) => {
+            refreshTree()
+            setTimeout(() => {
+              this.$message({
+                type: 'info',
+                message: 'berhasil menambahkan data'
+              }); 
+            }, 200);
+        })
+        .catch((error) => {
+          this.$message({
+            type: 'error',
+            duration: 3000,
+            message: error.response.data.message
+          });    
+        });
     },
     saveForm(formName) {
 
@@ -103,6 +244,7 @@ export default {
             this.$axios
                     .$post("/renja", this.RenjaForm )
                     .then((response) => {
+                      this.addKetua(response)
                       //console.log(response);
                       //this.nodeData.new = response
                       this.$emit('reloadTable')
@@ -116,8 +258,13 @@ export default {
                         }); 
                       }, 200);
                     })
-                    .catch((errors) => {
-                      console.log(errors);
+                    .catch((error) => {
+                        this.submitLoader = false
+                        this.$message({
+                          type: 'error',
+                          duration: 3000,
+                          message: error.response.data.message
+                        });    
                     });
 
         } else {
@@ -165,6 +312,10 @@ export default {
     line-height: 1.0em;
     font-size: 0.85em;
  
+  }
+
+  .el-select {
+    width: 100%;
   }
 
   .label{

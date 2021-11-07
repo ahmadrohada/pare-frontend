@@ -17,6 +17,7 @@
         :tableData="data"
         :total="total"
         v-on:createRencanaSkp="createRencanaSkp"
+        v-on:lihatRencanaSkp="lihatRencanaSkp"
         v-on:handlePaging="paging"
         :current-page.sync="currentPage"
         :layout="layout"
@@ -62,7 +63,6 @@ export default {
   },
   methods: {
     createRencanaSkp: function(id) {
-      
       this.$axios
         .$get("/create_rencana_skp?renja_pejabat_id="+id)
         .then((resp) => {
@@ -72,6 +72,9 @@ export default {
           console.log(err);
         });
 
+    },
+    lihatRencanaSkp: function(id) {
+      alert(id)
     },
     paging: function(params) {
       this.$refs.loader.start() 

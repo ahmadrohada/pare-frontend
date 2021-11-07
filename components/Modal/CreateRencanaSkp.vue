@@ -32,8 +32,8 @@
         :rules="rules"
         size="mini"
       >
-        <input v-model="RencanaSKPForm.renjaPejabatId"></input>
-        <input v-model="RencanaSKPForm.userId"></input>
+        <input v-model="RencanaSKPForm.renjaPejabatId" hidden></input>
+        <input v-model="RencanaSKPForm.userId" hidden ></input>
         
        
         <el-form-item size="mini" style="margin-top:20px;">
@@ -88,11 +88,12 @@ export default {
                       //this.nodeData.new = response
                       //this.$emit('reloadTree', this.nodeData )
                       //this.$refs[formName].resetFields();
-                      //this.modalFormVisible = false;
+                      this.modalFormVisible = false;
                       setTimeout(() => {
                         this.submitLoader = false
                         this.$message({
                           type: 'info',
+                          duration:3000,
                           message: 'berhasil menyimpan data'
                         }); 
                       }, 200);

@@ -74,7 +74,8 @@ export default {
 
     },
     lihatRencanaSkp: function(id) {
-      alert(id)
+      this.$refs.loader.start()
+      this.$router.push("/rencana_skp/"+id);
     },
     paging: function(params) {
       this.$refs.loader.start() 

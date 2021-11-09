@@ -17,7 +17,7 @@
         <el-table-column min-width="380" prop="tim_kerja.renja.nama_skpd" label="SKPD"></el-table-column>
         
         
-        <el-table-column min-width="80" header-align="center" label="SKP">
+        <el-table-column min-width="120" header-align="center" label="SKP">
           <template slot-scope="{ row }">
             <div class="text-center">
                 <base-button
@@ -30,16 +30,19 @@
                   <md-tooltip md-direction="top">Create Rencana SKP</md-tooltip>
                   <i class="el-icon-document-add"></i>
                 </base-button>
-                <base-button
-                  type="info"
-                  size="sm"
-                  icon
-                  v-on:click="$emit('lihatRencanaSkp', row.rencana_skp.id)"
-                  v-show = "row.rencana_skp != null"
-                >
-                  <md-tooltip md-direction="top">Lihat Rencana SKP</md-tooltip>
-                  <i class="el-icon-edit-outline"></i>
-                </base-button>
+                  <div class="text-right" v-show = "row.rencana_skp != null">
+                    <el-button-group >
+                      <el-button size="mini" type="success" @click="$emit('lihatRencanaSkp', row.rencana_skp.id)">
+                        <md-tooltip md-direction="top">Lihat Data</md-tooltip>
+                        <span class="el-icon-edit-outline"></span>
+                      </el-button>
+                      <el-button size="mini" type="success" @click="$emit('hapusRenja', row)">
+                        <span class="el-icon-delete">
+                           <md-tooltip md-direction="top">Hapus Data</md-tooltip>
+                        </span>
+                      </el-button>
+                    </el-button-group>
+                  </div>
             </div>
           </template>
         </el-table-column>

@@ -29,20 +29,20 @@
       :router="true" 
       :default-active="activeLink"
     >
-      <!-- <el-menu-item 
-        index= "renja-id-peran___en"
-        :route="{path:`/renja/${renjaId}/peran`, name:'renja-id-peran___en'}"
-       >
-        <i class="el-icon-user"></i>
-        <span>Peran</span>
-      </el-menu-item>
       <el-menu-item 
-        index= "renja-id-rencana_skp___en"
-        :route="{path:`/renja/${renjaId}/rencana_skp`, name:'renja-id-rencana_skp___en'}"
+        index= "rencana_skp-id-sumary___en"
+        :route="{path:`/rencana_skp/${rencanaSkpId}/sumary`, name:'rencana_skp-id-sumary___en'}"
        >
         <i class="el-icon-data-board"></i>
-        <span>Rencana SKP</span>
-      </el-menu-item> -->
+        <span>Sumary</span>
+      </el-menu-item>
+      <el-menu-item 
+        index= "rencana_skp-id-pejabat___en"
+        :route="{path:`/rencana_skp/${rencanaSkpId}/pejabat`, name:'rencana_skp-id-pejabat___en'}"
+       >
+        <i class="el-icon-user"></i>
+        <span>Pejabat</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -77,7 +77,7 @@ export default {
         }); */
     this.activeLink = this.$route.name; 
     console.log(this.$route.name) 
-    this.renjaId = this.$route.params.id;
+    this.rencanaSkpId = this.$route.params.id;
 
   },
 };

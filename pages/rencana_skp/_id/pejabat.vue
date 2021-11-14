@@ -129,15 +129,14 @@
 import ProfilUser from "~/components/Profile/ProfilUserHirarki.vue";
 
 export default {
-  name: "hirarki",
-  middleware: "auth",
-  layout: 'personalProfileLayout',
+  middleware: ['auth'],
+  layout: "rencanaSkpLayout",
   head() {
     return {
-      title: "hirarki",
+      title: "Rencana SKP - Pejabat",
     };
   },
-  components: {
+  components:{
     ProfilUser,
   },
   data() {
@@ -257,3 +256,5 @@ export default {
   background: rgba(247, 247, 247, 0.521);
 }
 </style>
+
+

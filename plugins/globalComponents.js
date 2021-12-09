@@ -24,7 +24,7 @@ import moment from 'moment'
 
 
 import { Input, InputNumber, Tooltip, Popover,Radio, RadioGroup,RadioButton } from 'element-ui';
-import {Table, TableColumn } from 'element-ui'
+import {Table, TableColumn,Pagination } from 'element-ui'
 import {Aside,  Menu,Submenu,MenuItem,MenuItemGroup} from 'element-ui'
 import {Avatar} from 'element-ui'
 import {Progress} from 'element-ui'
@@ -32,7 +32,7 @@ import {Tabs,TabPane} from 'element-ui'
 import {Switch} from 'element-ui'
 import {Col,Row,Tree,Button} from 'element-ui'
 import {Dialog,Form,FormItem , Select,Option ,Divider,ButtonGroup,MessageBox,Message} from 'element-ui'
-import {Autocomplete,Badge} from 'element-ui'
+import {Autocomplete,Badge,Timeline,TimelineItem} from 'element-ui'
 /**
  * You can register global components here and use them as a plugin in your main Vue instance
  */
@@ -62,6 +62,8 @@ Vue.use(VueSweetalert2);
 
 Vue.use(Table)
 Vue.use(TableColumn)
+Vue.use(Pagination)
+
 Vue.use(Aside)
 Vue.use(Menu)
 Vue.use(Submenu)
@@ -89,6 +91,8 @@ Vue.use(Radio)
 Vue.use(RadioGroup)
 Vue.use(RadioButton)
 Vue.use(Badge)
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 
 
 

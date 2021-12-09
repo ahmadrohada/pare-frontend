@@ -50,7 +50,7 @@ export default {
       currentPage: 0,
       pagerCount:0,
       page: 1,
-      layout: "prev, next",
+      layout: 'total, sizes, prev, pager, next, jumper',
     };
   },
   computed: {

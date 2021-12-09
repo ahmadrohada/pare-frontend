@@ -45,11 +45,11 @@
         <span>User</span>
       </el-menu-item>
       <el-menu-item 
-        index="/skpd/renja"
-        :route="{path: '/skpd/renja'}"
+        index="/skpd/perjanjian_kinerja"
+        :route="{path: '/skpd/perjanjian_kinerja'}"
        >
         <i class="el-icon-data-board"></i>
-        <span>Renja</span>
+        <span>Perjanjian Kinerja</span>
       </el-menu-item>
       <el-submenu index="2" disabled>
         <template slot="title"

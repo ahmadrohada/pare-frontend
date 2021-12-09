@@ -9,20 +9,14 @@
 
 
 <script>
+
 export default {
   middleware: ['auth'],
   layout: "renjaLayout",
-  methods: {
-    routing(renja_id){
-      if ( renja_id != 'undefined'){
-        this.$router.push(`/renja/${renja_id}/peran`);
-      }else{
-        this.$router.push(`/error`);
-      }
-    }
+  components:{
   },
   mounted() {
-    this.routing(this.$route.params.id)
+    this.$router.push(`/skpd/perjanjian_kinerja`);
   },
 };
 </script>

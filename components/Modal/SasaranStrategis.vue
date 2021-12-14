@@ -12,7 +12,8 @@
         size="mini"
       >
         
-         <input v-model="SasaranStrategisForm.renjaId" hidden></input>
+        <input v-model="SasaranStrategisForm.renjaId" hidden></input>
+        <input v-model="SasaranStrategisForm.sasaranStrategisId" hidden></input>
         <label>Sasaran Strategis</label>
         <el-form-item     prop="sasaranStrategisLabel">
           <el-input size="mini" type="textarea" placeholder="Sasaran Strategis Label" v-model="SasaranStrategisForm.sasaranStrategisLabel"></el-input>
@@ -50,7 +51,8 @@ export default {
       modalFormVisible: false,
       SasaranStrategisForm: {
         renjaId:"",
-        sasaranStrategisLabel:""
+        sasaranStrategisLabel:"",
+        sasaranStrategisId:""
        
       },
       rules: {
@@ -64,13 +66,34 @@ export default {
   methods: {
     
     showModalAdd(renjaId) {
+      this.resetForm("SasaranStrategisForm")
+      this.submitLoader = false
+      this.formType = "create"
       this.headerText = "Add Sasaran Strategis"
       this.SasaranStrategisForm.renjaId = renjaId
       this.modalFormVisible = true;
     },  
-    showModalEdit() {
-      this.headerText = "Edit Sasaran Strategis"
-      this.modalFormVisible = true;
+    showModalEdit(id) {
+      this.submitLoader = false
+      this.$refs.loader.start() 
+      this.formType = "edit"
+      this.headerText = "Edit Sasaran Startegis"
+      this.$axios
+          .$get("/sasaran_strategis?id="+id )
+          .then((resp) => {
+            
+            this.SasaranStrategisForm.sasaranStrategisId = resp.id
+            this.SasaranStrategisForm.sasaranStrategisLabel = resp.label
+            this.modalFormVisible = true;
+            this.$refs.loader.finish()
+            
+          })
+          .catch((errors) => {
+            this.$message({
+              type: 'warning',
+              message: 'terjadi kesalahan'
+            }); 
+          }); 
     }, 
     saveForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -96,6 +119,39 @@ export default {
                         message: 'terjadi kesalahan'
                       }); 
                     });
+
+
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+      });
+        
+    },
+    updateForm(formName) {
+      this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.submitLoader = true
+            this.$axios
+                    .$put("/sasaran_strategis", this.SasaranStrategisForm )
+                    .then((response) => {
+                      this.$emit('loadAsyncData')
+                      setTimeout(() => {
+                        this.resetForm('SasaranStrategisForm')
+                        this.$message({
+                          type: 'info',
+                          message: 'Update Berhasil'
+                        }); 
+                      }, 200);
+                    })
+                    .catch((errors) => {
+                      this.submitLoader = false
+                      console.log(errors);
+                      this.$message({
+                        type: 'warning',
+                        message: 'terjadi kesalahan'
+                      }); 
+                    }); 
 
 
           } else {

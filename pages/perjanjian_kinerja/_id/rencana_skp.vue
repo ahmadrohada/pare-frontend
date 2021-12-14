@@ -34,7 +34,7 @@ import TabelMatrik from "~/components/DataTables/TabelMatrik.vue";
 export default {
   name: 'rencana_skp',
   middleware: 'auth',
-  layout:'renjaLayout',
+  layout:'perjanjianKinerjaLayout',
   components:{
     TabelMatrik
 

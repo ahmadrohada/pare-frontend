@@ -22,10 +22,10 @@
         @click="toggleSidebar"
       >
         
-       <personal-renja-sub-menu
+       <personal-pk-sub-menu
           :index_1 = "index_1"
           :index_2 = "index_2"
-          ></personal-renja-sub-menu>
+          ></personal-pk-sub-menu>
 
 
         <zoom-center-transition :duration="300" mode="out-in">
@@ -62,7 +62,7 @@
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
   import PersonalMenu from '~/components/Menu/PersonalMenu.vue';
-  import PersonalRenjaSubMenu from '~/components/Menu/PersonalRenjaSubMenu.vue';
+  import PersonalPkSubMenu from '~/components/Menu/PersonalPkSubMenu.vue';
 
   import { mapGetters } from 'vuex'
 
@@ -74,7 +74,7 @@
       DashboardContent,
       SlideYDownTransition,
       ZoomCenterTransition,
-      PersonalRenjaSubMenu,
+      PersonalPkSubMenu,
       PersonalMenu,
     },
     data() {

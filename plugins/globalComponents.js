@@ -32,7 +32,7 @@ import {Tabs,TabPane} from 'element-ui'
 import {Switch} from 'element-ui'
 import {Col,Row,Tree,Button} from 'element-ui'
 import {Dialog,Form,FormItem , Select,Option ,Divider,ButtonGroup,MessageBox,Message} from 'element-ui'
-import {Autocomplete,Badge,Timeline,TimelineItem} from 'element-ui'
+import {Autocomplete,Badge,Timeline,TimelineItem ,DatePicker} from 'element-ui'
 /**
  * You can register global components here and use them as a plugin in your main Vue instance
  */
@@ -93,6 +93,7 @@ Vue.use(RadioButton)
 Vue.use(Badge)
 Vue.use(Timeline)
 Vue.use(TimelineItem)
+Vue.use(DatePicker)
 
 
 

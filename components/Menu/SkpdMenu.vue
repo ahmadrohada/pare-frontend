@@ -28,14 +28,6 @@
       :router="true" 
       :default-active="activeLink"
     >
-      <!-- <el-menu-item 
-        index="/skpd"
-        :route="{path: '/skpd'}"
-       >
-       
-        <i class="el-icon-data-board"></i>
-        <span>Dashboard</span>
-      </el-menu-item> -->
       <el-menu-item 
         index="/skpd/user"
         :route="{path: '/skpd/user'}"
@@ -51,13 +43,13 @@
         <i class="el-icon-data-board"></i>
         <span>Perjanjian Kinerja</span>
       </el-menu-item>
-      <el-submenu index="2" disabled>
-        <template slot="title"
-          ><i class="el-icon-notebook-2"></i>Capaian</template
-        >
-          <el-menu-item index="2-1">Tahunan</el-menu-item>
-          <el-menu-item index="2-2">Bulanan</el-menu-item>
-      </el-submenu>
+      <el-menu-item 
+        index="/skpd/sasaran_kinerja"
+        :route="{path: '/skpd/sasaran_kinerja'}"
+       >
+        <i class="el-icon-data-analysis"></i>
+        <span>Sasaran Kinerja</span>
+      </el-menu-item>
       <el-submenu index="3" disabled>
         <template slot="title"
           ><i class="el-icon-money"></i>TPP</template

@@ -233,7 +233,7 @@ import AddRencanaKinerja from '~/components/Modal/addRencanaKinerjaTimKerja.vue'
 export default {
   name: 'tim_kerja',
   middleware: 'auth',
-  layout:'renjaLayout',
+  layout:'perjanjianKinerjaLayout',
   components:{
     PareLoader,
     AddTimKerja,

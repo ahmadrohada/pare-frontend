@@ -28,7 +28,7 @@
 <script>
 export default {
   middleware: ['auth'],
-  layout: "renjaLayout",
+  layout: "perjanjianKinerjaLayout",
   data() {
       return {
         activities: [{

@@ -12,7 +12,7 @@
 
 export default {
   middleware: ['auth'],
-  layout: "renjaLayout",
+  layout: "perjanjianKinerjaLayout",
   components:{
   },
   mounted() {

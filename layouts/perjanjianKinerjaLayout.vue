@@ -7,7 +7,7 @@
       :short-title="$t('sidebar.shortTitle')"
       :title="$t('sidebar.title')"
     >
-    <renja-menu></renja-menu>
+    <pk-menu></pk-menu>
     </side-bar>
     
     <div class="main-panel" :data="sidebarBackground">
@@ -17,10 +17,10 @@
         @click="toggleSidebar"
       >
         
-      <!--  <renja-sub-menu
+      <!--  <pk-sub-menu
           :index_1 = "index_1"
           :index_2 = "index_2"
-          ></renja-sub-menu> -->
+          ></pk-sub-menu> -->
 
 
         <zoom-center-transition :duration="300" mode="out-in">
@@ -56,8 +56,8 @@
   import ContentFooter from '@/components/Layout/ContentFooter.vue';
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
-  import RenjaMenu from '~/components/Menu/RenjaMenu.vue';
-  import RenjaSubMenu from '~/components/Menu/RenjaSubMenu.vue';
+  import PkMenu from '~/components/Menu/PkMenu.vue';
+  import PkSubMenu from '~/components/Menu/PkSubMenu.vue';
 
 
   export default {
@@ -68,8 +68,8 @@
       DashboardContent,
       SlideYDownTransition,
       ZoomCenterTransition,
-      RenjaMenu,
-      RenjaSubMenu,
+      PkMenu,
+      PkSubMenu,
     },
     data() {
       return {

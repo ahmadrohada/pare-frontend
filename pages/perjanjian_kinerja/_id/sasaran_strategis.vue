@@ -46,18 +46,44 @@
         md-sort-order="asc"
       >
         <md-table-row slot="md-table-row" slot-scope="{ item }">
-          <md-table-cell rowspan="item.row" md-label="Sasaran Strategis" md-sort-by="sasaran_strategis">
+
+          <md-table-cell v-if=" item.primary == 1 " md-label="Sasaran Strategis" md-sort-by="sasaran_strategis">
               {{ item.sasaran_strategis }}
+              <i v-if=" item.indikator_id  != '' ">
+              <el-button size="mini" type="text" @click="editSasaranStrategis(item)">
+                <i class="el-icon-setting"></i> Edit
+                <md-tooltip md-direction="top">Edit Sasaran</md-tooltip>
+              </el-button>
+            </i>
           </md-table-cell>
-          <md-table-cell md-label="Indikator" md-sort-by="indikator">{{ item.indikator }}</md-table-cell>
+          <md-table-cell style="border-top:none !important;"v-if=" item.primary == 0 " md-label="Sasaran Strategis" md-sort-by="sasaran_strategis">
+              
+          </md-table-cell>
+          
+          <md-table-cell md-label="Indikator">{{ item.indikator }}</md-table-cell>
           <md-table-cell md-label="Target" >{{ item.target }}</md-table-cell>
           <md-table-cell md-label="Satuan" >{{ item.satuan_target }}</md-table-cell>
           <md-table-cell md-label="Aksi">
-            <el-button size="mini" type="text" @click="editIndikatorSasaranStrategis(item)">
-              <i class="el-icon-setting">
-                <md-tooltip md-direction="top">Edit Data</md-tooltip>
-              </i>
-            </el-button>
+            <div v-if=" item.indikator_id  != '' ">
+              <el-button size="mini" type="text" @click="editIndikatorSasaranStrategis(item)">
+                <i class="el-icon-setting"></i> Edit
+                <md-tooltip md-direction="top">Edit Indikator Sasaran</md-tooltip>
+              </el-button>
+              <el-button size="mini" type="text danger" @click="hapusIndikatorSasaranStrategis(item)">
+                <i class="el-icon-delete"></i> Hapus
+                <md-tooltip md-direction="top">Hapus Indikator Sasaran</md-tooltip>
+              </el-button>
+            </div>
+            <div v-else>
+              <el-button size="mini" type="text" @click="editSasaranStrategis(item)">
+                <i class="el-icon-setting"></i> Edit
+                <md-tooltip md-direction="top">Edit  Sasaran</md-tooltip>
+              </el-button>
+              <el-button size="mini" type="text danger" @click="hapusSasaranStrategis(item)">
+                <i class="el-icon-delete"></i> Hapus
+                <md-tooltip md-direction="top">Hapus  Sasaran</md-tooltip>
+              </el-button>
+            </div>
           </md-table-cell>
         </md-table-row>
       </md-table>
@@ -68,9 +94,8 @@
         @size-change="handleSizeChange"
         :page-sizes="[5, 10, 20]"
         :page-size="limit"
-        :pager-count="perPage"
         :total="total"
-      />
+      /> 
    </card>
 </template>
 
@@ -94,7 +119,7 @@ import SasaranStrategis from '~/components/Modal/SasaranStrategis.vue';
 export default {
 
   middleware: ['auth'],
-  layout: "renjaLayout",
+  layout: "perjanjianKinerjaLayout",
   components: {
     IndikatorSasaranStrategis,
     SasaranStrategis,
@@ -117,10 +142,11 @@ export default {
       hasMobileCards: true,
       defaultSortOrder: 'asc',
       page: 1,
-      perPage: '',
-      totalPage:'',
+      perPage: 1,
+      totalPage:0,
+      total:0,
       isPaginated: true,
-      limit:'5'
+      limit:5
     }
   },
   mounted() {
@@ -169,14 +195,82 @@ export default {
     },
     editSasaranStrategis: function(data) {
       //console.log(data)
-      this.$refs.ModalSasaranStrategis.showModalEdit();
+      this.$refs.ModalSasaranStrategis.showModalEdit(data.id);
+    },
+    hapusSasaranStrategis: function(data) {
+        //const parent = node.parent;
+        //const child = parent.data.child || parent.data;
+        
+        this.$confirm('Hapus Sasaran Strategis', 'Konfirmasi', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Batal',
+          type: 'warning'
+        }).then(() => {
+          this.$axios
+            .$delete("/sasaran_strategis?id="+data.id)
+            .then((resp) => {
+                this.loadAsyncData()
+                this.$message({
+                  type: 'success',
+                  message: 'Berhasil dihapus'
+                });
+            })
+            .catch((error) => {
+              //console.log(error.response.data.message)
+              this.$message({
+                type: 'error',
+                message: error.response.data.message
+              });          
+            });
+
+          
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Proses Hapus Dibatalkan'
+          });          
+        });
     },
     addIndikatorSasaranStrategis: function(data) {
       //console.log(data)
       this.$refs.ModalIndikatorSasaranStrategis.showModalAdd(this.renjaId);
     },
     editIndikatorSasaranStrategis: function(data) {
-      this.$refs.ModalIndikatorSasaranStrategis.showModalEdit();
+      this.$refs.ModalIndikatorSasaranStrategis.showModalEdit(data.indikator_id);
+    },
+    hapusIndikatorSasaranStrategis: function(data) {
+        //const parent = node.parent;
+        //const child = parent.data.child || parent.data;
+        
+        this.$confirm('Hapus Indikator Sasaran Strategis', 'Konfirmasi', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Batal',
+          type: 'warning'
+        }).then(() => {
+          this.$axios
+            .$delete("/indikator_sasaran_strategis?id="+data.indikator_id)
+            .then((resp) => {
+                this.loadAsyncData()
+                this.$message({
+                  type: 'success',
+                  message: 'Berhasil dihapus'
+                });
+            })
+            .catch((error) => {
+              //console.log(error.response.data.message)
+              this.$message({
+                type: 'error',
+                message: error.response.data.message
+              });          
+            });
+
+          
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Proses Hapus Dibatalkan'
+          });          
+        });
     },
     handleSizeChange(value) {
       //alert(value)

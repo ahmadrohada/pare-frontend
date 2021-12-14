@@ -40,7 +40,7 @@
 export default {
   name: 'kegiatan',
   middleware: 'auth',
-  layout:'renjaLayout',
+  layout:'perjanjianKinerjaLayout',
   head() {
     return {
       title: "Rencana Kerja",

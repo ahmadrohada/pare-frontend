@@ -1,15 +1,15 @@
 <template>
   <card style="min-height:480px;">
-    <create-pk 
-      ref="ModalRenja"
+    <sasaran-kinerja
+      ref="ModalSasaranKinerja"
       style="min-height:350px;"
       @loadAsyncData="loadAsyncData"
     >
-    </create-pk>
+    </sasaran-kinerja>
 
     <pare-loader ref="loader"></pare-loader>
     <template slot="header" class="d-inline">
-      <h4 class="title d-inline">Perjanjian Kinerja</h4>
+      <h4 class="title d-inline">Sasaran Kinerja Pegawai ( SKP )</h4>
       <p class="card-category d-inline">{{user.skpd.singkatan}}</p>
     </template>
 
@@ -19,7 +19,7 @@
       v-on:click="createRenja($event)"
       value="0"
      
-    ><span class="fa fa-plus"></span> Create Perjanjian Kinerja
+    ><span class="fa fa-plus"></span> Create SKP
     </md-button>
 
    
@@ -32,7 +32,6 @@
       >
         <md-table-row slot="md-table-row" slot-scope="{ item }">
           <md-table-cell md-label="Periode" md-sort-by="periode_id">{{ item.periode }}</md-table-cell>
-          <md-table-cell md-label="Nama SKPD" md-sort-by="nama_skpd">{{ item.nama_skpd }}</md-table-cell>
           <md-table-cell md-label="Created at" >
             <template slot-scope="props">
               <div style="padding:0px !important;">
@@ -42,13 +41,13 @@
           </md-table-cell>
           <md-table-cell md-label="Status" >{{ item.status }}</md-table-cell>
           <md-table-cell md-label="Aksi">
-            <el-button size="mini" type="text" @click="viewPerjanjianKinerja(item)">
+            <el-button size="mini" type="text" @click="viewSasaranKinerja(item)">
               <i class="el-icon-setting">
                 
               </i> Edit
               <md-tooltip md-direction="top">Edit Data</md-tooltip>
             </el-button>
-            <el-button size="mini" type="text danger" @click="hapusPerjanjianKinerja(item)">
+            <el-button size="mini" type="text danger" @click="hapusSasaranKinerja(item)">
               <i class="el-icon-delete">
                 
               </i> Hapus
@@ -74,7 +73,7 @@
 
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
-import CreatePk from '~/components/Modal/PerjanjianKinerja.vue';
+import SasaranKinerja from '~/components/Modal/SasaranKinerja.vue';
 import { mapGetters } from 'vuex' 
 
 
@@ -83,7 +82,7 @@ export default {
   middleware: "auth",
    components: {
     PareLoader,
-    CreatePk
+    SasaranKinerja
   },
   data() {
     return {
@@ -104,6 +103,7 @@ export default {
       totalPage:'',
       isPaginated: true,
       limit:'10',
+      jenis_jabatan:'',
     };
   },
   computed: {
@@ -116,6 +116,7 @@ export default {
     loadAsyncData() {
       const params = [
         `skpd_id=${this.skpd_id}`,
+        `jenis_jabatan=${this.jenis_jabatan}`,
         `search=${this.search}`,
         `order_by=${this.sortField}`,
         `order_direction=${this.sortOrder}`,
@@ -125,7 +126,7 @@ export default {
 
       this.$refs.loader.start() 
       this.$axios
-        .get(`/perjanjian_kinerja?${params}`)
+        .get(`/sasaran_kinerja_list?${params}`)
         .then(({ data }) => {
           // api.themoviedb.org manage max 1000 pages
           this.data = []
@@ -152,14 +153,14 @@ export default {
       this.page = page
       this.loadAsyncData()
     },
-    viewPerjanjianKinerja: function(data) {
+    viewSasaranKinerja: function(data) {
       this.$refs.loader.start()
       this.$router.push("/perjanjian_kinerja/"+data.id);
     },
     createRenja: function(e) {
-      this.$refs.ModalRenja.showModal(this.skpd_id);
+      this.$refs.ModalSasaranKinerja.showModal(this.skpd_id);
     },
-    hapusPerjanjianKinerja: function(data) {
+    hapusSasaranKinerja: function(data) {
         //const parent = node.parent;
         //const child = parent.data.child || parent.data;
         

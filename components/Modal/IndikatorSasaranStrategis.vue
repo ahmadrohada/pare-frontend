@@ -13,6 +13,7 @@
         size="mini"
       >
        
+        <input v-model="IndikatorSasaranStrategisForm.indikatorId" hidden></input>
 
         <label>Sasaran Strategis</label>
           <el-form-item  prop="sasaranStrategisId" >
@@ -82,6 +83,7 @@ export default {
       sasaranStrategis:[],
       IndikatorSasaranStrategisForm: {
         sasaranStrategisId:"",
+        indikatorId:"",
         indikatorSasaranStrategisLabel:"",
         target:"",
         satuanTarget:""
@@ -117,9 +119,6 @@ export default {
               }else{
                 this.IndikatorSasaranStrategisForm.sasaranStrategisId = isSelect
               }
-              
-              
-              
             setTimeout(() => {
               this.$refs.loader.finish() 
             }, 200);
@@ -128,13 +127,38 @@ export default {
     },
     
     showModalAdd(renjaId) {
+      this.resetForm("IndikatorSasaranStrategisForm")
+      this.submitLoader = false
+      this.$refs.loader.start() 
+      this.formType = "create"
       this.headerText = "Add Indikator Sasaran Startegis"
       this.sasaranStrategisList(renjaId,0)
       this.modalFormVisible = true;
     },  
-    showModalEdit() {
+    showModalEdit(id) {
+      this.submitLoader = false
+      this.$refs.loader.start() 
+      this.formType = "edit"
       this.headerText = "Edit Indikator Sasaran Startegis"
-      this.modalFormVisible = true;
+      this.$axios
+          .$get("/indikator_sasaran_strategis?id="+id )
+          .then((resp) => {
+            
+            this.IndikatorSasaranStrategisForm.indikatorId = resp.id
+            this.sasaranStrategisList(resp.renja_id,resp.sasaran_strategis_id)
+            this.IndikatorSasaranStrategisForm.indikatorSasaranStrategisLabel = resp.label
+            this.IndikatorSasaranStrategisForm.target = resp.target
+            this.IndikatorSasaranStrategisForm.satuanTarget = resp.satuan_target
+
+            this.modalFormVisible = true;
+            
+          })
+          .catch((errors) => {
+            this.$message({
+              type: 'warning',
+              message: 'terjadi kesalahan'
+            }); 
+          }); 
     }, 
     saveForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -150,7 +174,7 @@ export default {
                           type: 'info',
                           message: 'berhasil menyimpan data'
                         }); 
-                      }, 200);
+                      }, 100);
                     })
                     .catch((errors) => {
                       this.submitLoader = false
@@ -160,6 +184,39 @@ export default {
                         message: 'terjadi kesalahan'
                       }); 
                     });
+
+
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+      });
+        
+    },
+    updateForm(formName) {
+      this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.submitLoader = true
+            this.$axios
+                    .$put("/indikator_sasaran_strategis", this.IndikatorSasaranStrategisForm )
+                    .then((response) => {
+                      this.$emit('loadAsyncData')
+                      setTimeout(() => {
+                        this.resetForm('IndikatorSasaranStrategisForm')
+                        this.$message({
+                          type: 'info',
+                          message: 'Update Berhasil'
+                        }); 
+                      }, 200);
+                    })
+                    .catch((errors) => {
+                      this.submitLoader = false
+                      console.log(errors);
+                      this.$message({
+                        type: 'warning',
+                        message: 'terjadi kesalahan'
+                      }); 
+                    }); 
 
 
           } else {

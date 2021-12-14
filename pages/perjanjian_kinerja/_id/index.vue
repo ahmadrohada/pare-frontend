@@ -11,7 +11,7 @@
 <script>
 export default {
   middleware: ['auth'],
-  layout: "renjaLayout",
+  layout: "perjanjianKinerjaLayout",
   methods: {
     routing(renja_id){
       if ( renja_id != 'undefined'){

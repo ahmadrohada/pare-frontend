@@ -30,7 +30,7 @@ $box-shadow-lg: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
     margin-top: 0;
     height: 27px;
     width: 27px;
-    color: $primary;
+    //color: $primary;
 
     &:hover {
       border-radius: 50%;
@@ -40,7 +40,7 @@ $box-shadow-lg: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
   .el-date-picker__header-label, div {
     font-size: $font-size-base;
     font-weight: $font-weight-light;
-    color: $primary;
+    //color: $primary;
     &:hover {
       background-color: #eee;
       color: $primary;
@@ -53,12 +53,12 @@ $box-shadow-lg: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
 .time-select{
 
   .time-select-item.selected:not(.disabled) {
-    color: $primary;
+    //color: $pare;
   }
   .el-picker-panel__content {
     .el-date-table th {
-      color: $primary;
-      font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+      //color: $pare;
+      font-family: "MAIAN", "Helvetica Neue", Arial, sans-serif;
       font-size: $font-size-base;
       font-weight: $font-weight-light;
       border: none;
@@ -85,22 +85,22 @@ $box-shadow-lg: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
       justify-content: center;
       align-items: center;
       font-size: $font-size-base;
-      color: $default;
+      //color: $default;
 
       &:hover {
         border-radius: 50%;
         background: #eee;
         cursor: pointer;
-        color: $default;
+        //color: $default;
       }
     }
 
     &.current span,
     &.current a.cell {
-      background-color: $primary;
-      color: $white;
-      box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.2);
-      border-radius: 50%;
+      //background-color: $primary;
+      //color: $white;
+      //box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.2);
+      //border-radius: 50%;
     }
     span {
       width: 32px;

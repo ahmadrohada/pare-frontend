@@ -3,7 +3,7 @@
     :show.sync="modalFormVisible" >
     <pare-loader ref="loader"></pare-loader>
     <template slot="header">
-      <h4 class="modal-title">Create Renja</h4>
+      <h4 class="modal-title">Create Perjanjian Kinerja</h4>
     </template>
 
 
@@ -136,7 +136,7 @@ export default {
       this.modalFormVisible = true; 
 
       this.$axios
-        .$get("/create_renja?skpd_id="+skpd_id)
+        .$get("/create_perjanjian_kinerja?skpd_id="+skpd_id)
         .then((data) => {
             
             this.periodeList = data.periodeList
@@ -212,21 +212,21 @@ export default {
       console.log(data)
 
     },
-    addKetua(renjaId){
+    addKetua(perjanjianKinerjaId){
       this.$axios
         .$post("/add_tim_kerja", { 
-          renjaId : renjaId,
+          perjanjianKinerjaId : perjanjianKinerjaId,
           label : 'KETUA',
           parentId : 0
         } )
         .then((response) => {
-            refreshTree()
-            setTimeout(() => {
+            
+           /*  setTimeout(() => {
               this.$message({
                 type: 'info',
                 message: 'berhasil menambahkan data'
               }); 
-            }, 200);
+            }, 200); */
         })
         .catch((error) => {
           this.$message({
@@ -242,13 +242,10 @@ export default {
           if (valid) {
             this.submitLoader = true
             this.$axios
-                    .$post("/renja", this.RenjaForm )
+                    .$post("/perjanjian_kinerja", this.RenjaForm )
                     .then((response) => {
                       this.addKetua(response)
-                      //console.log(response);
-                      //this.nodeData.new = response
-                      this.$emit('reloadTable')
-                      //this.$refs[formName].resetFields();
+                      this.$emit('loadAsyncData')
                       this.modalFormVisible = false;
                       setTimeout(() => {
                         this.submitLoader = false
@@ -274,8 +271,9 @@ export default {
       });
       
     },
-    resetForm() {
+    resetForm(formName) {
       this.submitLoader = false
+      this.$refs[formName].resetFields();
       this.modalFormVisible = false;
     },
   },

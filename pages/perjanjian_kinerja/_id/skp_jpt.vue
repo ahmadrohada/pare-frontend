@@ -17,7 +17,18 @@
         md-sort-order="asc"
       >
         <md-table-row slot="md-table-row" slot-scope="{ item }">
-          <md-table-cell md-label="Rencana Kinerja" md-sort-by="rencana_kinerja">{{ item.rencana_kinerja }}</md-table-cell>
+          <md-table-cell v-if=" item.primary == 1 " md-label="Sasaran Strategis" md-sort-by="sasaran_strategis">
+              {{ item.sasaran_strategis }}
+              <i v-if=" item.indikator_id  != '' ">
+              <el-button size="mini" type="text" @click="editSasaranStrategis(item)">
+                <i class="el-icon-setting"></i> Edit
+                <md-tooltip md-direction="top">Edit Sasaran</md-tooltip>
+              </el-button>
+            </i>
+          </md-table-cell>
+          <md-table-cell style="border-top:none !important;"v-if=" item.primary == 0 " md-label="Sasaran Strategis" md-sort-by="sasaran_strategis">
+              
+          </md-table-cell>
           <md-table-cell md-label="Indikator Kinerja Individu" md-sort-by="indikator_kinerja_individu">{{ item.indikator_kinerja_individu }}</md-table-cell>
           <md-table-cell md-label="Target" >{{ item.target }}</md-table-cell>
           <md-table-cell md-label="Satuan" >{{ item.satuan_target }}</md-table-cell>
@@ -40,7 +51,6 @@
         @size-change="handleSizeChange"
         :page-sizes="[10, 20, 50, 100]"
         :page-size="limit"
-        :pager-count="perPage"
         :total="totalPage"
       />
    </card>
@@ -64,7 +74,7 @@
 export default {
 
   middleware: ['auth'],
-  layout: "renjaLayout",
+  layout: "perjanjianKinerjaLayout",
   components: {
   },
   data() {
@@ -83,10 +93,11 @@ export default {
       hasMobileCards: true,
       defaultSortOrder: 'asc',
       page: 1,
-      perPage: '',
-      totalPage:'',
+      perPage: 0,
+      totalPage:0,
+      total:0,
       isPaginated: true,
-      limit:'10',
+      limit: 10,
       skp_id:1,
     }
   },

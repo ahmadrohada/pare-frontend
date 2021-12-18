@@ -12,9 +12,6 @@
         :rules="rules"
         size="mini"
       >
-
-      
-
     <el-tabs v-model="activeName" @tab-click="handleClick" style="min-height:260px;">
       <el-tab-pane label="DETAIL" name="detail">
         <label>Periode PK</label>
@@ -29,8 +26,6 @@
                 :key="item.id"
                 :label="item.periode"
                 :value="item.id"
-                
-              
                 >
               </el-option>
             </el-select>
@@ -43,6 +38,7 @@
                 type="date" 
                 placeholder="Tanggal Mulai" 
                 v-model="SasaranKinerjaForm.dateFrom" 
+                format="dd-MM-yyyy"
                 style="width: 100%;">
               </el-date-picker>
             </el-col>
@@ -52,6 +48,7 @@
                 type="date" 
                 placeholder="Tanggal Selesai" 
                 v-model="SasaranKinerjaForm.dateTo" 
+                format="dd-MM-yyyy"
                 style="width: 100%;">
               </el-date-picker>
             </el-col>
@@ -69,32 +66,11 @@
                 :key="item.value"
                 :label="item.value"
                 :value="item.value"
-                
-              
                 >
               </el-option>
             </el-select>
           </el-form-item>
-        
-
-
-
-
-
-
-
-
-
-
       </el-tab-pane>
-
-
-
-
-
-
-
-
       <el-tab-pane label="PEGAWAI YANG DINILAI" name="pegawai">
         <label>Nama Pegawai</label>
         <el-form-item  prop="namaPegawaiYangDinilai" >
@@ -104,60 +80,67 @@
             :fetch-suggestions="querySearchPegawaiYangDinilai"
             placeholder="Nama Pegawai Yang Dinilai"
             :trigger-on-focus="false"
-            @select="handleSelect"
+            @select="handleSelectPegawaiYangDinilai"
             :clearable="true"
-            @clear="clearPegawaiYangDinilaiJabatan"
+            @clear="clearPegawaiYangDinilai"
           ></el-autocomplete>
         </el-form-item>
 
         <label>NIP Pegawai</label>
         <el-form-item>
           <el-input
-            v-model="nipPegawaiYangDinilai"
+            v-model="SasaranKinerjaForm.nipPegawaiYangDinilai"
             class="inline-input"
             readonly
           ></el-input>
         </el-form-item>
 
         <label>Jabatan</label>
-        <el-form-item  prop="jabatanPegawaiYangDinilaiId" >
+        <el-form-item  prop="jabatanAktifPegawaiYangDinilaiId" >
           <el-select 
-          
-            v-model="SasaranKinerjaForm.jabatanPegawaiYangDinilaiId" 
+            v-model="SasaranKinerjaForm.jabatanAktifPegawaiYangDinilaiId" 
             @change="onPilihJabatanPegawaiYangDinilai($event)"  
             placeholder="Pilih Jabatan"
             :disabled="disabledSelectJabatanPegawaiYangDinilai"
             >
             <el-option
               v-for="item in jabatansPegawaiYangDinilai"
-              :selected="item.value"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              
-             
+              :selected="item.id"
+              :key="item.id"
+              :label="item.nama"
+              :value="item.id"
               >
             </el-option>
           </el-select>
         </el-form-item>
-
         <label>Pangkat / Golongan Ruang</label>
         <el-form-item  prop="pangkatGolonganPegawaiYangDinilai" >
           <el-input
-            v-model="pangkatGolonganPegawaiYangDinilai"
+            v-model="SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai"
             class="inline-input"
             readonly
           ></el-input>
         </el-form-item>
 
-         <label>Instansi</label>
+        <label>Instansi</label>
         <el-form-item  prop="instansiPegawaiYangDinilai" >
           <el-input
-            v-model="instansiPegawaiYangDinilai"
+            v-model="SasaranKinerjaForm.instansiPegawaiYangDinilai"
             class="inline-input"
             readonly
           ></el-input>
         </el-form-item>
+
+        <input v-model="SasaranKinerjaForm.userId" hidden></input>
+        <input v-model="SasaranKinerjaForm.simpegId" hidden></input>
+        <input v-model="SasaranKinerjaForm.pnsId" hidden></input>
+
+
+        <input v-model="SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiId" hidden></input>
+        <input v-model="SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiJenis" hidden></input>
+        <input v-model="SasaranKinerjaForm.jabatanPegawaiYangDinilai" hidden></input>
+        <input v-model="SasaranKinerjaForm.golonganPegawaiYangDinilai" hidden></input>
+        <input v-model="SasaranKinerjaForm.pangkatPegawaiYangDinilai" hidden></input>
        
       </el-tab-pane>
 
@@ -166,82 +149,93 @@
 
 
       <el-tab-pane label="PEJABAT PENILAI KINERJA" name="pejabat_penilai_kinerja">
-        <label>Nama Pejabat Penilai Kinerja</label>
-        <el-form-item  prop="namaPejabatYangDinilai" >
+        <label>Nama Pegawai</label>
+        <el-form-item  prop="namaPejabatPenilaiKinerja" >
           <el-autocomplete
             class="inline-input"
             v-model="SasaranKinerjaForm.namaPejabatPenilaiKinerja"
             :fetch-suggestions="querySearchPejabatPenilaiKinerja"
-            placeholder="Nama Pejabat Penilai Kinerja"
+            placeholder="Nama Pegawai Yang Dinilai"
             :trigger-on-focus="false"
-            @select="handleSelect"
+            @select="handleSelectPejabatPenilaiKinerja"
             :clearable="true"
-            @clear="clearPejabatPenilaiKinerjaJabatan"
+            @clear="clearPejabatPenilaiKinerja"
           ></el-autocomplete>
         </el-form-item>
 
-        <label>NIP Pejabat Penilai Kinerja</label>
-        <el-form-item  prop="nipPejabatPenilaiKinerja" >
+        <label>NIP Pegawai</label>
+        <el-form-item>
           <el-input
+            v-model="SasaranKinerjaForm.nipPejabatPenilaiKinerja"
             class="inline-input"
             readonly
           ></el-input>
         </el-form-item>
 
         <label>Jabatan</label>
-        <el-form-item  prop="jabatanPejabatPenilaiKinerjaId" >
+        <el-form-item  prop="jabatanAktifPejabatPenilaiKinerjaId" >
           <el-select 
           
-            v-model="SasaranKinerjaForm.jabatanPejabatPenilaiKinerjaId" 
-            @change="onPilihPejabatPenilaiKinerja($event)"  
+            v-model="SasaranKinerjaForm.jabatanAktifPejabatPenilaiKinerjaId" 
+            @change="onPilihJabatanPejabatPenilaiKinerja($event)"  
             placeholder="Pilih Jabatan"
             :disabled="disabledSelectJabatanPejabatPenilaiKinerja"
             >
             <el-option
               v-for="item in jabatansPejabatPenilaiKinerja"
-              :selected="item.value"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :selected="item.id"
+              :key="item.id"
+              :label="item.nama"
+              :value="item.id"
               
              
               >
             </el-option>
           </el-select>
         </el-form-item>
+       
 
         <label>Pangkat / Golongan Ruang</label>
         <el-form-item  prop="pangkatGolonganPejabatPenilaiKinerja" >
           <el-input
-            v-model="pangkatGolonganPejabatPenilaiKinerja"
+            v-model="SasaranKinerjaForm.pangkatGolonganPejabatPenilaiKinerja"
             class="inline-input"
             readonly
           ></el-input>
         </el-form-item>
 
-         <label>Instansi</label>
+        <label>Instansi</label>
         <el-form-item  prop="instansiPejabatPenilaiKinerja" >
           <el-input
-            v-model="instansiPejabatPenilaiKinerja"
+            v-model="SasaranKinerjaForm.instansiPejabatPenilaiKinerja"
             class="inline-input"
             readonly
           ></el-input>
         </el-form-item>
         
+
+        <input v-model="SasaranKinerjaForm.skpdId" hidden></input>
+        <input v-model="SasaranKinerjaForm.unitKerjaId" hidden></input>
+        <input v-model="SasaranKinerjaForm.jabatanSimAsnPejabatPenilaiKinerjaId" hidden></input>
+        <input v-model="SasaranKinerjaForm.jabatanSimAsnPejabatPenilaiKinerjaJenis" hidden></input>
+        <input v-model="SasaranKinerjaForm.jabatanPejabatPenilaiKinerja" hidden></input>
+        <input v-model="SasaranKinerjaForm.golonganPejabatPenilaiKinerja" hidden></input>
+        <input v-model="SasaranKinerjaForm.pangkatPejabatPenilaiKinerja" hidden></input>
+        
       </el-tab-pane>
     </el-tabs> 
     
+    </el-form>
    
        
        
-        <el-form-item size="mini" style="margin-top:20px;">
-          <el-button  type="primary"  :loading="submitLoader" @click="submitForm('SasaranKinerjaForm')"
+       
+    <template slot="footer"> 
+          <el-button  size="mini" type="primary"  :loading="submitLoader" @click="submitForm('SasaranKinerjaForm')"
             >Create</el-button
           >
-          <el-button @click="resetForm('SasaranKinerjaForm')">Tutup</el-button>
-        </el-form-item>
-      </el-form>
-    <template slot="footer"> </template>
+          <el-button size="mini" @click="resetForm('SasaranKinerjaForm')">Tutup</el-button>
+    </template>
   </modal>
 </template>
 
@@ -258,6 +252,8 @@ export default {
       activeName: 'detail',
       submitLoader:false,
       periodePkList:[],
+      disabledSelectJabatanPegawaiYangDinilai:true,
+      disabledSelectJabatanPejabatPenilaiKinerja:true,
       jenisJabatanSkpList: [{
           value: 'PEJABAT PIMPINAN TINGGI',
         }, {
@@ -267,8 +263,6 @@ export default {
         }, {
           value: 'PEJABAT FUNGSIONAL',
         }],
-
-
       data:{
           detail:null,
           pegawaiYangDinilai:null,
@@ -278,10 +272,36 @@ export default {
         periodePkId: "",
         jenisJabatanSkp:"",
         dateFrom:"",
-        dateTo:""
+        dateTo:"",
+        userId:"",
+        pnsId:"",
+        simpegId:"",
+        skpdId:"",
+        unitKerjaId:"",
+
+        //Pegawai yang dinilai
+        jabatanAktifPegawaiYangDinilaiId:"",
+        jabatanSimAsnPegawaiYangDinilaiId:"",
+        jabatanSimAsnPegawaiYangDinilaiJenis:"",
+        jabatanPegawaiYangDinilai:"",
+        nipPegawaiYangDinilai:"",
+        pangkatPegawaiYangDinilai:"",
+        golonganPegawaiYangDinilai:"",
+        instansiPegawaiYangDinilai:"",
+
+        //Pejabat Penilai
+        jabatanAktifPejabatPenilaiKinerjaId:"",
+        jabatanSimAsnPejabatPenilaiKinerjaId:"",
+        jabatanSimAsnPejabatPenilaiKinerjaJenis:"",
+        jabatanPejabatPenilaiKinerja:"",
+        nipPejabatPenilaiKinerja:"",
+        pangkatPejabatPenilaiKinerja:"",
+        golonganPejabatPenilaiKinerja:"",
+        instansiPejabatPenilaiKinerja:"",
+
       },
       rules: {
-          periodePkId: [
+         periodePkId: [
             { required: true, message: 'Silakan pilih Periode PK', trigger: 'blur' }
           ],
           jenisJabatanSkp: [
@@ -292,7 +312,7 @@ export default {
           ],
           dateTo: [
             { required: true, message: '', trigger: 'blur' }
-          ],
+          ], 
          
       },
    
@@ -346,6 +366,9 @@ export default {
                     })
                     .catch((error) => {
                         this.submitLoader = false
+
+                       
+                       
                         this.$message({
                           type: 'error',
                           duration: 3000,
@@ -366,6 +389,8 @@ export default {
       this.$refs[formName].resetFields();
       this.modalFormVisible = false;
     },
+
+    //===== pegawai yang dinilai =============================//
     querySearchPegawaiYangDinilai(queryString, cb) {
         //console.log(queryString)
         this.$axios
@@ -375,6 +400,89 @@ export default {
             cb(resp);
           })
     },
+    handleSelectPegawaiYangDinilai(queryString) {
+        this.$refs.loader.start() 
+        
+        //mengisi  detail Pegawai
+        const params = [`user_id=${queryString.id}`].join('&')
+        this.$axios
+          .get(`/pegawai_detail?${params}`)
+          .then((resp) => {
+            console.log(resp)
+            this.SasaranKinerjaForm.nipPegawaiYangDinilai = resp.data.nip;
+            this.SasaranKinerjaForm.userId = queryString.id
+            this.SasaranKinerjaForm.simpegId = resp.data.id
+            this.SasaranKinerjaForm.pnsId = resp.data.pns_id
+            this.SasaranKinerjaForm.skpdId = resp.data.skpd.id
+            this.SasaranKinerjaForm.unitKerjaId = resp.data.unit_kerja?resp.data.unit_kerja.id : null 
+
+            //first get data, ambil jabatan yang pertama
+            if ( resp.data.jabatan.length == 0 ){
+              this.$message({
+                type: 'warning',
+                message: 'Pegawai Tidak Memiliki Jabatan ( SIM ASN )',
+                duration:800,
+              });   
+            }else{
+              this.$refs.SasaranKinerjaForm.clearValidate()
+              this.disabledSelectJabatanPegawaiYangDinilai = false
+              this.jabatansPegawaiYangDinilai =  resp.data.jabatan;
+              this.SasaranKinerjaForm.jabatanAktifPegawaiYangDinilaiId = resp.data.jabatan[0].id
+              this.SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiId = resp.data.jabatan[0].referensi.id
+              this.SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiJenis = resp.data.jabatan[0].referensi.jenis
+              this.SasaranKinerjaForm.jabatanPegawaiYangDinilai = resp.data.jabatan[0].nama
+              this.SasaranKinerjaForm.pangkatPegawaiYangDinilai = resp.data.jabatan[0].golongan.referensi.pangkat
+              this.SasaranKinerjaForm.golonganPegawaiYangDinilai = resp.data.jabatan[0].golongan.referensi.golongan
+              this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = resp.data.jabatan[0].golongan.referensi.pangkat+" / "+resp.data.jabatan[0].golongan.referensi.golongan
+              this.SasaranKinerjaForm.instansiPegawaiYangDinilai = resp.data.jabatan[0].skpd.nama
+              
+
+            }
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 700);
+          })
+          .catch((error) => {
+          this.$message({
+            type: 'error',
+            duration:1800,
+            message: error.response.data.message
+          });    
+          setTimeout(() => {
+            this.$refs.loader.finish() 
+          }, 700);
+        }); 
+    },
+    onPilihJabatanPegawaiYangDinilai(selectedId){
+      this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = null;
+      this.SasaranKinerjaForm.instansiPegawaiYangDinilai = null;
+
+      const isSelect = selectedId
+          this.$axios
+            .$get("/user_jabatan_detail?jabatan_aktif_id="+selectedId+"&nip_pegawai="+this.nipPegawaiYangDinilai)
+            .then((resp) => {
+
+              console.log(resp)
+              this.SasaranKinerjaForm.jabatanAktifPegawaiYangDinilaiId = selectedId
+              this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = resp.pangkat+" / "+resp.golongan
+              this.SasaranKinerjaForm.instansiPegawaiYangDinilai = resp.skpd
+              
+              
+          }) 
+
+    },
+    clearPegawaiYangDinilai(){
+      this.SasaranKinerjaForm.nipPegawaiYangDinilai = null;
+      this.SasaranKinerjaForm.jabatanAktifPegawaiYangDinilaiId = null;
+      this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = null;
+      this.SasaranKinerjaForm.instansiPegawaiYangDinilai = null;
+      this.jabatansPegawaiYangDinilai = null;
+      this.disabledSelectJabatanPejabatPenilaiKinerja = true
+      
+    },
+
+
+    //====== PEJABAT PENILAI KINERJA ===============================//
     querySearchPejabatPenilaiKinerja(queryString, cb) {
         //console.log(queryString)
         this.$axios
@@ -383,6 +491,80 @@ export default {
             //console.log(resp)
             cb(resp);
           })
+    },
+    handleSelectPejabatPenilaiKinerja(queryString) {
+        this.$refs.loader.start() 
+        
+        //mengisi  detail Pegawai
+        const params = [`user_id=${queryString.id}`].join('&')
+        this.$axios
+          .get(`/pegawai_detail?${params}`)
+          .then((resp) => {
+            console.log(resp)
+            //this.SasaranKinerjaForm.nipPejabatPenilaiKinerja = resp.data.nip;
+
+            //first get data, ambil jabatan yang pertama
+            if ( resp.data.jabatan.length == 0 ){
+              this.$message({
+                type: 'warning',
+                message: 'Pegawai Tidak Memiliki Jabatan ( SIM ASN )',
+                duration:1800,
+              });   
+            }else{
+              this.$refs.SasaranKinerjaForm.clearValidate()
+              this.disabledSelectJabatanPejabatPenilaiKinerja = false
+              this.jabatansPejabatPenilaiKinerja =  resp.data.jabatan;
+              this.SasaranKinerjaForm.jabatanAktifPejabatPenilaiKinerjaId = resp.data.jabatan[0].id
+              this.SasaranKinerjaForm.jabatanSimAsnPejabatPenilaiKinerjaId = resp.data.jabatan[0].referensi?resp.data.jabatan[0].referensi.id:null
+              this.SasaranKinerjaForm.jabatanSimAsnPejabatPenilaiKinerjaJenis = resp.data.jabatan[0].referensi?resp.data.jabatan[0].referensi.jenis:null
+              this.SasaranKinerjaForm.jabatanPejabatPenilaiKinerja = resp.data.jabatan[0].nama
+              this.SasaranKinerjaForm.pangkatPejabatPenilaiKinerja = resp.data.jabatan[0].golongan?resp.data.jabatan[0].golongan.referensi.pangkat:""
+              this.SasaranKinerjaForm.golonganPejabatPenilaiKinerja = resp.data.jabatan[0].golongan?resp.data.jabatan[0].golongan.referensi.golongan:""
+              this.SasaranKinerjaForm.pangkatGolonganPejabatPenilaiKinerja = this.SasaranKinerjaForm.pangkatPejabatPenilaiKinerja+" / "+this.SasaranKinerjaForm.golonganPejabatPenilaiKinerja
+              this.SasaranKinerjaForm.instansiPejabatPenilaiKinerja = resp.data.jabatan[0].skpd?resp.data.jabatan[0].skpd.nama:null
+              
+
+            }
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 700);
+          })
+          .catch((error) => {
+          this.$message({
+            type: 'error',
+            message: error.response.data.message
+          });    
+          setTimeout(() => {
+            this.$refs.loader.finish() 
+          }, 700);
+        }); 
+    },
+    onPilihJabatanPejabatPenilaiKinerja(selectedId){
+      this.SasaranKinerjaForm.pangkatGolonganPejabatPenilaiKinerja = null;
+      this.SasaranKinerjaForm.instansiPejabatPenilaiKinerja = null;
+
+      const isSelect = selectedId
+          this.$axios
+            .$get("/user_jabatan_detail?jabatan_aktif_id="+selectedId+"&nip_pegawai="+this.nipPejabatPenilaiKinerja)
+            .then((resp) => {
+
+              console.log(resp)
+              this.SasaranKinerjaForm.jabatanAktifPejabatPenilaiKinerjaId = selectedId
+              this.SasaranKinerjaForm.pangkatGolonganPejabatPenilaiKinerja = resp.pangkat+" / "+resp.golongan
+              this.SasaranKinerjaForm.instansiPejabatPenilaiKinerja = resp.skpd
+              
+              
+          }) 
+
+    },
+    clearPejabatPenilaiKinerja(){
+      this.SasaranKinerjaForm.nipPejabatPenilaiKinerja = null;
+      this.SasaranKinerjaForm.jabatanAktifPejabatPenilaiKinerjaId = null;
+      this.SasaranKinerjaForm.pangkatGolonganPejabatPenilaiKinerja = null;
+      this.SasaranKinerjaForm.instansiPejabatPenilaiKinerja = null;
+      this.jabatansPejabatPenilaiKinerja = null;
+      this.disabledSelectJabatanPejabatPenilaiKinerja = true
+      
     },
   },
   mounted() {
@@ -393,11 +575,17 @@ export default {
 <style scope>
 
 .modal.show .modal-dialog {
-    transform: translate(0, 15%) !important;
+    transform: translate(0, 10%) !important;
+}
+
+.modal-body {
+    min-height: 430px !important;
 }
 
 .modal-dialog {
-    max-width: 480px !important;
+    max-width: 520px !important;
+    margin-bottom: 13px !important;
+    
 }
 
 .list-item {

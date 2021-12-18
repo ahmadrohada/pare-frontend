@@ -355,8 +355,9 @@ export default {
                     .$post("/sasaran_kinerja", this.SasaranKinerjaForm )
                     .then((response) => {
                       
-                      //this.modalFormVisible = false;
+                      this.modalFormVisible = false;
                       setTimeout(() => {
+                        this.$emit('loadAsyncData')
                         this.submitLoader = false
                         this.$message({
                           type: 'info',
@@ -501,7 +502,7 @@ export default {
           .get(`/pegawai_detail?${params}`)
           .then((resp) => {
             console.log(resp)
-            //this.SasaranKinerjaForm.nipPejabatPenilaiKinerja = resp.data.nip;
+            this.SasaranKinerjaForm.nipPejabatPenilaiKinerja = resp.data.nip;
 
             //first get data, ambil jabatan yang pertama
             if ( resp.data.jabatan.length == 0 ){

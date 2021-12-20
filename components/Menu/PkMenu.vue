@@ -67,7 +67,7 @@
         <i class="el-icon-notebook-1"></i>
         <span>Sasaran Strategis</span>
       </el-menu-item>
-      <el-menu-item 
+      <!-- <el-menu-item 
         index= "perjanjian_kinerja-id-skp_jpt___en"
         :route="{path:`/perjanjian_kinerja/${renjaId}/skp_jpt`, name:'perjanjian_kinerja-id-skp_jpt___en'}"
        >
@@ -101,7 +101,7 @@
        >
         <i class="el-icon-data-board"></i>
         <span>Rencana SKP</span>
-      </el-menu-item>
+      </el-menu-item> -->
     </el-menu>
   </div>
 </template>

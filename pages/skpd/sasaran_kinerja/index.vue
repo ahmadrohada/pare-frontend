@@ -31,7 +31,9 @@
         md-sort-order="asc"
       >
         <md-table-row slot="md-table-row" slot-scope="{ item }">
-          <md-table-cell md-label="Periode" md-sort-by="periode_id">{{ item.periode }}</md-table-cell>
+          <md-table-cell md-label="Periode" md-sort-by="periode_id">{{ item.periode_tahun }}</md-table-cell>
+          <md-table-cell md-label="Jenis Jabatan" md-sort-by="jenis_jabatan_skp">{{ item.jenis_jabatan_skp }}</md-table-cell>
+          <md-table-cell md-label="Nama Pegawai" md-sort-by="nama_pegawai">{{ item.nama_pegawai }}</md-table-cell>
           <md-table-cell md-label="Created at" >
             <template slot-scope="props">
               <div style="padding:0px !important;">
@@ -39,7 +41,6 @@
               </div>
             </template>
           </md-table-cell>
-          <md-table-cell md-label="Status" >{{ item.status }}</md-table-cell>
           <md-table-cell md-label="Aksi">
             <el-button size="mini" type="text" @click="viewSasaranKinerja(item)">
               <i class="el-icon-setting">

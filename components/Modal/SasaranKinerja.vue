@@ -19,6 +19,7 @@
             <el-select 
               v-model="SasaranKinerjaForm.periodePkId" 
               placeholder="Pilih Periode Perjanjian Kinerja"
+              v-on:change="pilihPeriode($event)"
               >
               <el-option
                 v-for="item in periodePkList"
@@ -26,6 +27,7 @@
                 :key="item.id"
                 :label="item.periode"
                 :value="item.id"
+                @change="tes"
                 >
               </el-option>
             </el-select>
@@ -132,6 +134,7 @@
         </el-form-item>
 
         <input v-model="SasaranKinerjaForm.userId" hidden></input>
+        <input v-model="SasaranKinerjaForm.periodeLabel" hidden></input>
         <input v-model="SasaranKinerjaForm.simpegId" hidden></input>
         <input v-model="SasaranKinerjaForm.pnsId" hidden></input>
 
@@ -141,6 +144,7 @@
         <input v-model="SasaranKinerjaForm.jabatanPegawaiYangDinilai" hidden></input>
         <input v-model="SasaranKinerjaForm.golonganPegawaiYangDinilai" hidden></input>
         <input v-model="SasaranKinerjaForm.pangkatPegawaiYangDinilai" hidden></input>
+        <input v-model="SasaranKinerjaForm.namaLengkapPegawaiYangDinilai" hidden></input>
        
       </el-tab-pane>
 
@@ -216,6 +220,8 @@
 
         <input v-model="SasaranKinerjaForm.skpdId" hidden></input>
         <input v-model="SasaranKinerjaForm.unitKerjaId" hidden></input>
+        
+        <input v-model="SasaranKinerjaForm.namaLengkapPejabatPenilaiKinerja" hidden></input>
         <input v-model="SasaranKinerjaForm.jabatanSimAsnPejabatPenilaiKinerjaId" hidden></input>
         <input v-model="SasaranKinerjaForm.jabatanSimAsnPejabatPenilaiKinerjaJenis" hidden></input>
         <input v-model="SasaranKinerjaForm.jabatanPejabatPenilaiKinerja" hidden></input>
@@ -270,6 +276,7 @@ export default {
       },
       SasaranKinerjaForm: {
         periodePkId: "",
+        periodeLabel:"",
         jenisJabatanSkp:"",
         dateFrom:"",
         dateTo:"",
@@ -280,6 +287,7 @@ export default {
         unitKerjaId:"",
 
         //Pegawai yang dinilai
+        namaLengkapPegawaiYangDinilai:"",
         jabatanAktifPegawaiYangDinilaiId:"",
         jabatanSimAsnPegawaiYangDinilaiId:"",
         jabatanSimAsnPegawaiYangDinilaiJenis:"",
@@ -290,6 +298,7 @@ export default {
         instansiPegawaiYangDinilai:"",
 
         //Pejabat Penilai
+        namaLengkapPejabatPenilaiKinerja:"",
         jabatanAktifPejabatPenilaiKinerjaId:"",
         jabatanSimAsnPejabatPenilaiKinerjaId:"",
         jabatanSimAsnPejabatPenilaiKinerjaJenis:"",
@@ -390,6 +399,17 @@ export default {
       this.$refs[formName].resetFields();
       this.modalFormVisible = false;
     },
+    pilihPeriode(event){
+      
+       this.$axios
+        .$get("/perjanjian_kinerja_detail?id="+event)
+        .then((resp) => {
+
+          this.SasaranKinerjaForm.periodeLabel = resp.periode.tahun
+          console.log(resp.periode.tahun) 
+              
+        }) 
+    },
 
     //===== pegawai yang dinilai =============================//
     querySearchPegawaiYangDinilai(queryString, cb) {
@@ -411,6 +431,7 @@ export default {
           .then((resp) => {
             console.log(resp)
             this.SasaranKinerjaForm.nipPegawaiYangDinilai = resp.data.nip;
+            this.SasaranKinerjaForm.namaLengkapPegawaiYangDinilai = resp.data.nama_lengkap;
             this.SasaranKinerjaForm.userId = queryString.id
             this.SasaranKinerjaForm.simpegId = resp.data.id
             this.SasaranKinerjaForm.pnsId = resp.data.pns_id
@@ -503,6 +524,7 @@ export default {
           .then((resp) => {
             console.log(resp)
             this.SasaranKinerjaForm.nipPejabatPenilaiKinerja = resp.data.nip;
+            this.SasaranKinerjaForm.namaLengkapPejabatPenilaiKinerja = resp.data.nama_lengkap;
 
             //first get data, ambil jabatan yang pertama
             if ( resp.data.jabatan.length == 0 ){

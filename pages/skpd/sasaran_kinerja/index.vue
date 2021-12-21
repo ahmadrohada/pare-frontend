@@ -156,7 +156,7 @@ export default {
     },
     viewSasaranKinerja: function(data) {
       this.$refs.loader.start()
-      this.$router.push("/perjanjian_kinerja/"+data.id);
+      this.$router.push("/sasaran_kinerja/"+data.id);
     },
     createRenja: function(e) {
       this.$refs.ModalSasaranKinerja.showModal(this.skpd_id);
@@ -165,13 +165,13 @@ export default {
         //const parent = node.parent;
         //const child = parent.data.child || parent.data;
         
-        this.$confirm('Ini akan menghapus Perjanjian Kinerja, Semua data akan ikut terhapus !', 'Konfirmasi', {
+        this.$confirm('Ini akan menghapus Sasaran Kinerja, Semua data akan ikut terhapus !', 'Konfirmasi', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Batal',
           type: 'warning'
         }).then(() => {
           this.$axios
-            .$delete("/perjanjian_kinerja?id="+data.id)
+            .$delete("/sasaran_kinerja?id="+data.id)
             .then((resp) => {
                 this.loadAsyncData()
                 this.$message({
@@ -195,17 +195,6 @@ export default {
           });          
         });
     },
-    /* notifyVue(verticalAlign, horizontalAlign, alertType, alertMessage) {
-      this.$notify({
-        message: alertMessage,
-        timeout: 60000,
-        closeOnClick:false,
-        icon: 'fa fa-info',
-        horizontalAlign: horizontalAlign,
-        verticalAlign: verticalAlign,
-        type: alertType,
-      });
-    } */
   },
   mounted() {
     this.loadAsyncData()

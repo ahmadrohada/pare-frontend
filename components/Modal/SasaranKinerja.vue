@@ -381,7 +381,7 @@ export default {
                        
                         this.$message({
                           type: 'error',
-                          duration: 3000,
+                          duration: 1800,
                           message: error.response.data.message
                         });    
                     });

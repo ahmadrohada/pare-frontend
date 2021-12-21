@@ -34,6 +34,7 @@
       class="md-dense md-raised md-primary"
       v-on:click="addIndikatorSasaranStrategis($event)"
       value="0"
+      v-if="data.length != 0 "
      
     ><i class="el-icon-plus"></i> Indikator Sasaran Strategis
     </md-button>

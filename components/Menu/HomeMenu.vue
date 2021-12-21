@@ -1,14 +1,21 @@
 <template>
   <div>
-    <sidebar-item
-      :link="{
-        name: $t('sidebar.home'),
-        icon: 'fa fa-home',
-        path: '/home',
-      }"
-    >
-    </sidebar-item>
-    <div class="dropdown-divider"></div>
+   
+    <card class="card-user" style="margin-top:-10px !important;height: 90px !important; background: transparent !important;">
+      <div class="author">
+         
+        <img
+          class="sidemenu-avatar"
+          src="~/static/img/logo_pare.png"
+          alt="..."
+        />
+        <div>
+          
+        </div>
+      </div>
+    </card>
+
+
     <sidebar-item
       v-if="isPersonal === true"
       :link="{

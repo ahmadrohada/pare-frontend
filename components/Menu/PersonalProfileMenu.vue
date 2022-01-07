@@ -44,7 +44,7 @@
         <i class="el-icon-user"></i>
         <span>Profile</span>
       </el-menu-item>
-       <el-badge :value="notifikasi_renja" class="item" type="warning">
+       <!-- <el-badge :value="notifikasi_renja" class="item" type="warning">
         <el-menu-item 
         index="/personal/rencana_skp"
         :route="{path: '/personal/rencana_skp'}"
@@ -52,7 +52,7 @@
           <i class="el-icon-office-building"></i>
           <span>Rencana SKP</span>
       </el-menu-item>
-       </el-badge>
+       </el-badge> -->
       <el-submenu index="1" disabled>
         <template slot="title"
           ><i class="el-icon-document-copy"></i>SKP</template

@@ -334,10 +334,15 @@ export default {
       this.$refs.loader.start() 
       this.modalFormVisible = true; 
 
+       const params = [
+        `skpd_id=${skpdId}`,
+        `status=submited`,
+      ].join('&')
+
 
       //get data periode PK List from this SKPD
       this.$axios
-        .$get("/perjanjian_kinerja?skpd_id="+skpdId)
+        .$get(`/perjanjian_kinerja?${params}`)
         .then((data) => {
             this.periodePkList = data.data
             setTimeout(() => {
@@ -622,14 +627,14 @@ export default {
     margin-bottom: 14px;
 }
   
-  .title{
+/*   .title{
     color:rgb(36, 36, 37);
     margin-bottom: 5px;
     font-weight: 100;
     line-height: 1.0em;
     font-size: 0.85em;
  
-  }
+  } */
 
   .el-select {
     width: 100%;

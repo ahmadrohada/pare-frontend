@@ -15,8 +15,7 @@
        
         <input v-model="IndikatorSasaranStrategisForm.indikatorId" hidden></input>
 
-        <label>Sasaran Strategis</label>
-          <el-form-item  prop="sasaranStrategisId" >
+          <el-form-item label="Sasaran Strategis" prop="sasaranStrategisId" >
             <el-select 
               v-model="IndikatorSasaranStrategisForm.sasaranStrategisId" 
               placeholder="Pilih Sasaran Strategis"
@@ -35,18 +34,39 @@
             </el-select>
           </el-form-item>
 
-        <label>Indikator Sasaran Strategis</label>
-        <el-form-item     prop="indikatorSasaranStrategisLabel">
-          <el-input size="mini" type="textarea" placeholder="Indikator Sasaran Strategis Label" v-model="IndikatorSasaranStrategisForm.indikatorSasaranStrategisLabel"></el-input>
+        <el-form-item    label ="Indikator Sasaran Utama" prop="indikatorSasaranStrategisLabel">
+          <el-input size="mini" type="textarea" placeholder="Indikator Sasaran Utama Label" v-model="IndikatorSasaranStrategisForm.indikatorSasaranStrategisLabel"></el-input>
         </el-form-item>
 
-        <label>Target</label>
-        <el-form-item     prop="target">
-          <el-input size="mini" type="input" placeholder="Target" v-model="IndikatorSasaranStrategisForm.target"></el-input>
-        </el-form-item>
+        <el-row :gutter="10">
+          <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            
+            <el-form-item label="Type Target">
+              <el-select 
+                @change="onChangeTypeTarget($event)"
+                v-model="IndikatorSasaranStrategisForm.typeTarget" 
+                placeholder="pilih Type Target">
+                <el-option label="Single Rate" value="1" ></el-option>
+                <el-option label="Range" value="2"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-        <label>Satuan Target</label>
-        <el-form-item     prop="satuanTarget">
+          <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-form-item   label="Target Min"  prop="targetMin">
+              <el-input :disabled="targetMinDisabled" size="mini" type="input" placeholder="Target Min" v-model="IndikatorSasaranStrategisForm.targetMin"></el-input>
+            </el-form-item>
+          </el-col>
+
+           <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+            <el-form-item  label="Target Max"   prop="targetMax">
+              <el-input :disabled="targetMaxDisabled" size="mini" type="input" placeholder="Target Max" v-model="IndikatorSasaranStrategisForm.targetMax"></el-input>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+
+        <el-form-item  label="Satuan Target"   prop="satuanTarget">
           <el-input size="mini" type="input" placeholder="Satuan Target" v-model="IndikatorSasaranStrategisForm.satuanTarget"></el-input>
         </el-form-item>
         
@@ -78,17 +98,20 @@ export default {
       formType: 'create',
       selectVisible:true,
       submitLoader:false,
-      headerText:'Indikator Sasaran Startegis Form',
+      headerText:'Indikator Sasaran Utama Form',
       modalFormVisible: false,
       sasaranStrategis:[],
       IndikatorSasaranStrategisForm: {
         sasaranStrategisId:"",
         indikatorId:"",
         indikatorSasaranStrategisLabel:"",
-        target:"",
+        targetMin:"",
+        targetMax:"",
         satuanTarget:""
        
       },
+      targetMinDisabled:true,
+      targetMaxDisabled:true,
       rules: {
           sasaranStrategisId: [
             { required: true, message: 'Silakan Pilih Sasaran Strategis', trigger: 'blur' }
@@ -96,8 +119,14 @@ export default {
           indikatorSasaranStrategisLabel: [
             { required: true, message: 'Silakan isi Indikator Sasaran Strategis', trigger: 'blur' }
           ],
-          target: [
-            { required: true, message: 'Silakan isi Target', trigger: 'blur' }
+          targetMax: [
+            { required: true, message: 'Silakan isi Target Max', trigger: 'blur' }
+          ],
+          targetMin: [
+            { required: true, message: 'Silakan isi Target Min', trigger: 'blur' }
+          ],
+          typeTarget: [
+            { required: true, message: 'Silakan isi Type Target', trigger: 'blur' }
           ],
           satuanTarget: [
             { required: true, message: 'Silakan isi Satuan Target', trigger: 'blur' }
@@ -107,10 +136,10 @@ export default {
     };
   },
   methods: {
-    sasaranStrategisList(renjaId,selectedId){
+    sasaranStrategisList(perjanjianKinerjaId,selectedId){
        const isSelect = selectedId
           this.$axios
-            .$get("/sasaran_strategis_select_list?renja_id="+renjaId)
+            .$get("/sasaran_strategis_select_list?perjanjian_kinerja_id="+perjanjianKinerjaId)
             .then((resp) => {
               this.selectVisible = true
               this.sasaranStrategis =  resp.sasaran_strategis;
@@ -126,29 +155,43 @@ export default {
         
     },
     
-    showModalAdd(renjaId) {
+    showModalAdd(perjanjianKinerjaId) {
       this.resetForm("IndikatorSasaranStrategisForm")
       this.submitLoader = false
       this.$refs.loader.start() 
       this.formType = "create"
-      this.headerText = "Add Indikator Sasaran Startegis"
-      this.sasaranStrategisList(renjaId,0)
+      this.headerText = "Add Indikator Sasaran Utama"
+      this.sasaranStrategisList(perjanjianKinerjaId,0)
       this.modalFormVisible = true;
     },  
     showModalEdit(id) {
       this.submitLoader = false
       this.$refs.loader.start() 
       this.formType = "edit"
-      this.headerText = "Edit Indikator Sasaran Startegis"
+      this.headerText = "Edit Indikator Sasaran Utama"
       this.$axios
           .$get("/indikator_sasaran_strategis?id="+id )
           .then((resp) => {
             
             this.IndikatorSasaranStrategisForm.indikatorId = resp.id
-            this.sasaranStrategisList(resp.renja_id,resp.sasaran_strategis_id)
+            this.sasaranStrategisList(resp.perjanjian_kinerja_id,resp.sasaran_strategis_id)
             this.IndikatorSasaranStrategisForm.indikatorSasaranStrategisLabel = resp.label
-            this.IndikatorSasaranStrategisForm.target = resp.target
+            this.IndikatorSasaranStrategisForm.typeTarget = resp.type_target
+            this.IndikatorSasaranStrategisForm.targetMin = resp.target_min
+            this.IndikatorSasaranStrategisForm.targetMax = resp.target_max
             this.IndikatorSasaranStrategisForm.satuanTarget = resp.satuan_target
+
+            //persiapkan type target
+            if (resp.type_target == 1){
+              this.targetMinDisabled = true 
+              this.targetMaxDisabled = false
+            }else if (resp.type_target == 2 ){
+              this.targetMinDisabled = false 
+              this.targetMaxDisabled = false
+            }else{
+              this.targetMinDisabled = true 
+              this.targetMaxDisabled = true
+            }
 
             this.modalFormVisible = true;
             
@@ -231,6 +274,22 @@ export default {
       this.modalFormVisible = false;
       this.submitLoader = false
     },
+    onChangeTypeTarget(event) {
+      console.log(event)
+      if (event == 1){
+        this.targetMinDisabled = true 
+        this.targetMaxDisabled = false
+        this.IndikatorSasaranStrategisForm.targetMin = '-'
+      }else if (event == 2 ){
+        this.targetMinDisabled = false 
+        this.targetMaxDisabled = false
+        this.IndikatorSasaranStrategisForm.targetMin = null
+      }else{
+        this.targetMinDisabled = true 
+        this.targetMaxDisabled = true
+      }
+    }
+   
    
   },
   mounted() {
@@ -239,7 +298,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scope>
 
 .modal.show .modal-dialog {
     transform: none !important;
@@ -248,4 +307,5 @@ export default {
 .modal .modal-header .close {
     visibility: hidden;
 }
+
 </style>

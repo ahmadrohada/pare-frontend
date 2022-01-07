@@ -7,7 +7,7 @@
       :short-title="$t('sidebar.shortTitle')"
       :title="$t('sidebar.title')"
     >
-    <rencana-skp-menu></rencana-skp-menu>
+    <sasaran-kinerja-menu></sasaran-kinerja-menu>
     </side-bar>
     
     <div class="main-panel" :data="sidebarBackground">
@@ -49,7 +49,7 @@
   import ContentFooter from '@/components/Layout/ContentFooter.vue';
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
-  import RencanaSkpMenu from '~/components/Menu/RencanaSkpMenu.vue';
+  import SasaranKinerjaMenu from '~/components/Menu/SasaranKinerjaMenu.vue';
 
 
   export default {
@@ -60,7 +60,7 @@
       DashboardContent,
       SlideYDownTransition,
       ZoomCenterTransition,
-      RencanaSkpMenu,
+      SasaranKinerjaMenu,
     },
     data() {
       return {

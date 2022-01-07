@@ -8,18 +8,19 @@
       :router="true" 
       style="margin-top:10px;"
     >
-      <el-menu-item 
-        index="/personal/rencana_skp"
-        :route="{path: '/personal/rencana_skp'}"
+      <!-- <el-menu-item 
+        index="/skpd/sasaran_kinerja"
+        :route="{path: '/skpd/sasaran_kinerja'}"
        >
        <strong>
         <i class="el-icon-back"></i>
-        <span>List Rencana SKP</span>
+        <span>List Sasaran Kinerja</span>
        </strong>
        
-      </el-menu-item>
+      </el-menu-item> 
       
       <el-divider></el-divider>
+      -->
     </el-menu>
     <el-menu
       :default-openeds="[]"
@@ -30,19 +31,27 @@
       :default-active="activeLink"
     >
       <el-menu-item 
-        index= "rencana_skp-id-sumary___en"
-        :route="{path:`/rencana_skp/${rencanaSkpId}/sumary`, name:'rencana_skp-id-sumary___en'}"
+        index= "sasaran_kinerja-id-sumary___en"
+        :route="{path:`/sasaran_kinerja/${sasaranKinerja}/sumary`, name:'sasaran_kinerja-id-sumary___en'}"
        >
         <i class="el-icon-data-board"></i>
         <span>Sumary</span>
       </el-menu-item>
+     
       <el-menu-item 
-        index= "rencana_skp-id-pejabat___en"
-        :route="{path:`/rencana_skp/${rencanaSkpId}/pejabat`, name:'rencana_skp-id-pejabat___en'}"
+        index= "sasaran_kinerja-id-rencana_kinerja___en"
+        :route="{path:`/sasaran_kinerja/${sasaranKinerja}/sumary`, name:'sasaran_kinerja-id-rencana_kinerja___en'}"
+       >
+        <i class="el-icon-data-board"></i>
+        <span>Rencana Kinerja</span>
+      </el-menu-item>
+      <!-- <el-menu-item 
+        index= "sasaran_kinerja-id-pejabat___en"
+        :route="{path:`/sasaran_kinerja/${sasaranKinerja}/pejabat`, name:'sasaran_kinerja-id-pejabat___en'}"
        >
         <i class="el-icon-user"></i>
         <span>Pejabat</span>
-      </el-menu-item>
+      </el-menu-item> -->
     </el-menu>
   </div>
 </template>
@@ -77,7 +86,7 @@ export default {
         }); */
     this.activeLink = this.$route.name; 
     console.log(this.$route.name) 
-    this.rencanaSkpId = this.$route.params.id;
+    this.sasaranKinerja = this.$route.params.id;
 
   },
 };

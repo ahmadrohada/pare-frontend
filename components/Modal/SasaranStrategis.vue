@@ -12,10 +12,10 @@
         size="mini"
       >
         
-        <input v-model="SasaranStrategisForm.renjaId" hidden></input>
+        <input v-model="SasaranStrategisForm.perjanjianKinerjaId" hidden></input>
         <input v-model="SasaranStrategisForm.sasaranStrategisId" hidden></input>
-        <label>Sasaran Strategis</label>
-        <el-form-item     prop="sasaranStrategisLabel">
+      
+        <el-form-item   label="Sasaran Strategis"  prop="sasaranStrategisLabel">
           <el-input size="mini" type="textarea" placeholder="Sasaran Strategis Label" v-model="SasaranStrategisForm.sasaranStrategisLabel"></el-input>
         </el-form-item>
         
@@ -50,7 +50,7 @@ export default {
       headerText:'Sasaran Startegis Form',
       modalFormVisible: false,
       SasaranStrategisForm: {
-        renjaId:"",
+        perjanjianKinerjaId:"",
         sasaranStrategisLabel:"",
         sasaranStrategisId:""
        
@@ -65,12 +65,12 @@ export default {
   },
   methods: {
     
-    showModalAdd(renjaId) {
+    showModalAdd(perjanjianKinerjaId) {
       this.resetForm("SasaranStrategisForm")
       this.submitLoader = false
       this.formType = "create"
       this.headerText = "Add Sasaran Strategis"
-      this.SasaranStrategisForm.renjaId = renjaId
+      this.SasaranStrategisForm.perjanjianKinerjaId = perjanjianKinerjaId
       this.modalFormVisible = true;
     },  
     showModalEdit(id) {
@@ -111,12 +111,12 @@ export default {
                         }); 
                       }, 200);
                     })
-                    .catch((errors) => {
+                    .catch((error) => {
                       this.submitLoader = false
-                      console.log(errors);
+                      console.log(error);
                       this.$message({
                         type: 'warning',
-                        message: 'terjadi kesalahan'
+                        message: error.response.data.message
                       }); 
                     });
 
@@ -144,12 +144,12 @@ export default {
                         }); 
                       }, 200);
                     })
-                    .catch((errors) => {
+                    .catch((error) => {
                       this.submitLoader = false
-                      console.log(errors);
+                      console.log(error);
                       this.$message({
                         type: 'warning',
-                        message: 'terjadi kesalahan'
+                        message: error.response.data.message
                       }); 
                     }); 
 

@@ -7,25 +7,23 @@
       >
       </sasaran-strategis>
 
-      <indikator-sasaran-strategis 
+      <indikator-sasaran-utama
         ref="ModalIndikatorSasaranStrategis"
         @loadAsyncData="loadAsyncData"
       >
-      </indikator-sasaran-strategis>
+      </indikator-sasaran-utama>
 
-    <div class="md-toolbar-section-start">
-      <template slot="header" class="d-inline">
-        <h4 class="title d-inline">Perjanjian Kinerja JPT</h4>
-        <p class="card-category d-inline">RENJA SKPD</p>
-      </template>
-    </div>
+    <template slot="header" class="d-inline">
+      <h4 class="title d-inline">Perjanjian Kinerja</h4>
+      <p class="card-category d-inline">Sasaran Strategis</p>
+    </template>
 
     <md-button 
       style="height:28px;margin-left:-1px; font-size:11px; margin-top:30px;" 
       class="md-dense md-raised md-primary"
       v-on:click="addSasaranStrategis($event)"
       value="0"
-     
+      v-if="statusPk == 'open'"
     ><i class="el-icon-plus"></i>  Sasaran Strategis
     </md-button>
 
@@ -34,69 +32,70 @@
       class="md-dense md-raised md-primary"
       v-on:click="addIndikatorSasaranStrategis($event)"
       value="0"
-      v-if="data.length != 0 "
-     
-    ><i class="el-icon-plus"></i> Indikator Sasaran Strategis
+      v-if=" (tableData.length != 0)&(statusPk == 'open') "
+    ><i class="el-icon-plus"></i> Indikator Kinerja Utama
     </md-button>
 
-      <md-table
-        v-model="data"
-        highlight-current-row
-        style="width: 100%"
-        md-sort="label" 
-        md-sort-order="asc"
-      >
-        <md-table-row slot="md-table-row" slot-scope="{ item }">
-
-          <md-table-cell v-if=" item.primary == 1 " md-label="Sasaran Strategis" md-sort-by="sasaran_strategis">
-              {{ item.sasaran_strategis }}
-              <i v-if=" item.indikator_id  != '' ">
-              <el-button size="mini" type="text" @click="editSasaranStrategis(item)">
-                <i class="el-icon-setting"></i> Edit
-                <md-tooltip md-direction="top">Edit Sasaran</md-tooltip>
-              </el-button>
-            </i>
-          </md-table-cell>
-          <md-table-cell style="border-top:none !important;"v-if=" item.primary == 0 " md-label="Sasaran Strategis" md-sort-by="sasaran_strategis">
-              
-          </md-table-cell>
-          
-          <md-table-cell md-label="Indikator">{{ item.indikator }}</md-table-cell>
-          <md-table-cell md-label="Target" >{{ item.target }}</md-table-cell>
-          <md-table-cell md-label="Satuan" >{{ item.satuan_target }}</md-table-cell>
-          <md-table-cell md-label="Aksi">
-            <div v-if=" item.indikator_id  != '' ">
-              <el-button size="mini" type="text" @click="editIndikatorSasaranStrategis(item)">
-                <i class="el-icon-setting"></i> Edit
-                <md-tooltip md-direction="top">Edit Indikator Sasaran</md-tooltip>
-              </el-button>
-              <el-button size="mini" type="text danger" @click="hapusIndikatorSasaranStrategis(item)">
-                <i class="el-icon-delete"></i> Hapus
-                <md-tooltip md-direction="top">Hapus Indikator Sasaran</md-tooltip>
-              </el-button>
-            </div>
-            <div v-else>
-              <el-button size="mini" type="text" @click="editSasaranStrategis(item)">
-                <i class="el-icon-setting"></i> Edit
-                <md-tooltip md-direction="top">Edit  Sasaran</md-tooltip>
-              </el-button>
-              <el-button size="mini" type="text danger" @click="hapusSasaranStrategis(item)">
-                <i class="el-icon-delete"></i> Hapus
-                <md-tooltip md-direction="top">Hapus  Sasaran</md-tooltip>
-              </el-button>
-            </div>
-          </md-table-cell>
-        </md-table-row>
-      </md-table>
-      <el-pagination
-        :layout="layout"
-        :hide-on-single-page="true"
-        @current-change="onPageChange"
-        @size-change="handleSizeChange"
-        :page-sizes="[5, 10, 20]"
-        :page-size="limit"
-        :total="total"
-      /> 
+    <hr>
+    <el-table
+      :data="tableData"
+      :span-method="objectSpanMethod"
+      border
+      style="width: 100%;">
+      <el-table-column
+        align="center"
+        prop="no"
+        label="No"
+        width="50">
+      </el-table-column>
+      <el-table-column label="Sasaran Strategis" width="270">
+        <template slot-scope="scope">
+          {{scope.row.sasaran_strategis}}
+          <i v-if=" scope.row.indikator_id  != '' ">
+            <el-button v-if="statusPk == 'open' " size="mini" type="text" @click="editSasaranStrategis(scope.row)">
+            <i class="el-icon-setting"></i> Edit
+            <md-tooltip md-direction="top">Edit Sasaran Strategis</md-tooltip>
+            </el-button>
+          </i>
+        </template>
+      </el-table-column>
+      <el-table-column  label="Indikator Kinerja Utama" min-width="320">
+        <template slot-scope="scope">
+          {{scope.row.indikator}}
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        prop="target"
+        label="Target"
+        width="150">
+      </el-table-column>
+      <el-table-column align="center"  label="Aksi" width="160"  v-if="statusPk == 'open' ">
+        <template slot-scope="scope" >
+          <div v-if=" scope.row.indikator_id  != '' ">
+            <el-button size="mini" type="text" @click="editIndikatorSasaranStrategis(scope.row)">
+              <i class="el-icon-setting"></i> Edit
+              <md-tooltip md-direction="top">Edit Indikator Kinerja Utama</md-tooltip>
+            </el-button>
+            <el-button size="mini" type="text danger" @click="hapusIndikatorSasaranStrategis(scope.row)">
+              <i class="el-icon-delete"></i> Hapus
+              <md-tooltip md-direction="top">Hapus Indikator Kinerja Utama</md-tooltip>
+            </el-button>
+          </div>
+          <div v-else>
+            <el-button size="mini" type="text" @click="editSasaranStrategis(scope.row)">
+              <i class="el-icon-setting"></i> Edit
+              <md-tooltip md-direction="top">Edit  Sasaran Strategis</md-tooltip>
+            </el-button>
+            <el-button size="mini" type="text danger" @click="hapusSasaranStrategis(scope.row)">
+              <i class="el-icon-delete"></i> Hapus
+              <md-tooltip md-direction="top">Hapus  Sasaran Strategis</md-tooltip>
+            </el-button>
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
+    
    </card>
 </template>
 
@@ -114,85 +113,120 @@
     return items
   }
 
-import IndikatorSasaranStrategis from '~/components/Modal/IndikatorSasaranStrategis.vue';
+import IndikatorSasaranUtama from '~/components/Modal/IndikatorSasaranUtama.vue';
 import SasaranStrategis from '~/components/Modal/SasaranStrategis.vue';
-
 export default {
 
   middleware: ['auth'],
   layout: "perjanjianKinerjaLayout",
   components: {
-    IndikatorSasaranStrategis,
+    IndikatorSasaranUtama,
     SasaranStrategis,
   },
   data() {
     return {
-      renjaId:null,
-      data: [],
-      //layout: 'total, sizes, prev, pager, next',
-      layout: 'prev, next',
-      loading: false,
+      statusPk:'open',
+      isEmpty:false,
+      perjanjianKinerjaId:null,
+      tableData: [],
+      spanArr: [],
       search: '',
       sortField: 'id',
       sortOrder: 'asc',
-      sortIcon: 'arrow-up',
-      sortIconSize: 'is-small',
-      isNarrowed: true,
-      isStriped: true,
-      isEmpty: true,
-      hasMobileCards: true,
-      defaultSortOrder: 'asc',
-      page: 1,
-      perPage: 1,
-      totalPage:0,
-      total:0,
-      isPaginated: true,
-      limit:5
     }
   },
   mounted() {
-    this.renjaId = this.$route.params.id
+    this.perjanjianKinerjaId = this.$route.params.id
+    this.detailPk()
     this.loadAsyncData()
   },
   methods: {
+    detailPk() {
+      const params = [
+        `id=${this.perjanjianKinerjaId}`,
+      ].join('&')
+      this.$axios
+        .get(`/perjanjian_kinerja_detail?${params}`)
+        .then(({ data }) => {
+          this.statusPk = data.status
+         
+          setTimeout(() => {
+          }, 800);
+
+        })
+        .catch((error) => {
+          throw error
+        })
+
+    },
     loadAsyncData() {
       const params = [
-        `renja_id=${this.renjaId}`,
+        `perjanjian_kinerja_id=${this.perjanjianKinerjaId}`,
         `search=${this.search}`,
         `order_by=${this.sortField}`,
         `order_direction=${this.sortOrder}`,
-        `page=${this.page}`,
-        `take=${this.limit}`,
+        //`page=${this.page}`,
+        //`take=${this.limit}`,
       ].join('&')
 
-      this.loading = true
+      
       this.$axios
         .get(`/sasaran_strategis_skpd?${params}`)
         .then(({ data }) => {
-          // api.themoviedb.org manage max 1000 pages
-          this.data = []
-          this.total = data.pagination.total
-          this.page = data.pagination.current_page
-          this.perPage = data.pagination.per_page
-          this.totalPage = data.pagination.total_page
-          this.limit = data.pagination.limit
-          data.data.forEach((item) => {
-            this.data.push(item)
+            this.tableData = []
+            this.spanArr = []
+            data.data.forEach((item) => {
+              this.tableData.push(item)
+            }) 
+            this.onMergeLines(data.data);
+            this.total > 0 ? (this.isEmpty = false) : (this.isEmpty = true)
+            
           })
-          this.total > 0 ? (this.isEmpty = false) : (this.isEmpty = true)
-          this.loading = false
-        })
-        .catch((error) => {
-          this.data = []
-          this.total = 0
-          this.loading = false
-          this.isEmpty = true
-          throw error
-        })
+          .catch((error) => {
+            this.tableData = []
+            this.spanArr = []
+            this.total = 0
+            this.isEmpty = true
+            throw error
+          })
+          
     },
+    onMergeLines(data) {
+        data.forEach((item,index) => {
+          if (index === 0) {
+            this.spanArr.push(1);
+            this.position = 0;
+          } else {
+            if (
+              this.tableData[index].no ===
+              this.tableData[index - 1].no
+            ) {
+              this.spanArr[this.position] += 1;
+              this.spanArr.push(0);
+            } else {
+              this.spanArr.push(1);
+              this.position = index;
+            }
+          }
+        })
+      },
+      objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+        console.log(row, column);
+        
+        if (columnIndex === 0 || columnIndex === 1 ) {
+         
+            const _row = this.spanArr[rowIndex];
+            const _col = _row > 0 ? 1 : 0;
+            return {
+              rowspan: _row,
+              colspan: _col,
+            };
+          
+        }
+      },
     addSasaranStrategis: function(data) {
       //console.log(data)
-      this.$refs.ModalSasaranStrategis.showModalAdd(this.renjaId);
+      this.$refs.ModalSasaranStrategis.showModalAdd(this.perjanjianKinerjaId);
     },
     editSasaranStrategis: function(data) {
       //console.log(data)
@@ -234,7 +268,7 @@ export default {
     },
     addIndikatorSasaranStrategis: function(data) {
       //console.log(data)
-      this.$refs.ModalIndikatorSasaranStrategis.showModalAdd(this.renjaId);
+      this.$refs.ModalIndikatorSasaranStrategis.showModalAdd(this.perjanjianKinerjaId);
     },
     editIndikatorSasaranStrategis: function(data) {
       this.$refs.ModalIndikatorSasaranStrategis.showModalEdit(data.indikator_id);
@@ -243,7 +277,7 @@ export default {
         //const parent = node.parent;
         //const child = parent.data.child || parent.data;
         
-        this.$confirm('Hapus Indikator Sasaran Strategis', 'Konfirmasi', {
+        this.$confirm('Hapus Indikator Sasaran Utama', 'Konfirmasi', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Batal',
           type: 'warning'
@@ -273,24 +307,10 @@ export default {
           });          
         });
     },
-    handleSizeChange(value) {
-      //alert(value)
-      this.limit = value
-      this.loadAsyncData()
-    },
-     onPageChange(value) {
-      //alert(value)
-      this.page = value
-      this.loadAsyncData()
-    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
 
-
-  .md-table + .md-table {
-    margin-top: 10px
-  }
 </style>

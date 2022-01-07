@@ -14,7 +14,7 @@
        >
        <strong>
         <i class="el-icon-back"></i>
-        <span>List Perjanjian Kinerja</span>
+        <span>Perjanjian Kinerja SKPD</span>
        </strong>
        
       </el-menu-item>
@@ -53,23 +53,23 @@
       :router="true" 
       :default-active="activeLink"
     >
-      <!-- <el-menu-item 
-        index= "renja-id-dashboard___en"
-        :route="{path:`/renja/${renjaId}/dashboard`, name:'renja-id-dashboard___en'}"
+      <el-menu-item 
+        index= "perjanjian_kinerja-id-sumary___en"
+        :route="{path:`/perjanjian_kinerja/${perjanjianKinerjaId}/sumary`, name:'perjanjian_kinerja-id-sumary___en'}"
        >
         <i class="el-icon-data-board"></i>
-        <span>Dashboard</span>
-      </el-menu-item> -->
+        <span>Sumary</span>
+      </el-menu-item>
       <el-menu-item 
         index= "perjanjian_kinerja-id-sasaran_strategis___en"
-        :route="{path:`/perjanjian_kinerja/${renjaId}/sasaran_strategis`, name:'perjanjian_kinerja-id-sasaran_strategis___en'}"
+        :route="{path:`/perjanjian_kinerja/${perjanjianKinerjaId}/sasaran_strategis`, name:'perjanjian_kinerja-id-sasaran_strategis___en'}"
        >
         <i class="el-icon-notebook-1"></i>
         <span>Sasaran Strategis</span>
       </el-menu-item>
       <!-- <el-menu-item 
         index= "perjanjian_kinerja-id-skp_jpt___en"
-        :route="{path:`/perjanjian_kinerja/${renjaId}/skp_jpt`, name:'perjanjian_kinerja-id-skp_jpt___en'}"
+        :route="{path:`/perjanjian_kinerja/${perjanjianKinerjaId}/skp_jpt`, name:'perjanjian_kinerja-id-skp_jpt___en'}"
        >
         <i class="el-icon-data-board"></i>
         <span>SKP JPT Pratama</span>
@@ -90,14 +90,14 @@
       </el-menu-item>
       <el-menu-item 
         index= "perjanjian_kinerja-id-peran___en"
-        :route="{path:`/perjanjian_kinerja/${renjaId}/peran`, name:'perjanjian_kinerja-id-peran___en'}"
+        :route="{path:`/perjanjian_kinerja/${perjanjianKinerjaId}/peran`, name:'perjanjian_kinerja-id-peran___en'}"
        >
         <i class="el-icon-user"></i>
         <span>Peran</span>
       </el-menu-item>
       <el-menu-item 
         index= "perjanjian_kinerja-id-rencana_skp___en"
-        :route="{path:`/perjanjian_kinerja/${renjaId}/rencana_skp`, name:'perjanjian_kinerja-id-rencana_skp___en'}"
+        :route="{path:`/perjanjian_kinerja/${perjanjianKinerjaId}/rencana_skp`, name:'perjanjian_kinerja-id-rencana_skp___en'}"
        >
         <i class="el-icon-data-board"></i>
         <span>Rencana SKP</span>
@@ -109,11 +109,11 @@
 <script>
 export default {
   props: [],
-  name: "skpdMenu",
+  name: "PkMenu",
   data() {
     return {
       activeLink: null,
-      renjaId: null,
+      perjanjianKinerjaId: null,
       logo:null,
     };
   },
@@ -136,7 +136,7 @@ export default {
         }); */
     this.activeLink = this.$route.name; 
     console.log(this.$route.name) 
-    this.renjaId = this.$route.params.id;
+    this.perjanjianKinerjaId = this.$route.params.id;
 
   },
 };

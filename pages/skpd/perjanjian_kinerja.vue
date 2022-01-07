@@ -40,20 +40,35 @@
               </div>
             </template>
           </md-table-cell>
-          <md-table-cell md-label="Status" >{{ item.status }}</md-table-cell>
+          <md-table-cell md-label="Status" >
+            <el-button v-if=" item.status == 'open' "  size="mini" type="text" @click="submitPerjanjianKinerja(item)">
+              <i class="el-icon-position">
+              </i> Open
+              <md-tooltip md-direction="top">Klik Untuk Submit Perjanjian Kinerja</md-tooltip>
+            </el-button>
+            <span v-if=" item.status == 'close' ">Close</span>
+          </md-table-cell>
           <md-table-cell md-label="Aksi">
-            <el-button size="mini" type="text" @click="viewPerjanjianKinerja(item)">
+            <el-button v-if=" item.status == 'open' " size="mini" type="text" @click="viewPerjanjianKinerja(item)">
               <i class="el-icon-setting">
                 
               </i> Edit
               <md-tooltip md-direction="top">Edit Data</md-tooltip>
             </el-button>
-            <el-button size="mini" type="text danger" @click="hapusPerjanjianKinerja(item)">
+            <el-button v-if=" item.status == 'open' " size="mini" type="text danger" @click="hapusPerjanjianKinerja(item)">
               <i class="el-icon-delete">
                 
               </i> Hapus
               <md-tooltip md-direction="top">Hapus Data</md-tooltip>
             </el-button>
+
+             <el-button v-if=" item.status == 'close' " size="mini" type="text" @click="viewPerjanjianKinerja(item)">
+              <i class="el-icon-view">
+                
+              </i> Lihat
+              <md-tooltip md-direction="top">Lihat Data</md-tooltip>
+            </el-button>
+
           </md-table-cell>
         </md-table-row>
 
@@ -151,6 +166,56 @@ export default {
     onPageChange(page) {
       this.page = page
       this.loadAsyncData()
+    },
+    submitPerjanjianKinerja: function(data) {
+
+      //cek jumlah sasaran strategis
+      this.$axios
+        .get(`/perjanjian_kinerja_detail?id=`+data.id)
+        .then(({ data }) => {
+          
+          if(data.jumlahSasaranStrategis >= 1 ){
+              this.$confirm('Submit Perjanjian Kinerja', 'Konfirmasi', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Batal',
+                type: 'warning'
+              }).then(() => {
+                this.$axios
+                  .$put("/submit_perjanjian_kinerja?id="+data.id)
+                  .then((resp) => {
+                      this.loadAsyncData()
+                      this.$message({
+                        type: 'success',
+                        message: 'Berhasil Submit'
+                      });
+                  })
+                  .catch((error) => {
+                    //console.log(error.response.data.message)
+                    this.$message({
+                      type: 'error',
+                      message: error.response.data.message
+                    });          
+                  });
+
+                
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: 'Proses Submit Dibatalkan'
+                });          
+              });
+          }else{
+            this.$message({
+                  type: 'warning',
+                  message: 'PK harus memiliki minimal 1 Sasaran Strategis'
+                });   
+          }
+        
+
+        })
+        .catch((error) => {
+          throw error
+        })
     },
     viewPerjanjianKinerja: function(data) {
       this.$refs.loader.start()

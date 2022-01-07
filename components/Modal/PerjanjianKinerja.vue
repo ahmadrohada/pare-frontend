@@ -21,6 +21,7 @@
       >
         <input v-model="RenjaForm.skpdId" hidden></input>
         <input v-model="RenjaForm.userId" hidden></input>
+        <input v-model="RenjaForm.kepalaSkpdId" hidden></input>
        
         <div>
           <label>Periode Renja</label>
@@ -113,6 +114,7 @@ export default {
         periodeId:"",
         userId:"",
         jabatanId:"",
+        kepalaSkpdId:"",
       },
       jabatans: [],
       rules: {
@@ -172,7 +174,7 @@ export default {
     },
     handleSelect(queryString) {
         this.$refs.loader.start() 
-        this.RenjaForm.userId = queryString.id
+        this.RenjaForm.kepalaSkpdId = queryString.id
         this.$axios
           .$get("/user_jabatan_list?id="+queryString.id)
           .then((resp) => {
@@ -303,21 +305,20 @@ export default {
     margin-bottom: 14px;
 }
   
-  .title{
+/*   .title{
     color:rgb(36, 36, 37);
     margin-bottom: 5px;
     font-weight: 100;
     line-height: 1.0em;
     font-size: 0.85em;
  
-  }
+  } */
 
   .el-select {
     width: 100%;
   }
 
   .label{
-    
     color:#92989b;
   }
   .modal .modal-header .close {

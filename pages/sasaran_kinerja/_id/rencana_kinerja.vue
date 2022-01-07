@@ -1,0 +1,417 @@
+<template>
+   <card style="min-height:500px;">
+     <rencana-kinerja 
+        ref="ModalRencanaKinerja"
+        style="min-height:350px;"
+        @loadAsyncData="loadAsyncData"
+      >
+      </rencana-kinerja>
+
+      <indikator-kinerja-individu
+        ref="ModalIndikatorKinerjaIndividu"
+        @loadAsyncData="loadAsyncData"
+      >
+      </indikator-kinerja-individu>
+
+
+    <template slot="header" class="d-inline">
+      <h4 class="title d-inline">Sasaran Kinerja</h4>
+      <p class="card-category d-inline">Rencana Kinerja</p>
+    </template>
+
+    <md-button 
+      style="height:28px;margin-left:-1px; font-size:11px; margin-top:30px;" 
+      class="md-dense md-raised md-primary"
+      v-on:click="addRencanaKinerja($event)"
+      value="0"
+      v-if="statusSasaranKinerja == 'drafted'"
+    ><i class="el-icon-plus"></i>  Rencana Kinerja
+    </md-button>
+
+    <md-button 
+      style="height:28px;margin-left:-1px; font-size:11px; margin-top:30px;" 
+      class="md-dense md-raised md-primary"
+      v-on:click="addIndikatorKinerjaIndividu($event)"
+      value="0"
+      v-if=" statusSasaranKinerja == 'drafted'"
+    ><i class="el-icon-plus"></i> Indikator Kinerja Individu
+    </md-button>
+
+    <hr>
+
+
+    <p class="" style="margin-top: 20px">A. KINERJA UTAMA</p>
+    <el-table
+      :data="tableDataKinerjaUtama"
+      :span-method="objectSpanMethodKinerjaUtama"
+      border
+      style="width: 100%;">
+      <el-table-column
+        align="center"
+        prop="no"
+        label="No"
+        width="45">
+      </el-table-column>
+      <el-table-column label="Rencana Kinerja" width="270">
+        <template slot-scope="scope">
+          {{scope.row.rencana_kinerja}}
+          <i v-if=" scope.row.indikator_id  != '' ">
+            <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaKinerja(scope.row)">
+            <i class="el-icon-setting"></i> Edit
+            <md-tooltip md-direction="top">Edit Rencana Kinerja</md-tooltip>
+            </el-button>
+          </i>
+        </template>
+      </el-table-column>
+      <el-table-column  label="Indikator Kinerja Individu" min-width="320">
+        <template slot-scope="scope">
+          {{scope.row.indikator_kinerja_individu}}
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        prop="target"
+        label="Target"
+        width="150">
+      </el-table-column>
+      <el-table-column align="center"  label="Aksi" width="160"  v-if="statusSasaranKinerja == 'drafted' ">
+        <template slot-scope="scope" >
+          <div v-if=" scope.row.indikator_id  != '' ">
+            <el-button size="mini" type="text" @click="editIndikatorKinerjaIndividu(scope.row)">
+              <i class="el-icon-setting"></i> Edit
+              <md-tooltip md-direction="top">Edit Indikator Kinerja Individu</md-tooltip>
+            </el-button>
+            <el-button size="mini" type="text danger" @click="hapusIndikatorKinerjaIndividu(scope.row)">
+              <i class="el-icon-delete"></i> Hapus
+              <md-tooltip md-direction="top">Hapus Indikator Kinerja Individu</md-tooltip>
+            </el-button>
+          </div>
+          <div v-else>
+            <el-button size="mini" type="text" @click="editRencanaKinerja(scope.row)">
+              <i class="el-icon-setting"></i> Edit
+              <md-tooltip md-direction="top">Edit  Rencana Kinerja</md-tooltip>
+            </el-button>
+            <el-button size="mini" type="text danger" @click="hapusRencanaKinerja(scope.row)">
+              <i class="el-icon-delete"></i> Hapus
+              <md-tooltip md-direction="top">Hapus  Rencana Kinerja</md-tooltip>
+            </el-button>
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
+
+
+    <p class="" style="margin-top: 20px">B. KINERJA TAMBAHAN</p>
+    <el-table
+      :data="tableDataKinerjaTambahan"
+      :span-method="objectSpanMethodKinerjaTambahan"
+      border
+      style="width: 100%;"
+      :show-header = "true">
+      <el-table-column
+        align="center"
+        prop="no"
+        label="No"
+        width="45">
+      </el-table-column>
+      <el-table-column label="Rencana Kinerja" width="270">
+        <template slot-scope="scope">
+          {{scope.row.rencana_kinerja}}
+          <i v-if=" scope.row.indikator_id  != '' ">
+            <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaKinerja(scope.row)">
+            <i class="el-icon-setting"></i> Edit
+            <md-tooltip md-direction="top">Edit Rencana Kinerja</md-tooltip>
+            </el-button>
+          </i>
+        </template>
+      </el-table-column>
+      <el-table-column  label="Indikator Kinerja Individu" min-width="320">
+        <template slot-scope="scope">
+          {{scope.row.indikator_kinerja_individu}}
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        prop="target"
+        label=""
+        width="150">
+      </el-table-column>
+      <el-table-column align="center"  label="Aksi" width="160"  v-if="statusSasaranKinerja == 'drafted' ">
+        <template slot-scope="scope" >
+          <div v-if=" scope.row.indikator_id  != '' ">
+            <el-button size="mini" type="text" @click="editIndikatorKinerjaIndividu(scope.row)">
+              <i class="el-icon-setting"></i> Edit
+              <md-tooltip md-direction="top">Edit Indikator Kinerja Individu</md-tooltip>
+            </el-button>
+            <el-button size="mini" type="text danger" @click="hapusIndikatorKinerjaIndividu(scope.row)">
+              <i class="el-icon-delete"></i> Hapus
+              <md-tooltip md-direction="top">Hapus Indikator Kinerja Individu</md-tooltip>
+            </el-button>
+          </div>
+          <div v-else>
+            <el-button size="mini" type="text" @click="editRencanaKinerja(scope.row)">
+              <i class="el-icon-setting"></i> Edit
+              <md-tooltip md-direction="top">Edit  Rencana Kinerja</md-tooltip>
+            </el-button>
+            <el-button size="mini" type="text danger" @click="hapusRencanaKinerja(scope.row)">
+              <i class="el-icon-delete"></i> Hapus
+              <md-tooltip md-direction="top">Hapus  Rencana Kinerja</md-tooltip>
+            </el-button>
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
+
+
+
+
+   </card>
+</template>
+
+<script>
+
+
+import IndikatorKinerjaIndividu from '~/components/Modal/IndikatorKinerjaIndividu.vue';
+import RencanaKinerja from '~/components/Modal/RencanaKinerja.vue';
+
+export default {
+
+  middleware: ['auth'],
+  layout: "sasaranKinerjaLayout",
+  components: {
+    RencanaKinerja,
+    IndikatorKinerjaIndividu
+  },
+  data() {
+    return {
+      sasaranKinerjaId:null,
+      tableDataKinerjaUtama: [],
+      tableDataKinerjaTambahan: [],
+      spanArrKinerjaUtama: [],
+      spanArrKinerjaTambahan: [],
+      positionKinerjaTambahan: null,
+      positionKinerjaUtama: null,
+      search: '',
+      sortField: 'id',
+      sortOrder: 'asc',
+      statusSasaranKinerja:'drafted',
+     
+    }
+  },
+  mounted() {
+    this.sasaranKinerjaId = this.$route.params.id
+    this.loadAsyncData()
+    
+  },
+  methods: {
+      loadAsyncData(){
+        this.loadAsyncDataKinerjaUtama()
+        this.loadAsyncDataKinerjaTambahan()
+      },
+      loadAsyncDataKinerjaUtama() {
+        const params = [
+          `sasaran_kinerja_id=${this.sasaranKinerjaId}`,
+          `search=${this.search}`,
+          `order_by=${this.sortField}`,
+          `order_direction=${this.sortOrder}`,
+          `jenis_rencana_kinerja=kinerja_utama`
+        ].join('&')
+
+        this.loading = true
+        this.$axios
+          .get(`/sasaran_kinerja_rencana_kinerja?${params}`)
+          .then(({ data }) => {
+            this.tableDataKinerjaUtama = []
+            this.spanArrKinerjaUtama = []
+            data.data.forEach((item) => {
+              this.tableDataKinerjaUtama.push(item)
+            }) 
+            this.onMergeLinesKinerjaUtama(data.data);
+            this.loading = false
+          })
+          .catch((error) => {
+            this.tableDataKinerjaUtama = []
+            throw error
+          })
+      },
+      loadAsyncDataKinerjaTambahan() {
+        const params = [
+          `sasaran_kinerja_id=${this.sasaranKinerjaId}`,
+          `search=${this.search}`,
+          `order_by=${this.sortField}`,
+          `order_direction=${this.sortOrder}`,
+          `jenis_rencana_kinerja=kinerja_tambahan`
+        ].join('&')
+
+        this.loading = true
+        this.$axios
+          .get(`/sasaran_kinerja_rencana_kinerja?${params}`)
+          .then(({ data }) => {
+            this.tableDataKinerjaTambahan = []
+            this.spanArrKinerjaTambahan = []
+            data.data.forEach((item) => {
+              this.tableDataKinerjaTambahan.push(item)
+            }) 
+            this.onMergeLinesKinerjaTambahan(data.data);
+            this.loading = false
+          })
+          .catch((error) => {
+            this.tableDataKinerjaTambahan = []
+            throw error
+          })
+      },
+      onMergeLinesKinerjaUtama(data) {
+        data.forEach((item,index) => {
+          if (index === 0) {
+            this.spanArrKinerjaUtama.push(1);
+            this.positionKinerjaUtama = 0;
+          } else {
+            if (
+              this.tableDataKinerjaUtama[index].no ===
+              this.tableDataKinerjaUtama[index - 1].no
+            ) {
+              this.spanArrKinerjaUtama[this.positionKinerjaUtama] += 1;
+              this.spanArrKinerjaUtama.push(0);
+            } else {
+              this.spanArrKinerjaUtama.push(1);
+              this.positionKinerjaUtama = index;
+            }
+          }
+        })
+      },
+      onMergeLinesKinerjaTambahan(data) {
+        data.forEach((item,index) => {
+          if (index === 0) {
+            this.spanArrKinerjaTambahan.push(1);
+            this.positionKinerjaTambahan = 0;
+          } else {
+            if (
+              this.tableDataKinerjaTambahan[index].no ===
+              this.tableDataKinerjaTambahan[index - 1].no
+            ) {
+              this.spanArrKinerjaTambahan[this.positionKinerjaTambahan] += 1;
+              this.spanArrKinerjaTambahan.push(0);
+            } else {
+              this.spanArrKinerjaTambahan.push(1);
+              this.positionKinerjaTambahan = index;
+            }
+          }
+        })
+      },
+      objectSpanMethodKinerjaUtama({ row, column, rowIndex, columnIndex }) {
+        //console.log(row, column);
+        
+        if (columnIndex === 0 || columnIndex === 1 ) {
+         
+            const _row = this.spanArrKinerjaUtama[rowIndex];
+            const _col = _row > 0 ? 1 : 0;
+            return {
+              rowspan: _row,
+              colspan: _col,
+            };
+          
+        }
+      },
+       objectSpanMethodKinerjaTambahan({ row, column, rowIndex, columnIndex }) {
+        //console.log(row, column);
+        
+        if (columnIndex === 0 || columnIndex === 1 ) {
+         
+            const _row = this.spanArrKinerjaTambahan[rowIndex];
+            const _col = _row > 0 ? 1 : 0;
+            return {
+              rowspan: _row,
+              colspan: _col,
+            };
+          
+        }
+      },
+      addRencanaKinerja: function(data) {
+      //console.log(data)
+      this.$refs.ModalRencanaKinerja.showModalAdd(this.sasaranKinerjaId);
+      },
+      editRencanaKinerja: function(data) {
+        //console.log(data)
+        this.$refs.ModalRencanaKinerja.showModalEdit(data.id);
+      },
+      hapusRencanaKinerja: function(data) {
+        //const parent = node.parent;
+        //const child = parent.data.child || parent.data;
+        
+        this.$confirm('Hapus Rencana Kinerja', 'Konfirmasi', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Batal',
+          type: 'warning'
+        }).then(() => {
+          this.$axios
+            .$delete("/rencana_kinerja?id="+data.id)
+            .then((resp) => {
+                this.loadAsyncData()
+                this.$message({
+                  type: 'success',
+                  message: 'Berhasil dihapus'
+                });
+            })
+            .catch((error) => {
+              //console.log(error.response.data.message)
+              this.$message({
+                type: 'error',
+                message: error.response.data.message
+              });          
+            });
+
+          
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Proses Hapus Dibatalkan'
+          });          
+        });
+      },
+      addIndikatorKinerjaIndividu: function(data) {
+      //console.log(data)
+      this.$refs.ModalIndikatorKinerjaIndividu.showModalAdd(this.sasaranKinerjaId);
+      },
+      editIndikatorKinerjaIndividu: function(data) {
+        this.$refs.ModalIndikatorKinerjaIndividu.showModalEdit(data.indikator_id);
+      },
+      hapusIndikatorKinerjaIndividu: function(data) {
+        //const parent = node.parent;
+        //const child = parent.data.child || parent.data;
+        
+        this.$confirm('Hapus Indikator Kinerja Individu', 'Konfirmasi', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Batal',
+          type: 'warning'
+        }).then(() => {
+          this.$axios
+            .$delete("/indikator_kinerja_individu?id="+data.indikator_id)
+            .then((resp) => {
+                this.loadAsyncData()
+                this.$message({
+                  type: 'success',
+                  message: 'Berhasil dihapus'
+                });
+            })
+            .catch((error) => {
+              //console.log(error.response.data.message)
+              this.$message({
+                type: 'error',
+                message: error.response.data.message
+              });          
+            });
+
+          
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Proses Hapus Dibatalkan'
+          });          
+        });
+      }
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+</style>

@@ -12,11 +12,11 @@
 
 export default {
   middleware: ['auth'],
-  layout: "rencanaSkpLayout",
+  layout: "sasaranKinerjaLayout",
   components:{
   },
   mounted() {
-    this.$router.push(`/personal/rencana_skp`);
+    this.$router.push(`/sasaran_kinerja`);
   },
 };
 </script>

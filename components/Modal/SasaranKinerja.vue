@@ -336,7 +336,7 @@ export default {
 
        const params = [
         `skpd_id=${skpdId}`,
-        `status=submited`,
+        `status=close`,
       ].join('&')
 
 

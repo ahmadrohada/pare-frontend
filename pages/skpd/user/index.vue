@@ -9,15 +9,15 @@
       <el-table
         :data="tableDataUser"
         highlight-current-row
+        :span-method="objectSpanMethodUser"
         border
         style="width: 100%;">
-       <!--  <el-table-column
-          label="No"
-          type="index"
-          width="45"
+        <!-- <el-table-column
           align="center"
-          :index="indexMethod">
-
+          prop="id"
+          label="No"
+          width="45"
+          :formatter="formatTerm">
         </el-table-column> -->
         <el-table-column  min-width="160" label="NAMA USER">
             <template slot-scope="scope">
@@ -29,35 +29,27 @@
           </el-table-column>
           <el-table-column min-width="60" align="center" prop="jabatan_eselon" label="ESELON"></el-table-column>
           <el-table-column min-width="250" prop="jabatan" label="JABATAN"></el-table-column>
-          <el-table-column min-width="60" header-align="right" label="Is Admin">
+          <el-table-column min-width="60" header-align="right" label="ADMIN">
             <template slot-scope="{ row }">
               <div class="text-center">
-                <el-tooltip content="admin SKPD" :open-delay="300" placement="top">
-                  <el-switch
+                <el-switch
                     v-model="row.is_admin"
                     active-color="#13ce66"
                     v-on:change="$emit('addToAdmin', row)"
                     disabled
                     >
                   </el-switch>
-                </el-tooltip>
+                  <md-tooltip md-direction="top">Admin</md-tooltip>
               </div>
             </template>
           </el-table-column>
-          <el-table-column min-width="60" header-align="center" label="Actions">
-            <template slot-scope="{ row }">
-              <div class="text-center">
-                <el-tooltip content="detail" :open-delay="300" placement="top">
-                  <base-button
-                    type="info"
-                    size="sm"
-                    icon
-                    v-on:click="$emit('viewUser', row)"
-                  >
-                    <i class="tim-icons icon-single-02"></i>
-                  </base-button>
-                </el-tooltip>
-              </div>
+          <el-table-column min-width="60" header-align="center" label="AKSI">
+            <template slot-scope="scope">
+              <el-button size="mini" type="text" @click="viewUser(scope.row)">
+                <i class="el-icon-view">
+                </i> Lihat
+                <md-tooltip md-direction="top">Lihat</md-tooltip>
+            </el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -65,7 +57,7 @@
         :layout="layout"
         @current-change="onPageChange"
         @size-change="handleSizeChange"
-        :page-sizes="[10, 20, 50, 100]"
+        :page-sizes="[20, 50, 100]"
         :page-size="pageSize"
         :total="total"
       />
@@ -87,6 +79,12 @@ export default {
     return {
       skpdid:null,
       tableDataUser: [],
+
+      spanArrUser: [],
+      positionUser: null,
+
+
+      search: '',
       
 
       //pagination
@@ -97,9 +95,11 @@ export default {
      
       defaultSortOrder: 'asc',
       page: 1,
-      limit:'10',
+      limit:'20',
       total:'',
       currentPage: 1,
+
+      kalkulasi:1,
     };
   },
   computed: {
@@ -110,9 +110,18 @@ export default {
       })
     },
   methods: {
-    indexMethod(index) {
-        return ( index+1 ) + ( (this.currentPage - 1 ) * this.limit);
-    },
+  /*   formatTerm (row, col, value, index,rowIndex, columnIndex ) {
+        if ( this.spanArrUser[index] === 1 ){
+          return ( index+ this.kalkulasi ) + ( (this.currentPage - 1 ) * this.limit);
+
+        }else{
+          return ( index+ this.kalkulasi ) + ( (this.currentPage - 1 ) * this.limit);
+          this.kalkulasi = 1 - this.spanArrUser[index]
+        }
+
+        
+
+    }, */
     loadAsyncDataUser() {
         const params = [
           `skpd_id=${this.skpdId}`,
@@ -130,11 +139,13 @@ export default {
             this.tableDataUser= []
             this.total = data.pagination.total
             this.currentPage = data.pagination.currentPage
+            this.pageSize = data.pagination.limit
             
-
+            this.spanArrUser = []
             data.data.forEach((item) => {
               this.tableDataUser.push(item)
             }) 
+            this.onMergeLinesUser(data.data);
 
             this.$refs.loader.finish() 
       
@@ -145,12 +156,45 @@ export default {
             throw error
           })
     },
+     onMergeLinesUser(data) {
+        console.log(data);
+        
+        data.forEach((item,index) => {
+          if (index === 0) {
+            this.spanArrUser.push(1);
+            this.positionUser = 0;
+          } else {
+            if (
+              this.tableDataUser[index].id ===
+              this.tableDataUser[index - 1].id
+            ) {
+              this.spanArrUser[this.positionUser] += 1;
+              this.spanArrUser.push(0);
+            } else {
+              this.spanArrUser.push(1);
+              this.positionUser = index;
+            }
+          }
+        })
+      },
+    objectSpanMethodUser({ row, column, rowIndex, columnIndex }) {      
+        if ( ( columnIndex === 0 )||(columnIndex === 3)||(columnIndex === 4)) {
+         
+            const _row = this.spanArrUser[rowIndex];
+            const _col = _row > 0 ? 1 : 0;
+            return {
+              rowspan: _row,
+              colspan: _col,
+            };
+          
+        }
+    },
     onPageChange(page) {
       this.page = page
       this.loadAsyncDataUser()
     },
     viewUser: function(data) {
-      //alert(data.id);
+     
       this.$refs.loader.start()
       this.$router.push("/skpd/user/"+data.nip);
     },

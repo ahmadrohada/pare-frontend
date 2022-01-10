@@ -45,6 +45,7 @@
               <el-select 
                 @change="onChangeTypeTarget($event)"
                 v-model="IndikatorSasaranStrategisForm.typeTarget" 
+                clearable
                 placeholder="pilih Type Target">
                 <el-option label="Single Rate" value="1" ></el-option>
                 <el-option label="Range" value="2"></el-option>
@@ -105,6 +106,7 @@ export default {
         sasaranStrategisId:"",
         indikatorId:"",
         indikatorSasaranStrategisLabel:"",
+        typeTarget:"",
         targetMin:"",
         targetMax:"",
         satuanTarget:""
@@ -157,6 +159,7 @@ export default {
     
     showModalAdd(perjanjianKinerjaId) {
       this.resetForm("IndikatorSasaranStrategisForm")
+      this.IndikatorSasaranStrategisForm.typeTarget=""
       this.submitLoader = false
       this.$refs.loader.start() 
       this.formType = "create"
@@ -271,6 +274,7 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.type_target=''
       this.modalFormVisible = false;
       this.submitLoader = false
     },

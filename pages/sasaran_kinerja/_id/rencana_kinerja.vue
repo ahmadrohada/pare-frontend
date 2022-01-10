@@ -270,7 +270,7 @@ export default {
               this.tableDataKinerjaUtama[index].no ===
               this.tableDataKinerjaUtama[index - 1].no
             ) {
-              this.spanArrKinerjaUtama[this.positionKinerjaUtama] += 1;
+              this.spanArrKinerjaUtama[this.positionKinerjaUtama] += 1 ;
               this.spanArrKinerjaUtama.push(0);
             } else {
               this.spanArrKinerjaUtama.push(1);

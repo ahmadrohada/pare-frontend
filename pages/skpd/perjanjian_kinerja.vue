@@ -1,5 +1,6 @@
 <template>
   <card style="min-height:480px;">
+    <pare-loader ref="loader"></pare-loader>
     <create-pk 
       ref="ModalRenja"
       style="min-height:350px;"
@@ -21,69 +22,60 @@
      
     ><span class="fa fa-plus"></span> Create Perjanjian Kinerja
     </md-button>
+    <el-table
+      :data="tableDataPk"
+      highlight-current-row
+      :span-method="objectSpanMethodUser"
+      border
+      style="width: 100%;">
 
+      <el-table-column min-width="60" align="center" prop="periode" label="Periode"></el-table-column>
+      <el-table-column min-width="320" align="left" prop="nama_kepala_skpd" label="Nama Kepala SKPD"></el-table-column>
+      <el-table-column  min-width="120" align="center" label="Created at">
+        <template slot-scope="{ row }">
+          <div style="padding:0px !important;">
+            <span style="margin-top:-6px;" class="">{{moment(row.created_at).format('DD-MM-YYYY hh:mm')}}</span><br>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="180" align="left" prop="nama_admin" label="Created By"></el-table-column>
+      <el-table-column min-width="90" align="center" label="Status">
+        <template slot-scope="{ row }">
+          <el-button v-if=" row.status == 'open' "  size="mini" type="text" @click="submitPerjanjianKinerja(row)">
+            <i class="el-icon-position">
+            </i> Open
+            <md-tooltip md-direction="top">Klik Untuk Submit Perjanjian Kinerja</md-tooltip>
+          </el-button>
+          <span v-if=" row.status == 'close' ">Close</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="120" align="center" label="Aksi">
+        <template slot-scope="{ row }">
+          <el-button v-if=" row.status == 'open' " size="mini" type="text" @click="viewPerjanjianKinerja(row)">
+            <i class="el-icon-setting">
+                
+            </i> Edit
+            <md-tooltip md-direction="top">Edit Data</md-tooltip>
+          </el-button>
+          <el-button v-if=" row.status == 'open' " size="mini" type="text danger" @click="hapusPerjanjianKinerja(row)">
+            <i class="el-icon-delete">
+                
+            </i> Hapus
+            <md-tooltip md-direction="top">Hapus Data</md-tooltip>
+          </el-button>
+
+          <el-button v-if=" row.status == 'close' " size="mini" type="text" @click="viewPerjanjianKinerja(row)">
+            <i class="el-icon-view">
+                
+            </i> Lihat
+            <md-tooltip md-direction="top">Lihat Data</md-tooltip>
+          </el-button>
+        </template>
+      </el-table-column>
+
+    </el-table>
    
-      <md-table
-        v-model="data"
-        highlight-current-row
-        style="width: 100%"
-        md-sort="label" 
-        md-sort-order="asc"
-      >
-        <md-table-row slot="md-table-row" slot-scope="{ item }">
-          <md-table-cell md-label="Periode" md-sort-by="periode_id">{{ item.periode }}</md-table-cell>
-          <md-table-cell md-label="Nama SKPD" md-sort-by="nama_skpd">{{ item.nama_skpd }}</md-table-cell>
-          <md-table-cell md-label="Created at" >
-            <template slot-scope="props">
-              <div style="padding:0px !important;">
-                <span style="margin-top:-6px;" class="">{{moment(item.created_at).format('DD-MM-YYYY hh:mm')}}</span><br>
-              </div>
-            </template>
-          </md-table-cell>
-          <md-table-cell md-label="Status" >
-            <el-button v-if=" item.status == 'open' "  size="mini" type="text" @click="submitPerjanjianKinerja(item)">
-              <i class="el-icon-position">
-              </i> Open
-              <md-tooltip md-direction="top">Klik Untuk Submit Perjanjian Kinerja</md-tooltip>
-            </el-button>
-            <span v-if=" item.status == 'close' ">Close</span>
-          </md-table-cell>
-          <md-table-cell md-label="Aksi">
-            <el-button v-if=" item.status == 'open' " size="mini" type="text" @click="viewPerjanjianKinerja(item)">
-              <i class="el-icon-setting">
-                
-              </i> Edit
-              <md-tooltip md-direction="top">Edit Data</md-tooltip>
-            </el-button>
-            <el-button v-if=" item.status == 'open' " size="mini" type="text danger" @click="hapusPerjanjianKinerja(item)">
-              <i class="el-icon-delete">
-                
-              </i> Hapus
-              <md-tooltip md-direction="top">Hapus Data</md-tooltip>
-            </el-button>
-
-             <el-button v-if=" item.status == 'close' " size="mini" type="text" @click="viewPerjanjianKinerja(item)">
-              <i class="el-icon-view">
-                
-              </i> Lihat
-              <md-tooltip md-direction="top">Lihat Data</md-tooltip>
-            </el-button>
-
-          </md-table-cell>
-        </md-table-row>
-
-       
-
-      </md-table>
-       <el-pagination
-        :layout="layout"
-        @current-change="onPageChange"
-        @size-change="handleSizeChange"
-        :page-sizes="[10, 20, 50, 100]"
-        :page-size="limit"
-        :pager-count="perPage"
-        :total="totalPage"
-      />
+      
   </card>
 </template>
 
@@ -102,23 +94,19 @@ export default {
   },
   data() {
     return {
-      data: [],
-      layout: ' prev, next',
+      tableDataPk: [],
+      search: '',
+      //pagination
+      layout: ' prev,  pager,next',
       search: '',
       sortField: 'id',
       sortOrder: 'asc',
-      sortIcon: 'arrow-up',
-      sortIconSize: 'is-small',
-      isNarrowed: true,
-      isStriped: true,
-      isEmpty: true,
-      hasMobileCards: true,
+     
       defaultSortOrder: 'asc',
       page: 1,
-      perPage: '',
-      totalPage:'',
-      isPaginated: true,
-      limit:'10',
+      limit:'20',
+      total:'',
+      currentPage: 1,
     };
   },
   computed: {
@@ -143,23 +131,20 @@ export default {
         .get(`/perjanjian_kinerja?${params}`)
         .then(({ data }) => {
           // api.themoviedb.org manage max 1000 pages
-          this.data = []
+          this.tableDataPk = []
           this.total = data.pagination.total
-          this.page = data.pagination.current_page
-          this.perPage = data.pagination.per_page
-          this.totalPage = data.pagination.total_page
-          this.limit = data.pagination.limit
+          this.currentPage = data.pagination.currentPage
+          this.pageSize = data.pagination.limit
+
           data.data.forEach((item) => {
-            this.data.push(item)
+            this.tableDataPk.push(item)
           })
           this.total > 0 ? (this.isEmpty = false) : (this.isEmpty = true)
           this.$refs.loader.finish() 
         })
         .catch((error) => {
-          this.data = []
-          this.total = 0
-          this.loading = false
-          this.isEmpty = true
+          this.$refs.loader.finish() 
+          this.tableDataPk = []
           throw error
         })
     },
@@ -168,7 +153,7 @@ export default {
       this.loadAsyncData()
     },
     submitPerjanjianKinerja: function(data) {
-
+     
       //cek jumlah sasaran strategis
       this.$axios
         .get(`/perjanjian_kinerja_detail?id=`+data.id)

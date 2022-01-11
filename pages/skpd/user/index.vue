@@ -2,9 +2,25 @@
   <card style="min-height:480px;">
     <pare-loader ref="loader"></pare-loader>
     <template slot="header" class="d-inline">
-      <h4 class="title d-inline">USER LIST</h4>
+      <h4 class="title d-inline">User List</h4>
       <p class="card-category d-inline">{{user.skpd.singkatan}}</p>
+
+
+    
+
     </template>
+
+    
+
+      <el-input
+        size="small"
+        style="width:220px; float: right; padding: 3px 0"
+        placeholder="Cari"
+        prefix-icon="el-icon-search"
+        v-model="search"
+        @input="onSearch">
+      </el-input>
+
     
       <el-table
         :data="tableDataUser"
@@ -12,14 +28,7 @@
         :span-method="objectSpanMethodUser"
         border
         style="width: 100%;">
-        <!-- <el-table-column
-          align="center"
-          prop="id"
-          label="No"
-          width="45"
-          :formatter="formatTerm">
-        </el-table-column> -->
-        <el-table-column  min-width="160" label="NAMA USER">
+        <el-table-column  min-width="160" sortable label="Nama Lengkap">
             <template slot-scope="scope">
               <div style="padding:0px !important;">
                 <span style="margin-top:-6px; color:black;" class="">{{scope.row.nama_lengkap}}</span><br>
@@ -27,9 +36,9 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column min-width="60" align="center" prop="jabatan_eselon" label="ESELON"></el-table-column>
-          <el-table-column min-width="250" prop="jabatan" label="JABATAN"></el-table-column>
-          <el-table-column min-width="60" header-align="right" label="ADMIN">
+          <el-table-column min-width="60" align="center" prop="jabatan_eselon" label="Eselon"></el-table-column>
+          <el-table-column min-width="250" prop="jabatan" label="Jabatan"></el-table-column>
+          <el-table-column min-width="60" header-align="center" label="Is Admin">
             <template slot-scope="{ row }">
               <div class="text-center">
                 <el-switch
@@ -43,7 +52,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column min-width="60" header-align="center" label="AKSI">
+          <el-table-column min-width="60" header-align="center" align="center" label="Aksi">
             <template slot-scope="scope">
               <el-button size="mini" type="text" @click="viewUser(scope.row)">
                 <i class="el-icon-view">
@@ -88,7 +97,7 @@ export default {
       
 
       //pagination
-      layout: ' prev, next',
+      layout: ' prev,  pager,next',
       search: '',
       sortField: 'id',
       sortOrder: 'asc',
@@ -189,6 +198,11 @@ export default {
           
         }
     },
+    onSearch(value) {
+      this.search = value
+      this.page = null
+      this.loadAsyncDataUser()
+    },
     onPageChange(page) {
       this.page = page
       this.loadAsyncDataUser()
@@ -197,7 +211,7 @@ export default {
      
       this.$refs.loader.start()
       this.$router.push("/skpd/user/"+data.nip);
-    },
+    }
   },
   mounted() {
     

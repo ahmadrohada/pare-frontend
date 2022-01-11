@@ -8,20 +8,20 @@
       :router="true" 
       style="margin-top:10px;"
     >
-      <!-- <el-menu-item 
+      <el-menu-item 
         index="/skpd/sasaran_kinerja"
         :route="{path: '/skpd/sasaran_kinerja'}"
        >
        <strong>
         <i class="el-icon-back"></i>
-        <span>List Sasaran Kinerja</span>
+        <span>Sasaran Kinerja SKPD</span>
        </strong>
        
-      </el-menu-item> 
+      </el-menu-item>
       
       <el-divider></el-divider>
-      -->
     </el-menu>
+
     <el-menu
       :default-openeds="[]"
       background-color="transparent"

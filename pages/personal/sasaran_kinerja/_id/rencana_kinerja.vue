@@ -177,7 +177,7 @@ import RencanaKinerja from '~/components/Modal/RencanaKinerja.vue';
 export default {
 
   middleware: ['auth'],
-  layout: "sasaranKinerjaLayout",
+  layout: "sasaranKinerjaPersonalLayout",
   components: {
     RencanaKinerja,
     IndikatorKinerjaIndividu

@@ -15,7 +15,7 @@
 
 
     <template slot="header" class="d-inline">
-      <h4 class="title d-inline">Sasaran Kinerja</h4>
+      <h4 class="title d-inline">Reviu Sasaran Kinerja</h4>
       <p class="card-category d-inline">Rencana Kinerja</p>
     </template>
 
@@ -63,7 +63,7 @@
           </i>
         </template>
       </el-table-column>
-      <el-table-column  label="Indikator Kinerja Individu" min-width="320">
+      <el-table-column  label="Indikator Kinerja Individu" min-width="280">
         <template slot-scope="scope">
           {{scope.row.indikator_kinerja_individu}}
         </template>
@@ -74,28 +74,9 @@
         label="Target"
         width="150">
       </el-table-column>
-      <el-table-column align="center"  label="Aksi" width="160"  v-if="statusSasaranKinerja == 'drafted' ">
-        <template slot-scope="scope" >
-          <div v-if=" scope.row.indikator_id  != '' ">
-            <el-button size="mini" type="text" @click="editIndikatorKinerjaIndividu(scope.row)">
-              <i class="el-icon-setting"></i> Edit
-              <md-tooltip md-direction="top">Edit Indikator Kinerja Individu</md-tooltip>
-            </el-button>
-            <el-button size="mini" type="text danger" @click="hapusIndikatorKinerjaIndividu(scope.row)">
-              <i class="el-icon-delete"></i> Hapus
-              <md-tooltip md-direction="top">Hapus Indikator Kinerja Individu</md-tooltip>
-            </el-button>
-          </div>
-          <div v-else>
-            <el-button size="mini" type="text" @click="editRencanaKinerja(scope.row)">
-              <i class="el-icon-setting"></i> Edit
-              <md-tooltip md-direction="top">Edit  Rencana Kinerja</md-tooltip>
-            </el-button>
-            <el-button size="mini" type="text danger" @click="hapusRencanaKinerja(scope.row)">
-              <i class="el-icon-delete"></i> Hapus
-              <md-tooltip md-direction="top">Hapus  Rencana Kinerja</md-tooltip>
-            </el-button>
-          </div>
+      <el-table-column align="center"  label="Reviu Pengelola Kinerja" width="260" >
+        <template slot-scope="{row}" >
+         
         </template>
       </el-table-column>
     </el-table>
@@ -125,7 +106,7 @@
           </i>
         </template>
       </el-table-column>
-      <el-table-column  label="Indikator Kinerja Individu" min-width="320">
+      <el-table-column  label="Indikator Kinerja Individu" min-width="280">
         <template slot-scope="scope">
           {{scope.row.indikator_kinerja_individu}}
         </template>
@@ -133,31 +114,12 @@
       <el-table-column
         align="center"
         prop="target"
-        label="Targetupdateu"
+        label="Target"
         width="150">
       </el-table-column>
-      <el-table-column align="center"  label="Aksi" width="160"  v-if="statusSasaranKinerja == 'drafted' ">
-        <template slot-scope="scope" >
-          <div v-if=" scope.row.indikator_id  != '' ">
-            <el-button size="mini" type="text" @click="editIndikatorKinerjaIndividu(scope.row)">
-              <i class="el-icon-setting"></i> Edit
-              <md-tooltip md-direction="top">Edit Indikator Kinerja Individu</md-tooltip>
-            </el-button>
-            <el-button size="mini" type="text danger" @click="hapusIndikatorKinerjaIndividu(scope.row)">
-              <i class="el-icon-delete"></i> Hapus
-              <md-tooltip md-direction="top">Hapus Indikator Kinerja Individu</md-tooltip>
-            </el-button>
-          </div>
-          <div v-else>
-            <el-button size="mini" type="text" @click="editRencanaKinerja(scope.row)">
-              <i class="el-icon-setting"></i> Edit
-              <md-tooltip md-direction="top">Edit  Rencana Kinerja</md-tooltip>
-            </el-button>
-            <el-button size="mini" type="text danger" @click="hapusRencanaKinerja(scope.row)">
-              <i class="el-icon-delete"></i> Hapus
-              <md-tooltip md-direction="top">Hapus  Rencana Kinerja</md-tooltip>
-            </el-button>
-          </div>
+      <el-table-column align="center"  label="Reviu Pengelola Kinerja" width="260" >
+        <template slot-scope="{row}" >
+         
         </template>
       </el-table-column>
     </el-table>
@@ -177,7 +139,7 @@ import RencanaKinerja from '~/components/Modal/RencanaKinerja.vue';
 export default {
 
   middleware: ['auth'],
-  layout: "sasaranKinerjaLayout",
+  layout: "sasaranKinerjaReviuLayout",
   components: {
     RencanaKinerja,
     IndikatorKinerjaIndividu

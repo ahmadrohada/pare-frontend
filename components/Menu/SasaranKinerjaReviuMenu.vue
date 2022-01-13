@@ -31,16 +31,16 @@
       :default-active="activeLink"
     >
       <el-menu-item 
-        index= "sasaran_kinerja-id-sumary___en"
-        :route="{path:`/sasaran_kinerja/${sasaranKinerja}/sumary`, name:'sasaran_kinerja-id-sumary___en'}"
+        index= "sasaran_kinerja_reviu-id-sumary___en"
+        :route="{path:`/sasaran_kinerja_reviu/${sasaranKinerja}/sumary`, name:'sasaran_kinerja_reviu-id-sumary___en'}"
        >
         <i class="el-icon-data-board"></i>
         <span>Sumary</span>
       </el-menu-item>
      
       <el-menu-item 
-        index= "sasaran_kinerja-id-rencana_kinerja___en"
-        :route="{path:`/sasaran_kinerja/${sasaranKinerja}/sumary`, name:'sasaran_kinerja-id-rencana_kinerja___en'}"
+        index= "sasaran_kinerja_reviu-id-rencana_kinerja___en"
+        :route="{path:`/sasaran_kinerja_reviu/${sasaranKinerja}/sumary`, name:'sasaran_kinerja_reviu-id-rencana_kinerja___en'}"
        >
         <i class="el-icon-data-board"></i>
         <span>Rencana Kinerja</span>
@@ -59,7 +59,7 @@
 <script>
 export default {
   props: [],
-  name: "sasaranKinerjaMenu",
+  name: "sasaranKinerjaReviuMenu",
   data() {
     return {
       activeLink: null,

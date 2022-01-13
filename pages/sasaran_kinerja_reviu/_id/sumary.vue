@@ -5,7 +5,7 @@
 
 
     <template slot="header" class="d-inline">
-      <h4 class="title d-inline">Sasaran Kinerja</h4>
+      <h4 class="title d-inline">Reviu Sasaran Kinerja</h4>
       <p class="card-category d-inline">Sumary</p>
     </template>
 
@@ -113,7 +113,7 @@ import PareLoader from '~/components/Loader/PareLoader.vue';
 
 export default {
   middleware: ['auth'],
-  layout: "sasaranKinerjaLayout",
+  layout: "sasaranKinerjaReviuLayout",
   components:{
     PareLoader,
   },

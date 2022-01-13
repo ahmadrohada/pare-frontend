@@ -9,7 +9,7 @@
     </sasaran-kinerja>
     <template slot="header" class="d-inline">
       <h4 class="title d-inline">Sasaran Kinerja Pegawai ( SKP )</h4>
-      <p class="card-category d-inline">{{user.skpd.singkatan}}</p>
+      <p class="card-category d-inline">Personal</p>
     </template>
 
     <md-button 
@@ -28,8 +28,8 @@
       style="width: 100%;">
       <el-table-column min-width="60" align="center" prop="periode_tahun" label="Periode"></el-table-column>
       <el-table-column min-width="130" align="center" prop="jenis_jabatan_skp" label="Jenis Jabatan SKP"></el-table-column>
-      <el-table-column min-width="230" align="left" prop="nama_pegawai" label="Nama Pegawai"></el-table-column>
-      <el-table-column  min-width="100" align="center" label="Created at">
+      <el-table-column min-width="210" align="left" prop="nama_pegawai" label="Nama Pegawai"></el-table-column>
+      <el-table-column  min-width="90" align="center" label="Created at">
         <template slot-scope="{ row }">
           <div style="padding:0px !important;">
             <span style="margin-top:-6px;" class="">{{moment(row.created_at).format('DD-MM-YYYY hh:mm')}}</span><br>
@@ -50,7 +50,7 @@
           </el-button>
           <el-button v-if=" row.status == '3' "  size="mini" type="text">
             <i class="el-icon-position">
-            </i> Proses reviu
+            </i> Proses Reviu
             <md-tooltip md-direction="top">Klik Untuk Submit Sasaran Kinerja</md-tooltip>
           </el-button>
           <el-button v-if=" row.status == '4' "  size="mini" type="text">
@@ -60,7 +60,7 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column min-width="90" align="center" label="Aksi">
+      <el-table-column min-width="110" align="center" label="Aksi">
         <template slot-scope="{ row }">
           <div v-if=" row.status == '1' ">
             <el-button  size="mini" type="text" @click="viewSasaranKinerja(row)">
@@ -75,16 +75,16 @@
             </el-button>
           </div>
 
-          <div v-if=" row.status == '2' ">
-            <el-button  size="mini" type="text" @click="reviewSasaranKinerja(row)">
-              <i class="el-icon-setting">
-              </i> Reviu
-              <md-tooltip md-direction="top">Reviu SKP</md-tooltip>
+          <div v-if=" row.status == '4' ">
+            <el-button  size="mini" type="text" @click="viewSasaranKinerja(row)">
+              <i class="el-icon-eye">
+              </i> Lihat
+              <md-tooltip md-direction="top">Lihat Data</md-tooltip>
             </el-button>
           </div>
 
-          <div v-if=" row.status == '4' ">
-            <el-button  size="mini" type="text" @click="viewSasaranKinerja(row)">
+          <div v-else >
+            <el-button  size="mini" type="text" disabled>
               <i class="el-icon-view">
               </i> Lihat
               <md-tooltip md-direction="top">Lihat Data</md-tooltip>
@@ -108,7 +108,7 @@ import { mapGetters } from 'vuex'
 
 
 export default {
-  layout: "skpdLayout",
+  layout: "personalLayout",
   middleware: "auth",
    components: {
     PareLoader,
@@ -135,14 +135,13 @@ export default {
   },
   computed: {
       ...mapGetters({
-        skpd_id:'id_skpd',
-        user:'user',
+        user_id:'user_id',
       })
     },
   methods: {
     loadAsyncData() {
       const params = [
-        `skpd_id=${this.skpd_id}`,
+        `user_id=${this.user_id}`,
         `jenis_jabatan=${this.jenis_jabatan}`,
         `search=${this.search}`,
         `order_by=${this.sortField}`,
@@ -182,15 +181,11 @@ export default {
     },
     viewSasaranKinerja: function(data) {
       this.$refs.loader.start()
-      this.$router.push("/sasaran_kinerja/"+data.id);
+      this.$router.push("/personal/sasaran_kinerja/"+data.id);
     },
     reviewSasaranKinerja: function(data) {
-      //this.$refs.loader.start()
-      //this.$router.push("/sasaran_kinerja_reviu/"+data.id);
-      this.$message({
-        type: 'info',
-        message: "Fitur dalam pengerjaan"
-      });   
+      this.$refs.loader.start()
+      this.$router.push("/personal/sasaran_kinerja_reviu/"+data.id);
     },
     createRenja: function(e) {
       this.$refs.ModalSasaranKinerja.showModal(this.skpd_id);

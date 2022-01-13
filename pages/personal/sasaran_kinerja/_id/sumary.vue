@@ -113,7 +113,7 @@ import PareLoader from '~/components/Loader/PareLoader.vue';
 
 export default {
   middleware: ['auth'],
-  layout: "sasaranKinerjaLayout",
+  layout: "sasaranKinerjaPersonalLayout",
   components:{
     PareLoader,
   },

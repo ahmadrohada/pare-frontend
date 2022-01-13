@@ -44,6 +44,13 @@
         <i class="el-icon-user"></i>
         <span>Profile</span>
       </el-menu-item>
+      <el-menu-item 
+        index="/personal/sasaran_kinerja"
+        :route="{path: '/personal/sasaran_kinerja'}"
+       >
+          <i class="el-icon-data-analysis"></i>
+          <span>Sasaran Kinerja</span>
+      </el-menu-item>
        <!-- <el-badge :value="notifikasi_renja" class="item" type="warning">
         <el-menu-item 
         index="/personal/rencana_skp"
@@ -53,7 +60,7 @@
           <span>Rencana SKP</span>
       </el-menu-item>
        </el-badge> -->
-      <el-submenu index="1" disabled>
+      <!-- <el-submenu index="1" disabled>
         <template slot="title"
           ><i class="el-icon-document-copy"></i>SKP</template
         >
@@ -73,7 +80,8 @@
         >
           <el-menu-item index="3-1">Report</el-menu-item>
         </el-submenu>
-      </el-submenu>
+      </el-submenu> -->
+      
     </el-menu>
   </div>
 </template>

@@ -1,19 +1,16 @@
 <template>
-  <div>
-   
+  <div> 
     <card class="card-user" style="margin-top:-10px !important;height: 90px !important; background: transparent !important;">
       <div class="author">
-         
-        <img
-          class="sidemenu-avatar"
-          src="~/static/img/logo_pare.png"
+         <img 
+          src="~/static/img/bg_profile.png"
           alt="..."
+          class="bg_photo"
         />
-        <div>
-          
-        </div>
       </div>
     </card>
+   
+   
 
 
     <sidebar-item

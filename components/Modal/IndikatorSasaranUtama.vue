@@ -35,7 +35,7 @@
           </el-form-item>
 
         <el-form-item    label ="Indikator Sasaran Utama" prop="indikatorSasaranStrategisLabel">
-          <el-input size="mini" type="textarea" placeholder="Indikator Sasaran Utama Label" v-model="IndikatorSasaranStrategisForm.indikatorSasaranStrategisLabel"></el-input>
+          <el-input size="mini" autosize type="textarea" placeholder="Indikator Sasaran Utama Label" v-model="IndikatorSasaranStrategisForm.indikatorSasaranStrategisLabel"></el-input>
         </el-form-item>
 
         <el-row :gutter="10">

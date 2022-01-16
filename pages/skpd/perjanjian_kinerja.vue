@@ -52,7 +52,7 @@
       <el-table-column min-width="120" align="center" label="Aksi">
         <template slot-scope="{ row }">
           <el-button v-if=" row.status == 'open' " size="mini" type="text" @click="viewPerjanjianKinerja(row)">
-            <i class="el-icon-setting">
+            <i class="el-icon-edit-outline">
                 
             </i> Edit
             <md-tooltip md-direction="top">Edit Data</md-tooltip>

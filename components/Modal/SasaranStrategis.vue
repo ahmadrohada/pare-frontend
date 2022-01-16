@@ -16,7 +16,7 @@
         <input v-model="SasaranStrategisForm.sasaranStrategisId" hidden></input>
       
         <el-form-item   label="Sasaran Strategis"  prop="sasaranStrategisLabel">
-          <el-input size="mini" type="textarea" placeholder="Sasaran Strategis Label" v-model="SasaranStrategisForm.sasaranStrategisLabel"></el-input>
+          <el-input size="mini" autosize type="textarea" placeholder="Sasaran Strategis Label" v-model="SasaranStrategisForm.sasaranStrategisLabel"></el-input>
         </el-form-item>
         
 

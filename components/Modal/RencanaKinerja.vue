@@ -28,6 +28,7 @@
         <el-form-item v-show="isVisibleTypeKinerjaUtama" label="Type Kinerja Utama" prop="typeKinerjaUtama">
           <el-select 
             v-model="RencanaKinerjaForm.typeKinerjaUtama" 
+            default-first-option
             placeholder="pilih Type Kinerja Utama">
             <el-option label="Perjanjian Kinerja" value="perjanjian_kinerja" ></el-option>
             <el-option label="Direktif" value="direktif"></el-option>
@@ -36,9 +37,28 @@
           </el-select>
         </el-form-item>
 
+        
+        
+        
+        <el-form-item v-show="isVisibleTypeKinerjaTambahan" label="Lingkup Penugasan" prop="lingkupPenugasan">
+          <el-select v-model="RencanaKinerjaForm.lingkupPenugasan" placeholder="pilih Lingkup Penugasan">
+            <el-option-group
+              v-for="group in optionsLingkupPenugasan"
+              :key="group.label"
+              :label="group.label">
+              <el-option
+                v-for="item in group.options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-option-group>
+          </el-select>
+        </el-form-item>
+
        
         <el-form-item   label="Rencana Kinerja"  prop="rencanaKinerjaLabel">
-          <el-input size="mini" type="textarea" placeholder="Rencana Kinerja Label" v-model="RencanaKinerjaForm.rencanaKinerjaLabel"></el-input>
+          <el-input size="mini" autosize type="textarea" placeholder="Rencana Kinerja Label" v-model="RencanaKinerjaForm.rencanaKinerjaLabel"></el-input>
         </el-form-item>
         
 
@@ -71,12 +91,14 @@ export default {
       headerText:'Rencana Kinerja Form',
       modalFormVisible: false,
       isVisibleTypeKinerjaUtama:true,
+      isVisibleTypeKinerjaTambahan:false,
       RencanaKinerjaForm: {
         sasaranKinerjaId:"",
         rencanaKinerjaLabel:"",
         rencanaKinerjaId:"",
         jenisRencanaKinerja:"",
-        typeKinerjaUtama:""
+        typeKinerjaUtama:"",
+        lingkupPenugasan:""
        
       },
       rules: {
@@ -87,6 +109,31 @@ export default {
             { required: true, message: 'Silakan pilih jenis Rencana Kinerja', trigger: 'blur' }
           ],
       },
+      optionsLingkupPenugasan: [{
+          label: 'Instansi Pusat',
+          options: [{
+            value: 'Dalam satu unit kerja',
+            label: 'Dalam satu unit kerja'
+          }, {
+            value: 'Antar unit kerja dalam satu Instansi',
+            label: 'Antar unit kerja dalam satu Instansi'
+          }, {
+            value: 'Antar Instansi (Pusat-Pusat/Pusat-Daerah)',
+            label: 'Antar Instansi (Pusat-Pusat/Pusat-Daerah)'
+          }]
+        }, {
+          label: 'Instansi Daerah',
+          options: [{
+            value: 'Dalam satu perangkat daerah',
+            label: 'Dalam satu perangkat daerah'
+          }, {
+            value: 'Antar perangkat daerah dalam satu daerah',
+            label: 'Antar perangkat daerah dalam satu daerah'
+          }, {
+            value: 'Antar daerah (Daerah-Daerah/Daerah-Pusat)',
+            label: 'Antar daerah (Daerah-Daerah/Daerah-Pusat)'
+          }]
+        }],
       
     };
   },
@@ -115,10 +162,13 @@ export default {
             this.RencanaKinerjaForm.rencanaKinerjaLabel = resp.label
             this.RencanaKinerjaForm.jenisRencanaKinerja = resp.jenis_rencana_kinerja
             this.RencanaKinerjaForm.typeKinerjaUtama = resp.type_kinerja_utama
+            this.RencanaKinerjaForm.lingkupPenugasan = resp.lingkup_penugasan_kinerja_tambahan
 
             if (resp.jenis_rencana_kinerja === 'kinerja_utama'){
               this.isVisibleTypeKinerjaUtama = true
+              this.isVisibleTypeKinerjaTambahan = false
             }else if ( resp.jenis_rencana_kinerja === 'kinerja_tambahan'){
+              this.isVisibleTypeKinerjaTambahan = true
               this.isVisibleTypeKinerjaUtama = false
             }
 
@@ -212,7 +262,9 @@ export default {
       console.log(event)
       if (event === 'kinerja_utama'){
         this.isVisibleTypeKinerjaUtama = true
+        this.isVisibleTypeKinerjaTambahan = false
       }else if ( event === 'kinerja_tambahan'){
+        this.isVisibleTypeKinerjaTambahan = true
         this.isVisibleTypeKinerjaUtama = false
       }
     }
@@ -223,11 +275,15 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scope>
 
  .el-select {
     width: 100%;
   }
+
+  .el-select-group__title{
+      color: rgb(102, 102, 102) !important;
+    }
 
 
 .modal .modal-header .close {

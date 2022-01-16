@@ -2,7 +2,7 @@
    <card style="min-height:500px;">
      <rencana-kinerja 
         ref="ModalRencanaKinerja"
-        style="min-height:350px;"
+        style="min-height:280px;"
         @loadAsyncData="loadAsyncData"
       >
       </rencana-kinerja>
@@ -12,6 +12,12 @@
         @loadAsyncData="loadAsyncData"
       >
       </indikator-kinerja-individu>
+
+      <manual-indikator-kinerja
+        ref="ModalManualIndikatorKinerja"
+        @loadAsyncData="loadAsyncData"
+      >
+      </manual-indikator-kinerja>
 
 
     <template slot="header" class="d-inline">
@@ -53,19 +59,19 @@
         width="45">
       </el-table-column>
       <el-table-column label="Rencana Kinerja" width="270">
-        <template slot-scope="scope">
-          {{scope.row.rencana_kinerja}}
-          <i v-if=" scope.row.indikator_id  != '' ">
-            <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaKinerja(scope.row)">
-            <i class="el-icon-setting"></i> Edit
+        <template slot-scope="{row}">
+          {{row.rencana_kinerja}}
+          <i v-if=" row.indikator_id  != '' ">
+            <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaKinerja(row)">
+            <i class="el-icon-edit-outline"></i> Edit
             <md-tooltip md-direction="top">Edit Rencana Kinerja</md-tooltip>
             </el-button>
           </i>
         </template>
       </el-table-column>
       <el-table-column  label="Indikator Kinerja Individu" min-width="320">
-        <template slot-scope="scope">
-          {{scope.row.indikator_kinerja_individu}}
+        <template slot-scope="{row}">
+          {{row.indikator_kinerja_individu}}
         </template>
       </el-table-column>
       <el-table-column
@@ -74,25 +80,38 @@
         label="Target"
         width="150">
       </el-table-column>
-      <el-table-column align="center"  label="Aksi" width="160"  v-if="statusSasaranKinerja == 'drafted' ">
-        <template slot-scope="scope" >
-          <div v-if=" scope.row.indikator_id  != '' ">
-            <el-button size="mini" type="text" @click="editIndikatorKinerjaIndividu(scope.row)">
-              <i class="el-icon-setting"></i> Edit
+      <el-table-column  fixed="right" align="center" label="Manual" width="70" v-if="statusSasaranKinerja == 'drafted' ">
+        <template slot-scope="{row}">
+          <el-button v-if=" row.manual_indikator_kinerja_id  == 0 "  size="mini" type="text" @click="addManualIndikatorKinerja(row)">
+            <i class="el-icon-circle-plus-outline"></i>
+            <md-tooltip md-direction="top">Add Manual Indikator Kinerja</md-tooltip>
+          </el-button>
+          
+          <el-button v-if=" row.manual_indikator_kinerja_id  != 0 & row.manual_indikator_kinerja_id != 'disabled'" size="mini" type="text" @click="editManualIndikatorKinerja(row)">
+            <i class="el-icon-edit-outline"></i>
+            <md-tooltip md-direction="top">Edit Manual Indikator Kinerja</md-tooltip>
+          </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" align="center"  label="Aksi" width="63"  v-if="statusSasaranKinerja == 'drafted' ">
+        <template slot-scope="{row}" >
+          <div v-if=" row.indikator_id  != '' ">
+            <el-button size="mini" type="text" @click="editIndikatorKinerjaIndividu(row)">
+              <i class="el-icon-edit-outline"></i>
               <md-tooltip md-direction="top">Edit Indikator Kinerja Individu</md-tooltip>
             </el-button>
-            <el-button size="mini" type="text danger" @click="hapusIndikatorKinerjaIndividu(scope.row)">
-              <i class="el-icon-delete"></i> Hapus
+            <el-button size="mini" type="text danger" @click="hapusIndikatorKinerjaIndividu(row)">
+              <i class="el-icon-delete"></i>
               <md-tooltip md-direction="top">Hapus Indikator Kinerja Individu</md-tooltip>
             </el-button>
           </div>
           <div v-else>
-            <el-button size="mini" type="text" @click="editRencanaKinerja(scope.row)">
-              <i class="el-icon-setting"></i> Edit
+            <el-button size="mini" type="text" @click="editRencanaKinerja(row)">
+              <i class="el-icon-edit-outline"></i>
               <md-tooltip md-direction="top">Edit  Rencana Kinerja</md-tooltip>
             </el-button>
-            <el-button size="mini" type="text danger" @click="hapusRencanaKinerja(scope.row)">
-              <i class="el-icon-delete"></i> Hapus
+            <el-button size="mini" type="text danger" @click="hapusRencanaKinerja(row)">
+              <i class="el-icon-delete"></i>
               <md-tooltip md-direction="top">Hapus  Rencana Kinerja</md-tooltip>
             </el-button>
           </div>
@@ -115,46 +134,59 @@
         width="45">
       </el-table-column>
       <el-table-column label="Rencana Kinerja" width="270">
-        <template slot-scope="scope">
-          {{scope.row.rencana_kinerja}}
-          <i v-if=" scope.row.indikator_id  != '' ">
-            <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaKinerja(scope.row)">
-            <i class="el-icon-setting"></i> Edit
+        <template slot-scope="{row}">
+          {{row.rencana_kinerja}}
+          <i v-if=" row.indikator_id  != '' ">
+            <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaKinerja(row)">
+            <i class="el-icon-edit-outline"></i> Edit
             <md-tooltip md-direction="top">Edit Rencana Kinerja</md-tooltip>
             </el-button>
           </i>
         </template>
       </el-table-column>
       <el-table-column  label="Indikator Kinerja Individu" min-width="320">
-        <template slot-scope="scope">
-          {{scope.row.indikator_kinerja_individu}}
+        <template slot-scope="{row}">
+          {{row.indikator_kinerja_individu}}
         </template>
       </el-table-column>
       <el-table-column
         align="center"
         prop="target"
-        label="Targetupdateu"
+        label="Target"
         width="150">
       </el-table-column>
-      <el-table-column align="center"  label="Aksi" width="160"  v-if="statusSasaranKinerja == 'drafted' ">
-        <template slot-scope="scope" >
-          <div v-if=" scope.row.indikator_id  != '' ">
-            <el-button size="mini" type="text" @click="editIndikatorKinerjaIndividu(scope.row)">
-              <i class="el-icon-setting"></i> Edit
+      <el-table-column  fixed="right" align="center" label="Manual" width="70" v-if="statusSasaranKinerja == 'drafted' ">
+        <template slot-scope="{row}">
+          <el-button v-if=" row.manual_indikator_kinerja_id  == 0  "  size="mini" type="text" @click="addManualIndikator(row)">
+            <i class="el-icon-circle-plus-outline"></i>
+            <md-tooltip md-direction="top">Add Manual Indikator Kinerja</md-tooltip>
+          </el-button>
+          
+          <el-button v-if=" row.manual_indikator_kinerja_id  != 0 & row.manual_indikator_kinerja_id != 'disabled'" size="mini" type="text" @click="editManualIndikator(row)">
+            <i class="el-icon-edit-outline"></i>
+            <md-tooltip md-direction="top">Edit Manual Indikator Kinerja</md-tooltip>
+          </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" align="center"  label="Aksi" width="63"  v-if="statusSasaranKinerja == 'drafted' ">
+        <template slot-scope="{row}" >
+          <div v-if=" row.indikator_id  != '' ">
+            <el-button size="mini" type="text" @click="editIndikatorKinerjaIndividu(row)">
+              <i class="el-icon-edit-outline"></i>
               <md-tooltip md-direction="top">Edit Indikator Kinerja Individu</md-tooltip>
             </el-button>
-            <el-button size="mini" type="text danger" @click="hapusIndikatorKinerjaIndividu(scope.row)">
-              <i class="el-icon-delete"></i> Hapus
+            <el-button size="mini" type="text danger" @click="hapusIndikatorKinerjaIndividu(row)">
+              <i class="el-icon-delete"></i>
               <md-tooltip md-direction="top">Hapus Indikator Kinerja Individu</md-tooltip>
             </el-button>
           </div>
           <div v-else>
-            <el-button size="mini" type="text" @click="editRencanaKinerja(scope.row)">
-              <i class="el-icon-setting"></i> Edit
+            <el-button size="mini" type="text" @click="editRencanaKinerja(row)">
+              <i class="el-icon-edit-outline"></i>
               <md-tooltip md-direction="top">Edit  Rencana Kinerja</md-tooltip>
             </el-button>
-            <el-button size="mini" type="text danger" @click="hapusRencanaKinerja(scope.row)">
-              <i class="el-icon-delete"></i> Hapus
+            <el-button size="mini" type="text danger" @click="hapusRencanaKinerja(row)">
+              <i class="el-icon-delete"></i>
               <md-tooltip md-direction="top">Hapus  Rencana Kinerja</md-tooltip>
             </el-button>
           </div>
@@ -173,6 +205,7 @@
 
 import IndikatorKinerjaIndividu from '~/components/Modal/IndikatorKinerjaIndividu.vue';
 import RencanaKinerja from '~/components/Modal/RencanaKinerja.vue';
+import ManualIndikatorKinerja from '~/components/Modal/ManualIndikatorKinerja.vue';
 
 export default {
 
@@ -180,6 +213,7 @@ export default {
   layout: "sasaranKinerjaLayout",
   components: {
     RencanaKinerja,
+    ManualIndikatorKinerja,
     IndikatorKinerjaIndividu
   },
   data() {
@@ -408,7 +442,17 @@ export default {
             message: 'Proses Hapus Dibatalkan'
           });          
         });
-      }
+      },
+
+
+      addManualIndikatorKinerja: function(data) {
+      //console.log(data)
+      this.$refs.ModalManualIndikatorKinerja.showModalAdd(data.indikator_id);
+      },
+      editManualIndikatorKinerja: function(data) {
+        //console.log(data)
+        this.$refs.ModalManualIndikatorKinerja.showModalEdit(data.manual_indikator_kinerja_id);
+      },
   },
 }
 </script>

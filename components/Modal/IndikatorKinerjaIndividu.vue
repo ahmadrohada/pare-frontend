@@ -35,7 +35,7 @@
           </el-form-item>
 
         <el-form-item    label ="Indikator Kinerja Individu" prop="indikatorKinerjaIndividuLabel">
-          <el-input size="mini" type="textarea" placeholder="Indikator Kinerja Individu Label" v-model="IndikatorKinerjaIndividuForm.indikatorKinerjaIndividuLabel"></el-input>
+          <el-input size="mini" autosize type="textarea" placeholder="Indikator Kinerja Individu Label" v-model="IndikatorKinerjaIndividuForm.indikatorKinerjaIndividuLabel"></el-input>
         </el-form-item>
 
         <el-row :gutter="10">
@@ -165,6 +165,7 @@ export default {
       this.modalFormVisible = true;
     },  
     showModalEdit(id) {
+      this.resetForm("IndikatorKinerjaIndividuForm")
       this.submitLoader = false
       this.$refs.loader.start() 
       this.formType = "edit"
@@ -208,7 +209,7 @@ export default {
           if (valid) {
             this.submitLoader = true
             this.$axios
-                    .$post("/indikator_rencana_kinerja", this.IndikatorKinerjaIndividuForm )
+                    .$post("/indikator_kinerja_individu", this.IndikatorKinerjaIndividuForm )
                     .then((response) => {
                       setTimeout(() => {
                         this.$emit('loadAsyncData')
@@ -271,16 +272,19 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.onChangeTypeTarget(1);
       this.modalFormVisible = false;
       this.submitLoader = false
     },
     onChangeTypeTarget(event) {
       console.log(event)
       if (event == 1){
+        this.IndikatorKinerjaIndividuForm.typeTarget = '1'
         this.targetMinDisabled = true 
         this.targetMaxDisabled = false
         this.IndikatorKinerjaIndividuForm.targetMin = '-'
       }else if (event == 2 ){
+        this.IndikatorKinerjaIndividuForm.typeTarget = '2'
         this.targetMinDisabled = false 
         this.targetMaxDisabled = false
         this.IndikatorKinerjaIndividuForm.targetMin = null

@@ -40,7 +40,7 @@
         <template slot-scope="{ row }">
           <!-- DRAFT -->
           <el-button v-if=" row.status == '1' "  size="mini" type="text" @click="submitSasaranKinerja(row)">
-            <i class="el-icon-edit">
+            <i class="el-icon-edit-outline">
             </i> Perencanaan
             <md-tooltip md-direction="top">Klik Untuk Submit Sasaran Kinerja</md-tooltip>
           </el-button>
@@ -64,7 +64,7 @@
         <template slot-scope="{ row }">
           <div v-if=" row.status == '1' ">
             <el-button  size="mini" type="text" @click="viewSasaranKinerja(row)">
-              <i class="el-icon-setting">
+              <i class="el-icon-edit-outline">
               </i> Edit
               <md-tooltip md-direction="top">Edit Data</md-tooltip>
             </el-button>
@@ -77,7 +77,7 @@
 
           <div v-if=" row.status == '2' ">
             <el-button  size="mini" type="text" @click="reviewSasaranKinerja(row)">
-              <i class="el-icon-setting">
+              <i class="el-icon-edit-outline">
               </i> Reviu
               <md-tooltip md-direction="top">Reviu SKP</md-tooltip>
             </el-button>
@@ -185,12 +185,12 @@ export default {
       this.$router.push("/sasaran_kinerja/"+data.id);
     },
     reviewSasaranKinerja: function(data) {
-      //this.$refs.loader.start()
-      //this.$router.push("/sasaran_kinerja_reviu/"+data.id);
-      this.$message({
+      this.$refs.loader.start()
+      this.$router.push("/sasaran_kinerja_reviu/"+data.id);
+      /* this.$message({
         type: 'info',
         message: "Fitur dalam pengerjaan"
-      });   
+      }); */   
     },
     createRenja: function(e) {
       this.$refs.ModalSasaranKinerja.showModal(this.skpd_id);

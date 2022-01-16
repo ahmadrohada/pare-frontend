@@ -31,7 +31,7 @@ import {Progress} from 'element-ui'
 import {Tabs,TabPane} from 'element-ui'
 import {Switch} from 'element-ui'
 import {Col,Row,Tree,Button} from 'element-ui'
-import {Dialog,Form,FormItem , Select,Option ,Divider,ButtonGroup,MessageBox,Message} from 'element-ui'
+import {Dialog,Form,FormItem , Select,Option ,OptionGroup,Divider,ButtonGroup,MessageBox,Message} from 'element-ui'
 import {Autocomplete,Badge,Timeline,TimelineItem ,DatePicker} from 'element-ui'
 /**
  * You can register global components here and use them as a plugin in your main Vue instance
@@ -84,6 +84,7 @@ Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(OptionGroup)
 Vue.use(Divider)
 Vue.use(ButtonGroup)
 Vue.use(Autocomplete)

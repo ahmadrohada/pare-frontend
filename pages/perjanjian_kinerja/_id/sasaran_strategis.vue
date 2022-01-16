@@ -53,7 +53,7 @@
           {{scope.row.sasaran_strategis}}
           <i v-if=" scope.row.indikator_id  != '' ">
             <el-button v-if="statusPk == 'open' " size="mini" type="text" @click="editSasaranStrategis(scope.row)">
-            <i class="el-icon-setting"></i> Edit
+            <i class="el-icon-edit-outline"></i> Edit
             <md-tooltip md-direction="top">Edit Sasaran Strategis</md-tooltip>
             </el-button>
           </i>
@@ -70,25 +70,25 @@
         label="Target"
         width="150">
       </el-table-column>
-      <el-table-column align="center"  label="Aksi" width="160"  v-if="statusPk == 'open' ">
+      <el-table-column fixed="right" align="center"  label="Aksi" width="70"  v-if="statusPk == 'open' ">
         <template slot-scope="scope" >
           <div v-if=" scope.row.indikator_id  != '' ">
             <el-button size="mini" type="text" @click="editIndikatorSasaranStrategis(scope.row)">
-              <i class="el-icon-setting"></i> Edit
+              <i class="el-icon-edit-outline"></i>
               <md-tooltip md-direction="top">Edit Indikator Kinerja Utama</md-tooltip>
             </el-button>
             <el-button size="mini" type="text danger" @click="hapusIndikatorSasaranStrategis(scope.row)">
-              <i class="el-icon-delete"></i> Hapus
+              <i class="el-icon-delete"></i>
               <md-tooltip md-direction="top">Hapus Indikator Kinerja Utama</md-tooltip>
             </el-button>
           </div>
           <div v-else>
             <el-button size="mini" type="text" @click="editSasaranStrategis(scope.row)">
-              <i class="el-icon-setting"></i> Edit
+              <i class="el-icon-edit-outline"></i>
               <md-tooltip md-direction="top">Edit  Sasaran Strategis</md-tooltip>
             </el-button>
             <el-button size="mini" type="text danger" @click="hapusSasaranStrategis(scope.row)">
-              <i class="el-icon-delete"></i> Hapus
+              <i class="el-icon-delete"></i>
               <md-tooltip md-direction="top">Hapus  Sasaran Strategis</md-tooltip>
             </el-button>
           </div>

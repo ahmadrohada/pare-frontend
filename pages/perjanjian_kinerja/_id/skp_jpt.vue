@@ -98,7 +98,7 @@ export default {
       total:0,
       isPaginated: true,
       limit: 10,
-      skp_id:1,
+      sasaran_kinerja_id:0,
     }
   },
   mounted() {
@@ -107,7 +107,7 @@ export default {
   methods: {
     loadAsyncData() {
       const params = [
-        `skp_id=${this.skp_id}`,
+        `sasaran_kinerja_id=${this.sasaran_kinerja_id}`,
         `search=${this.search}`,
         `order_by=${this.sortField}`,
         `order_direction=${this.sortOrder}`,

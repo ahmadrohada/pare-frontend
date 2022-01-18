@@ -60,11 +60,11 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column min-width="110" align="center" label="Aksi">
+      <el-table-column min-width="90" align="center" label="Aksi">
         <template slot-scope="{ row }">
           <div v-if=" row.status == '1' ">
             <el-button  size="mini" type="text" @click="viewSasaranKinerja(row)">
-              <i class="el-icon-setting">
+              <i class="el-icon-edit-outline">
               </i> Edit
               <md-tooltip md-direction="top">Edit Data</md-tooltip>
             </el-button>
@@ -75,16 +75,16 @@
             </el-button>
           </div>
 
-          <div v-if=" row.status == '4' ">
-            <el-button  size="mini" type="text" @click="viewSasaranKinerja(row)">
-              <i class="el-icon-eye">
-              </i> Lihat
-              <md-tooltip md-direction="top">Lihat Data</md-tooltip>
+          <div v-if=" row.status == '2' ">
+            <el-button  size="mini" type="text" @click="reviewSasaranKinerja(row)">
+              <i class="el-icon-edit-outline">
+              </i> Reviu
+              <md-tooltip md-direction="top">Reviu SKP</md-tooltip>
             </el-button>
           </div>
 
-          <div v-else >
-            <el-button  size="mini" type="text" disabled>
+          <div v-if=" row.status == '4' ">
+            <el-button  size="mini" type="text" @click="viewSasaranKinerja(row)">
               <i class="el-icon-view">
               </i> Lihat
               <md-tooltip md-direction="top">Lihat Data</md-tooltip>

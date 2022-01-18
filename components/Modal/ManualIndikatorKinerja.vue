@@ -14,25 +14,34 @@
         
       >
        
-        <input v-model="ManualIndikatorKinerjaForm.skpId" hidden></input>
+        <input v-model="ManualIndikatorKinerjaForm.manualIndikatorKinerjaId" hidden></input>
+        <input v-model="ManualIndikatorKinerjaForm.sasaranKinerjaId" hidden></input>
         <input v-model="ManualIndikatorKinerjaForm.rencanaKinerjaId" hidden></input>
         <input v-model="ManualIndikatorKinerjaForm.indikatorKinerjaId" hidden></input>
 
-        <el-form-item   label="Rencana Kinerja"  prop="rencanaKinerjaLabel" >
+       <!--  <el-form-item   label="Rencana Kinerja"  prop="rencanaKinerjaLabel" >
           <el-input size="mini" autosize type="textarea" placeholder="Rencana Kinerja Label" v-model="ManualIndikatorKinerjaForm.rencanaKinerjaLabel" readonly></el-input>
-        </el-form-item>
+        </el-form-item> -->
 
-        <el-form-item   label="Deskripsi Rencana Kinerja"  prop="deskripsiRencanaKinerja" >
-          <el-input size="mini" autosize type="textarea" placeholder="Isi dengan Deskripsi Rencana Kinerja" v-model="ManualIndikatorKinerjaForm.deskripsiRencanaKinerja"></el-input>
-        </el-form-item>
+        <p class="card-text">Rencana Kinerja</p>
+        <p class="text-muted" style="margin-top:-7px; line-height:18px !important;">{{ManualIndikatorKinerjaForm.rencanaKinerjaLabel}}</p>
+
+        <p style="margin-top:8px; "class="card-text">Indikator Kinerja Utama</p>
+        <p class="text-muted" style="margin-top:-7px; line-height:18px !important;">{{ManualIndikatorKinerjaForm.indikatorKinerjaUtamaLabel}}</p>
+
         <el-divider ></el-divider>
 
-        <el-form-item   label="Indikator Kinerja Utama"  prop="indikatorKinerjaUtamaLabel" >
-          <el-input size="mini" autosize type="textarea" placeholder="Indikator Kinerja Utama Label" v-model="ManualIndikatorKinerjaForm.indikatorKinerjaUtamaLabel" readonly></el-input>
+        <el-form-item   label="Deskripsi Rencana Kinerja"  prop="deskripsiRencanaKinerja" >
+          <el-input  size="mini" autosize type="textarea" placeholder="Isi dengan Deskripsi Rencana Kinerja" v-model="ManualIndikatorKinerjaForm.deskripsiRencanaKinerja"></el-input>
         </el-form-item>
         
+
+        <!-- <el-form-item   label="Indikator Kinerja Utama"  prop="indikatorKinerjaUtamaLabel" >
+          <el-input size="mini" autosize type="textarea" placeholder="Indikator Kinerja Utama Label" v-model="ManualIndikatorKinerjaForm.indikatorKinerjaUtamaLabel" readonly></el-input>
+        </el-form-item> -->
         
-        <el-form-item   label="Definisi"  prop="deskipsiDefinisi" >
+        
+        <el-form-item   label="Definisi"  prop="deskripsiDefinisi" >
           <el-input size="mini" autosize type="textarea" placeholder="Deskripsi Definisi" v-model="ManualIndikatorKinerjaForm.deskripsiDefinisi"></el-input>
         </el-form-item>
         <el-form-item   label="Formula"  prop="deskripsiFormula" >
@@ -106,8 +115,8 @@ export default {
       headerText:'Manual Indikator Kinerja Form',
       modalFormVisible: false,
       ManualIndikatorKinerjaForm: {
-
-        skpId:"",
+        manualIndikatorKinerjaId:"",
+        sasaranKinerjaId:"",
         rencanaKinerjaId:"",
         indikatorKinerjaId:"",
 
@@ -168,7 +177,7 @@ export default {
           .then(response => {
 
               //console.log(response.data.rencana_kinerja.label)
-              this.ManualIndikatorKinerjaForm.skpId = response.data.rencana_kinerja.skp_id
+              this.ManualIndikatorKinerjaForm.sasaranKinerjaId = response.data.rencana_kinerja.sasaran_kinerja_id
               this.ManualIndikatorKinerjaForm.rencanaKinerjaId = response.data.rencana_kinerja_id
               this.ManualIndikatorKinerjaForm.indikatorKinerjaId = response.data.id
               this.ManualIndikatorKinerjaForm.rencanaKinerjaLabel = response.data.rencana_kinerja.label
@@ -197,13 +206,24 @@ export default {
       this.$axios
           .$get("/manual_indikator_kinerja?id="+id )
           .then((resp) => {
-            this.ManualIndikatorKinerjaForm.rencanaKinerjaLabel = resp.rencana_kinerja_label
-            /* this.ManualIndikatorKinerjaForm.indikatorId = resp.id
-            this.ManualIndikatorKinerjaForm.indikatorKinerjaIndividuLabel = resp.label
-            this.ManualIndikatorKinerjaForm.typeTarget = resp.type_target
-            this.ManualIndikatorKinerjaForm.targetMin = resp.target_min
-            this.ManualIndikatorKinerjaForm.targetMax = resp.target_max
-            this.ManualIndikatorKinerjaForm.satuanTarget = resp.satuan_target */
+           
+            this.ManualIndikatorKinerjaForm.manualIndikatorKinerjaId = resp.manual_indikator_kinerja_id
+            this.ManualIndikatorKinerjaForm.sasaranKinerjaId = resp.sasaran_kinerja_id
+            this.ManualIndikatorKinerjaForm.rencanaKinerjaId = resp.rencana_kinerja.id
+            this.ManualIndikatorKinerjaForm.indikatorKinerjaId = resp.indikator_kinerja_individu.id
+
+            this.ManualIndikatorKinerjaForm.rencanaKinerjaLabel = resp.rencana_kinerja.label
+            this.ManualIndikatorKinerjaForm.deskripsiRencanaKinerja = resp.deskripsi_rencana_kinerja
+            this.ManualIndikatorKinerjaForm.indikatorKinerjaUtamaLabel = resp.indikator_kinerja_individu.label
+            this.ManualIndikatorKinerjaForm.deskripsiDefinisi = resp.definisi
+            this.ManualIndikatorKinerjaForm.deskripsiFormula = resp.formula
+            this.ManualIndikatorKinerjaForm.deskripsiTujuan = resp.tujuan
+            this.ManualIndikatorKinerjaForm.satuanPengukuran = resp.satuan_pengukuran 
+            this.ManualIndikatorKinerjaForm.jenisIndikatorKinerjaUtama = resp.jenis_indikator_kinerja
+            this.ManualIndikatorKinerjaForm.penanggungJawab = resp.penanggung_jawab
+            this.ManualIndikatorKinerjaForm.pihakPenyediaData = resp.pihak_penyedia_data
+            this.ManualIndikatorKinerjaForm.sumberData = resp.sumber_data
+            this.ManualIndikatorKinerjaForm.periodePelaporan = resp.periode_pelaporan
 
             this.modalFormVisible = true;
 
@@ -299,10 +319,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped>
 
-.modal.show .modal-dialog {
-    transform: none !important;
+.el-textarea{   
+    border-color: none !important;
+    outline: 0 none !important; 
 }
 
 .modal .modal-header .close {

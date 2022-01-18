@@ -101,7 +101,7 @@ export default {
     
     showModalAdd(pkId) {
       const params = [
-        `skp_id=${this.skpId}`,
+        `sasaran_kinerja_id=${this.skpId}`,
         `search=${this.search}`,
         `order_by=${this.sortField}`,
         `order_direction=${this.sortOrder}`,

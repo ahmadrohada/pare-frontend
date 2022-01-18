@@ -48,7 +48,7 @@
           <el-button v-if=" row.status == '2' "  size="mini" type="text">
             </i> Submited
           </el-button>
-          <el-button v-if=" row.status == '3' "  size="mini" type="text">
+          <el-button v-if=" row.status == '3' "  size="mini" type="text"> 
             <i class="el-icon-position">
             </i> Proses reviu
             <md-tooltip md-direction="top">Klik Untuk Submit Sasaran Kinerja</md-tooltip>

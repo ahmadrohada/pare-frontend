@@ -1,45 +1,18 @@
 <template>
    <card style="min-height:500px;">
-     <rencana-kinerja 
-        ref="ModalRencanaKinerja"
-        style="min-height:350px;"
-        @loadAsyncData="loadAsyncData"
-      >
-      </rencana-kinerja>
 
-      <indikator-kinerja-individu
-        ref="ModalIndikatorKinerjaIndividu"
-        @loadAsyncData="loadAsyncData"
-      >
-      </indikator-kinerja-individu>
-
+    <manual-indikator-kinerja
+      ref="ModalManualIndikatorKinerja"
+      @loadAsyncData="loadAsyncData"
+    >
+    </manual-indikator-kinerja>
 
     <template slot="header" class="d-inline">
       <h4 class="title d-inline">Reviu Sasaran Kinerja</h4>
       <p class="card-category d-inline">Rencana Kinerja</p>
     </template>
 
-    <md-button 
-      style="height:28px;margin-left:-1px; font-size:11px; margin-top:30px;" 
-      class="md-dense md-raised md-primary"
-      v-on:click="addRencanaKinerja($event)"
-      value="0"
-      v-if="statusSasaranKinerja == 'drafted'"
-    ><i class="el-icon-plus"></i>  Rencana Kinerja
-    </md-button>
-
-    <md-button 
-      style="height:28px;margin-left:-1px; font-size:11px; margin-top:30px;" 
-      class="md-dense md-raised md-primary"
-      v-on:click="addIndikatorKinerjaIndividu($event)"
-      value="0"
-      v-if=" statusSasaranKinerja == 'drafted'"
-    ><i class="el-icon-plus"></i> Indikator Kinerja Individu
-    </md-button>
-
-    <hr>
-
-
+    
     <p class="" style="margin-top: 20px">A. KINERJA UTAMA</p>
     <el-table
       :data="tableDataKinerjaUtama"
@@ -55,15 +28,9 @@
       <el-table-column label="Rencana Kinerja" width="270">
         <template slot-scope="scope">
           {{scope.row.rencana_kinerja}}
-          <i v-if=" scope.row.indikator_id  != '' ">
-            <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaKinerja(scope.row)">
-            <i class="el-icon-setting"></i> Edit
-            <md-tooltip md-direction="top">Edit Rencana Kinerja</md-tooltip>
-            </el-button>
-          </i>
         </template>
       </el-table-column>
-      <el-table-column  label="Indikator Kinerja Individu" min-width="280">
+      <el-table-column  label="Indikator Kinerja Individu" min-width="320">
         <template slot-scope="scope">
           {{scope.row.indikator_kinerja_individu}}
         </template>
@@ -73,6 +40,14 @@
         prop="target"
         label="Target"
         width="150">
+      </el-table-column>
+      <el-table-column align="center" label="Manual" width="70" >
+        <template slot-scope="{row}">
+          <el-button v-if=" row.manual_indikator_kinerja_id  != 0 & row.manual_indikator_kinerja_id != 'disabled'" size="mini" type="text" @click="lihatManualIndikatorKinerja(row)">
+            <i class="el-icon-view"></i>
+            <md-tooltip md-direction="top">Lihat Manual Indikator Kinerja</md-tooltip>
+          </el-button>
+        </template>
       </el-table-column>
       <el-table-column align="center"  label="Reviu Pengelola Kinerja" width="260" >
         <template slot-scope="{row}" >
@@ -98,15 +73,9 @@
       <el-table-column label="Rencana Kinerja" width="270">
         <template slot-scope="scope">
           {{scope.row.rencana_kinerja}}
-          <i v-if=" scope.row.indikator_id  != '' ">
-            <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaKinerja(scope.row)">
-            <i class="el-icon-setting"></i> Edit
-            <md-tooltip md-direction="top">Edit Rencana Kinerja</md-tooltip>
-            </el-button>
-          </i>
         </template>
       </el-table-column>
-      <el-table-column  label="Indikator Kinerja Individu" min-width="280">
+      <el-table-column  label="Indikator Kinerja Individu" min-width="320">
         <template slot-scope="scope">
           {{scope.row.indikator_kinerja_individu}}
         </template>
@@ -116,6 +85,14 @@
         prop="target"
         label="Target"
         width="150">
+      </el-table-column>
+      <el-table-column align="center" label="Manual" width="70" >
+        <template slot-scope="{row}">
+          <el-button v-if=" row.manual_indikator_kinerja_id  != 0 & row.manual_indikator_kinerja_id != 'disabled'" size="mini" type="text" @click="lihatManualIndikatorKinerja(row)">
+            <i class="el-icon-eye"></i>
+            <md-tooltip md-direction="top">Lihat Manual Indikator Kinerja</md-tooltip>
+          </el-button>
+        </template>
       </el-table-column>
       <el-table-column align="center"  label="Reviu Pengelola Kinerja" width="260" >
         <template slot-scope="{row}" >
@@ -132,17 +109,14 @@
 
 <script>
 
-
-import IndikatorKinerjaIndividu from '~/components/Modal/IndikatorKinerjaIndividu.vue';
-import RencanaKinerja from '~/components/Modal/RencanaKinerja.vue';
+import ManualIndikatorKinerja from '~/components/Modal/ManualIndikatorKinerjaDetail.vue';
 
 export default {
 
   middleware: ['auth'],
   layout: "sasaranKinerjaReviuLayout",
   components: {
-    RencanaKinerja,
-    IndikatorKinerjaIndividu
+    ManualIndikatorKinerja
   },
   data() {
     return {
@@ -163,6 +137,7 @@ export default {
   mounted() {
     this.sasaranKinerjaId = this.$route.params.id
     this.loadAsyncData()
+     
     
   },
   methods: {
@@ -274,7 +249,7 @@ export default {
           
         }
       },
-       objectSpanMethodKinerjaTambahan({ row, column, rowIndex, columnIndex }) {
+      objectSpanMethodKinerjaTambahan({ row, column, rowIndex, columnIndex }) {
         //console.log(row, column);
         
         if (columnIndex === 0 || columnIndex === 1 ) {
@@ -288,92 +263,24 @@ export default {
           
         }
       },
-      addRencanaKinerja: function(data) {
-      //console.log(data)
-      this.$refs.ModalRencanaKinerja.showModalAdd(this.sasaranKinerjaId);
-      },
-      editRencanaKinerja: function(data) {
+      lihatManualIndikatorKinerja: function(data) {
         //console.log(data)
-        this.$refs.ModalRencanaKinerja.showModalEdit(data.id);
-      },
-      hapusRencanaKinerja: function(data) {
-        //const parent = node.parent;
-        //const child = parent.data.child || parent.data;
-        
-        this.$confirm('Hapus Rencana Kinerja', 'Konfirmasi', {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Batal',
-          type: 'warning'
-        }).then(() => {
-          this.$axios
-            .$delete("/rencana_kinerja?id="+data.id)
-            .then((resp) => {
-                this.loadAsyncData()
-                this.$message({
-                  type: 'success',
-                  message: 'Berhasil dihapus'
-                });
-            })
-            .catch((error) => {
-              //console.log(error.response.data.message)
-              this.$message({
-                type: 'error',
-                message: error.response.data.message
-              });          
-            });
-
-          
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Proses Hapus Dibatalkan'
-          });          
-        });
-      },
-      addIndikatorKinerjaIndividu: function(data) {
-      //console.log(data)
-      this.$refs.ModalIndikatorKinerjaIndividu.showModalAdd(this.sasaranKinerjaId);
-      },
-      editIndikatorKinerjaIndividu: function(data) {
-        this.$refs.ModalIndikatorKinerjaIndividu.showModalEdit(data.indikator_id);
-      },
-      hapusIndikatorKinerjaIndividu: function(data) {
-        //const parent = node.parent;
-        //const child = parent.data.child || parent.data;
-        
-        this.$confirm('Hapus Indikator Kinerja Individu', 'Konfirmasi', {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Batal',
-          type: 'warning'
-        }).then(() => {
-          this.$axios
-            .$delete("/indikator_kinerja_individu?id="+data.indikator_id)
-            .then((resp) => {
-                this.loadAsyncData()
-                this.$message({
-                  type: 'success',
-                  message: 'Berhasil dihapus'
-                });
-            })
-            .catch((error) => {
-              //console.log(error.response.data.message)
-              this.$message({
-                type: 'error',
-                message: error.response.data.message
-              });          
-            });
-
-          
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Proses Hapus Dibatalkan'
-          });          
-        });
+        this.$refs.ModalManualIndikatorKinerja.showModalDetail(data.manual_indikator_kinerja_id);
+        //this.$router.push(`/sasaran_kinerja_reviu/${data.manual_indikator_kinerja_id}/manual_indikator`);
       }
+     
   },
 }
 </script>
 
+<style>
+.modal-dialog_x {
+    max-width: 900px !important;
+}
+
+</style>
+
+
 <style lang="scss" scoped>
+
 </style>

@@ -140,7 +140,9 @@ export default {
             this.tableDataPk.push(item)
           })
           this.total > 0 ? (this.isEmpty = false) : (this.isEmpty = true)
-          this.$refs.loader.finish() 
+          setTimeout(() => {
+            this.$refs.loader.finish() 
+          }, 400);
         })
         .catch((error) => {
           this.$refs.loader.finish() 

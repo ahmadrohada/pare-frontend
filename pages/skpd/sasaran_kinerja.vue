@@ -45,9 +45,9 @@
             <md-tooltip md-direction="top">Klik Untuk Submit Sasaran Kinerja</md-tooltip>
           </el-button>
            <!-- Submit -->
-          <el-button v-if=" row.status == '2' "  size="mini" type="text">
-            </i> Submited
-          </el-button>
+          <span v-if=" row.status == '2' " class="text-info">
+            Submited
+          </span>
           <el-button v-if=" row.status == '3' "  size="mini" type="text"> 
             <i class="el-icon-position">
             </i> Proses reviu
@@ -76,7 +76,7 @@
           </div>
 
           <div v-if=" row.status == '2' ">
-            <el-button  size="mini" type="text" @click="reviewSasaranKinerja(row)">
+            <el-button  size="mini" type="text" @click="reviuSasaranKinerja(row)">
               <i class="el-icon-edit-outline">
               </i> Reviu
               <md-tooltip md-direction="top">Reviu SKP</md-tooltip>
@@ -166,7 +166,10 @@ export default {
             this.tableDataSkp.push(item)
           })
           this.total > 0 ? (this.isEmpty = false) : (this.isEmpty = true)
-          this.$refs.loader.finish() 
+          setTimeout(() => {
+            this.$refs.loader.finish() 
+          }, 400);
+          
         })
         .catch((error) => {
           this.tableDataSkp = []
@@ -184,13 +187,31 @@ export default {
       this.$refs.loader.start()
       this.$router.push("/sasaran_kinerja/"+data.id);
     },
-    reviewSasaranKinerja: function(data) {
-      this.$refs.loader.start()
-      this.$router.push("/sasaran_kinerja_reviu/"+data.id);
-      /* this.$message({
-        type: 'info',
-        message: "Fitur dalam pengerjaan"
-      }); */   
+    reviuSasaranKinerja: function(data) {
+
+      this.$confirm('Anda Akan melakukan proses Reviu terhadap SKP JPT', 'Konfirmasi', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Batal',
+          type: 'warning'
+        }).then(() => {
+
+          this.$axios
+            .$post("/sasaran_kinerja_reviu?id="+data.id)
+            .then((resp) => {
+                this.$router.push("/sasaran_kinerja_reviu/"+resp.id);
+            })
+            .catch((error) => {
+              this.$message({
+                type: 'error',
+                message: error.response.data.message
+              });          
+            });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Proses Reviu Dibatalkan'
+          });          
+        });
     },
     createRenja: function(e) {
       this.$refs.ModalSasaranKinerja.showModal(this.skpd_id);

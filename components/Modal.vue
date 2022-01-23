@@ -74,7 +74,7 @@ export default {
     show: Boolean,
     showClose: {
       type: Boolean,
-      default: true
+      default: false
     },
     centered: {
       type: Boolean,
@@ -87,7 +87,7 @@ export default {
     },
     scrollToBottom: {
       type: Boolean,
-      default: true,
+      default: false,
       description: "Whether modal should scroll to it's bottom automatically"
     },
     type: {
@@ -166,5 +166,10 @@ export default {
 <style>
 .modal.show {
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal.show .modal-dialog {
+  transform: translate(0, 7%) !important;
+  width:auto !important;
 }
 </style>

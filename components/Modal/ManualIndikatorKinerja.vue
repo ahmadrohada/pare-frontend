@@ -1,6 +1,9 @@
 <template>
+
+
     <modal 
     :show.sync="modalFormVisible" 
+    modalClasses="modal-dialog_x"
    >
     <pare-loader ref="loader"></pare-loader>
     <template slot="header">
@@ -319,7 +322,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+
+
+.modal-dialog_x {
+    max-width: 700px !important;
+}
 
 .el-textarea{   
     border-color: none !important;

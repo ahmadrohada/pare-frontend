@@ -45,9 +45,9 @@
             <md-tooltip md-direction="top">Klik Untuk Submit Sasaran Kinerja</md-tooltip>
           </el-button>
            <!-- Submit -->
-          <el-button v-if=" row.status == '2' "  size="mini" type="text">
-            </i> Submited
-          </el-button>
+          <span v-if=" row.status == '2' " class="text-info">
+            Submited
+          </span>
           <el-button v-if=" row.status == '3' "  size="mini" type="text">
             <i class="el-icon-position">
             </i> Proses Reviu
@@ -76,10 +76,10 @@
           </div>
 
           <div v-if=" row.status == '2' ">
-            <el-button  size="mini" type="text" @click="reviewSasaranKinerja(row)">
-              <i class="el-icon-edit-outline">
-              </i> Reviu
-              <md-tooltip md-direction="top">Reviu SKP</md-tooltip>
+            <el-button  disabled size="mini" type="text" @click="viewSasaranKinerja(row)">
+              <i class="el-icon-view">
+              </i> Lihat
+              <md-tooltip md-direction="top">Lihat Data</md-tooltip>
             </el-button>
           </div>
 

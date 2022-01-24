@@ -15,7 +15,7 @@
     <md-button 
       style="height:28px;margin-left:-1px; font-size:11px;" 
       class="md-dense md-raised md-primary"
-      v-on:click="createRenja($event)"
+      v-on:click="createSasaranKinerja($event)"
       value="0"
      
     ><span class="fa fa-plus"></span> Create SKP
@@ -48,11 +48,9 @@
           <span v-if=" row.status == '2' " class="text-info">
             Submited
           </span>
-          <el-button v-if=" row.status == '3' "  size="mini" type="text"> 
-            <i class="el-icon-position">
-            </i> Proses reviu
-            <md-tooltip md-direction="top">Klik Untuk Submit Sasaran Kinerja</md-tooltip>
-          </el-button>
+          <span v-if=" row.status == '3' " class="text-info">
+            Proses Reviu
+          </span>
           <el-button v-if=" row.status == '4' "  size="mini" type="text">
             <i class="el-icon-position">
             </i> Ditetapkan
@@ -79,6 +77,13 @@
             <el-button  size="mini" type="text" @click="reviuSasaranKinerja(row)">
               <i class="el-icon-edit-outline">
               </i> Reviu
+              <md-tooltip md-direction="top">Reviu SKP</md-tooltip>
+            </el-button>
+          </div>
+          <div v-if=" row.status == '3' ">
+            <el-button  size="mini" type="text" @click="editReviuSasaranKinerja(row)">
+              <i class="el-icon-edit-outline">
+              </i> Edit Reviu
               <md-tooltip md-direction="top">Reviu SKP</md-tooltip>
             </el-button>
           </div>
@@ -198,7 +203,7 @@ export default {
           this.$axios
             .$post("/sasaran_kinerja_reviu?id="+data.id)
             .then((resp) => {
-                this.$router.push("/sasaran_kinerja_reviu/"+resp.id);
+                this.$router.push("/sasaran_kinerja_reviu/"+resp);
             })
             .catch((error) => {
               this.$message({
@@ -213,7 +218,10 @@ export default {
           });          
         });
     },
-    createRenja: function(e) {
+    editReviuSasaranKinerja: function(data) {
+      this.$router.push("/sasaran_kinerja_reviu/"+data.id);
+    },
+    createSasaranKinerja: function(e) {
       this.$refs.ModalSasaranKinerja.showModal(this.skpd_id);
     },
     hapusSasaranKinerja: function(data) {

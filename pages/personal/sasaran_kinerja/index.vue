@@ -48,11 +48,9 @@
           <span v-if=" row.status == '2' " class="text-info">
             Submited
           </span>
-          <el-button v-if=" row.status == '3' "  size="mini" type="text">
-            <i class="el-icon-position">
-            </i> Proses Reviu
-            <md-tooltip md-direction="top">Klik Untuk Submit Sasaran Kinerja</md-tooltip>
-          </el-button>
+          <span v-if=" row.status == '3' " class="text-info">
+            Proses Reviu
+          </span>
           <el-button v-if=" row.status == '4' "  size="mini" type="text">
             <i class="el-icon-position">
             </i> Ditetapkan
@@ -75,7 +73,7 @@
             </el-button>
           </div>
 
-          <div v-if=" row.status == '2' ">
+          <div v-if=" row.status == '2' | row.status == '3' ">
             <el-button  disabled size="mini" type="text" @click="viewSasaranKinerja(row)">
               <i class="el-icon-view">
               </i> Lihat

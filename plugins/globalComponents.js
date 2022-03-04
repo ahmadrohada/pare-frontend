@@ -2,7 +2,7 @@ import Vue from 'vue'
 import BaseInput from '@/components/Inputs/BaseInput.vue';
 import BaseAlert from '@/components/BaseAlert.vue';
 import BaseDropdown from '@/components/BaseDropdown.vue';
-import Card from '@/components/Cards/Card.vue';
+import MCard from '@/components/Cards/Card.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseCheckbox from '@/components/Inputs/BaseCheckbox.vue';
 import Modal from '@/components/Modal.vue';
@@ -32,7 +32,8 @@ import {Tabs,TabPane} from 'element-ui'
 import {Switch} from 'element-ui'
 import {Col,Row,Tree,Button} from 'element-ui'
 import {Dialog,Form,FormItem , Select,Option ,OptionGroup,Divider,ButtonGroup,MessageBox,Message} from 'element-ui'
-import {Autocomplete,Badge,Timeline,TimelineItem ,DatePicker} from 'element-ui'
+import {Autocomplete,Badge,Timeline,TimelineItem ,DatePicker,Card} from 'element-ui'
+//import {Card} from 'element-ui'
 
 /**
  * You can register global components here and use them as a plugin in your main Vue instance
@@ -49,7 +50,7 @@ Vue.component(BaseCheckbox.name, BaseCheckbox);
 Vue.component(BaseButton.name, BaseButton);
 Vue.component(BaseAlert.name, BaseAlert);
 
-Vue.component(Card.name, Card);
+Vue.component(MCard.name, MCard);
 Vue.component(Modal.name, Modal)
 Vue.component(Input.name, Input);
 Vue.component(InputNumber.name, InputNumber);
@@ -96,6 +97,7 @@ Vue.use(Badge)
 Vue.use(Timeline)
 Vue.use(TimelineItem)
 Vue.use(DatePicker)
+Vue.use(Card)
 
 
 

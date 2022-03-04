@@ -85,7 +85,7 @@ import { mapGetters } from 'vuex'
 
 
 export default {
-  layout: "skpdLayout",
+  layout: "skpdManajemenKinerjaLayout",
   middleware: "auth",
    components: {
     PareLoader,
@@ -255,6 +255,10 @@ export default {
         type: alertType,
       });
     } */
+  },
+  async asyncData({ params }) {
+      const periode = params.periode
+      return { periode }
   },
   mounted() {
     this.loadAsyncData()

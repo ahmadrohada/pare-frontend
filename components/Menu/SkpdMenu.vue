@@ -37,6 +37,13 @@
         <span>User</span>
       </el-menu-item>
       <el-menu-item 
+        index="/skpd/manajemen_kinerja"
+        :route="{path: '/skpd/manajemen_kinerja'}"
+       >
+        <i class="el-icon-data-analysis"></i>
+        <span>Manajemen Kinerja</span>
+      </el-menu-item>
+      <!-- <el-menu-item 
         index="/skpd/perjanjian_kinerja"
         :route="{path: '/skpd/perjanjian_kinerja'}"
        >
@@ -55,8 +62,7 @@
           ><i class="el-icon-money"></i>TPP</template
         >
           <el-menu-item index="3-1">Report</el-menu-item>
-        </el-submenu>
-      </el-submenu>
+      </el-submenu> -->
     </el-menu>
   </div>
 </template>

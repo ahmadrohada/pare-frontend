@@ -1,0 +1,170 @@
+<template>
+    <modal 
+    :show.sync="modalFormVisible" >
+    <pare-loader ref="loader"></pare-loader>
+    <template slot="header">
+      <h4 class="modal-title">{{headerText}}</h4>
+    </template>
+        
+      
+
+          <el-table
+            ref="jabatanTable"
+            :data="tableListJabatan"
+            :show-header="false"
+            border
+            :highlight-current-row="false"
+            style="width: 100%; margin-top:10px;"
+            @selection-change="handleSelectionChange">
+
+            <el-table-column
+              align="center"
+              type="selection"
+              width="40">
+            </el-table-column>
+            
+            <el-table-column   label="JABATAN">
+              <template slot-scope="{ row }">
+                <div style="padding:0px !important;">
+                  <span style="margin-top:-6px;" class="">{{row.nama_lengkap}}</span>
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+
+     <el-form
+        ref="KoordinatorForm"
+        :model="KoordinatorForm"
+        size="mini"
+      >
+
+          <input v-model="KoordinatorForm.skpd_id"></input>
+          <input v-model="KoordinatorForm.periode"></input>
+           <input v-model="KoordinatorForm.selectedRoles"></input>
+
+      </el-form>
+         
+
+
+
+       
+
+          
+
+
+          
+         
+    <template slot="footer"> 
+      <el-button  
+        size="mini" 
+        type="primary"  
+        :loading="submitLoader" 
+        @click="submitData()"
+      >Submit
+      </el-button>
+    </template>
+  </modal>
+</template>
+
+<script>
+import PareLoader from '~/components/Loader/PareLoader.vue';
+
+export default {
+  components:{
+    PareLoader,
+  },
+  data() {
+    return {
+      formType: 'create',
+      submitLoader:false,
+      headerText:'Rencana Kinerja Form',
+      modalFormVisible: false,
+      tableListJabatan:[],
+     
+      params:[],
+      
+      KoordinatorForm:{
+          skpd_id:null,
+          periode:null,
+          selectedRoles: [],
+      }
+      //loading: true
+    };
+  },
+  methods: {
+    
+    showModalAdd(skpd_id,periode) {
+      this.KoordinatorForm.skpd_id = skpd_id
+      this.KoordinatorForm.periode = periode
+      this.submitLoader = false
+      this.formType = "create"
+      this.headerText = "Add Koordinator"
+      //this.$refs.loader.start() 
+
+      const params = [
+          `periode=${this.periode}`,
+          `skpd_id=${this.skpd_id}`,
+        ].join('&')
+      this.$axios
+          .get(`/list_jabatan?${params}`)
+          .then(({data}) => {
+            this.tableListJabatan = []
+            data.list_jabatan.forEach((item) => {
+              this.tableListJabatan.push(item)
+            })
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 700);
+          })
+          .catch((error) => {
+          this.$message({
+            type: 'error',
+            message: error.response.data.message
+          });    
+          setTimeout(() => {
+            this.$refs.loader.finish() 
+          }, 700);
+      }); 
+      this.modalFormVisible = true;
+    },  
+    submitData() {
+      this.submitLoader = true
+      this.$axios
+        .$post("/jabatan", this.KoordinatorForm )
+        .then((response) => {
+                      
+                      
+        })
+        .catch((error) => {
+          this.submitLoader = false 
+        });
+      
+      
+    },
+    handleSelectionChange(val) {
+        this.KoordinatorForm.selectedRoles = val;
+        //console.log(this.selectedRoles)
+    }
+   
+  },
+  mounted() {
+      
+  }
+};
+</script>
+<style lang="scss" scope>
+
+ .el-select {
+    width: 100%;
+  }
+
+  .el-select-group__title{
+      color: rgb(102, 102, 102) !important;
+    }
+
+
+  .modal .modal-header .close {
+      visibility: hidden;
+  }
+
+</style>

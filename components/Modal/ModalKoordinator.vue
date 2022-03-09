@@ -38,9 +38,10 @@
         size="mini"
       >
 
-          <input v-model="KoordinatorForm.skpd_id"></input>
-          <input v-model="KoordinatorForm.periode"></input>
-           <input v-model="KoordinatorForm.selectedRoles"></input>
+          <input v-model="KoordinatorForm.skpdId" hidden></input>
+          <input v-model="KoordinatorForm.periode" hidden></input>
+          <!-- <input v-model="KoordinatorForm.idJabatanKepala" hidden></input> -->
+          <input v-model="KoordinatorForm.selectedRoles" hidden></input>
 
       </el-form>
          
@@ -84,8 +85,9 @@ export default {
       params:[],
       
       KoordinatorForm:{
-          skpd_id:null,
+          skpdId:null,
           periode:null,
+          //idJabatanKepala:null,
           selectedRoles: [],
       }
       //loading: true
@@ -94,21 +96,23 @@ export default {
   methods: {
     
     showModalAdd(skpd_id,periode) {
-      this.KoordinatorForm.skpd_id = skpd_id
+      this.KoordinatorForm.skpdId = skpd_id
       this.KoordinatorForm.periode = periode
+      //this.KoordinatorForm.idJabatanKepala = 6235
+      this.tableListJabatan = [];
       this.submitLoader = false
       this.formType = "create"
       this.headerText = "Add Koordinator"
-      //this.$refs.loader.start() 
+      this.$refs.loader.start() 
 
       const params = [
-          `periode=${this.periode}`,
-          `skpd_id=${this.skpd_id}`,
+          `periode=${this.KoordinatorForm.periode}`,
+          `skpd_id=${this.KoordinatorForm.skpdId}`,
         ].join('&')
       this.$axios
           .get(`/list_jabatan?${params}`)
           .then(({data}) => {
-            this.tableListJabatan = []
+            
             data.list_jabatan.forEach((item) => {
               this.tableListJabatan.push(item)
             })
@@ -132,6 +136,15 @@ export default {
       this.$axios
         .$post("/jabatan", this.KoordinatorForm )
         .then((response) => {
+          this.$emit('loadAsyncData');
+          setTimeout(() => {
+                this.modalFormVisible = false;
+                this.submitLoader = false
+                this.$message({
+                  type: 'info',
+                  message: 'berhasil menyimpan data'
+                }); 
+          }, 200);
                       
                       
         })

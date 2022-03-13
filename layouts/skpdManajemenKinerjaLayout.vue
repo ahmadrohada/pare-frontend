@@ -10,6 +10,7 @@
       <manajemen-kinerja-menu 
           :skpdLogo="dataUser.skpd.logo"
           :skpdSingkatan="dataUser.skpd.singkatan"
+          :skpdId="dataUser.skpd.id"
       ></manajemen-kinerja-menu>
     </side-bar>
     
@@ -30,9 +31,7 @@
   </div>
 </template>
 <script>
-  /* eslint-disable no-new */
-
-  
+ 
   import PerfectScrollbar from 'perfect-scrollbar';
   import 'perfect-scrollbar/css/perfect-scrollbar.css';
   function hasElement(className) {
@@ -59,7 +58,6 @@
   import { mapGetters } from 'vuex'
 
   export default {
-    
     components: {
       DashboardNavbar,
       ContentFooter,
@@ -70,15 +68,10 @@
     },
     data() {
       return {
-        //sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
-        //laoding:true,
-        //overlay:true,
+
       };
     },
     computed: {
-      isFullScreenRoute() {
-        return this.$route.path === '/maps/full-screen'
-      },
       ...mapGetters({
         dataUser:'user',
       })
@@ -108,6 +101,8 @@
       '$route.path': function() {
         console.log(this.$route); 
       }
+
+
     },
     mounted() {
       this.initScrollbar();

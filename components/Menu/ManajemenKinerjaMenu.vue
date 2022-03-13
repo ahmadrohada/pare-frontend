@@ -38,22 +38,27 @@
         <i class="el-icon-date"></i>
         <span>Timeline</span>
       </el-menu-item> -->
-     
       <el-menu-item 
         index="skpd-manajemen_kinerja-periode-perjanjian_kinerja___en"
         :route="{path:`/skpd/manajemen_kinerja/${periodeTahun}/perjanjian_kinerja`, name:'skpd-manajemen_kinerja-periode-perjanjian_kinerja___en'}"
        >
         <i class="el-icon-data-board"></i>
         <span>Perjanjian Kinerja</span>
+        
       </el-menu-item>
+    
+
       <el-menu-item 
+        :disabled="disabledSkpjpt"
         index="skpd-manajemen_kinerja-periode-sasaran_kinerja_jpt___en"
         :route="{path:`/skpd/manajemen_kinerja/${periodeTahun}/sasaran_kinerja_jpt`, name:'skpd-manajemen_kinerja-periode-sasaran_kinerja_jpt___en'}"
        >
         <i class="el-icon-data-analysis"></i>
         <span>SKP JPT</span>
       </el-menu-item>
+
       <el-menu-item 
+        :disabled="disabledTimKerja"
         index="skpd-manajemen_kinerja-periode-tim_kerja___en"
         :route="{path:`/skpd/manajemen_kinerja/${periodeTahun}/tim_kerja`, name:'skpd-manajemen_kinerja-periode-tim_kerja___en'}"
        >
@@ -66,15 +71,37 @@
 
 <script>
 export default {
-  props: ["skpdLogo","skpdSingkatan" ],
+  props: ["skpdLogo","skpdSingkatan","skpdId" ],
   name: "manajemenKinerjaMenu",
   data() {
     return {
       activeLink: null,
+      disabledSkpjpt:true,
+      disabledTimKerja:true,
       periodeTahun:null,
     };
   },
   methods: {
+    activateMenu() {
+      const params = [
+        `skpd_id=${this.skpdId}`,
+        `periode_tahun=${this.periodeTahun}`,
+      ].join('&')
+      this.$axios
+        .get(`/manajemen_kinerja_menu?${params}`)
+        .then((resp) => {
+          //console.log(resp.data[0].perjanjian_kinerja)
+          if (resp.data[0].perjanjian_kinerja == true ){
+            this.disabledSkpjpt = false
+            this.disabledTimKerja = false
+          }
+          
+          
+        })
+        .catch((error) => {
+          throw error
+        })
+    },
     
   },
   watch: {
@@ -83,10 +110,9 @@ export default {
     }
   },
   mounted() {
-    
     this.activeLink = this.$route.name; 
-    console.log(this.$route.name) 
     this.periodeTahun = this.$route.params.periode;
+    this.activateMenu()
   },
 };
 </script>

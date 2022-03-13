@@ -23,17 +23,18 @@
         <input v-model="RenjaForm.userId" hidden></input>
         <input v-model="RenjaForm.kepalaSkpdId" hidden></input>
        
-        <div>
+        <div v-if="showSelectPeriode">
           <label>Periode Renja</label>
-          <el-form-item  prop="periodeId" >
+          <el-form-item  prop="periode" >
             <el-select 
-              v-model="RenjaForm.periodeId" 
+              :disabled="disabledSelectPeriode"
+              v-model="RenjaForm.periode" 
               placeholder="Pilih Periode Renja"
               >
               <el-option
                 v-for="item in periodeList"
-                :selected="item.id"
-                :key="item.label"
+                :selected="item.label"
+                :key="item.id"
                 :label="item.label"
                 :value="item.id"
                 
@@ -44,7 +45,7 @@
           </el-form-item>
         </div>
 
-        <label>Kepala SKPD</label>
+        <label>Nama Kepala SKPD</label>
         <el-form-item  prop="namaPejabat" >
           <el-autocomplete
             class="inline-input"
@@ -61,7 +62,6 @@
         <label>Jabatan</label>
         <el-form-item  prop="jabatanId" >
           <el-select 
-          
             v-model="RenjaForm.jabatanId" 
             @change="onPilihJabatan($event)"  
             placeholder="Pilih Jabatan"
@@ -107,18 +107,19 @@ export default {
       modalFormVisible: false,
       activeName: 'detail',
       submitLoader:false,
+      showSelectPeriode:true,
       periodeList:[],
       detailRenja:[],
       RenjaForm: {
         skpdId: "",
-        periodeId:"",
+        periode:"",
         userId:"",
         jabatanId:"",
         kepalaSkpdId:"",
       },
       jabatans: [],
       rules: {
-          periodeId: [
+          periode: [
             { required: true, message: 'Silakan pilih Periode', trigger: 'blur' }
           ],
           namaPejabat: [
@@ -129,10 +130,11 @@ export default {
           ]
       },
       disabledSelect:true,
+      disabledSelectPeriode:false,
     };
   },
   methods: {
-    showModal(skpd_id) {
+    showModal(skpd_id,periode) {
       this.submitLoader = false
       this.$refs.loader.start() 
       this.modalFormVisible = true; 
@@ -142,7 +144,10 @@ export default {
         .then((data) => {
             
             this.periodeList = data.periodeList
-            this.RenjaForm.periodeId = data.periodeAktifId
+
+            this.RenjaForm.periode = periode
+
+
             this.RenjaForm.skpdId = data.skpdId
             this.RenjaForm.userId = data.userId
             this.detailRenja = data.detailRenja
@@ -246,7 +251,7 @@ export default {
             this.$axios
                     .$post("/perjanjian_kinerja", this.RenjaForm )
                     .then((response) => {
-                      this.addKetua(response)
+                      //this.addKetua(response)
                       this.$emit('loadAsyncData')
                       this.modalFormVisible = false;
                       setTimeout(() => {
@@ -256,6 +261,7 @@ export default {
                           message: 'berhasil menyimpan data'
                         }); 
                       }, 200);
+                      //this.$router.go(this.$router.currentRoute)
                     })
                     .catch((error) => {
                         this.submitLoader = false
@@ -278,6 +284,11 @@ export default {
       this.$refs[formName].resetFields();
       this.modalFormVisible = false;
     },
+    tes() {
+      this.disabledSelectPeriode = true
+      this.showSelectPeriode = false
+      
+    }
   },
   mounted() {
       

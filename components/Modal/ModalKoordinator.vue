@@ -45,18 +45,9 @@
 
       </el-form>
          
-
-
-
-       
-
-          
-
-
-          
-         
     <template slot="footer"> 
       <el-button  
+        :disabled="disabled"
         size="mini" 
         type="primary"  
         :loading="submitLoader" 
@@ -81,7 +72,7 @@ export default {
       headerText:'Rencana Kinerja Form',
       modalFormVisible: false,
       tableListJabatan:[],
-     
+      disabled:true,
       params:[],
       
       KoordinatorForm:{
@@ -149,13 +140,25 @@ export default {
                       
         })
         .catch((error) => {
-          this.submitLoader = false 
+            this.submitLoader = false
+            this.$message({
+              type: 'error',
+              duration: 2000,
+              message: "Tidak Berhasil Menyimpan Data"
+            });    
         });
       
       
     },
     handleSelectionChange(val) {
         this.KoordinatorForm.selectedRoles = val;
+
+        if ( this.KoordinatorForm.selectedRoles != "" ){
+          this.disabled = false
+        }else{
+          this.disabled = true
+        }
+        
         //console.log(this.selectedRoles)
     }
    

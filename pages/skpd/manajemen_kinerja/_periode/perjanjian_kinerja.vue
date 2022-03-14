@@ -18,9 +18,8 @@
       style="height:28px;margin-left:-1px; font-size:11px;" 
       class="md-dense md-raised md-primary btn-block"
       v-on:click="createRenja($event)"
-      value="0"
-     
-    ><span class="fa fa-plus"></span> Create Perjanjian Kinerja
+    >
+    <span class="fa fa-plus"></span> Create Perjanjian Kinerja
     </md-button>
 
 

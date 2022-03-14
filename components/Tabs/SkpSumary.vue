@@ -1,15 +1,6 @@
 <template>
   <card style="min-height:500px;">
-
     <pare-loader ref="loader"></pare-loader>
-
-
-    <template slot="header" class="d-inline">
-      <h4 class="title d-inline">Sasaran Kinerja</h4>
-      <p class="card-category d-inline">Sumary</p>
-    </template>
-
-
     <el-row :gutter="10">
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
           <card class="font-weight-300">
@@ -19,13 +10,13 @@
                 <p class="card-text"><i class="el-icon-date"></i> MASA PENILAIAN SKP</p>
                 <p class="text-muted" style="min-height:20px;">{{moment(periodePenilaian.tgl_mulai).format('DD MM YYYY')}} &nbsp; s.d &nbsp; {{moment(periodePenilaian.tgl_selesai).format('DD MM YYYY')}}</p>
                 <hr style="margin-top:-2px;">
-                <p class="card-text"><i class="el-icon-office-building"></i> INSTANSI</p>
+               <!--  <p class="card-text"><i class="el-icon-office-building"></i> INSTANSI</p>
                 <p class="text-muted" style="min-height:20px;">{{pegawaiYangDinilai.instansi}}</p>
                 <hr style="margin-top:-2px;">
 
                 <p class="card-text"><i class="el-icon-medal"></i> JENIS JABATAN</p>
                 <p class="text-muted" style="min-height:20px;">{{jenisJabatanSkp}}</p>
-                <hr style="margin-top:-2px;">
+                <hr style="margin-top:-2px;"> -->
 
 
                
@@ -150,8 +141,8 @@ export default {
     }
   },
   methods: {
-    loadData() {
-
+    loadData(sasaranKinerjaId) {
+      this.sasaranKinerjaId = sasaranKinerjaId
       const params = [
         `id=${this.sasaranKinerjaId}`,
       ].join('&')
@@ -172,7 +163,7 @@ export default {
          
           setTimeout(() => {
              this.$refs.loader.finish() 
-          }, 800);
+          }, 300);
 
         })
         .catch((error) => {
@@ -181,8 +172,9 @@ export default {
     },
   },
   mounted() {
-    this.sasaranKinerjaId = this.$route.params.id
-    this.loadData()
+    if ( this.sasaranKinerjaId != null ){
+        this.loadData(this.sasaranKinerjaId)
+    }
   },
 
 };

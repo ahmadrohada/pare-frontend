@@ -13,28 +13,28 @@
         size="mini"
       >
     <el-tabs v-model="activeName" @tab-click="handleClick" style="min-height:260px;">
-      <el-tab-pane label="DETAIL" name="detail">
-        <label>Periode PK</label>
-          <el-form-item  prop="periodePkId" >
+      <el-tab-pane label="PERIODE" name="detail">
+
+        
+          <el-form-item v-if="showSelectPeriode" label ="Periode" prop="periodeTahun" >
             <el-select 
-              v-model="SasaranKinerjaForm.periodePkId" 
+              v-model="SasaranKinerjaForm.periodeTahun" 
               placeholder="Pilih Periode Perjanjian Kinerja"
               v-on:change="pilihPeriode($event)"
               >
               <el-option
-                v-for="item in periodePkList"
-                :selected="item.id"
-                :key="item.id"
+                v-for="item in periodeTahunList"
+                :selected="item.label"
+                :key="item.periode"
                 :label="item.periode"
-                :value="item.id"
-                @change="tes"
+                :value="item.periode"
                 >
               </el-option>
             </el-select>
           </el-form-item>
 
           <label>Periode Penilaian SKP</label>
-          <el-form-item prop="dateFrom">
+          <el-form-item  prop="dateFrom">
             <el-col :span="10">
               <el-date-picker 
                 type="date" 
@@ -56,8 +56,7 @@
             </el-col>
           </el-form-item>
 
-          <label>Jenis Jabatan</label>
-          <el-form-item  prop="jenisJabatanSkp" >
+          <el-form-item label="Jenis Jabatan" v-if="showSelectJenisJabatan" prop="jenisJabatanSkp" >
             <el-select 
               v-model="SasaranKinerjaForm.jenisJabatanSkp" 
               placeholder="Pilih Jenis Jabatan Sasaran Kinerja"
@@ -246,6 +245,19 @@
 </template>
 
 <script>
+
+var getStartDate = function(year) {
+    var date = new Date(year, 0, 1);
+    var theFirst = new Date(date.getFullYear(), 0, 1);
+    return theFirst;
+}
+var getEndDate = function(year) {
+    var date = new Date(year, 0, 1);
+    var theLast = new Date(date.getFullYear(), 11, 31);
+    return theLast;
+}
+
+
 import PareLoader from '~/components/Loader/PareLoader.vue';
 
 export default {
@@ -257,7 +269,9 @@ export default {
       modalFormVisible: false,
       activeName: 'detail',
       submitLoader:false,
-      periodePkList:[],
+      showSelectPeriode:false,
+      showSelectJenisJabatan:false,
+      periodeTahunList:[],
       disabledSelectJabatanPegawaiYangDinilai:true,
       disabledSelectJabatanPejabatPenilaiKinerja:true,
       jenisJabatanSkpList: [{
@@ -275,7 +289,7 @@ export default {
           pejabatPenilaiKinerja:null
       },
       SasaranKinerjaForm: {
-        periodePkId: "",
+        periodeTahun: "",
         periodeLabel:"",
         jenisJabatanSkp:"",
         dateFrom:"",
@@ -310,7 +324,7 @@ export default {
 
       },
       rules: {
-         periodePkId: [
+         periodeTahun: [
             { required: true, message: 'Silakan pilih Periode PK', trigger: 'blur' }
           ],
           jenisJabatanSkp: [
@@ -328,6 +342,20 @@ export default {
     };
   },
   methods: {
+    showModalFromMk(skpdId,periode,jenisJabatan){
+
+        const start = getStartDate(periode);
+        const end = getEndDate(periode);
+
+        this.SasaranKinerjaForm.dateFrom = start
+        this.SasaranKinerjaForm.dateTo = end
+       
+        this.SasaranKinerjaForm.periodeTahun = periode
+        this.SasaranKinerjaForm.jenisJabatanSkp = jenisJabatan
+        this.showSelectPeriode = false
+        this.showSelectJenisJabatan = false
+        this.showModal(skpdId)
+    },
     showModal(skpdId) {
 
       this.submitLoader = false
@@ -344,7 +372,7 @@ export default {
       this.$axios
         .$get(`/perjanjian_kinerja?${params}`)
         .then((data) => {
-            this.periodePkList = data.data
+            this.periodeTahunList = data.data
             setTimeout(() => {
               this.$refs.loader.finish() 
             }, 700);
@@ -377,13 +405,10 @@ export default {
                           type: 'info',
                           message: 'berhasil menyimpan data'
                         }); 
-                      }, 200);
+                      }, 500);
                     })
                     .catch((error) => {
                         this.submitLoader = false
-
-                       
-                       
                         this.$message({
                           type: 'error',
                           duration: 1800,

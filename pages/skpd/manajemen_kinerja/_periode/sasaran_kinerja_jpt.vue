@@ -4,7 +4,7 @@
     <sasaran-kinerja
       ref="ModalSasaranKinerja"
       style="min-height:350px;"
-      @loadAsyncData="loadAsyncData"
+      @loadAsyncData="sasaranKinerjaPegawai"
     >
     </sasaran-kinerja>
     <template slot="header" class="d-inline">
@@ -32,6 +32,7 @@
         <skp-sumary
           :skpJptId="skpJptId"
           ref="tabSumary"
+          @loadAsyncData="sasaranKinerjaPegawai"
           >
         </skp-sumary>
       </el-tab-pane>
@@ -116,7 +117,10 @@ export default {
         }else{
           this.$refs.tabRencanaKinerja.loadData(this.skpJptId);
         }
-    }
+    },
+    createSasaranKinerja: function(e) {
+      this.$refs.ModalSasaranKinerja.showModalFromMk(this.skpd_id,this.periode,"PEJABAT PIMPINAN TINGGI");
+    },
     
   },
   async asyncData({ params }) {

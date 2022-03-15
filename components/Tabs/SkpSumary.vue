@@ -86,7 +86,14 @@
 
 
     
-
+  <md-button 
+      v-show="(statusSkp == '1')"
+      style="height:28px;margin-left:-1px; font-size:11px;" 
+      class="md-dense md-raised md-primary btn-block"
+      v-on:click="submitSasaranKinerja($event)"
+    >
+    <i class="el-icon-position"></i> SUBMIT SKP
+    </md-button>
 
 
 
@@ -164,6 +171,59 @@ export default {
           setTimeout(() => {
              this.$refs.loader.finish() 
           }, 300);
+
+        })
+        .catch((error) => {
+          throw error
+        })
+    },
+    submitSasaranKinerja: function(row) {
+
+      const params = [
+        `id=${this.sasaranKinerjaId}`,
+      ].join('&')
+
+      this.$axios
+        .$get(`/sasaran_kinerja?${params}`)
+        .then(({ data }) => {
+          
+          if(data.jumlahRencanaKinerja >= 1 ){
+              this.$confirm('SKP dalam status perencanaan, klik submit untuk lanjut ke proses reviu pengelola kinerja', 'Info', {
+                confirmButtonText: 'Submit',
+                cancelButtonText: 'Batal',
+                type: 'info'
+              }).then(() => {
+                this.$axios
+                  .$put("/submit_sasaran_kinerja?id="+data.id)
+                  .then((resp) => {
+                      this.$emit('loadAsyncData')
+                      this.$message({
+                        type: 'success',
+                        message: 'Berhasil Submit'
+                      });
+                  })
+                  .catch((error) => {
+                    //console.log(error.response.data.message)
+                    this.$message({
+                      type: 'error',
+                      message: error.response.data.message
+                    });          
+                  });
+
+                
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: 'Proses Submit Dibatalkan'
+                });          
+              });
+          }else{
+            this.$message({
+                  type: 'warning',
+                  message: 'SKP harus memiliki minimal 1 Rencana Kinerja'
+                });   
+          }
+        
 
         })
         .catch((error) => {

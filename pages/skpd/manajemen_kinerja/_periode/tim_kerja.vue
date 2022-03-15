@@ -125,9 +125,13 @@ export default {
       this.$refs.KoordinatorForm.showModalAdd(this.skpd_id,this.periode);
     },
     viewMatrikPeranHasil: function(data) {
-      this.$refs.loader.start()
+      this.$message({
+                      type: 'error',
+                      message: "unknown link"
+                    });  
+      //this.$refs.loader.start()
       //console.log(data.id)
-      this.$router.push(`/skpd/manajemen_kinerja/${this.$route.params.periode}/matrik_peran_hasil/${data.id}`); 
+      //this.$router.push(`/skpd/manajemen_kinerja/${this.$route.params.periode}/matrik_peran_hasil/${data.id}`); 
     },
   },
   async asyncData({ params }) {

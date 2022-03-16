@@ -6,13 +6,25 @@
       <p class="card-category d-inline">{{user.skpd.singkatan}}</p>
     </template>
 
+    <modal-jabatan 
+      ref="JabatanForm"
+      style="min-height:350px;"
+      @loadAsyncData="loadAsyncData"
+    >
+    </modal-jabatan>
     
-
+    <md-button 
+      style="height:28px;margin-left:-1px; font-size:11px;" 
+      class="md-dense md-raised md-primary"
+      v-on:click="addJabatan($event)"
+      value="0"
+     
+    ><span class="fa fa-plus"></span> Add Jabatan
+    </md-button>
 
 
     <el-table
       :data="tableMatriksPeranHasil"
-      :span-method="objectSpanMethod"
       border
       :show-header="true"
       :row-class-name="tableRowClassName"
@@ -20,26 +32,26 @@
       :highlight-current-row="false"
       style="width: 100%;">
 
-      <el-table-column  :fixed="true" min-width="60" label="NAMA">
+      <el-table-column  :fixed="true" min-width="110" label="PEGAWAI">
         <template slot-scope="{ row }">
           <div style="display: inline-block !important; padding:0px !important;">
-            <span style="margin-top:-6px;" class="">{{row.id_jabatan}}</span><br>
-            <span style="color:#848484;   margin-top:-6px;" class="">{{row.role}}</span>
+            <span style="margin-top:-6px;" class="">{{row.jabatan}}</span><br>
+            <span style="color:#100f15;   margin-top:-6px;" class="">{{row.role}}</span>
           </div>
         </template>
       </el-table-column>
-      <el-table-column  :fixed="true" min-width="100" label="JABATAN">
+     <!--  <el-table-column  :fixed="true" min-width="100" label="JABATAN">
         <template slot-scope="{ row }">
           <div style="padding:0px !important;">
             <span style="margin-top:-6px;" class="">{{row.jabatan}}</span>
           </div>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
 
       <!-- ========== KOLOM HASIL / OUTCOME ========================== -->
       <template v-for="(data,index) in sasaranStrategis">
-        <el-table-column  min-width="80" label="INTERMEDIATE OUTCOME">
+        <el-table-column  v-bind:key min-width="80" label="INTERMEDIATE OUTCOME">
           <template slot-scope="{ row }">
             <div style="padding:0px !important;">
               <span style="margin-top:-6px;" class="">{{row.outcome[index].label}}</span>
@@ -59,6 +71,7 @@
 
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
+import ModalJabatan from '~/components/Modal/ModalJabatan.vue';
 import { mapGetters } from 'vuex' 
 
 
@@ -66,13 +79,14 @@ export default {
   layout: "skpdManajemenKinerjaLayout",
   middleware: "auth",
    components: {
-    PareLoader
+    PareLoader,
+    ModalJabatan
   },
   data() {
     return {
       tableMatriksPeranHasil:[],
       sasaran_strategis:[],
-      periode: 2022,
+      periode: '',
       koordinator_id: ''
     };
   },
@@ -94,10 +108,8 @@ export default {
         this.$axios
           .get(`/matrik_peran_hasil?${params}`)
           .then(({ data }) => {
-
             this.tableMatriksPeranHasil = []
             this.sasaranStrategis = data.sasaran_strategis
-          
             data.matriks.forEach((item) => {
               this.tableMatriksPeranHasil.push(item)
             })
@@ -119,28 +131,13 @@ export default {
       },
       tableCellClassName({row, column, rowIndex, columnIndex}) {
         
-        if ((rowIndex === 0)|(rowIndex === 1)|(rowIndex === 2)) {
+        /* if ((rowIndex === 0)|(rowIndex === 1)|(rowIndex === 2)) {
           return 'header-row';
-        } 
+        }  */
       },
-      objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-        if ((rowIndex === 0)|(rowIndex === 1)|(rowIndex === 2)) {
-          if ((columnIndex === 0)|(columnIndex === 1)) {
-            if (rowIndex % 3 === 0) {
-              return {
-                rowspan: 3,
-                colspan: 1
-              };
-            } else {
-              return {
-                rowspan: 0,
-                colspan: 0
-              };
-            }
-          }
-
-        }
-      } 
+      addJabatan: function(e) {
+        this.$refs.JabatanForm.showModalAdd(this.skpd_id,this.periode);
+      },
   },
   async asyncData({ params ,$route }) {
       //const user =  await $axios.$get("/user/"+params.nip)
@@ -152,6 +149,7 @@ export default {
 
   },
   mounted() {
+    this.periode = this.$route.params.periode
     this.loadAsyncData()
   },
   

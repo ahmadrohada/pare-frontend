@@ -38,9 +38,11 @@
         size="mini"
       >
 
+          <input v-model="KoordinatorForm.level" hidden></input>
           <input v-model="KoordinatorForm.skpdId" hidden></input>
           <input v-model="KoordinatorForm.periode" hidden></input>
-          <!-- <input v-model="KoordinatorForm.idJabatanKepala" hidden></input> -->
+          <input v-model="KoordinatorForm.roleId" hidden></input>
+          <input v-model="KoordinatorForm.role" hidden></input>
           <input v-model="KoordinatorForm.selectedRoles" hidden></input>
 
       </el-form>
@@ -69,17 +71,22 @@ export default {
     return {
       formType: 'create',
       submitLoader:false,
-      headerText:'Rencana Kinerja Form',
+      headerText:'Add Koordinator MPH',
       modalFormVisible: false,
       tableListJabatan:[],
       disabled:true,
       params:[],
+      jabatanAtasanId:null,
+      
       
       KoordinatorForm:{
           skpdId:null,
           periode:null,
-          //idJabatanKepala:null,
+          roleId:null,
+          role:'koordinator',
+          level:"S2",
           selectedRoles: [],
+
       }
       //loading: true
     };
@@ -89,16 +96,18 @@ export default {
     showModalAdd(skpd_id,periode) {
       this.KoordinatorForm.skpdId = skpd_id
       this.KoordinatorForm.periode = periode
-      //this.KoordinatorForm.idJabatanKepala = 6235
       this.tableListJabatan = [];
       this.submitLoader = false
       this.formType = "create"
       this.headerText = "Add Koordinator"
       this.$refs.loader.start() 
+      //this.jabatanAtasanId = 1931
 
       const params = [
           `periode=${this.KoordinatorForm.periode}`,
           `skpd_id=${this.KoordinatorForm.skpdId}`,
+          //`jabatan_atasan_id=${this.jabatanAtasanId}`,
+          `role=${this.KoordinatorForm.role}`,
         ].join('&')
       this.$axios
           .get(`/list_jabatan?${params}`)

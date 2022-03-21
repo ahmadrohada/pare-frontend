@@ -13,7 +13,7 @@
    
 
 
-    <sidebar-item
+    <!-- <sidebar-item
       v-if="isPersonal === true"
       :link="{
         name: $t('sidebar.personalDashboard'),
@@ -40,7 +40,7 @@
       }"
       
     >
-    </sidebar-item>
+    </sidebar-item> -->
    
   </div>
 </template>

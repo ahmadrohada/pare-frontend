@@ -16,8 +16,14 @@
           <span class="navbar-toggler-bar bar3"></span>
         </button>
       </div>
-      <!-- <a class="navbar-brand ml-xl-3 ml-5" href="#pare">{{ routeName }}</a> -->
-      <span class="navbar-brand ml-xl-3 ml-5 fa fa-home" @click="goToHome" style="cursor:pointer;"></span>
+
+    <div style="width:100%; text-align:center;margin-left:25px;">
+      <el-button type="success" size="small"icon="fa fa-home" @click="goToHome"></el-button>
+      <el-button type="success"size="small"icon="fa fa-user" @click="goToPersonal"></el-button>
+      <el-button type="success" size="small" icon="fa fa-users" @click="goToSkpd"></el-button>
+    </div>
+
+      
     </div>
 
     <ul class="navbar-nav" :class="$rtl.isRTL ? 'mr-auto' : 'ml-auto'">
@@ -84,6 +90,12 @@ export default {
     goToHome(){
       this.$router.push("/");
     },
+    goToPersonal(){
+      this.$router.push("/personal");
+    },
+    goToSkpd(){
+      this.$router.push("/skpd");
+    },
     capitalizeFirstLetter(string) {
       if (!string || typeof string !== 'string') {
         return ''
@@ -100,8 +112,25 @@ export default {
       this.showMenu = !this.showMenu;
     },
     signOut() {
-      this.$swal.fire({
-        title: 'Keluar dari aplikasi',
+        this.$confirm('keluar dari aplikasi', 'Konfirmasi', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Batal',
+          type: 'warning'
+        }).then(() => {
+          //console.log(this.$route.path)
+          this.$auth.logout();
+          if ( this.$route.path == "/"){
+            this.$router.go("/login")
+          }
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Batal'
+          });          
+        });
+   /*    this.$swal.fire({
+        title: 'Keluar dari aplikasi', 
         text: "",
         icon: 'question',
         showCancelButton: true,
@@ -113,7 +142,7 @@ export default {
         if (result.isConfirmed) {
           this.$auth.logout();
         }
-      })
+      }) */
      
     }
   },
@@ -126,6 +155,15 @@ export default {
 <style scoped>
 .top-navbar {
   top: 0px;
+}
+
+.el-button {
+  cursor: pointer;
+  background: hsla(167, 61%, 25%, 0.692) !important;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 13px;
 }
 
 </style>

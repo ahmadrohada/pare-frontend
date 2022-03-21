@@ -2,20 +2,16 @@
   <div class="wrapper" :class="{ 'nav-open': $sidebar.showSidebar }">
     <notifications></notifications>
 
-
     <side-bar
       :background-color="sidebarBackground"
       :short-title="$t('sidebar.shortTitle')"
       :title="$t('sidebar.title')"
     >
-
-
-    <personal-profile-menu 
-          :nama_lengkap="namaLengkap"
-          :photo_url="photoUrl"
-          :nip_pegawai="nipPegawai"
-          :notifikasi_renja="notifikasiRenja"
-          ></personal-profile-menu>
+      <matrik-peran-hasil-menu 
+          :skpdLogo="dataUser.skpd.logo"
+          :skpdSingkatan="dataUser.skpd.singkatan"
+          :skpdId="dataUser.skpd.id"
+      ></matrik-peran-hasil-menu>
     </side-bar>
     
     <div class="main-panel" :data="sidebarBackground">
@@ -25,7 +21,6 @@
         :class="{ content: !isFullScreenRoute }"
         @click="toggleSidebar"
       >
-        <personal-sub-menu></personal-sub-menu>
         
         <zoom-center-transition :duration="300" mode="out-in">
           <nuxt></nuxt>
@@ -36,9 +31,7 @@
   </div>
 </template>
 <script>
-  /* eslint-disable no-new */
-
-  
+ 
   import PerfectScrollbar from 'perfect-scrollbar';
   import 'perfect-scrollbar/css/perfect-scrollbar.css';
   function hasElement(className) {
@@ -60,38 +53,27 @@
   import ContentFooter from '@/components/Layout/ContentFooter.vue';
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
-  import PersonalProfileMenu from '~/components/Menu/PersonalProfileMenu.vue';
-  import PersonalSubMenu from '~/components/Menu/PersonalSubMenu.vue';
+  import MatrikPeranHasilMenu from '~/components/Menu/MatrikPeranHasilMenu.vue';
 
   import { mapGetters } from 'vuex'
 
   export default {
-    
     components: {
       DashboardNavbar,
       ContentFooter,
       DashboardContent,
       SlideYDownTransition,
       ZoomCenterTransition,
-      PersonalProfileMenu,
-      PersonalSubMenu
+      MatrikPeranHasilMenu,
     },
     data() {
       return {
-        sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
-        laoding:true,
-        overlay:true,
-        notifikasiRenja:'-',
+
       };
     },
     computed: {
-      isFullScreenRoute() {
-        return this.$route.path === '/maps/full-screen'
-      },
       ...mapGetters({
-        photoUrl: 'photo',
-        namaLengkap:'nama_lengkap',
-        nipPegawai:'nip',
+        dataUser:'user',
       })
     },
     methods: {
@@ -117,8 +99,10 @@
     },
     watch: {
       '$route.path': function() {
-        //console.log(this.$route.fullPath); // path is /users
+        console.log(this.$route); 
       }
+
+
     },
     mounted() {
       this.initScrollbar();

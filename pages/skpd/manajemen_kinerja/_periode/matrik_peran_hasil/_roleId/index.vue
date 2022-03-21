@@ -12,6 +12,15 @@
       @loadAsyncData="loadAsyncData"
     >
     </modal-jabatan>
+
+    <modal-outcome 
+      ref="OutcomeForm"
+      style="min-height:350px;"
+      @loadAsyncData="loadAsyncData"
+    >
+    </modal-outcome>
+
+
     
     <md-button 
       style="height:28px;margin-left:-1px; font-size:11px;" 
@@ -21,7 +30,7 @@
      
     ><span class="fa fa-plus"></span> Add Jabatan
     </md-button>
-
+   
 
     <el-table
       :data="tableMatriksPeranHasil"
@@ -32,23 +41,27 @@
       :highlight-current-row="false"
       style="width: 100%;">
 
-      <el-table-column  :fixed="true" min-width="110" label="PEGAWAI">
+      <el-table-column  :fixed="true" min-width="110" label="JABATAN">
         <template slot-scope="{ row }">
-          <div style="display: inline-block !important; padding:0px !important;">
-            <span style="margin-top:-6px;" class="">{{row.jabatan}}</span><br>
-            <span style="color:#100f15;   margin-top:-6px;" class="">{{row.role}}</span>
-          </div>
+          <div style="display: inline-block !important; padding:0px !important; width:100%; ">
+            <div style="float: left; width:80%;">
+              <span style="margin-top:-6px;" class="">{{row.jabatan}}</span><br>
+              <span style="color:#100f15;   margin-top:-6px;" class="">{{row.role}}</span>
+            </div>
+            <div style="float:right;">
+              <el-button  
+                size="small" 
+                type="success" 
+                @click="addOutcome(row)" 
+                icon="el-icon-s-order" 
+                circle>
+              </el-button>
+              <md-tooltip md-direction="top">Add Outcome</md-tooltip>
+            </div>
+          </div> 
         </template>
       </el-table-column>
-     <!--  <el-table-column  :fixed="true" min-width="100" label="JABATAN">
-        <template slot-scope="{ row }">
-          <div style="padding:0px !important;">
-            <span style="margin-top:-6px;" class="">{{row.jabatan}}</span>
-          </div>
-        </template>
-      </el-table-column> -->
-
-
+    
       <!-- ========== KOLOM HASIL / OUTCOME ========================== -->
       <template v-for="(data,index) in sasaranStrategis">
         <el-table-column  v-bind:key min-width="80" label="INTERMEDIATE OUTCOME">
@@ -63,24 +76,29 @@
       
     </el-table>
 
-   
+   <!--  https://stackoverflow.com/questions/70373804/vue-js-element-ui-el-table-how-to-merge-cells-and-subtotal-them -->
    
      
   </card>
 </template>
 
+
+
+
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
 import ModalJabatan from '~/components/Modal/ModalJabatan.vue';
+import ModalOutcome from '~/components/Modal/ModalOutcome.vue';
 import { mapGetters } from 'vuex' 
 
 
 export default {
-  layout: "skpdManajemenKinerjaLayout",
+  layout: "skpdMatrikPeranHasilLayout",
   middleware: "auth",
    components: {
     PareLoader,
-    ModalJabatan
+    ModalJabatan,
+    ModalOutcome
   },
   data() {
     return {
@@ -124,10 +142,7 @@ export default {
           })
       },
       tableRowClassName({row, rowIndex}) {
-        //console.log(row.row_style)
-        if (( rowIndex != 0)&(rowIndex != 1)&(rowIndex != 2)) {
-          return row.row_style;
-        } 
+          //return row.row_style;
       },
       tableCellClassName({row, column, rowIndex, columnIndex}) {
         
@@ -136,7 +151,11 @@ export default {
         }  */
       },
       addJabatan: function(e) {
-        this.$refs.JabatanForm.showModalAdd(this.skpd_id,this.periode);
+        this.$refs.JabatanForm.showModalAdd(this.skpd_id);
+      },
+      addOutcome: function(e) {
+        console.log(e)
+        this.$refs.OutcomeForm.showModalAdd(e);
       },
   },
   async asyncData({ params ,$route }) {

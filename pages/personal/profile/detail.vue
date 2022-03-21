@@ -21,7 +21,7 @@ import ProfilUser from '@/components/Profile/ProfilUser.vue';
 import CardUser from '@/components/Profile/CardUser.vue';
 
 export default {
-  name: "personalProfile",
+  name: "personalProfile", 
   middleware: ['auth'],
   layout: 'personalProfileLayout',
   components: {

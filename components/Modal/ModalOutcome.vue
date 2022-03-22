@@ -12,6 +12,27 @@
         :rules="rules"
         size="mini"
       >
+        <el-form-item  
+          label="Outcome Atasan"   
+          prop="outcomeAtasanId"
+          v-show="selectVisible == true">
+          <el-select 
+              v-model="OutcomeForm.outcomeAtasanId" 
+              placeholder="Pilih Outcome Atasan"
+              style="width:100%"
+              >
+              <el-option
+                v-for="item in outcomeAtasan"
+                :selected="item.id"
+                :key="item.label"
+                :label="item.label"
+                :value="item.id"
+                
+              
+                >
+              </el-option>
+          </el-select>
+        </el-form-item>
 
         <el-form-item   label="Label"  prop="outcomeLabel">
           <el-input 
@@ -26,7 +47,6 @@
         <input v-model="OutcomeForm.skpdId" hidden></input>
         <input v-model="OutcomeForm.periode" hidden></input>
         <input v-model="OutcomeForm.roleId" hidden></input>
-        <input v-model="OutcomeForm.parentId" hidden></input>
         <input v-model="OutcomeForm.level" hidden ></input>
 
       </el-form>
@@ -57,20 +77,44 @@ export default {
       submitLoader:false,
       headerText:'Add Outcome',
       modalFormVisible: false,
+      selectVisible:false,
       params:[],
+      outcomeAtasan:[],
       OutcomeForm:{
           skpdId:null,
           periode:null,
           roleId:null,
-          parentId:null,
           level:null,
           outcomeLabel:null,
+          outcomeAtasanId:null
       }
       //loading: true
     };
   },
   methods: {
-    
+     outcomeAtasanList(skpdId,periode,roleId,selectedId){
+       const isSelect = selectedId
+       const params = [
+          `periode=${periode}`,
+          `skpd_id=${skpdId}`,
+          `role_id=${roleId}`,
+        ].join('&')
+
+          this.$axios
+            .get(`/list_outcome_atasan?${params}`)
+            .then((data) => {
+              this.outcomeAtasan =  data.data.outcomeAtasan;
+              if ( isSelect == 0 ){
+                this.OutcomeForm.outcomeAtasanId = data.data.outcomeAtasan[0].id // pilih data ke 1
+              }else{
+                this.OutcomeForm.outcomeAtasanId = isSelect
+              }
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 200);
+          }) 
+        
+    },
     showModalAdd(e) {
      
       this.OutcomeForm.parentId = null
@@ -78,19 +122,24 @@ export default {
       this.OutcomeForm.level = e.level
       this.OutcomeForm.roleId = e.id
       this.OutcomeForm.outcomeLabel = ""
-
-      if ( e.level == "S2" ){
-        //alert("cari parent outcome atasan nya")
-        //munculkan list outcome atasan
-        this.$refs.loader.start() 
-
-        setTimeout(() => {
-          this.$refs.loader.finish() 
-        }, 700);
-        this.modalFormVisible = true;
-      }
+      this.OutcomeForm.outcomeAtasanId = null
 
       
+
+      if ( e.level != "S2" ){
+        this.outcomeAtasanList(e.skpd_id,this.OutcomeForm.periode,e.id,0)
+        this.selectVisible = true
+        //munculkan list outcome atasan
+      }else{
+        this.selectVisible = false
+      }
+
+      this.$refs.loader.start() 
+
+      setTimeout(() => {
+        this.$refs.loader.finish() 
+      }, 700);
+      this.modalFormVisible = true;
     }, 
     submitData() {
       this.submitLoader = true

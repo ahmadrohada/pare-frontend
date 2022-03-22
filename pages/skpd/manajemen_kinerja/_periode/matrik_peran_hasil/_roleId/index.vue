@@ -41,7 +41,7 @@
       :highlight-current-row="false"
       style="width: 100%;">
 
-      <el-table-column  :fixed="true" min-width="110" label="JABATAN">
+      <el-table-column  :fixed="true" min-width="260" label="JABATAN">
         <template slot-scope="{ row }">
           <div style="display: inline-block !important; padding:0px !important; width:100%; ">
             <div style="float: left; width:80%;">
@@ -64,7 +64,7 @@
     
       <!-- ========== KOLOM HASIL / OUTCOME ========================== -->
       <template v-for="(data,index) in sasaranStrategis">
-        <el-table-column  v-bind:key min-width="80" label="INTERMEDIATE OUTCOME">
+        <el-table-column  v-bind:key min-width="220" label="INTERMEDIATE OUTCOME">
           <template slot-scope="{ row }">
             <div style="padding:0px !important;">
               <span style="margin-top:-6px;" class="">{{row.outcome[index].label}}</span>

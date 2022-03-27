@@ -141,6 +141,10 @@ export default {
       }, 700);
       this.modalFormVisible = true;
     }, 
+    showModalEdit(e) {
+      this.modalFormVisible = true;
+      
+    }, 
     submitData() {
       this.submitLoader = true
       this.$axios

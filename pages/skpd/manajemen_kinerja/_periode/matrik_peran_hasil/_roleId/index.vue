@@ -66,7 +66,7 @@
       <template v-for="(data,index) in sasaranStrategis">
         <el-table-column  v-bind:key min-width="220" label="INTERMEDIATE OUTCOME">
           <template slot-scope="{ row }">
-            <div style="padding:0px !important;">
+            <div style="cursor:pointer;padding:0px !important;" v-on:click="klikKolom(row.outcome[index])">
               <span style="margin-top:-6px;" class="">{{row.outcome[index].label}}</span>
             </div>
           </template>
@@ -141,15 +141,6 @@ export default {
             throw error
           })
       },
-      tableRowClassName({row, rowIndex}) {
-          //return row.row_style;
-      },
-      tableCellClassName({row, column, rowIndex, columnIndex}) {
-        
-        /* if ((rowIndex === 0)|(rowIndex === 1)|(rowIndex === 2)) {
-          return 'header-row';
-        }  */
-      },
       addJabatan: function(e) {
         this.$refs.JabatanForm.showModalAdd(this.skpd_id);
       },
@@ -157,14 +148,20 @@ export default {
         console.log(e)
         this.$refs.OutcomeForm.showModalAdd(e);
       },
+      klikKolom: function(e) {
+        console.log(e.id)
+        //this.$refs.OutcomeForm.showModalEdit(e);
+        this.$message({
+          showClose: true,
+          message: 'Warning, fungsi dalam pengerjaan',
+          type: 'warning'
+        });
+        
+      },
   },
   async asyncData({ params ,$route }) {
-      //const user =  await $axios.$get("/user/"+params.nip)
-      //return { user }
-      //this.koordinator_id = this.$route.params.roleId
       const koordinator_id = params.roleId
       return { koordinator_id }
-      //console.log(params.roleId)
 
   },
   mounted() {

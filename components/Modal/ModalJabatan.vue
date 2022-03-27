@@ -200,6 +200,7 @@ export default {
     },
     submitData() {
       this.submitLoader = true
+      this.$refs.loader.start() 
       this.$axios
         .$post("/jabatan", this.JabatanForm )
         .then((response) => {
@@ -207,6 +208,7 @@ export default {
           setTimeout(() => {
                 this.modalFormVisible = false;
                 this.submitLoader = false
+                this.$refs.loader.finish() 
                 this.$message({
                   type: 'info',
                   message: 'berhasil menyimpan data'
@@ -217,6 +219,7 @@ export default {
         })
         .catch((error) => {
             this.submitLoader = false
+            this.$refs.loader.finish() 
             this.$message({
               type: 'error',
               duration: 2000,
@@ -228,14 +231,11 @@ export default {
     },
     handleSelectionChange(val) {
         this.JabatanForm.selectedRoles = val;
-
         if ( this.JabatanForm.selectedRoles != "" ){
           this.disabled = false
         }else{
           this.disabled = true
         }
-        
-        //console.log(this.selectedRoles)
     }
    
   },

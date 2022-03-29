@@ -28,7 +28,7 @@
       v-on:click="addJabatan($event)"
       value="0"
      
-    ><span class="fa fa-plus"></span> Add Jabatan
+    ><span class="fa fa-plus"></span> Tambah Jabatan
     </md-button>
    
 
@@ -56,7 +56,7 @@
                 icon="el-icon-s-order" 
                 circle>
               </el-button>
-              <md-tooltip md-direction="top">Add Outcome</md-tooltip>
+              <md-tooltip md-direction="top">Tambah Outcome / Hasil</md-tooltip>
             </div>
           </div> 
         </template>
@@ -150,12 +150,12 @@ export default {
       },
       klikKolom: function(e) {
         console.log(e.id)
-        //this.$refs.OutcomeForm.showModalEdit(e);
-        this.$message({
+        this.$refs.OutcomeForm.showModalEdit(e);
+       /*  this.$message({
           showClose: true,
           message: 'Warning, fungsi dalam pengerjaan',
           type: 'warning'
-        });
+        }); */
         
       },
   },

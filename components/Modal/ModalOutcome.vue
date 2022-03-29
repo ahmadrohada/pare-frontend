@@ -57,7 +57,7 @@
         size="mini" 
         type="primary"  
         :loading="submitLoader" 
-        @click="submitData()"
+        @click="submitData('OutcomeForm')"
       >Submit
       </el-button>
     </template>
@@ -75,7 +75,7 @@ export default {
     return {
       formType: 'create',
       submitLoader:false,
-      headerText:'Add Outcome',
+      headerText:'Tambah Outcome / Hasil',
       modalFormVisible: false,
       selectVisible:false,
       params:[],
@@ -87,7 +87,12 @@ export default {
           level:null,
           outcomeLabel:null,
           outcomeAtasanId:null
-      }
+      },
+      rules: {
+          outcomeLabel: [
+            { required: true, message: 'Silakan pilih Label Outcome', trigger: 'blur' }
+          ],
+      },
       //loading: true
     };
   },
@@ -142,35 +147,87 @@ export default {
       this.modalFormVisible = true;
     }, 
     showModalEdit(e) {
+
+      this.headerText = 'Edit Outcome / Hasil'
+      this.$refs.loader.start() 
       this.modalFormVisible = true;
-      
-    }, 
-    submitData() {
-      this.submitLoader = true
+
+      const params = [
+        `outcome_id=${e.id}`,
+      ].join('&')
+
       this.$axios
-        .$post("/hasil", this.OutcomeForm )
-        .then((response) => {
-          this.$emit('loadAsyncData');
+        .$get(`/hasil?${params}`)
+        .then((data) => {
+              
+          this.OutcomeForm.parentId = null
+          this.OutcomeForm.skpdId = e.skpd_id
+          this.OutcomeForm.level = e.level
+          this.OutcomeForm.roleId = e.id
+          this.OutcomeForm.outcomeLabel = ""
+          this.OutcomeForm.outcomeAtasanId = null
+
+          
+
+          if ( e.level != "S2" ){
+            this.outcomeAtasanList(e.skpd_id,this.OutcomeForm.periode,e.id,0)
+            this.selectVisible = true
+            //munculkan list outcome atasan
+          }else{
+            this.selectVisible = false
+          }
+          
           setTimeout(() => {
-                this.modalFormVisible = false;
-                this.submitLoader = false
-                this.$message({
-                  type: 'info',
-                  message: 'berhasil menyimpan data'
-                }); 
-          }, 200);
-                      
-                      
+            this.$refs.loader.finish() 
+          }, 700);
+            
         })
         .catch((error) => {
-            this.submitLoader = false
-            this.$message({
-              type: 'error',
-              duration: 2000,
-              message: "Tidak Berhasil Menyimpan Data"
-            });    
-        });
+          this.$message({
+            type: 'error',
+            message: error.response.data.message
+          });    
+          setTimeout(() => {
+            this.$refs.loader.finish() 
+          }, 700);
+        }); 
+
+
+     
       
+    }, 
+    submitData(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.submitLoader = true
+          this.$axios
+            .$post("/hasil", this.OutcomeForm )
+            .then((response) => {
+              this.$emit('loadAsyncData');
+              setTimeout(() => {
+                    this.modalFormVisible = false;
+                    this.submitLoader = false
+                    this.$message({
+                      type: 'info',
+                      message: 'berhasil menyimpan data'
+                    }); 
+              }, 200);
+                          
+                          
+            })
+            .catch((error) => {
+                this.submitLoader = false
+                this.$message({
+                  type: 'error',
+                  duration: 2000,
+                  message: "Tidak Berhasil Menyimpan Data"
+                });    
+            });
+        }else{
+            console.log('error submit!!');
+            return false;
+          }
+      });
       
     },
     handleSelectionChange(val) {

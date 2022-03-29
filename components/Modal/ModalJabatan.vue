@@ -101,7 +101,7 @@ export default {
     return {
       formType: 'create',
       submitLoader:false,
-      headerText:'Add Jabatan MPH',
+      headerText:'Tambah Jabatan',
       modalFormVisible: false,
       tableListJabatan:[],
       parentList:[],

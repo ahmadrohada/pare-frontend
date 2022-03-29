@@ -47,20 +47,30 @@
         <input v-model="OutcomeForm.skpdId" hidden></input>
         <input v-model="OutcomeForm.periode" hidden></input>
         <input v-model="OutcomeForm.roleId" hidden></input>
-        <input v-model="OutcomeForm.level" hidden ></input>
+        <input v-model="OutcomeForm.level"  hidden></input>
+        <input v-model="OutcomeForm.outcomeId"  hidden></input>
+
+
+     
+
+        <el-form-item size="mini" style="margin-top:20px;">
+          <el-button v-if="formType=='create'" type="primary"  :loading="submitLoader" @click="saveForm('OutcomeForm')"
+              >Save</el-button
+          >
+          <el-button v-if="formType=='edit'" type="primary"  :loading="submitLoader" @click="updateForm('OutcomeForm')"
+            >Update</el-button
+          >
+          <el-button @click="resetForm('OutcomeForm')">Tutup</el-button>
+
+          <el-button style="float:right;" v-if="formType=='edit'" type="danger"  @click="deleteForm('OutcomeForm')"
+            >Delete</el-button
+          >
+
+        </el-form-item>
 
       </el-form>
          
-    <template slot="footer"> 
-      <el-button  
-        :disabled="disabled"
-        size="mini" 
-        type="primary"  
-        :loading="submitLoader" 
-        @click="submitData('OutcomeForm')"
-      >Submit
-      </el-button>
-    </template>
+    <template slot="footer"></template>
   </modal>
 </template>
 
@@ -86,7 +96,8 @@ export default {
           roleId:null,
           level:null,
           outcomeLabel:null,
-          outcomeAtasanId:null
+          outcomeAtasanId:null,
+          outcomeId:null
       },
       rules: {
           outcomeLabel: [
@@ -122,7 +133,10 @@ export default {
     },
     showModalAdd(e) {
      
-      this.OutcomeForm.parentId = null
+      this.resetForm("OutcomeForm")
+      this.submitLoader = false
+      this.formType = "create"
+
       this.OutcomeForm.skpdId = e.skpd_id
       this.OutcomeForm.level = e.level
       this.OutcomeForm.roleId = e.id
@@ -148,9 +162,10 @@ export default {
     }, 
     showModalEdit(e) {
 
+      this.submitLoader = false
       this.headerText = 'Edit Outcome / Hasil'
       this.$refs.loader.start() 
-      this.modalFormVisible = true;
+      this.formType = "edit"
 
       const params = [
         `outcome_id=${e.id}`,
@@ -158,45 +173,44 @@ export default {
 
       this.$axios
         .$get(`/hasil?${params}`)
-        .then((data) => {
+        .then(({ data }) => {
               
-          this.OutcomeForm.parentId = null
-          this.OutcomeForm.skpdId = e.skpd_id
-          this.OutcomeForm.level = e.level
-          this.OutcomeForm.roleId = e.id
-          this.OutcomeForm.outcomeLabel = ""
+          this.OutcomeForm.skpdId = data.skpd_id
+          this.OutcomeForm.periode = data.periode
+          this.OutcomeForm.level = data.level
+          this.OutcomeForm.roleId = data.role_id
+          this.OutcomeForm.outcomeLabel = data.label
+          this.OutcomeForm.outcomeId = data.id
+
           this.OutcomeForm.outcomeAtasanId = null
 
           
 
-          if ( e.level != "S2" ){
-            this.outcomeAtasanList(e.skpd_id,this.OutcomeForm.periode,e.id,0)
+          if ( data.level != "S2" ){
+            this.outcomeAtasanList(data.skpd_id,data.periode,data.role_id,data.parent_id)
             this.selectVisible = true
-            //munculkan list outcome atasan
+            
           }else{
             this.selectVisible = false
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 300); 
           }
+          this.modalFormVisible = true;
           
-          setTimeout(() => {
-            this.$refs.loader.finish() 
-          }, 700);
-            
         })
-        .catch((error) => {
-          this.$message({
-            type: 'error',
-            message: error.response.data.message
-          });    
-          setTimeout(() => {
-            this.$refs.loader.finish() 
-          }, 700);
+        .catch((errors) => {
+            this.$message({
+              type: 'warning',
+              message: 'terjadi kesalahan'
+            }); 
         }); 
 
 
      
       
     }, 
-    submitData(formName) {
+    saveForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.submitLoader = true
@@ -240,7 +254,106 @@ export default {
         }
         
         //console.log(this.selectedRoles)
-    }
+    },
+    updateForm(formName) {
+       this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.submitLoader = true
+          this.$axios
+            .$put("/hasil", this.OutcomeForm )
+            .then((response) => {
+              this.$emit('loadAsyncData');
+              setTimeout(() => {
+                    this.modalFormVisible = false;
+                    this.submitLoader = false
+                    this.$message({
+                      type: 'info',
+                      message: 'berhasil mengupdate data'
+                    }); 
+              }, 200);
+                          
+                          
+            })
+            .catch((error) => {
+                this.submitLoader = false
+                this.$message({
+                  type: 'error',
+                  duration: 2000,
+                  message: "Tidak Berhasil mengupdate Data"
+                });    
+            });
+
+        }else{
+          console.log('error submit!!');
+          return false;
+        }
+      });
+
+    },
+    deleteForm(formName) {
+      this.$confirm('Ini akan menghapus Outcome, Semua outcome bawahan ikut terhapus !', 'Konfirmasi', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Batal',
+          type: 'warning'
+        }).then(() => {
+          this.$axios
+            .$delete("/hasil?id="+this.OutcomeForm.outcomeId)
+            .then((resp) => {
+                this.modalFormVisible = false;
+                this.$emit('loadAsyncData');
+                this.$message({
+                  type: 'success',
+                  message: 'Berhasil dihapus'
+                });
+            })
+            .catch((error) => {
+               this.$message({
+                  type: 'error',
+                  duration: 2000,
+                  message: "Tidak Berhasil Menghapus Data"
+                });          
+            });
+
+          
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Proses Hapus Dibatalkan'
+          });          
+        });
+       
+          /* this.submitLoader = true
+          this.$axios
+            .$put("/hasil", this.OutcomeForm )
+            .then((response) => {
+              this.$emit('loadAsyncData');
+              setTimeout(() => {
+                    this.modalFormVisible = false;
+                    this.submitLoader = false
+                    this.$message({
+                      type: 'info',
+                      message: 'berhasil mengupdate data'
+                    }); 
+              }, 200);
+                          
+                          
+            })
+            .catch((error) => {
+                this.submitLoader = false
+                this.$message({
+                  type: 'error',
+                  duration: 2000,
+                  message: "Tidak Berhasil mengupdate Data"
+                });    
+            }); */
+
+
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+      this.modalFormVisible = false;
+      this.submitLoader = false
+    },
    
   },
   mounted() {

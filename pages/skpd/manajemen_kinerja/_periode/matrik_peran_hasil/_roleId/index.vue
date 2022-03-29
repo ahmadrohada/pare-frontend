@@ -76,6 +76,8 @@
       
     </el-table>
 
+    
+
    <!--  https://stackoverflow.com/questions/70373804/vue-js-element-ui-el-table-how-to-merge-cells-and-subtotal-them -->
    
      
@@ -105,7 +107,8 @@ export default {
       tableMatriksPeranHasil:[],
       sasaran_strategis:[],
       periode: '',
-      koordinator_id: ''
+      koordinator_id: '',
+      visible:false,
     };
   },
   computed: {

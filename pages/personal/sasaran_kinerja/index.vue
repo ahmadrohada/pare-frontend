@@ -12,18 +12,18 @@
       <p class="card-category d-inline">Personal</p>
     </template>
 
-    <md-button 
+    <!-- <md-button 
       style="height:28px;margin-left:-1px; font-size:11px;" 
       class="md-dense md-raised md-primary"
-      v-on:click="createRenja($event)"
+      v-on:click="createSkp($event)"
       value="0"
      
     ><span class="fa fa-plus"></span> Create SKP
-    </md-button>
+    </md-button> -->
+
     <el-table
       :data="tableDataSkp"
       highlight-current-row
-      :span-method="objectSpanMethodUser"
       border
       style="width: 100%;">
       <el-table-column min-width="60" align="center" prop="periode_tahun" label="Periode"></el-table-column>
@@ -179,13 +179,13 @@ export default {
     },
     viewSasaranKinerja: function(data) {
       this.$refs.loader.start()
-      this.$router.push("/personal/sasaran_kinerja/"+data.id);
+      this.$router.push("/personal/sasaran_kinerja/"+data.id+"/edit");
     },
     reviewSasaranKinerja: function(data) {
       this.$refs.loader.start()
       this.$router.push("/personal/sasaran_kinerja_reviu/"+data.id);
     },
-    createRenja: function(e) {
+    createSkp: function(e) {
       this.$refs.ModalSasaranKinerja.showModal(this.skpd_id);
     },
     hapusSasaranKinerja: function(data) {

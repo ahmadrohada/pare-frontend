@@ -7,7 +7,12 @@
       :short-title="$t('sidebar.shortTitle')"
       :title="$t('sidebar.title')"
     >
-    <sasaran-kinerja-personal-menu></sasaran-kinerja-personal-menu>
+      <sasaran-kinerja-personal-menu 
+          :nama_lengkap="namaLengkap"
+          :photo_url="photoUrl"
+          :nip_pegawai="nipPegawai"
+          :notifikasi_renja="notifikasiRenja"
+          ></sasaran-kinerja-personal-menu>
     </side-bar>
     
     <div class="main-panel" :data="sidebarBackground">
@@ -51,6 +56,7 @@
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
   import SasaranKinerjaPersonalMenu from '~/components/Menu/SasaranKinerjaPersonalMenu.vue';
 
+  import { mapGetters } from 'vuex'
 
   export default {
     
@@ -65,12 +71,19 @@
     data() {
       return {
         sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
+        notifikasiRenja:'-',
+        
       };
     },
     computed: {
       isFullScreenRoute() {
         return this.$route.path === '/maps/full-screen'
       },
+      ...mapGetters({
+        photoUrl: 'photo',
+        namaLengkap:'nama_lengkap',
+        nipPegawai:'nip',
+      })
     },
     methods: {
       toggleSidebar() {

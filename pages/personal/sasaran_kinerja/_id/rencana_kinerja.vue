@@ -55,10 +55,15 @@
       <el-table-column
         align="center"
         prop="no"
-        label="No"
+        label="NO"
         width="45">
       </el-table-column>
-      <el-table-column label="Rencana Kinerja" width="270">
+      <el-table-column label="RENCANA KINERJA ATASAN LANGSUNG YANG DI INTERVENSI" width="290">
+        <template slot-scope="{row}">
+          {{row.rencana_kinerja}}
+        </template>
+      </el-table-column>
+      <el-table-column label="RENCANA KINERJA" width="290">
         <template slot-scope="{row}">
           {{row.rencana_kinerja}}
           <i v-if=" row.indikator_id  != '' ">
@@ -69,7 +74,12 @@
           </i>
         </template>
       </el-table-column>
-      <el-table-column  label="Indikator Kinerja Individu" min-width="320">
+      <el-table-column  label="ASPEK" min-width="120">
+        <template slot-scope="{row}">
+          {{row.indikator_kinerja_individu}}
+        </template>
+      </el-table-column>
+      <el-table-column  label="INDIKATOR KINERJA INDIVIDU" min-width="320">
         <template slot-scope="{row}">
           {{row.indikator_kinerja_individu}}
         </template>
@@ -79,19 +89,6 @@
         prop="target"
         label="Target"
         width="150">
-      </el-table-column>
-      <el-table-column  fixed="right" align="center" label="Manual" width="70" v-if="statusSasaranKinerja == 'drafted' ">
-        <template slot-scope="{row}">
-          <el-button v-if=" row.manual_indikator_kinerja_id  == 0 "  size="mini" type="text" @click="addManualIndikatorKinerja(row)">
-            <i class="el-icon-circle-plus-outline"></i>
-            <md-tooltip md-direction="top">Add Manual Indikator Kinerja</md-tooltip>
-          </el-button>
-          
-          <el-button v-if=" row.manual_indikator_kinerja_id  != 0 & row.manual_indikator_kinerja_id != 'disabled'" size="mini" type="text" @click="editManualIndikatorKinerja(row)">
-            <i class="el-icon-edit-outline"></i>
-            <md-tooltip md-direction="top">Edit Manual Indikator Kinerja</md-tooltip>
-          </el-button>
-        </template>
       </el-table-column>
       <el-table-column fixed="right" align="center"  label="Aksi" width="63"  v-if="statusSasaranKinerja == 'drafted' ">
         <template slot-scope="{row}" >
@@ -121,7 +118,7 @@
 
 
     <p class="" style="margin-top: 20px">B. KINERJA TAMBAHAN</p>
-    <el-table
+    <el-table hidden
       :data="tableDataKinerjaTambahan"
       :span-method="objectSpanMethodKinerjaTambahan"
       border

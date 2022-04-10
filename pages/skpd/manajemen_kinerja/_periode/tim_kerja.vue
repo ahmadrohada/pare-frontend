@@ -4,7 +4,6 @@
 
     <modal-koordinator 
       ref="KoordinatorForm"
-      style="min-height:350px;"
       @loadAsyncData="loadAsyncData"
     >
     </modal-koordinator>

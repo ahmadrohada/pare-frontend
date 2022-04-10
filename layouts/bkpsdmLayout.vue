@@ -67,6 +67,7 @@
     data() {
       return {
         sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
+        isFullScreenRoute:false,
         laoding:true,
         overlay:true,
       };

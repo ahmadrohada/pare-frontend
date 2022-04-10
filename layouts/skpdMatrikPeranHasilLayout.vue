@@ -68,6 +68,8 @@
     },
     data() {
       return {
+        sidebarBackground:"",
+        isFullScreenRoute:false
 
       };
     },

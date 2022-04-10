@@ -3,7 +3,6 @@
     <pare-loader ref="loader"></pare-loader>
     <sasaran-kinerja
       ref="ModalSasaranKinerja"
-      style="min-height:350px;"
       @loadAsyncData="loadAsyncData"
     >
     </sasaran-kinerja>

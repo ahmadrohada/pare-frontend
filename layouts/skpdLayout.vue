@@ -70,9 +70,7 @@
     },
     data() {
       return {
-        //sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
-        //laoding:true,
-        //overlay:true,
+        sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
       };
     },
     computed: {

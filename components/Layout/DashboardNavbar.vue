@@ -18,9 +18,20 @@
       </div>
 
     <div style="width:100%; text-align:center;margin-left:25px;">
-      <el-button type="success" size="small"icon="fa fa-home" @click="goToHome"></el-button>
-      <el-button type="success"size="small"icon="fa fa-user" @click="goToPersonal"></el-button>
-      <el-button type="success" size="small" icon="fa fa-users" @click="goToSkpd"></el-button>
+      
+      <el-badge is-dot class="item" hidden>
+        <el-button type="success" size="small" icon="fa fa-home" @click="goToHome"></el-button>
+      </el-badge>
+
+      <el-badge is-dot class="item" :hidden="hidePersonalBadge">
+        <el-button type="success" size="small"icon="fa fa-user" @click="goToPersonal"></el-button>
+      </el-badge>
+
+      <el-badge is-dot class="item" hidden>
+        <el-button type="success" size="small" icon="fa fa-users" @click="goToSkpd"></el-button>
+      </el-badge>
+      
+      
     </div>
 
       
@@ -64,6 +75,22 @@ export default {
     BaseNav,
     Modal
   },
+  data() {
+    return {
+      activeNotifications: false,
+      showMenu: false,
+      searchModalVisible: false,
+      searchQuery: '',
+      hidePersonalBadge:true,
+      badge:""
+      
+    };
+  },
+  watch: {
+    badge: function (val) {
+      this.fullName = val + ' ' + this.lastName
+    }
+  },
   computed: {
     routeName() {
       const { path } = this.$route;
@@ -77,14 +104,6 @@ export default {
       photoUrl: 'photo',
       namaLengkap:'nama_lengkap',
     })
-  },
-  data() {
-    return {
-      activeNotifications: false,
-      showMenu: false,
-      searchModalVisible: false,
-      searchQuery: '',
-    };
   },
   methods: {
     goToHome(){
@@ -128,22 +147,7 @@ export default {
             type: 'info',
             message: 'Batal'
           });          
-        });
-   /*    this.$swal.fire({
-        title: 'Keluar dari aplikasi', 
-        text: "",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Logout',
-        cancelButtonText: 'Batal'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.$auth.logout();
-        }
-      }) */
-     
+        });     
     }
   },
   mounted() {
@@ -164,6 +168,11 @@ export default {
   color: #ffffff;
   text-align: center;
   font-size: 13px;
+}
+
+.item {
+  margin-top: 0px;
+  margin-right: 8px;
 }
 
 </style>

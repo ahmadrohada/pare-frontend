@@ -304,10 +304,19 @@ export default {
 
 <style lang="scss" scope>
 
-.modal.show .modal-dialog {
+  .el-select-dropdown__item {
+    width: 450px;
+    white-space: normal;
+    overflow: unset;
+    height: auto;
+    line-height: 20px;
+    margin-bottom:7px;
+  }
+
+/* .modal.show .modal-dialog {
     transform: none !important;
 }
-
+ */
 .modal .modal-header .close {
     visibility: hidden;
 }

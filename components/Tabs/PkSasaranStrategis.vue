@@ -19,7 +19,7 @@
       v-on:click="addSasaranStrategis($event)"
       value="0"
       v-if="statusPk == 'open'"
-    ><i class="el-icon-plus"></i>  Sasaran Strategis {{perjanjianKinerjaId}}
+    ><i class="el-icon-plus"></i>  Sasaran Strategis 
     </md-button>
 
     <md-button 

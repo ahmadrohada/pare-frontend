@@ -3,7 +3,6 @@
     <pare-loader ref="loader"></pare-loader>
     <create-pk 
       ref="ModalRenja"
-      style="min-height:350px;"
       @loadAsyncData="perjanjianKinerja"
     >
     </create-pk>

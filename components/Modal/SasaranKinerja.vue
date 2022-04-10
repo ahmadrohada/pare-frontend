@@ -12,7 +12,7 @@
         :rules="rules"
         size="mini"
       >
-    <el-tabs v-model="activeName" @tab-click="handleClick" style="min-height:260px;">
+    <el-tabs v-model="activeName" style="min-height:260px;">
       <el-tab-pane label="PERIODE" name="detail">
 
         
@@ -272,6 +272,8 @@ export default {
       showSelectPeriode:false,
       showSelectJenisJabatan:false,
       periodeTahunList:[],
+      jabatansPegawaiYangDinilai:[],
+      jabatansPejabatPenilaiKinerja:[],
       disabledSelectJabatanPegawaiYangDinilai:true,
       disabledSelectJabatanPejabatPenilaiKinerja:true,
       jenisJabatanSkpList: [{
@@ -511,7 +513,7 @@ export default {
 
       const isSelect = selectedId
           this.$axios
-            .$get("/user_jabatan_detail?jabatan_aktif_id="+selectedId+"&nip_pegawai="+this.nipPegawaiYangDinilai)
+            .$get("/user_jabatan_detail?jabatan_aktif_id="+selectedId+"&nip_pegawai="+this.SasaranKinerjaForm.nipPegawaiYangDinilai)
             .then((resp) => {
 
               console.log(resp)
@@ -598,7 +600,7 @@ export default {
 
       const isSelect = selectedId
           this.$axios
-            .$get("/user_jabatan_detail?jabatan_aktif_id="+selectedId+"&nip_pegawai="+this.nipPejabatPenilaiKinerja)
+            .$get("/user_jabatan_detail?jabatan_aktif_id="+selectedId+"&nip_pegawai="+this.SasaranKinerjaForm.nipPejabatPenilaiKinerja)
             .then((resp) => {
 
               console.log(resp)
@@ -625,14 +627,14 @@ export default {
   }
 };
 </script>
-<style scope>
+<style lang="scss" scope>
 
 .modal.show .modal-dialog {
     transform: translate(0, 10%) !important;
 }
 
 .modal-body {
-    min-height: 430px !important;
+    //min-height: 430px !important;
 }
 
 .modal-dialog {

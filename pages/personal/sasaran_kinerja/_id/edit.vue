@@ -7,18 +7,9 @@
     >
     </sasaran-kinerja>
     <template slot="header" class="d-inline">
-      <h4 class="title d-inline">Sasaran Kinerja Pegawai JPT</h4>
+      <h4 class="title d-inline">Sasaran Kinerja Pegawai</h4>
       <p class="card-category d-inline">{{user.skpd.singkatan}}</p>
     </template>
-
-    <md-button 
-      v-show="(showButtonCreate == true )"
-      style="height:28px;margin-left:-1px; font-size:11px;" 
-      class="md-dense md-raised md-primary btn-block"
-      v-on:click="createSasaranKinerja($event)"
-    ><span class="fa fa-plus"></span> Create SKP
-    </md-button>
-
 
     <el-tabs 
         v-model="activeName"
@@ -58,7 +49,7 @@ import { mapGetters } from 'vuex'
 
 
 export default {
-  layout: "skpdManajemenKinerjaLayout",
+  layout: "sasaranKinerjaPersonalLayout",
   middleware: "auth",
    components: {
     PareLoader,
@@ -70,7 +61,7 @@ export default {
     return {
       jenis_jabatan:'',
       showButtonCreate:false,
-      showTab:false,
+      showTab:true,
       periode:null,
       activeName: 'sumary',
       skpJptId:null
@@ -84,31 +75,8 @@ export default {
     },
   methods: {
     sasaranKinerjaPegawai(){
-       const params = [
-        `periode=${this.periode}`,
-        `skpd_id=${this.skpd_id}`,
-      ].join('&')
-      //this.$refs.loader.start() 
-      this.$axios
-        .get(`/sasaran_kinerja_id?${params}`)
-        .then(({ data }) => {
-          if ( data.id == null ){
-            this.showButtonCreate = true
-            this.showTab = false
-          }else{
-            this.skpJptId = data.id
-            this.showButtonCreate = false
-            this.showTab = true
-            this.$refs.tabSumary.loadData(this.skpJptId);
-            this.$refs.tabRencanaKinerja.loadData(this.skpJptId);
-
-          }
-          
-          //this.$refs.loader.finish() 
-        })
-        .catch((error) => {
-          throw error
-        })
+      this.$refs.tabSumary.loadData(this.skpJptId);
+      this.$refs.tabRencanaKinerja.loadData(this.skpJptId);
     },
     handleTabClick(tab) {
         if ( tab.name == 'sumary'){
@@ -117,16 +85,13 @@ export default {
           this.$refs.tabRencanaKinerja.loadData(this.skpJptId);
         }
     },
-    createSasaranKinerja: function(e) {
-      this.$refs.ModalSasaranKinerja.showModalFromMk(this.skpd_id,this.periode,"PEJABAT PIMPINAN TINGGI");
-    },
-    
   },
   async asyncData({ params }) {
-      const periode = params.periode
-      return { periode }
+      const skpJptId = params.id
+      return { skpJptId }
   },
   mounted() {
+    this.skpJptId = this.$route.params.id
     this.sasaranKinerjaPegawai()
   },
   

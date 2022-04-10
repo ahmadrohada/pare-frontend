@@ -41,14 +41,18 @@
     </el-row>
 
 
-     <md-button 
-      v-show="(statusPk == 'open')"
-      style="height:28px;margin-left:-1px; font-size:11px;" 
-      class="md-dense md-raised md-primary btn-block"
-      v-on:click="submitPerjanjianKinerja($event)"
+    <el-button 
+        class="btn-block"
+        size="small"
+        v-show="(statusPk == 'open')" 
+        type="primary"  
+        :loading="submitLoader"  
+        icon="el-icon-position"
+        @click="submitPerjanjianKinerja($event)"
     >
-    <i class="el-icon-position"></i> SUBMIT PERJANJIAN KINERJA
-    </md-button>
+    SUBMIT PERJANJIAN KINERJA
+    </el-button>
+
   </card>
 </template>
 
@@ -72,7 +76,8 @@ export default {
       createdBy:'-',
       jumlahSasaranStrategis:'-',
       statusPk:'close',
-      perjanjianKinerjaId:null
+      perjanjianKinerjaId:null,
+      submitLoader:false
 
     }
   },
@@ -102,7 +107,7 @@ export default {
 
           })
           .catch((error) => {
-            this.$refs.loader.start() 
+            this.$refs.loader.finish() 
             throw error
           })
       }
@@ -111,6 +116,7 @@ export default {
     submitPerjanjianKinerja: function(data) {
      
       //cek jumlah sasaran strategis
+      this.submitLoader = true
       this.$axios
         .get(`/perjanjian_kinerja_detail?id=`+this.perjanjianKinerjaId)
         .then(({ data }) => {
@@ -121,6 +127,7 @@ export default {
                 cancelButtonText: 'Batal',
                 type: 'warning'
               }).then(() => {
+                this.$refs.loader.start() 
                 this.$axios
                   .$put("/submit_perjanjian_kinerja?id="+this.perjanjianKinerjaId)
                   .then((resp) => {
@@ -129,12 +136,16 @@ export default {
                         message: 'Berhasil Submit'
                       });
                       setTimeout(() => {
+                        this.$refs.loader.finish() 
                         this.$router.go(this.$router.currentRoute)
-                      }, 800);
+                      }, 400);
                       
                   })
                   .catch((error) => {
-                    //console.log(error.response.data.message)
+                    setTimeout(() => {
+                        this.$refs.loader.finish() 
+                        this.submitLoader = false
+                    }, 700);
                     this.$message({
                       type: 'error',
                       message: error.response.data.message
@@ -143,6 +154,9 @@ export default {
 
                 
               }).catch(() => {
+                setTimeout(() => {
+                  this.submitLoader = false
+                }, 800);
                 this.$message({
                   type: 'info',
                   message: 'Proses Submit Dibatalkan'
@@ -153,6 +167,9 @@ export default {
                   type: 'warning',
                   message: 'PK harus memiliki minimal 1 Sasaran Strategis'
                 });   
+            setTimeout(() => {
+              this.submitLoader = false
+            }, 800);
           }
         
 

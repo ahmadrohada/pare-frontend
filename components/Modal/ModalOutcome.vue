@@ -19,7 +19,7 @@
           <el-select 
               v-model="OutcomeForm.outcomeAtasanId" 
               placeholder="Pilih Outcome Atasan"
-              style="width:100%"
+              style="width:100% !important;"
               >
               <el-option
                 v-for="item in outcomeAtasan"
@@ -292,8 +292,8 @@ export default {
     },
     deleteForm(formName) {
       this.$confirm('Ini akan menghapus Outcome, Semua outcome bawahan ikut terhapus !', 'Konfirmasi', {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Batal',
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           this.$axios
@@ -365,13 +365,24 @@ export default {
 </script>
 <style lang="scss" scope>
 
- .el-select {
+/*  .el-select {
     width: 100%;
   }
 
   .el-select-group__title{
       color: rgb(102, 102, 102) !important;
-    }
+    } */
+
+  .el-select-dropdown__item {
+    width: 450px;
+    white-space: normal;
+    overflow: unset;
+    height: auto;
+    line-height: 20px;
+    margin-bottom:7px;
+  }
+
+
 
 
   .modal .modal-header .close {

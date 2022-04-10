@@ -8,7 +8,6 @@
 
     <modal-jabatan 
       ref="JabatanForm"
-      style="min-height:350px;"
       @loadAsyncData="loadAsyncData"
     >
     </modal-jabatan>
@@ -19,6 +18,12 @@
       @loadAsyncData="loadAsyncData"
     >
     </modal-outcome>
+
+    <modal-pejabat 
+      ref="PejabatForm"
+      @loadAsyncData="loadAsyncData"
+    >
+    </modal-pejabat>
 
 
     
@@ -36,8 +41,6 @@
       :data="tableMatriksPeranHasil"
       border
       :show-header="true"
-      :row-class-name="tableRowClassName"
-      :cell-class-name="tableCellClassName"
       :highlight-current-row="false"
       style="width: 100%;">
 
@@ -46,17 +49,39 @@
           <div style="display: inline-block !important; padding:0px !important; width:100%; ">
             <div style="float: left; width:80%;">
               <span style="margin-top:-6px;" class="">{{row.jabatan}}</span><br>
-              <span style="color:#100f15;   margin-top:-6px;" class="">{{row.role}}</span>
+              <span style="color:#100f15;   margin-top:-6px;" class="">{{row.role}}</span><br>
+              
+              <div v-for=" data in row.pejabat_skp" v-bind:key >
+                 <span style="color:#100f15;   margin-top:-6px;" class="">{{data.nama_pejabat}}</span><br>
+              </div>
+
+
             </div>
-            <div style="float:right;">
-              <el-button  
-                size="small" 
-                type="success" 
-                @click="addOutcome(row)" 
-                icon="el-icon-s-order" 
-                circle>
-              </el-button>
-              <md-tooltip md-direction="top">Tambah Outcome / Hasil</md-tooltip>
+            <div style="margin-top:10px;float:right;">
+              <div>
+                <el-button  
+                  size="small" 
+                  type="default" 
+                  @click="addOutcome(row)" 
+                  icon="el-icon-s-order" 
+                  circle
+                  class="tes-button">
+                </el-button>
+                <md-tooltip md-direction="left">Tambah Outcome / Hasil</md-tooltip>
+              </div>
+              <div style="margin-top:10px;">
+                <el-button  
+                  size="small" 
+                  type="default" 
+                  @click="addPegawai(row)" 
+                  icon="el-icon-user" 
+                  circle
+                  class="tes-button">
+                </el-button>
+                <md-tooltip md-direction="left">Tambah Pegawai</md-tooltip>
+              </div>
+              
+
             </div>
           </div> 
         </template>
@@ -90,6 +115,7 @@
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
 import ModalJabatan from '~/components/Modal/ModalJabatan.vue';
+import ModalPejabat from '~/components/Modal/ModalPejabat.vue';
 import ModalOutcome from '~/components/Modal/ModalOutcome.vue';
 import { mapGetters } from 'vuex' 
 
@@ -100,12 +126,14 @@ export default {
    components: {
     PareLoader,
     ModalJabatan,
-    ModalOutcome
+    ModalOutcome,
+    ModalPejabat
+    
   },
   data() {
     return {
       tableMatriksPeranHasil:[],
-      sasaran_strategis:[],
+      sasaranStrategis:[],
       periode: '',
       koordinator_id: '',
       visible:false,
@@ -151,6 +179,9 @@ export default {
         console.log(e)
         this.$refs.OutcomeForm.showModalAdd(e);
       },
+      addPegawai: function(e) {
+        this.$refs.PejabatForm.showModalAdd(e);
+      },
       klikKolom: function(e) {
         console.log(e.id)
         this.$refs.OutcomeForm.showModalEdit(e);
@@ -180,38 +211,18 @@ export default {
     word-break: normal !important;
   }
 
-  .el-table .header-row {
-    background: rgb(206, 205, 205);
-    font-size: 10pt !important;
-    color: #141516;
-    text-align: center !important;
-  }
-  .el-table tr.header-row:hover {
-    background: rgb(206, 205, 205);
-    font-size: 11pt !important;
-    color: #141516;
-    text-align: center !important;
+  .tes-button {
+  opacity:50%;
+  box-shadow:0 0 1px rgb(95, 111, 119);
+  background-color: rgb(255, 255, 255);
+  color:rgb(1, 30, 58);
+  transition: 0.4s;
   }
 
-  .el-table .style0 {
-    background: rgb(196, 196, 196);
-  }
-  .el-table .style1 {
-    background: rgb(255, 243, 243);
-  }
-  .el-table .style2 {
-    background: #fcf8f0;
-  }
-  .el-table .style3 {
-    background: #fffff3;
-  }
-  .el-table .style4 {
-    background: #fef3ff;
-  }
-  .el-table .style5 {
-    background: #f5ffff;
-  }
-  .el-table .style6 {
-    background: #fff5f9;
+    .tes-button:hover {
+  opacity:70%;
+  box-shadow:0 0 3px rgb(196, 196, 196);
+  background-color: rgb(66, 129, 145);
+  color:rgb(253, 253, 253);
   }
 </style>

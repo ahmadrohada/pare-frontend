@@ -2,6 +2,7 @@
    <card style="min-height:500px;">
      <rencana-kinerja 
         ref="ModalRencanaKinerja"
+        style="min-height:350px;"
         @loadAsyncData="loadAsyncData"
       >
       </rencana-kinerja>
@@ -17,9 +18,15 @@
         @loadAsyncData="loadAsyncData"
       >
       </manual-indikator-kinerja>
-      
+
+
+    <template slot="header" class="d-inline">
+      <h4 class="title d-inline">Sasaran Kinerja</h4>
+      <p class="card-category d-inline">Rencana Kinerja</p>
+    </template>
+
     <md-button 
-      style="height:28px;margin-left:-1px; font-size:11px; margin-top:3px;" 
+      style="height:28px;margin-left:-1px; font-size:11px; margin-top:30px;" 
       class="md-dense md-raised md-primary"
       v-on:click="addRencanaKinerja($event)"
       value="0"
@@ -28,7 +35,7 @@
     </md-button>
 
     <md-button 
-      style="height:28px;margin-left:-1px; font-size:11px; margin-top:3px;" 
+      style="height:28px;margin-left:-1px; font-size:11px; margin-top:30px;" 
       class="md-dense md-raised md-primary"
       v-on:click="addIndikatorKinerjaIndividu($event)"
       value="0"
@@ -203,10 +210,11 @@ import ManualIndikatorKinerja from '~/components/Modal/ManualIndikatorKinerja.vu
 export default {
 
   middleware: ['auth'],
+  layout: "sasaranKinerjaPersonalLayout",
   components: {
     RencanaKinerja,
-    ManualIndikatorKinerja,
-    IndikatorKinerjaIndividu
+    IndikatorKinerjaIndividu,
+    ManualIndikatorKinerja
   },
   data() {
     return {
@@ -225,18 +233,11 @@ export default {
     }
   },
   mounted() {
-    if ( this.sasaranKinerjaId != null ){
-        this.loadData(sasaranKinerjaId)
-    }
-   
+    this.sasaranKinerjaId = this.$route.params.id
+    this.loadAsyncData()
+    
   },
   methods: {
-      loadData(sasaranKinerjaId){
-        this.sasaranKinerjaId = sasaranKinerjaId
-        this.loadAsyncDataKinerjaUtama()
-        this.loadAsyncDataKinerjaTambahan()
-      },
-      
       loadAsyncData(){
         this.loadAsyncDataKinerjaUtama()
         this.loadAsyncDataKinerjaTambahan()
@@ -250,6 +251,7 @@ export default {
           `jenis_rencana_kinerja=kinerja_utama`
         ].join('&')
 
+        this.loading = true
         this.$axios
           .get(`/sasaran_kinerja_rencana_kinerja?${params}`)
           .then(({ data }) => {
@@ -259,6 +261,7 @@ export default {
               this.tableDataKinerjaUtama.push(item)
             }) 
             this.onMergeLinesKinerjaUtama(data.data);
+            this.loading = false
           })
           .catch((error) => {
             this.tableDataKinerjaUtama = []
@@ -274,6 +277,7 @@ export default {
           `jenis_rencana_kinerja=kinerja_tambahan`
         ].join('&')
 
+        this.loading = true
         this.$axios
           .get(`/sasaran_kinerja_rencana_kinerja?${params}`)
           .then(({ data }) => {
@@ -283,6 +287,7 @@ export default {
               this.tableDataKinerjaTambahan.push(item)
             }) 
             this.onMergeLinesKinerjaTambahan(data.data);
+            this.loading = false
           })
           .catch((error) => {
             this.tableDataKinerjaTambahan = []
@@ -438,8 +443,6 @@ export default {
           });          
         });
       },
-
-
       addManualIndikatorKinerja: function(data) {
       //console.log(data)
       this.$refs.ModalManualIndikatorKinerja.showModalAdd(data.indikator_id);

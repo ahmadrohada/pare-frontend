@@ -210,7 +210,7 @@ export default {
   }
 
   
-  .el-button .tes-button {
+/*   .el-button .tes-button {
     opacity:50% !important;
     box-shadow:0 0 1px rgb(95, 111, 119);
     background-color: rgb(255, 255, 255);
@@ -223,5 +223,5 @@ export default {
     box-shadow:0 0 3px rgb(196, 196, 196);
     background-color: rgb(66, 129, 145) !important;
     color:rgb(253, 253, 253);
-  }
+  } */
 </style>

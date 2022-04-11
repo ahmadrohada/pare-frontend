@@ -61,7 +61,6 @@
               <div>
                 <el-button  
                   size="small" 
-                  type="default" 
                   @click="addOutcome(row)" 
                   icon="el-icon-s-order" 
                   circle
@@ -72,7 +71,6 @@
               <div style="margin-top:10px;">
                 <el-button  
                   size="small" 
-                  type="default" 
                   @click="addPegawai(row)" 
                   icon="el-icon-user" 
                   circle
@@ -212,17 +210,17 @@ export default {
   }
 
   .tes-button {
-  opacity:50%;
-  box-shadow:0 0 1px rgb(95, 111, 119);
-  background-color: rgb(255, 255, 255);
-  color:rgb(1, 30, 58);
-  transition: 0.4s;
+    opacity:50% !important;
+    box-shadow:0 0 1px rgb(95, 111, 119);
+    background-color: rgb(255, 255, 255);
+    color:rgb(1, 30, 58) !important;
+    transition: 0.4s;
   }
 
-    .tes-button:hover {
-  opacity:70%;
-  box-shadow:0 0 3px rgb(196, 196, 196);
-  background-color: rgb(66, 129, 145);
-  color:rgb(253, 253, 253);
+  .tes-button:hover {
+    opacity:70% !important;
+    box-shadow:0 0 3px rgb(196, 196, 196);
+    background-color: rgb(66, 129, 145) !important;
+    color:rgb(253, 253, 253);
   }
 </style>

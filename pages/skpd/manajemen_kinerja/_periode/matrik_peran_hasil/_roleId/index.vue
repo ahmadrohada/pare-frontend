@@ -218,7 +218,7 @@ export default {
     transition: 0.4s;
   }
 
-  .tes-button:hover {
+  .el-button:hover {
     opacity:70% !important;
     box-shadow:0 0 3px rgb(196, 196, 196);
     background-color: rgb(66, 129, 145) !important;

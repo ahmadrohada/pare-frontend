@@ -63,8 +63,7 @@
                   size="small" 
                   @click="addOutcome(row)" 
                   icon="el-icon-s-order" 
-                  circle
-                  class="tes-button">
+                  circle>
                 </el-button>
                 <md-tooltip md-direction="left">Tambah Outcome / Hasil</md-tooltip>
               </div>
@@ -73,8 +72,7 @@
                   size="small" 
                   @click="addPegawai(row)" 
                   icon="el-icon-user" 
-                  circle
-                  class="tes-button">
+                  circle>
                 </el-button>
                 <md-tooltip md-direction="left">Tambah Pegawai</md-tooltip>
               </div>
@@ -204,24 +202,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
- 
   .el-table .cell {
     word-break: normal !important;
   }
-
-  
-/*   .el-button .tes-button {
-    opacity:50% !important;
-    box-shadow:0 0 1px rgb(95, 111, 119);
-    background-color: rgb(255, 255, 255);
-    color:rgb(1, 30, 58) !important;
-    transition: 0.4s;
-  }
-
-  .el-button:hover {
-    opacity:70% !important;
-    box-shadow:0 0 3px rgb(196, 196, 196);
-    background-color: rgb(66, 129, 145) !important;
-    color:rgb(253, 253, 253);
-  } */
 </style>

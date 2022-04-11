@@ -203,13 +203,14 @@ export default {
   
 };
 </script>
-<style>
+<style lang="scss" scoped>
  
   .el-table .cell {
     word-break: normal !important;
   }
 
-  .tes-button {
+  
+  .el-button .tes-button {
     opacity:50% !important;
     box-shadow:0 0 1px rgb(95, 111, 119);
     background-color: rgb(255, 255, 255);

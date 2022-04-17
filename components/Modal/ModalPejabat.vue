@@ -46,6 +46,26 @@
               </el-date-picker>
             </el-col>
           </el-form-item>
+
+
+        <el-form-item  
+          label="Pejabat Penilai Kinerja / Atasan Langsung"   
+          prop="skpPejabatPenilaiKinerjaId">
+            <el-select 
+                v-model="PejabatForm.skpPejabatPenilaiKinerjaId" 
+                placeholder="Pilih Pejabat Penilai Kinerja / Atasan Langsung"
+                style="width:100% !important;"
+                >
+                <el-option
+                  v-for="item in pejabatPenilaiKinerja"
+                  :selected="item.id"
+                  :key="item.id"
+                  :label="item.nama"
+                  :value="item.id"
+                  >
+                </el-option>
+            </el-select>
+        </el-form-item>
       
         <el-form-item  prop="namaPejabat" label="Nama Pejabat" >
           <el-autocomplete
@@ -160,8 +180,10 @@ export default {
         dateFrom:null,
         dateTo:null,
         jenisJabatanSkp:"",
+        skpPejabatPenilaiKinerjaId:""
       },
       jabatans: [],
+      pejabatPenilaiKinerja:[],
       jenisJabatanSkpList: [{
           value: 'PEJABAT PIMPINAN TINGGI',
         }, {
@@ -181,11 +203,36 @@ export default {
           jenisJabatanSkp: [
             { required: true, message: 'Silakan jenis Jabatan SKP', trigger: 'blur' }
           ],
+          skpPejabatPenilaiKinerjaId:[
+            { required: true, message: 'Silakan pilih pejabat penilai', trigger: 'blur' }
+          ] 
       },
       disabledSelect:true,
     };
   },
   methods: {
+      pejabatPenilaiList(matriksPeranId,selectedId){
+       const isSelect = selectedId
+       const params = [
+          `matriksPeranId=${matriksPeranId}`,
+        ].join('&')
+
+          this.$axios
+            .get(`/list_pejabat_penilai_mph?${params}`)
+            .then((data) => {
+              this.pejabatPenilaiKinerja = data.data.pejabatPenilai
+              if ( isSelect == 0 ){
+                this.PejabatForm.skpPejabatPenilaiKinerjaId = data.data.pejabatPenilai[0].id // pilih data ke 1
+              }else{
+                this.PejabatForm.skpPejabatPenilaiKinerjaId = isSelect
+              } 
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 200);
+          }) 
+        
+    },
+
     showModalAdd(data) {
       this.clearPejabat()
       this.submitLoader = false
@@ -201,6 +248,9 @@ export default {
       this.PejabatForm.periodeTahun = data.periode
       this.PejabatForm.dateFrom = start
       this.PejabatForm.dateTo = end
+
+      //list pejabat penilai
+      this.pejabatPenilaiList(data.id , 0);
     
       this.modalFormVisible = true; 
 
@@ -292,6 +342,7 @@ export default {
       this.disabledSelectJabatan = true
       this.saveDisabled = true
       this.showSelectJenisJabatan = false
+      this.PejabatForm.skpPejabatPenilaiKinerjaId = null
       
     },
     closeForm(){

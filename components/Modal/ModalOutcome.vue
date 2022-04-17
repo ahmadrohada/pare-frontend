@@ -12,10 +12,58 @@
         :rules="rules"
         size="mini"
       >
+
+
+        <!-- ================= SASARAN KINERJA DAN IKU PK ============================== -->
+        <div v-show="selectVisibleSasaranStrategis == true">
+          <el-form-item  
+            label="Sasaran Strategis"   
+            prop="sasaranStrategisId">
+            <el-select 
+                v-model="OutcomeForm.sasaranStrategisId" 
+                placeholder="Pilih Sasaran Strategis PK"
+                style="width:100% !important;"
+                >
+                <el-option
+                  v-for="item in sasaranStrategis"
+                  :selected="item.id"
+                  :key="item.label"
+                  :label="item.label"
+                  :value="item.id"
+                  >
+                </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item  
+            label="Indikator Kinerja Utama"   
+            prop="indikatorKinerjaUtamaId">
+            <el-select 
+                v-model="OutcomeForm.indikatorKinerjaUtamaId" 
+                placeholder="Pilih Indikator Kinerja Utama"
+                style="width:100% !important;"
+                >
+                <el-option
+                  v-for="item in indikatorKinerjaUtama"
+                  :selected="item.id"
+                  :key="item.label"
+                  :label="item.label"
+                  :value="item.id"
+                  >
+                </el-option>
+            </el-select>
+          </el-form-item>
+        </div>
+       
+
+
+
+
+
         <el-form-item  
           label="Outcome Atasan"   
           prop="outcomeAtasanId"
-          v-show="selectVisible == true">
+          v-show="selectVisibleOutcomeAtasan == true">
           <el-select 
               v-model="OutcomeForm.outcomeAtasanId" 
               placeholder="Pilih Outcome Atasan"
@@ -87,9 +135,12 @@ export default {
       submitLoader:false,
       headerText:'Tambah Outcome / Hasil',
       modalFormVisible: false,
-      selectVisible:false,
+      selectVisibleOutcomeAtasan:false,
+      selectVisibleSasaranStrategis:false,
       params:[],
       outcomeAtasan:[],
+      sasaranStrategis:[],
+      indikatorKinerjaUtama:[],
       OutcomeForm:{
           skpdId:null,
           periode:null,
@@ -97,7 +148,9 @@ export default {
           level:null,
           outcomeLabel:null,
           outcomeAtasanId:null,
-          outcomeId:null
+          outcomeId:null,
+          sasaranStrategisId:null,
+          indikatorKinerjaUtamaId:null
       },
       rules: {
           outcomeLabel: [
@@ -147,10 +200,19 @@ export default {
 
       if ( e.level != "S2" ){
         this.outcomeAtasanList(e.skpd_id,this.OutcomeForm.periode,e.id,0)
-        this.selectVisible = true
+        this.selectVisibleOutcomeAtasan = true
+        this.selectVisibleSasaranStrategis = false
         //munculkan list outcome atasan
       }else{
-        this.selectVisible = false
+        //ini jika S2 atau koordinator atau kabid
+        this.selectVisibleOutcomeAtasan = false
+        this.selectVisibleSasaranStrategis = true
+
+
+
+
+
+
       }
 
       this.$refs.loader.start() 
@@ -188,10 +250,12 @@ export default {
 
           if ( data.level != "S2" ){
             this.outcomeAtasanList(data.skpd_id,data.periode,data.role_id,data.parent_id)
-            this.selectVisible = true
+            this.selectVisibleOutcomeAtasan = true
+            this.selectVisibleSasaranStrategis = false
             
           }else{
-            this.selectVisible = false
+            this.selectVisibleOutcomeAtasan = false
+            this.selectVisibleSasaranStrategis = true
             setTimeout(() => {
               this.$refs.loader.finish() 
             }, 300); 

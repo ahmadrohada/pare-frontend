@@ -28,7 +28,7 @@
       </el-badge>
 
       <el-badge is-dot class="item" hidden>
-        <el-button type="success" size="small" icon="fa fa-users" @click="goToSkpd"></el-button>
+        <el-button v-if = "isAdminSkpd" type="success" size="small" icon="fa fa-users" @click="goToSkpd"></el-button>
       </el-badge>
       
       
@@ -82,7 +82,10 @@ export default {
       searchModalVisible: false,
       searchQuery: '',
       hidePersonalBadge:true,
-      badge:""
+      badge:"",
+      isAdminSkpd: false,
+      isPersonal : false,
+      isAdminBkpsdm : false,
       
     };
   },
@@ -103,6 +106,7 @@ export default {
     ...mapGetters({
       photoUrl: 'photo',
       namaLengkap:'nama_lengkap',
+      roles:'roles'
     })
   },
   methods: {
@@ -148,11 +152,39 @@ export default {
             message: 'Batal'
           });          
         });     
+    },
+    functionAdminSkpd(roles) {
+     for(var i=0; i < roles.length; i++){
+        if( roles[i].role_id == 2){
+          return true
+        }
+      }
+      return false
+    },
+    functionPersonal(roles) {
+     for(var i=0; i < roles.length; i++){
+        if( roles[i].role_id == 1){
+          return true
+        }
+      }
+      return false
+    },
+    functionAdminBkpsdm(roles) {
+     for(var i=0; i < roles.length; i++){
+        if( roles[i].role_id == 3){
+          return true
+        }
+      }
+      return false
     }
   },
   mounted() {
     //this.photoUrl = this.$auth.user.profile.photo
     //this.nama_lengkap = this.$auth.user.profile.pegawai.nama_lengkap
+    var roles = this.$auth.state.user.roles
+    this.isPersonal = this.functionPersonal(roles)
+    this.isAdminSkpd = this.functionAdminSkpd(roles)
+    this.isAdminBkpsdm = this.functionAdminBkpsdm(roles)
   },
 };
 </script>

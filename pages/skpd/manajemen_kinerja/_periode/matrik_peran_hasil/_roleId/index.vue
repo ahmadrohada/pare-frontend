@@ -74,7 +74,7 @@
                   icon="el-icon-user" 
                   circle>
                 </el-button>
-                <md-tooltip md-direction="left">Tambah Pegawai</md-tooltip>
+                <md-tooltip md-direction="left">Add Pejabat</md-tooltip>
               </div>
               
 
@@ -144,15 +144,17 @@ export default {
   },
   methods: {
     loadAsyncData() {
+        this.$refs.loader.start() 
         const params = [
           `periode=${this.periode}`,
           `skpd_id=${this.skpd_id}`,
           `koordinator_id=${this.koordinator_id}`,
         ].join('&')
-        this.loading = true
+        
         this.$axios
           .get(`/matrik_peran_hasil?${params}`)
           .then(({ data }) => {
+            
             this.tableMatriksPeranHasil = []
             this.sasaranStrategis = data.sasaran_strategis
             data.matriks.forEach((item) => {
@@ -160,11 +162,11 @@ export default {
             })
             setTimeout(() => {
               this.$refs.loader.finish() 
-            }, 400);
-            this.loading = false
+            }, 600);
           })
           .catch((error) => {
             this.tableMatriksPeranHasil = []
+            this.$refs.loader.finish() 
             throw error
           })
       },
@@ -201,7 +203,7 @@ export default {
   
 };
 </script>
-<style lang="scss" scoped>
+<style>
   .el-table .cell {
     word-break: normal !important;
   }

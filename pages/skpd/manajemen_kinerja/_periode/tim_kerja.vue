@@ -8,6 +8,13 @@
     >
     </modal-koordinator>
 
+    <modal-pejabat 
+      ref="PejabatForm"
+      @loadAsyncData="loadAsyncData"
+    >
+    </modal-pejabat>
+
+
     <template slot="header" class="d-inline">
       <h4 class="title d-inline">Tim Kerja ( Koordinator )</h4>
       <p class="card-category d-inline">{{user.skpd.singkatan}}</p>
@@ -47,13 +54,21 @@
           <div style="padding:0px !important;">
             <span style="margin-top:-6px;" class="">{{row.jabatan}}</span>
           </div>
+
+          <div v-for=" data in row.pejabat_skp" v-bind:key >
+            <span style="color:#100f15;   margin-top:-6px;" class="">{{data.nama_pejabat}}</span><br>
+          </div>
+
         </template>
       </el-table-column>
-      <el-table-column  align="center" width="120" label="AKSI">
+      <el-table-column align="center" fixed="right" width="80" label="AKSI">
         <template slot-scope="{ row }">
+            <el-button size="mini" type="text" @click="addPegawai(row)">
+              <i class="el-icon-user"></i>
+              <md-tooltip md-direction="top">Add Pejabat</md-tooltip>
+            </el-button>
             <el-button  size="mini" type="text" @click="viewMatrikPeranHasil(row)">
-              <i class="el-icon-view">
-              </i> Lihat
+              <i class="el-icon-view"></i>
               <md-tooltip md-direction="top">Lihat Matrik Peran Hasil</md-tooltip>
             </el-button>
         </template>
@@ -70,6 +85,7 @@
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
 import ModalKoordinator from '~/components/Modal/ModalKoordinator.vue';
+import ModalPejabat from '~/components/Modal/ModalPejabat.vue';
 import { mapGetters } from 'vuex' 
 
 
@@ -78,7 +94,8 @@ export default {
   middleware: "auth",
    components: {
     PareLoader,
-    ModalKoordinator
+    ModalKoordinator,
+    ModalPejabat
   },
   data() {
     return {
@@ -131,6 +148,9 @@ export default {
       this.$refs.loader.start()
       //console.log(data.id)
       this.$router.push(`/skpd/manajemen_kinerja/${this.$route.params.periode}/matrik_peran_hasil/${data.id}`); 
+    },
+    addPegawai: function(e) {
+        this.$refs.PejabatForm.showModalAdd(e);
     },
   },
   async asyncData({ params }) {

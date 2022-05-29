@@ -35,11 +35,11 @@
 
       <el-menu-item 
         :disabled="disabledTimKerja"
-        index="skpd-manajemen_kinerja-periode-tim_kerja___en"
-        :route="{path:`/skpd/manajemen_kinerja/${periodeTahun}/tim_kerja`, name:'skpd-manajemen_kinerja-periode-tim_kerja___en'}"
+        index="skpd-manajemen_kinerja-periode-matrik_peran_hasil___en"
+        :route="{path:`/skpd/manajemen_kinerja/${periodeTahun}/matrik_peran_hasil`, name:'skpd-manajemen_kinerja-periode-matrik_peran_hasil___en'}"
        >
         <i class="el-icon-arrow-left"></i>
-        <span>Tim Kerja List</span>
+        <span>Matrik Peran</span>
       </el-menu-item>
     </el-menu>
   </div>

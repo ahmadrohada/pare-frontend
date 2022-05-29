@@ -96,18 +96,18 @@
 
 <script>
 export default {
-  props: ["nama_lengkap", "photo_url","nip_pegawai","notifikasi_renja" ],
-  name: "PersonalProfileMenu",
+  props: ["nama_lengkap", "photo_url","nip_pegawai" ],
+  name: "PersonalLaporanHarianMenu",
   data() {
     return {
-      activeLink: "/personal/profile",
+      activeLink: "/personal/laporan_harian",
     };
   },
   methods: {
     
   },
   mounted() {
-    this.activeLink = "/personal/profile"; 
+    this.activeLink = "/personal/laporan_harian"; 
   },
 };
 </script>

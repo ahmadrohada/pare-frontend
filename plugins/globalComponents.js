@@ -32,7 +32,7 @@ import {Tabs,TabPane} from 'element-ui'
 import {Switch} from 'element-ui'
 import {Col,Row,Tree,Button} from 'element-ui'
 import {Dialog,Form,FormItem , Select,Option ,OptionGroup,Divider,ButtonGroup,MessageBox,Message} from 'element-ui'
-import {Autocomplete,Badge,Timeline,TimelineItem ,DatePicker,Card} from 'element-ui'
+import {Autocomplete,Badge,Timeline,TimelineItem ,DatePicker,Card,Calendar} from 'element-ui'
 //import {Card} from 'element-ui'
 
 /**
@@ -65,6 +65,8 @@ Vue.use(VueSweetalert2);
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Pagination)
+
+Vue.use(Calendar)
 
 Vue.use(Aside)
 Vue.use(Menu)

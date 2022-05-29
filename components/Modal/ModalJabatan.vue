@@ -112,7 +112,7 @@ export default {
       JabatanForm:{
           skpdId:null,
           periode:null,
-          roleId:'',
+          roleId:null,
           parentId:null,
           level:null,
           role:[],
@@ -241,7 +241,7 @@ export default {
   },
   mounted() {
     this.JabatanForm.periode = this.$route.params.periode
-    this.JabatanForm.roleId = this.$route.params.roleId
+    this.JabatanForm.roleId =  this.$route.params.roleId
       
   }
 };

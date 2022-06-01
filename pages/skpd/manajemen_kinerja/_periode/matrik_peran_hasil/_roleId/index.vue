@@ -33,7 +33,7 @@
       v-on:click="addJabatan($event)"
       value="0"
      
-    ><span class="fa fa-plus"></span> Tambah Jabatan
+    ><span class="fa fa-plus"></span>  Jabatan
     </md-button>
    
 
@@ -67,7 +67,7 @@
                 </el-button>
                 <md-tooltip md-direction="left">Tambah Outcome / Hasil</md-tooltip>
               </div>
-              <div style="margin-top:10px;">
+             <!--  <div style="margin-top:10px;">
                 <el-button  
                   size="small" 
                   @click="addPegawai(row)" 
@@ -75,7 +75,7 @@
                   circle>
                 </el-button>
                 <md-tooltip md-direction="left">Add Pejabat</md-tooltip>
-              </div>
+              </div> -->
               
 
             </div>

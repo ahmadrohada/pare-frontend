@@ -28,7 +28,7 @@
       class="md-dense md-raised md-primary"
       v-on:click="addKoordinator($event)"
       value="0"
-      ><span class="fa fa-plus"></span> Jabatan
+      ><span class="fa fa-plus"></span> Koordinator
     </md-button>
 
     <!-- <md-button 
@@ -46,7 +46,9 @@
       :highlight-current-row="false"
       style="width: 100%; margin-top: 10px"
       row-key="id"
-      :expand-row-keys="expands"
+      lazy
+      :load="load"
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
 
       <el-table-column align="center" width="50">
@@ -57,19 +59,19 @@
       <el-table-column label="Nama dan Jabatan" width="420">
         <template slot-scope="{ row }">
           <div v-for="data in row.pejabat_skp" :key="data.nama_pejabat">
-            <el-button size="mini" type="text" @click="hapusPegawai(data)">
+            <!-- <el-button size="mini" type="text" @click="hapusPegawai(data)">
               <i class="el-icon-remove"></i>
               <md-tooltip md-direction="top">Hapus Pejabat</md-tooltip>
-            </el-button>
+            </el-button> -->
             <span style="color: #100f15; margin-top: -6px" class="">{{
               data.nama_pejabat
             }}</span
             ><br />
           </div>
-          <el-button size="mini" type="text" @click="addPegawai(row)">
+          <!-- <el-button size="mini" type="text" @click="addPegawai(row)">
             <i class="el-icon-circle-plus"></i>Tambah Pejabat
             <md-tooltip md-direction="top">Add Pejabat</md-tooltip>
-          </el-button>
+          </el-button> -->
 
           <div style="padding: 0px !important">
             <span style="margin-top: -6px" class="">{{ row.jabatan }}</span>
@@ -96,7 +98,7 @@
       </el-table-column>
       <el-table-column align="center" fixed="right" width="80" label="AKSI">
         <template slot-scope="{ row }">
-          <el-button size="mini" type="text" @click="viewMatrikPeranHasil(row)">
+          <el-button size="mini" type="text" @click="viewMatrikPeranHasil(row)" v-if="row.level == 'S2'">
             <i class="el-icon-view"></i>
             <md-tooltip md-direction="top">Lihat Matrik Peran Hasil</md-tooltip>
           </el-button>
@@ -127,7 +129,6 @@ export default {
   data() {
     return {
       tableKoordinatorList: [],
-      expands: null,
       //periode: 2022,
     };
   },
@@ -191,6 +192,25 @@ export default {
       console.log(e);
       this.$refs.OutcomeForm.showModalAdd(e);
     },
+    load(tree, treeNode, resolve) {
+      const params = [
+        `parent_id=${tree.id}`,
+      ].join("&");
+      this.$axios
+        .get(`/jabatan_child?${params}`)
+        .then(({ data }) => {
+          setTimeout(() => {
+            resolve(data.jabatan_list)
+          }, 1000)
+          
+        })
+        .catch((error) => {
+         
+          throw error;
+        });
+
+      
+    }
   },
   async asyncData({ params }) {
     const periode = params.periode;
@@ -198,9 +218,6 @@ export default {
   },
   mounted() {
     this.loadAsyncData();
-    setTimeout(() => {
-      this.expands = ['1']
-    }, 2000)
   },
 };
 </script>

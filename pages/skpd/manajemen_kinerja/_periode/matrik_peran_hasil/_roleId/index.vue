@@ -97,6 +97,9 @@
       
     </el-table>
 
+    <br>
+
+    * Klik pada item Intermediate Outcome untuk melakukan menghapus atau melakukan perubahan narasi
     
 
    <!--  https://stackoverflow.com/questions/70373804/vue-js-element-ui-el-table-how-to-merge-cells-and-subtotal-them -->

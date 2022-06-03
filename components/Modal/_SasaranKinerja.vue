@@ -13,7 +13,9 @@
         size="mini"
       >
     <el-tabs v-model="activeName" style="min-height:260px;">
-      <el-tab-pane label="PERIODE" name="periode">
+      <el-tab-pane label="PERIODE" name="detail">
+
+        
           <el-form-item v-if="showSelectPeriode" label ="Periode" prop="periodeTahun" >
             <el-select 
               v-model="SasaranKinerjaForm.periodeTahun" 
@@ -25,7 +27,46 @@
                 :selected="item.label"
                 :key="item.periode"
                 :label="item.periode"
-                :value="item.id"
+                :value="item.periode"
+                >
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <label>Periode Penilaian SKP</label>
+          <el-form-item  prop="dateFrom">
+            <el-col :span="10">
+              <el-date-picker 
+                type="date" 
+                placeholder="Tanggal Mulai" 
+                v-model="SasaranKinerjaForm.dateFrom" 
+                format="dd-MM-yyyy"
+                style="width: 100%;">
+              </el-date-picker>
+            </el-col>
+            <el-col class="line text-center" :span="4">s.d</el-col>
+            <el-col :span="10" >
+              <el-date-picker 
+                type="date" 
+                placeholder="Tanggal Selesai" 
+                v-model="SasaranKinerjaForm.dateTo" 
+                format="dd-MM-yyyy"
+                style="width: 100%;">
+              </el-date-picker>
+            </el-col>
+          </el-form-item>
+
+          <el-form-item label="Jenis Jabatan" v-if="showSelectJenisJabatan" prop="jenisJabatanSkp" >
+            <el-select 
+              v-model="SasaranKinerjaForm.jenisJabatanSkp" 
+              placeholder="Pilih Jenis Jabatan Sasaran Kinerja"
+              >
+              <el-option
+                v-for="item in jenisJabatanSkpList"
+                :selected="item.value"
+                :key="item.value"
+                :label="item.value"
+                :value="item.value"
                 >
               </el-option>
             </el-select>
@@ -33,13 +74,17 @@
       </el-tab-pane>
       <el-tab-pane label="PEGAWAI YANG DINILAI" name="pegawai">
         <label>Nama Pegawai</label>
-        <el-form-item>
-          <el-input 
-            v-model="SasaranKinerjaForm.namaLengkapPegawaiYangDinilai" 
+        <el-form-item  prop="namaPegawaiYangDinilai" >
+          <el-autocomplete
             class="inline-input"
-            readonly
-          ></el-input>
-          
+            v-model="SasaranKinerjaForm.namaPegawaiYangDinilai"
+            :fetch-suggestions="querySearchPegawaiYangDinilai"
+            placeholder="Nama Pegawai Yang Dinilai"
+            :trigger-on-focus="false"
+            @select="handleSelectPegawaiYangDinilai"
+            :clearable="true"
+            @clear="clearPegawaiYangDinilai"
+          ></el-autocomplete>
         </el-form-item>
 
         <label>NIP Pegawai</label>
@@ -98,7 +143,7 @@
         <input v-model="SasaranKinerjaForm.jabatanPegawaiYangDinilai" hidden></input>
         <input v-model="SasaranKinerjaForm.golonganPegawaiYangDinilai" hidden></input>
         <input v-model="SasaranKinerjaForm.pangkatPegawaiYangDinilai" hidden></input>
-        
+        <input v-model="SasaranKinerjaForm.namaLengkapPegawaiYangDinilai" hidden></input>
        
       </el-tab-pane>
 
@@ -214,17 +259,10 @@ var getEndDate = function(year) {
 
 
 import PareLoader from '~/components/Loader/PareLoader.vue';
-import { mapGetters } from 'vuex' 
 
 export default {
   components:{
     PareLoader,
-  },
-  computed: {
-      ...mapGetters({
-        user_id:'user_id',
-        skpd_id:'id_skpd'
-      })
   },
   data() {
     return {
@@ -306,7 +344,7 @@ export default {
     };
   },
   methods: {
-    _showModalFromMk(skpdId,periode,jenisJabatan){
+    showModalFromMk(skpdId,periode,jenisJabatan){
 
         const start = getStartDate(periode);
         const end = getEndDate(periode);
@@ -320,21 +358,18 @@ export default {
         this.showSelectJenisJabatan = false
         this.showModal(skpdId)
     },
-    showModal() {
+    showModal(skpdId) {
 
-      this.listPeriodePK()
-      this.handleSelectPegawaiYangDinilai(this.user_id)
       this.submitLoader = false
+      this.$refs.loader.start() 
       this.modalFormVisible = true; 
 
-
-    },
-    listPeriodePK(){
-      this.$refs.loader.start() 
-      const params = [
-        `skpd_id=${this.skpd_id}`,
+       const params = [
+        `skpd_id=${skpdId}`,
         `status=close`,
       ].join('&')
+
+
       //get data periode PK List from this SKPD
       this.$axios
         .$get(`/perjanjian_kinerja?${params}`)
@@ -343,6 +378,7 @@ export default {
             setTimeout(() => {
               this.$refs.loader.finish() 
             }, 700);
+            
         })
         .catch((error) => {
           this.$message({
@@ -353,6 +389,7 @@ export default {
             this.$refs.loader.finish() 
           }, 700);
         }); 
+
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -400,20 +437,14 @@ export default {
         .$get("/perjanjian_kinerja_detail?id="+event)
         .then((resp) => {
 
-          this.SasaranKinerjaForm.periodeLabel = resp.periodePk
-          const start = getStartDate(resp.periodePk)
-          const end = getEndDate(resp.periodePk)
-
-          this.SasaranKinerjaForm.dateFrom = start
-          this.SasaranKinerjaForm.dateTo = end
-          
-          console.log(resp.periodePk) 
+          this.SasaranKinerjaForm.periodeLabel = resp.periode.tahun
+          console.log(resp.periode.tahun) 
               
         }) 
     },
 
     //===== pegawai yang dinilai =============================//
-    /* querySearchPegawaiYangDinilai(queryString, cb) {
+    querySearchPegawaiYangDinilai(queryString, cb) {
         //console.log(queryString)
         this.$axios
           .$get("/select_user?search="+queryString)
@@ -421,19 +452,19 @@ export default {
             //console.log(resp)
             cb(resp);
           })
-    }, */
+    },
     handleSelectPegawaiYangDinilai(queryString) {
         this.$refs.loader.start() 
         
         //mengisi  detail Pegawai
-        const params = [`user_id=${queryString}`].join('&')
+        const params = [`user_id=${queryString.id}`].join('&')
         this.$axios
           .get(`/pegawai_detail?${params}`)
           .then((resp) => {
             console.log(resp)
             this.SasaranKinerjaForm.nipPegawaiYangDinilai = resp.data.nip;
             this.SasaranKinerjaForm.namaLengkapPegawaiYangDinilai = resp.data.nama_lengkap;
-            this.SasaranKinerjaForm.userId = queryString
+            this.SasaranKinerjaForm.userId = queryString.id
             this.SasaranKinerjaForm.simpegId = resp.data.id
             this.SasaranKinerjaForm.pnsId = resp.data.pns_id
             this.SasaranKinerjaForm.skpdId = resp.data.skpd.id

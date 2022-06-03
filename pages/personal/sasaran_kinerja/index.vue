@@ -12,14 +12,14 @@
       <p class="card-category d-inline">Personal</p>
     </template>
 
-    <!-- <md-button 
+    <md-button 
       style="height:28px;margin-left:-1px; font-size:11px;" 
       class="md-dense md-raised md-primary"
       v-on:click="createSkp($event)"
       value="0"
      
-    ><span class="fa fa-plus"></span> Create SKP
-    </md-button> -->
+    ><span class="fa fa-plus"></span> Sasaran Kinerja
+    </md-button>
 
     <el-table
       :data="tableDataSkp"

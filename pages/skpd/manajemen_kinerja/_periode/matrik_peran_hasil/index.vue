@@ -51,34 +51,30 @@
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
 
-      <el-table-column align="center" width="50">
-        <template slot="header">
-           <i class="fa fa-sitemap"></i>
-        </template>
-      </el-table-column>
-      <el-table-column label="Nama dan Jabatan" width="420">
+      <el-table-column prop="jabatan" label="Jabatan" width="600"></el-table-column>
+      <!-- <el-table-column label="Nama dan Jabatan" width="420">
         <template slot-scope="{ row }">
           <div v-for="data in row.pejabat_skp" :key="data.nama_pejabat">
-            <!-- <el-button size="mini" type="text" @click="hapusPegawai(data)">
+            <el-button size="mini" type="text" @click="hapusPegawai(data)">
               <i class="el-icon-remove"></i>
               <md-tooltip md-direction="top">Hapus Pejabat</md-tooltip>
-            </el-button> -->
+            </el-button>
             <span style="color: #100f15; margin-top: -6px" class="">{{
               data.nama_pejabat
             }}</span
             ><br />
           </div>
-          <!-- <el-button size="mini" type="text" @click="addPegawai(row)">
+          <el-button size="mini" type="text" @click="addPegawai(row)">
             <i class="el-icon-circle-plus"></i>Tambah Pejabat
             <md-tooltip md-direction="top">Add Pejabat</md-tooltip>
-          </el-button> -->
+          </el-button>
 
           <div style="padding: 0px !important">
             <span style="margin-top: -6px" class="">{{ row.jabatan }}</span>
           </div>
         </template> 
-      </el-table-column>
-      <el-table-column label="Intermediate Outcome">
+      </el-table-column> -->
+      <el-table-column label="Rencana Kinerja SKP">
         <template slot-scope="{ row }">
           <ol style="margin-left: -22px">
             <li v-for="(data, key) in row.outcome" :key="key">
@@ -96,10 +92,13 @@
           </ol>
         </template>
       </el-table-column>
-      <el-table-column align="center" fixed="right" width="80" label="AKSI">
+      <el-table-column align="center" fixed="right" width="80">
+        <template slot="header">
+           <i class="fa fa-cog"></i>
+        </template>
         <template slot-scope="{ row }">
           <el-button size="mini" type="text" @click="viewMatrikPeranHasil(row)" v-if="row.level == 'S2'">
-            <i class="el-icon-view"></i>
+            <i class="fa fa-sitemap"></i>
             <md-tooltip md-direction="top">Lihat Matrik Peran Hasil</md-tooltip>
           </el-button>
         </template>

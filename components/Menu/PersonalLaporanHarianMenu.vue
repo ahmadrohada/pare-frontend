@@ -52,13 +52,13 @@
           <span>Sasaran Kinerja</span>
       </el-menu-item>
 
-      <el-menu-item 
+      <!-- <el-menu-item 
         index="/personal/laporan_harian"
         :route="{path: '/personal/laporan_harian'}"
        >
           <i class="el-icon-date"></i>
           <span>Laporan Harian</span>
-      </el-menu-item>
+      </el-menu-item> -->
        <!-- <el-badge :value="notifikasi_renja" class="item" type="warning">
         <el-menu-item 
         index="/personal/rencana_skp"

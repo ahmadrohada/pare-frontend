@@ -26,25 +26,55 @@
       highlight-current-row
       border
       style="width: 100%;">
-      <el-table-column min-width="60" align="center" prop="periode_tahun" label="Periode"></el-table-column>
-      <el-table-column min-width="130" align="center" prop="jenis_jabatan_skp" label="Jenis Jabatan SKP"></el-table-column>
-      <el-table-column min-width="210" align="left" prop="nama_pegawai" label="Nama Pegawai"></el-table-column>
-      <el-table-column  min-width="90" align="center" label="Created at">
+      <el-table-column width="75" align="center" prop="periode_tahun" label="Periode SKP"></el-table-column>
+      <!-- <el-table-column min-width="130" align="center" prop="jenis_jabatan_skp" label="Jenis Jabatan SKP"></el-table-column> -->
+      <el-table-column min-width="180" label="Pegawai Yang Dinilai">
+        <template slot-scope="{ row }">
+          <div style="padding:0px !important;">
+            <span style="color:#130f0f;" class="">{{ row.nama_pegawai}}</span><br>
+          </div>
+          <div style="padding:0px !important; margin-top:-5px;">
+            <span style="" class="">{{ row.nip_pegawai}}</span><br>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="180" label="Pejabat Penilai">
+        <template slot-scope="{ row }">
+          <div style="padding:0px !important;">
+            <span style="color:#130f0f;" class="">{{ row.nama_pejabat_penilai}}</span><br>
+          </div>
+          <div style="padding:0px !important; margin-top:-5px;">
+            <span style="" class="">{{ row.nip_pejabat_penilai}}</span><br>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="180" label="Atasan Pejabat Penilai">
+        <template slot-scope="{ row }">
+          <div style="padding:0px !important;">
+            <span style="color:#130f0f;" class="">{{ row.nama_atasan_pejabat_penilai}}</span><br>
+          </div>
+          <div style="padding:0px !important; margin-top:-5px;">
+            <span style="" class="">{{ row.nip_atasan_pejabat_penilai}}</span><br>
+          </div>
+        </template>
+      </el-table-column>
+      
+      <el-table-column   align="center" label="Created at">
         <template slot-scope="{ row }">
           <div style="padding:0px !important;">
             <span style="margin-top:-6px;" class="">{{moment(row.created_at).format('DD-MM-YYYY hh:mm')}}</span><br>
           </div>
         </template>
       </el-table-column>
-      <el-table-column  min-width="100" align="center" label="Status">
+      <!-- <el-table-column   align="center" label="Status">
         <template slot-scope="{ row }">
-          <!-- DRAFT -->
+          
           <el-button v-if=" row.status == '1' "  size="mini" type="text" @click="submitSasaranKinerja(row)">
             <i class="el-icon-edit">
             </i> Perencanaan
             <md-tooltip md-direction="top">Klik Untuk Submit Sasaran Kinerja</md-tooltip>
           </el-button>
-           <!-- Submit -->
+           
           <span v-if=" row.status == '2' " class="text-info">
             Submited
           </span>
@@ -57,38 +87,22 @@
             <md-tooltip md-direction="top">Klik Untuk Submit Perjanjian Kinerja</md-tooltip>
           </el-button>
         </template>
-      </el-table-column>
-      <el-table-column min-width="90" align="center" label="Aksi">
+      </el-table-column> -->
+      <el-table-column width="90px" align="center">
+        <template slot="header">
+          <i class="el-icon-s-tools"></i>
+        </template>
         <template slot-scope="{ row }">
-          <div v-if=" row.status == '1' ">
-            <el-button  size="mini" type="text" @click="viewSasaranKinerja(row)">
-              <i class="el-icon-edit-outline">
-              </i> Edit
-              <md-tooltip md-direction="top">Edit Data</md-tooltip>
-            </el-button>
-            <el-button  size="mini" type="text danger" @click="hapusSasaranKinerja(row)">
+           <!--  <el-button  size="mini" type="text danger" @click="hapusSasaranKinerja(row)">
               <i class="el-icon-delete">
               </i> Hapus
               <md-tooltip md-direction="top">Hapus Data</md-tooltip>
-            </el-button>
-          </div>
-
-          <div v-if=" row.status == '2' | row.status == '3' ">
-            <el-button  disabled size="mini" type="text" @click="viewSasaranKinerja(row)">
-              <i class="el-icon-view">
-              </i> Lihat
-              <md-tooltip md-direction="top">Lihat Data</md-tooltip>
-            </el-button>
-          </div>
-
-          <div v-if=" row.status == '4' ">
+            </el-button> -->
             <el-button  size="mini" type="text" @click="viewSasaranKinerja(row)">
               <i class="el-icon-view">
               </i> Lihat
               <md-tooltip md-direction="top">Lihat Data</md-tooltip>
             </el-button>
-          </div>
-          
         </template>
       </el-table-column>
 

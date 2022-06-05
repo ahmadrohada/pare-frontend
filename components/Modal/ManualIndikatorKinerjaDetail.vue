@@ -15,7 +15,7 @@
       <thead>
         <tr>
           <th width="50%" colspan="2">PEGAWAI YANG DINILAI</th>
-          <th width="50%" colspan="2">PEJABAT PENILAI KINERJA</th>
+          <th width="50%" colspan="2">PEJABAT PENILAI</th>
         </tr>
       </thead>
       <tbody>
@@ -23,31 +23,31 @@
             <td width="18%" class="label"> NAMA </td>
             <td>{{pegawaiYangDinilai.nama}}</td>
             <td width="18%" class="label"> NAMA</td>
-            <td>{{pejabatPenilaiKinerja.nama}}</td>
+            <td>{{pejabatPenilai.nama}}</td>
         </tr>
         <tr>
             <td class="label"> NIP </td>
             <td>{{pegawaiYangDinilai.nip}}</td>
             <td class="label"> NIP</td>
-            <td>{{pejabatPenilaiKinerja.nip}}</td>
+            <td>{{pejabatPenilai.nip}}</td>
         </tr>
         <tr>
             <td class="label"> PANGKAT / GOL RUANG </td>
             <td>{{pegawaiYangDinilai.pangkat}} {{ (pegawaiYangDinilai.golongan != null )? '  /  '+pegawaiYangDinilai.golongan:''}}</td>
             <td class="label"> PANGKAT / GOL RUANG</td>
-            <td>{{pejabatPenilaiKinerja.pangkat}} {{ (pejabatPenilaiKinerja.golongan != null )? '  /  '+pejabatPenilaiKinerja.golongan:''}}</td>
+            <td>{{pejabatPenilai.pangkat}} {{ (pejabatPenilai.golongan != null )? '  /  '+pejabatPenilai.golongan:''}}</td>
         </tr>
         <tr>
             <td class="label"> JABATAN </td>
             <td>{{pegawaiYangDinilai.jabatan}}</td>
             <td class="label"> JABATAN</td>
-            <td>{{pejabatPenilaiKinerja.jabatan}}</td>
+            <td>{{pejabatPenilai.jabatan}}</td>
         </tr>
         <tr>
             <td class="label"> UNIT KERJA </td>
             <td>{{pegawaiYangDinilai.unit_kerja}}</td>
             <td class="label"> UNIT KERJA</td>
-            <td>{{pejabatPenilaiKinerja.unit_kerja}}</td>
+            <td>{{pejabatPenilai.unit_kerja}}</td>
         </tr>
         <tr>
             <td class="label"> RENCANA KINERJA </td>
@@ -129,7 +129,7 @@ export default {
       indikatorKinerjaId:"",
 
       pegawaiYangDinilai:"",
-      pejabatPenilaiKinerja:"",
+      pejabatPenilai:"",
 
       rencanaKinerjaLabel:"",
       deskripsiRencanaKinerja:"",
@@ -162,7 +162,7 @@ export default {
             this.indikatorKinerjaId = resp.indikator_kinerja_individu.id
 
             this.pegawaiYangDinilai = resp.pegawai_yang_dinilai
-            this.pejabatPenilaiKinerja = resp.pejabat_penilai_kinerja
+            this.pejabatPenilai = resp.pejabat_penilai
 
             this.rencanaKinerjaLabel = resp.rencana_kinerja.label
             this.deskripsiRencanaKinerja = resp.deskripsi_rencana_kinerja

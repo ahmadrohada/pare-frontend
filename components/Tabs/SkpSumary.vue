@@ -58,25 +58,25 @@
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
           <card class="font-weight-300">
-                <p style="font-weight:bold;height:30px;"><i class="el-icon-user"></i> PEJABAT PENILAI KINERJA</p>
+                <p style="font-weight:bold;height:30px;"><i class="el-icon-user"></i> PEJABAT PENILAI</p>
                 <p class="card-text"><i class="el-icon-date"></i> NAMA</p>
-                <p class="text-muted" style="min-height:20px;">{{pejabatPenilaiKinerja.nama}}</p>
+                <p class="text-muted" style="min-height:20px;">{{pejabatPenilai.nama}}</p>
                 <hr style="margin-top:-2px;">
 
                 <p class="card-text"><i class="el-icon-thumb"></i> NIP</p>
-                <p class="text-muted" style="min-height:20px;">{{pejabatPenilaiKinerja.nip}}</p>
+                <p class="text-muted" style="min-height:20px;">{{pejabatPenilai.nip}}</p>
                 <hr style="margin-top:-2px;">
 
                 <p class="card-text"><i class="el-icon-notebook-2"></i> PANGKAT / GOL RUANG</p>
-                <p class="text-muted" style="min-height:20px;">{{pejabatPenilaiKinerja.pangkat}} {{ (pejabatPenilaiKinerja.golongan != null )? '  /  '+pejabatPenilaiKinerja.golongan:''}}</p>
+                <p class="text-muted" style="min-height:20px;">{{pejabatPenilai.pangkat}} {{ (pejabatPenilai.golongan != null )? '  /  '+pejabatPenilai.golongan:''}}</p>
                 <hr style="margin-top:-2px;">
 
                 <p class="card-text"><i class="el-icon-monitor"></i> JABATAN</p>
-                <p class="text-muted" style="min-height:20px;">{{pejabatPenilaiKinerja.jabatan}}</p>
+                <p class="text-muted" style="min-height:20px;">{{pejabatPenilai.jabatan}}</p>
                 <hr style="margin-top:-2px;">
 
                 <p class="card-text"><i class="el-icon-monitor"></i> INSTANSI</p>
-                <p class="text-muted" style="min-height:20px;">{{pejabatPenilaiKinerja.instansi}}</p>
+                <p class="text-muted" style="min-height:20px;">{{pejabatPenilai.instansi}}</p>
                 <hr style="margin-top:-2px;">
           </card>
       </el-col>
@@ -126,7 +126,7 @@ export default {
         jabatan:"-",
         instansi:"-"
       },
-      pejabatPenilaiKinerja:{
+      pejabatPenilai:{
         nama:"-",
         nip:"-",
         pangkat:"-",
@@ -164,7 +164,7 @@ export default {
           this.statusSkp = data.statusSkp,
 
           this.pegawaiYangDinilai = ( data.pegawaiYangDinilai != null ) ? data.pegawaiYangDinilai : this.pegawaiYangDinilai
-          this.pejabatPenilaiKinerja = ( data.pejabatPenilaiKinerja != null ) ? data.pejabatPenilaiKinerja : this.pejabatPenilaiKinerja
+          this.pejabatPenilai = ( data.pejabatPenilai != null ) ? data.pejabatPenilai : this.pejabatPenilai
           this.periodePenilaian = ( data.periodePenilaian != null ) ? data.periodePenilaian : this.periodePenilaian
          
          

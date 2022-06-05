@@ -49,15 +49,15 @@
 
 
         <el-form-item  
-          label="Pejabat Penilai Kinerja / Atasan Langsung"   
-          prop="skpPejabatPenilaiKinerjaId">
+          label="Pejabat Penilai  / Atasan Langsung"   
+          prop="skppejabatPenilaiId">
             <el-select 
-                v-model="PejabatForm.skpPejabatPenilaiKinerjaId" 
-                placeholder="Pilih Pejabat Penilai Kinerja / Atasan Langsung"
+                v-model="PejabatForm.skppejabatPenilaiId" 
+                placeholder="Pilih Pejabat Penilai  / Atasan Langsung"
                 style="width:100% !important;"
                 >
                 <el-option
-                  v-for="item in pejabatPenilaiKinerja"
+                  v-for="item in pejabatPenilai"
                   :selected="item.id"
                   :key="item.id"
                   :label="item.nama"
@@ -180,10 +180,10 @@ export default {
         dateFrom:null,
         dateTo:null,
         jenisJabatanSkp:"",
-        skpPejabatPenilaiKinerjaId:""
+        skppejabatPenilaiId:""
       },
       jabatans: [],
-      pejabatPenilaiKinerja:[],
+      pejabatPenilai:[],
       jenisJabatanSkpList: [{
           value: 'PEJABAT PIMPINAN TINGGI',
         }, {
@@ -203,7 +203,7 @@ export default {
           jenisJabatanSkp: [
             { required: true, message: 'Silakan jenis Jabatan SKP', trigger: 'blur' }
           ],
-          skpPejabatPenilaiKinerjaId:[
+          skppejabatPenilaiId:[
             { required: true, message: 'Silakan pilih pejabat penilai', trigger: 'blur' }
           ] 
       },
@@ -220,11 +220,11 @@ export default {
           this.$axios
             .get(`/list_pejabat_penilai_mph?${params}`)
             .then((data) => {
-              this.pejabatPenilaiKinerja = data.data.pejabatPenilai
+              this.pejabatPenilai = data.data.pejabatPenilai
               if ( isSelect == 0 ){
-                this.PejabatForm.skpPejabatPenilaiKinerjaId = data.data.pejabatPenilai[0].id // pilih data ke 1
+                this.PejabatForm.skppejabatPenilaiId = data.data.pejabatPenilai[0].id // pilih data ke 1
               }else{
-                this.PejabatForm.skpPejabatPenilaiKinerjaId = isSelect
+                this.PejabatForm.skppejabatPenilaiId = isSelect
               } 
             setTimeout(() => {
               this.$refs.loader.finish() 
@@ -342,7 +342,7 @@ export default {
       this.disabledSelectJabatan = true
       this.saveDisabled = true
       this.showSelectJenisJabatan = false
-      this.PejabatForm.skpPejabatPenilaiKinerjaId = null
+      this.PejabatForm.skppejabatPenilaiId = null
       
     },
     closeForm(){

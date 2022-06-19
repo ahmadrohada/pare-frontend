@@ -263,12 +263,14 @@ export default {
       }, 700);
       this.modalFormVisible = true;
     }, 
-    showModalEdit(e) {
+    showModalEdit(e,pk_id) {
 
       this.submitLoader = false
       this.headerText = 'Edit Outcome / Hasil'
       this.$refs.loader.start() 
       this.formType = "edit"
+
+      const perjanjian_kinerja_id = pk_id
 
       const params = [
         `outcome_id=${e.id}`,
@@ -295,6 +297,10 @@ export default {
             this.selectVisibleSasaranStrategis = false
             
           }else{
+
+            this.sasaranStrategisList(perjanjian_kinerja_id,data.sasaran_strategis_id)
+            this.onPilihSasaranStrategis(data.sasaran_strategis_id,data.indikator_kinerja_utama_id)
+
             this.selectVisibleOutcomeAtasan = false
             this.selectVisibleSasaranStrategis = true
             setTimeout(() => {

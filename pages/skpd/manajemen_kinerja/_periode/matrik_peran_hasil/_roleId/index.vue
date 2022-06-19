@@ -99,7 +99,7 @@
               <md-tooltip md-direction="top">Add Pegawai</md-tooltip>
             </el-button> -->
             <br>
-            <el-button  v-if="row.outcome[index].label != '' " size="mini" type="text"  style="color:#34a890;margin-left:-3px;" @click="klikKolom(row.outcome[index])" >
+            <el-button  v-if="row.outcome[index].label != '' " size="mini" type="text"  style="color:#34a890;margin-left:-3px;" @click="klikKolom(row.outcome[index],row.perjanjian_kinerja_id)" >
               <i class="el-icon-setting"></i> Update/Delete
               <md-tooltip md-direction="top">Update / Delete Outcome</md-tooltip>
             </el-button>
@@ -227,9 +227,9 @@ export default {
         });
 
       },
-      klikKolom: function(e) {
-        console.log(e.id)
-        this.$refs.OutcomeForm.showModalEdit(e);
+      klikKolom: function(e,pk_id) {
+        console.log(pk_id)
+        this.$refs.OutcomeForm.showModalEdit(e,pk_id);
         
       },
   },

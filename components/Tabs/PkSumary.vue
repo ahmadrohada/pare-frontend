@@ -33,7 +33,7 @@
                 <p class="text-muted">{{jumlahSasaranStrategis}}</p>
                 <hr style="margin-top:-2px;">
 
-                <p class="card-text"><i class="el-icon-monitor"></i> STATUS</p>
+                <p class="card-text"><i class="fa fa-hourglass-start"></i> STATUS</p>
                 <p class="text-muted">{{statusPk}}</p>
                 <hr style="margin-top:-2px;">
           </card>
@@ -122,7 +122,7 @@ export default {
         .then(({ data }) => {
           
           if(data.jumlahSasaranStrategis >= 1 ){
-              this.$confirm('Submit Perjanjian Kinerja', 'Konfirmasi', {
+              this.$confirm('Perjanjian Kinerja akan ditutup, dan proses edit pada Sasaran Strategis tidak dapat dilakukan', 'Submit Perjanjian Kinerja', {
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Batal',
                 type: 'warning'
@@ -136,9 +136,10 @@ export default {
                         message: 'Berhasil Submit'
                       });
                       setTimeout(() => {
-                        this.$refs.loader.finish() 
+                        //this.$refs.loader.finish() 
                         this.$router.go(this.$router.currentRoute)
-                      }, 400);
+                        //this.$router.push("/skpd/manajemen_kinerja/"+this.periodePk+"/sasaran_kinerja_jpt");
+                      }, 600);
                       
                   })
                   .catch((error) => {
@@ -165,7 +166,7 @@ export default {
           }else{
             this.$message({
                   type: 'warning',
-                  message: 'PK harus memiliki minimal 1 Sasaran Strategis'
+                  message: 'PK harus memiliki minimal 1 Sasaran Strategis',
                 });   
             setTimeout(() => {
               this.submitLoader = false
@@ -178,6 +179,11 @@ export default {
           throw error
         })
     },
+  },
+  async asyncData({ params }) {
+      const periode = params.periode
+      return { periode }
+      
   },
   mounted() {
     if ( this.perjanjianKinerjaId != null ){

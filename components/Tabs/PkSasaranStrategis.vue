@@ -46,12 +46,12 @@
       <el-table-column label="Sasaran Strategis" width="270">
         <template slot-scope="scope">
           {{scope.row.sasaran_strategis}}
-          <i v-if=" scope.row.indikator_id  != '' ">
-            <el-button v-if="statusPk == 'open' " size="mini" type="text" @click="editSasaranStrategis(scope.row)">
+          <!-- <i v-if=" scope.row.indikator_id  != '' "> -->
+            <el-button v-if="statusPk == 'open' " size="medium" type="text" @click="editSasaranStrategis(scope.row)">
             <i class="el-icon-edit-outline"></i> Edit
             <md-tooltip md-direction="top">Edit Sasaran Strategis</md-tooltip>
             </el-button>
-          </i>
+          <!-- </i> -->
         </template>
       </el-table-column>
       <el-table-column  label="Indikator Kinerja Utama" min-width="320">
@@ -68,28 +68,34 @@
       <el-table-column fixed="right" align="center"  label="Aksi" width="70"  v-if="statusPk == 'open' ">
         <template slot-scope="scope" >
           <div v-if=" scope.row.indikator_id  != '' ">
-            <el-button size="mini" type="text" @click="editIndikatorSasaranStrategis(scope.row)">
+            <el-button size="medium" type="text" @click="editIndikatorSasaranStrategis(scope.row)">
               <i class="el-icon-edit-outline"></i>
               <md-tooltip md-direction="top">Edit Indikator Kinerja Utama</md-tooltip>
             </el-button>
-            <el-button size="mini" type="text danger" @click="hapusIndikatorSasaranStrategis(scope.row)">
-              <i class="el-icon-delete"></i>
+            <el-button size="medium" type="text" @click="hapusIndikatorSasaranStrategis(scope.row)">
+              <i class="el-icon-delete" style="color:#F56C6C;"></i>
               <md-tooltip md-direction="top">Hapus Indikator Kinerja Utama</md-tooltip>
             </el-button>
           </div>
           <div v-else>
-            <el-button size="mini" type="text" @click="editSasaranStrategis(scope.row)">
+            <el-button size="medium" type="text" @click="editSasaranStrategis(scope.row)">
               <i class="el-icon-edit-outline"></i>
               <md-tooltip md-direction="top">Edit  Sasaran Strategis</md-tooltip>
             </el-button>
-            <el-button size="mini" type="text danger" @click="hapusSasaranStrategis(scope.row)">
-              <i class="el-icon-delete"></i>
+            <el-button size="medium" type="text" @click="hapusSasaranStrategis(scope.row)">
+              <i class="el-icon-delete" style="color:#F56C6C;"></i>
               <md-tooltip md-direction="top">Hapus  Sasaran Strategis</md-tooltip>
             </el-button>
           </div>
         </template>
       </el-table-column>
     </el-table>
+
+    <br>
+    <span class="text-info" v-if="statusPk == 'open' " >
+      * Perjanjian Kinerja wajib memiliki minimal 1 Sasaran Strategis beserta indikator nya
+    </span>
+    
     
    </card>
 </template>

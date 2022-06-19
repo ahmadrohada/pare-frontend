@@ -59,7 +59,7 @@
           ></el-autocomplete>
         </el-form-item>
 
-        <label>Jabatan</label>
+        <label>Pilih Jabatan</label>
         <el-form-item  prop="jabatanId" >
           <el-select 
             v-model="RenjaForm.jabatanId" 

@@ -19,11 +19,11 @@
     >
     </modal-outcome>
 
-    <modal-pejabat 
-      ref="PejabatForm"
+    <modal-pegawai 
+      ref="PegawaiForm"
       @loadAsyncData="loadAsyncData"
     >
-    </modal-pejabat>
+    </modal-pegawai>
 
 
     
@@ -44,18 +44,33 @@
       :highlight-current-row="false"
       style="width: 100%;">
 
-      <el-table-column  :fixed="true" min-width="260" label="JABATAN">
+      <el-table-column  :fixed="true" min-width="360" label="Jabatan dan Nama Pegawai">
         <template slot-scope="{ row }">
           <div style="display: inline-block !important; padding:0px !important; width:100%; ">
             <div style="float: left; width:80%;">
-              <span style="margin-top:-6px;" class="">{{row.jabatan}}</span><br>
-              <span style="color:#100f15;   margin-top:-6px;" class="">{{row.role}}</span><br>
-              
-              <div v-for=" data in row.pejabat_skp" v-bind:key >
-                 <span style="color:#100f15;   margin-top:-6px;" class="">{{data.nama_pejabat}}</span><br>
+
+              <div v-if="row.nama_pegawai != null ">
+                <el-button size="mini" type="text" @click="hapusPegawai(row)">
+                  <i class="el-icon-remove" style="color:#F56C6C;"></i>
+                  <md-tooltip md-direction="top">Hapus Pegawai</md-tooltip>
+                </el-button>
+                <span style="color: #100f15; margin-top: -6px" class="">{{
+                  row.nama_pegawai
+                }}</span
+                ><br />
               </div>
+              <el-button v-else size="mini" type="text" @click="addPegawai(row)" >
+                <i class="el-icon-user"></i> Tambah Pegawai
+                <md-tooltip md-direction="top">Add Pegawai</md-tooltip>
+              </el-button>
 
-
+              <div style="padding: 0px !important">
+                <span style="margin-top:-6px;" class="">{{row.jabatan}}</span>
+              </div>
+              <div style="padding: 0px !important">
+                <span style="color:#100f15;   margin-top:-6px;" class="">{{row.role}}</span><br>
+              </div>
+              
             </div>
             <div style="margin-top:10px;float:right;">
               <div>
@@ -63,21 +78,11 @@
                   size="small" 
                   @click="addOutcome(row)" 
                   icon="el-icon-s-order" 
-                  circle>
+                  circle
+                  style="color:#34a890;">
                 </el-button>
                 <md-tooltip md-direction="left">Tambah Outcome / Hasil</md-tooltip>
               </div>
-             <!--  <div style="margin-top:10px;">
-                <el-button  
-                  size="small" 
-                  @click="addPegawai(row)" 
-                  icon="el-icon-user" 
-                  circle>
-                </el-button>
-                <md-tooltip md-direction="left">Add Pejabat</md-tooltip>
-              </div> -->
-              
-
             </div>
           </div> 
         </template>
@@ -85,11 +90,19 @@
     
       <!-- ========== KOLOM HASIL / OUTCOME ========================== -->
       <template v-for="(data,index) in sasaranStrategis">
-        <el-table-column  v-bind:key min-width="220" label="INTERMEDIATE OUTCOME">
+        <el-table-column  v-bind:key min-width="250" label="INTERMEDIATE OUTCOME">
           <template slot-scope="{ row }">
-            <div style="cursor:pointer;padding:0px !important;" v-on:click="klikKolom(row.outcome[index])">
-              <span style="margin-top:-6px;" class="">{{row.outcome[index].label}}</span>
-            </div>
+            <span style="margin-top:-6px;" class="">{{row.outcome[index].label}}</span>
+
+            <!-- <el-button v-if="" size="mini" type="text" @click="klikKolom(row.outcome[index])" >
+              <i class="el-icon-circle-plus-outline"></i> Tambah Pegawai
+              <md-tooltip md-direction="top">Add Pegawai</md-tooltip>
+            </el-button> -->
+            <br>
+            <el-button  v-if="row.outcome[index].label != '' " size="mini" type="text"  style="color:#34a890;margin-left:-3px;" @click="klikKolom(row.outcome[index])" >
+              <i class="el-icon-setting"></i> Update/Delete
+              <md-tooltip md-direction="top">Update / Delete Outcome</md-tooltip>
+            </el-button>
           </template>
         </el-table-column>
       </template>
@@ -99,7 +112,7 @@
 
     <br>
 
-    * Klik pada item Intermediate Outcome untuk melakukan menghapus atau melakukan perubahan narasi
+    <span style="color:#22726f">* Klik pada item Intermediate Outcome untuk melakukan menghapus atau melakukan perubahan narasi</span>
     
 
    <!--  https://stackoverflow.com/questions/70373804/vue-js-element-ui-el-table-how-to-merge-cells-and-subtotal-them -->
@@ -114,7 +127,7 @@
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
 import ModalJabatan from '~/components/Modal/ModalJabatan.vue';
-import ModalPejabat from '~/components/Modal/ModalPejabat.vue';
+import ModalPegawai from '~/components/Modal/ModalPegawai.vue';
 import ModalOutcome from '~/components/Modal/ModalOutcome.vue';
 import { mapGetters } from 'vuex' 
 
@@ -126,7 +139,7 @@ export default {
     PareLoader,
     ModalJabatan,
     ModalOutcome,
-    ModalPejabat
+    ModalPegawai
     
   },
   data() {
@@ -181,16 +194,42 @@ export default {
         this.$refs.OutcomeForm.showModalAdd(e);
       },
       addPegawai: function(e) {
-        this.$refs.PejabatForm.showModalAdd(e);
+        this.$refs.PegawaiForm.showModalAdd(e);
+      },
+      hapusPegawai: function (data) {
+      console.log(data);
+        this.$confirm('Nama Pegawai akan dihapus dari jabatan ini !', 'Konfirmasi', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Batal',
+          type: 'warning'
+        }).then(() => {
+          this.$axios
+            .$delete("/peran_pegawai?id="+data.id)
+            .then((resp) => {
+                this.loadAsyncData()
+                this.$message({
+                  type: 'success',
+                  message: 'Pegawai Berhasil dihapus'
+                });
+            })
+            .catch((error) => {
+              //console.log(error.response.data.message)
+              this.$message({
+                type: 'error',
+                message: error.response.data.message
+              });          
+            });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Proses Hapus Pegawai Dibatalkan'
+          });          
+        });
+
       },
       klikKolom: function(e) {
         console.log(e.id)
         this.$refs.OutcomeForm.showModalEdit(e);
-       /*  this.$message({
-          showClose: true,
-          message: 'Warning, fungsi dalam pengerjaan',
-          type: 'warning'
-        }); */
         
       },
   },

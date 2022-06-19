@@ -42,7 +42,7 @@
                 <p class="text-muted">{{jumlahSasaranStrategis}}</p>
                 <hr style="margin-top:-2px;">
 
-                <p class="card-text"><i class="el-icon-monitor"></i> STATUS</p>
+                <p class="card-text"><i class="fa fa-hourglass-start"></i> STATUS</p>
                 <p class="text-muted">{{statusPk}}</p>
                 <hr style="margin-top:-2px;">
           </card>

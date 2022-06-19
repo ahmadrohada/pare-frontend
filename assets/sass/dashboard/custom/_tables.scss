@@ -14,10 +14,11 @@
         width: 100%;
       }
     }
+
   }
 
   > tbody > tr.table-success{
-    &,
+    &
     > td {
       background-color: darken($success, 10%);
     }

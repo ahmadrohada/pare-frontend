@@ -16,7 +16,7 @@
       style="height:28px;margin-left:-1px; font-size:11px;" 
       class="md-dense md-raised md-primary btn-block"
       v-on:click="createSasaranKinerja($event)"
-    ><span class="fa fa-plus"></span> Create SKP
+    ><span class="fa fa-plus"></span> Create SKP JPT
     </md-button>
 
 
@@ -36,7 +36,7 @@
         </skp-sumary>
       </el-tab-pane>
       <el-tab-pane name="rencana_kinerja">
-        <span slot="label"><i class="el-icon-notebook-1"></i> Rencana Kinerja</span>
+        <span slot="label"><i class="el-icon-notebook-1"></i> Rencana Kinerja JPT</span>
         <skp-rencana-kinerja
           :skpJptId="skpJptId"
           ref="tabRencanaKinerja"
@@ -51,7 +51,7 @@
 
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
-import SasaranKinerja from '~/components/Modal/SasaranKinerja.vue';
+import SasaranKinerja from '~/components/Modal/SasaranKinerjaJPT.vue';
 import SkpSumary from '~/components/Tabs/SkpSumary.vue';
 import SkpRencanaKinerja from '~/components/Tabs/SkpRencanaKinerja.vue';
 import { mapGetters } from 'vuex' 
@@ -118,7 +118,35 @@ export default {
         }
     },
     createSasaranKinerja: function(e) {
-      this.$refs.ModalSasaranKinerja.showModalFromMk(this.skpd_id,this.periode,"PEJABAT PIMPINAN TINGGI");
+
+      //cari dulu data dari PK
+      const params = [
+        `periode=${this.periode}`,
+        `skpd_id=${this.skpd_id}`,
+      ].join('&')
+      //this.$refs.loader.start() 
+      this.$axios
+        .get(`/perjanjian_kinerja_id?${params}`)
+        .then(({ data }) => {
+          if ( data.id == null ){
+            //Go to PK page
+
+          }else{
+            //this.perjanjianKinerjaId = data.id
+            console.log(data)
+            this.$refs.ModalSasaranKinerja.showModal(data.kepala_skpd_id,data.id,this.periode);
+            
+
+
+
+          }
+          
+        })
+        .catch((error) => {
+          throw error
+        })
+
+      
     },
     
   },

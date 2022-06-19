@@ -27,6 +27,7 @@
         type="border-card"
         v-show="(showTab == true )"
         @tab-click="handleTabClick"
+        
       >
       <el-tab-pane name="sumary">
         <span slot="label"><i class="el-icon-data-board"></i> Sumary</span>
@@ -125,6 +126,10 @@ export default {
         }else{
           this.$refs.tabSasaranStrategis.loadData(this.perjanjianKinerjaId);
         } 
+    },
+    openTab2() {
+       
+        alert("hahaha")
     }
   },
   async asyncData({ params }) {

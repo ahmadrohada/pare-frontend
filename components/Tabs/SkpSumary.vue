@@ -86,14 +86,14 @@
 
 
     
-  <md-button 
+<!--     <md-button 
       v-show="(statusSkp == '1')"
       style="height:28px;margin-left:-1px; font-size:11px;" 
       class="md-dense md-raised md-primary btn-block"
       v-on:click="submitSasaranKinerja($event)"
     >
     <i class="el-icon-position"></i> SUBMIT SKP
-    </md-button>
+    </md-button> -->
 
 
 

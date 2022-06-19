@@ -23,6 +23,7 @@
                 v-model="OutcomeForm.sasaranStrategisId" 
                 placeholder="Pilih Sasaran Strategis PK"
                 style="width:100% !important;"
+                @change="onPilihSasaranStrategis($event,0)"  
                 >
                 <el-option
                   v-for="item in sasaranStrategis"
@@ -84,7 +85,7 @@
 
         <el-form-item   label="Label"  prop="outcomeLabel">
           <el-input 
-            :rows="2"
+            :rows="3"
             type="textarea" 
             placeholder="Outcome Label" 
             v-model="OutcomeForm.outcomeLabel">
@@ -184,6 +185,42 @@ export default {
           }) 
         
     },
+    sasaranStrategisList(perjanjianKinerjaId,selectedId){
+       const isSelect = selectedId
+          this.$axios
+            .$get("/sasaran_strategis_select_list?perjanjian_kinerja_id="+perjanjianKinerjaId)
+            .then((resp) => {
+              this.sasaranStrategis =  resp.sasaran_strategis;
+              if ( isSelect == 0 ){
+                this.OutcomeForm.sasaranStrategisId = resp.sasaran_strategis[0].id // pilih data ke 1
+                this.onPilihSasaranStrategis(resp.sasaran_strategis[0].id,0)
+              }else{
+                this.OutcomeForm.sasaranStrategisId = isSelect
+              }
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 200);
+          }) 
+        
+    },
+    onPilihSasaranStrategis(sasaranStrategisId,selectedId){
+      //this.$refs.loader.start() 
+      const isSelect = selectedId
+      this.$axios
+            .$get("/indikator_kinerja_utama_select_list?sasaran_strategis_id="+sasaranStrategisId)
+            .then((resp) => {
+              this.indikatorKinerjaUtama =  resp.indikator_kinerja_utama;
+              if ( isSelect == 0 ){
+                this.OutcomeForm.indikatorKinerjaUtamaId = resp.indikator_kinerja_utama[0].id // pilih data ke 1
+              }else{
+                this.OutcomeForm.indikatorKinerjaUtamaId = isSelect
+              }
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 200);
+          }) 
+      
+    },
     showModalAdd(e) {
      
       this.resetForm("OutcomeForm")
@@ -205,6 +242,10 @@ export default {
         //munculkan list outcome atasan
       }else{
         //ini jika S2 atau koordinator atau kabid
+
+        this.sasaranStrategisList(e.perjanjian_kinerja_id,0)
+
+
         this.selectVisibleOutcomeAtasan = false
         this.selectVisibleSasaranStrategis = true
 

@@ -33,8 +33,10 @@
       v-on:click="addJabatan($event)"
       value="0"
      
-    ><span class="fa fa-plus"></span>  Jabatan
+    ><span class="fa fa-plus"></span>  Peran
+    <md-tooltip md-direction="top">Tambah Peran Pada Tim Kerja</md-tooltip>
     </md-button>
+    
    
 
     <el-table
@@ -65,10 +67,10 @@
               </el-button>
 
               <div style="padding: 0px !important">
-                <span style="margin-top:-6px;" class="">{{row.jabatan}}</span>
+                <span style="margin-top:-6px; color:#242424;" class="">{{row.jabatan}}</span>
               </div>
               <div style="padding: 0px !important">
-                <span style="color:#100f15;   margin-top:-6px;" class="">{{row.role}}</span><br>
+                <span  size="small" style="color:#a1a1a1;" class="el-icon-s-management"></span><span style="color:#a1a1a1;   margin-top:-6px;" class=""> {{row.role}}</span><br>
               </div>
               
             </div>

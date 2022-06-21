@@ -12,7 +12,7 @@
         size="mini"
       >
 
-    <label>Pilih Jabatan Atasan</label>
+    <label>Parent / Atasan</label>
       <el-select 
         size="mini"
         v-model="JabatanForm.parentId" 
@@ -30,15 +30,16 @@
         </el-option>
       </el-select>
         
-      <hr>
-      <el-form-item  label="Jenis Jabatan"  prop="role">
+      <el-form-item  label="Level Jabatan"  prop="role">
         <el-select 
           v-model="JabatanForm.role" 
-          placeholder="pilih Jenis Jabatan">
+          placeholder="pilih Level Jabatan">
           <el-option label="Ketua" value="ketua" ></el-option>
           <el-option label="Anggota" value="anggota"></el-option>
         </el-select>
       </el-form-item>
+
+   
 
      
 
@@ -69,11 +70,11 @@
       </el-table>
 
     
-          <input v-model="JabatanForm.level" hidden></input>
+          <!-- <input v-model="JabatanForm.level" hidden></input>
           <input v-model="JabatanForm.skpdId" hidden></input>
           <input v-model="JabatanForm.periode" hidden></input>
           <input v-model="JabatanForm.roleId" hidden></input>
-          <input v-model="JabatanForm.selectedRoles" hidden></input>
+          <input v-model="JabatanForm.selectedRoles" hidden></input> -->
 
       </el-form>
          
@@ -101,7 +102,7 @@ export default {
     return {
       formType: 'create',
       submitLoader:false,
-      headerText:'Tambah Jabatan',
+      headerText:'Tambah Peran pada Tim Kerja',
       modalFormVisible: false,
       tableListJabatan:[],
       parentList:[],

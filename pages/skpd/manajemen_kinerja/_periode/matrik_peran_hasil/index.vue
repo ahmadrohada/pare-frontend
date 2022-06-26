@@ -23,13 +23,7 @@
       <p class="card-category d-inline">{{ user.skpd.singkatan }}</p>
     </template>
 
-    <md-button
-      style="height: 28px; margin-left: -1px; font-size: 11px"
-      class="md-dense md-raised md-primary"
-      v-on:click="addKoordinator($event)"
-      value="0"
-      ><span class="fa fa-plus"></span> Koordinator
-    </md-button>
+  
 
     <!-- <md-button 
       style="height:28px;margin-left:-1px; font-size:11px;" 
@@ -39,6 +33,57 @@
      
     ><span class="fa fa-plus"></span>  Jabatan
     </md-button> -->
+
+
+    <el-table
+      :data="tableSKpJptList"
+      border
+      :highlight-current-row="false"
+      style="width: 100%; margin-top: 10px"
+      row-key="id"
+    >
+      <el-table-column prop="role" label="Peran" width="160"></el-table-column>
+      <el-table-column label="Jabatan dan Nama Pegawai" width="420">
+        <template slot-scope="{ row }">
+          <div style="color: #100f15; margin-top: -6px">
+            <span style="margin-top: -6px" class="">{{ row.nama_pegawai }}</span>
+          </div>
+          <div style="padding: 0px !important">
+            <span style="margin-top: -6px" class="">{{ row.jabatan }}</span>
+          </div>
+        </template> 
+      </el-table-column>
+      <el-table-column label="Indikator Kinerja Individu">
+        <template slot-scope="{ row }">
+          <ol style="margin-left: -22px">
+            <div v-for="(data, key) in row.rencana_kinerja" :key="key">
+              <!-- {{ data.indikator_kinerja_individu }} -->
+              <li v-for="(data,key) in data.indikator_kinerja_individu" :key="key">
+                {{ data.label }}
+              </li>
+
+            </div>
+          </ol>
+        </template>
+      </el-table-column>
+      <!-- <el-table-column align="center" fixed="right" width="80">
+        <template slot="header">
+           <i class="fa fa-cog"></i>
+        </template>
+      </el-table-column> -->
+    </el-table>
+    <br>
+
+
+    <md-button
+      style="height: 28px; margin-left: -1px; font-size: 11px"
+      class="md-dense md-raised md-primary"
+      v-on:click="addKoordinator($event)"
+      value="0"
+      ><span class="fa fa-plus"></span> Koordinator
+    </md-button>
+
+
 
     <el-table
       :data="tableKoordinatorList"
@@ -51,6 +96,7 @@
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       @expand-change="ExpandChange"
     >
+
 
 
       <el-table-column prop="role" label="Peran" width="160"></el-table-column>
@@ -144,6 +190,7 @@ export default {
   data() {
     return {
       tableKoordinatorList: [],
+      tableSKpJptList: [],
       tableTreeRefreshTool: {}
       //periode: 2022,
     };
@@ -167,9 +214,13 @@ export default {
         .get(`/koordinator_list?${params}`)
         .then(({ data }) => {
           this.tableKoordinatorList = [];
+          this.tableSKpJptList = [];
 
           data.koordinatorList.forEach((item) => {
             this.tableKoordinatorList.push(item);
+          });
+          data.skpJptList.forEach((item) => {
+            this.tableSKpJptList.push(item);
           });
           setTimeout(() => {
             this.$refs.loader.finish();
@@ -178,6 +229,7 @@ export default {
         })
         .catch((error) => {
           this.tableKoordinatorList = [];
+          this.tableSKpJptList = [];
           throw error;
         });
     },

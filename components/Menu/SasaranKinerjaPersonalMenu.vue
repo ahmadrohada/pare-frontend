@@ -36,14 +36,14 @@
         <i class="el-icon-data-board"></i>
         <span>Dashboard</span>
       </el-menu-item> -->
-      <el-menu-item 
+     <!--  <el-menu-item 
         index="/personal/profile"
         :route="{path: '/personal/profile'}"
        >
        
         <i class="el-icon-user"></i>
         <span>Profile</span>
-      </el-menu-item>
+      </el-menu-item> -->
 
     <!--   <el-badge :value="notifikasi_renja" class="item" type="warning">
         <el-menu-item 
@@ -61,7 +61,31 @@
           <i class="el-icon-data-analysis"></i>
           <span>Sasaran Kinerja List</span>
       </el-menu-item>
+
+     <!--  <el-menu-item 
+        index="/personal/sasaran_kinerja"
+        :route="{path: '/personal/sasaran_kinerja'}"
+       >
+          <i class="el-icon-data-analysis"></i>
+          <span>Kegiatan</span>
+      </el-menu-item>
        
+
+      <el-menu-item 
+        index="/personal/sasaran_kinerja"
+        :route="{path: '/personal/sasaran_kinerja'}"
+       >
+          <i class="el-icon-data-analysis"></i>
+          <span>Feedback</span>
+      </el-menu-item>
+
+      <el-menu-item 
+        index="/personal/sasaran_kinerja"
+        :route="{path: '/personal/sasaran_kinerja'}"
+       >
+          <i class="el-icon-data-analysis"></i>
+          <span>Capaian</span>
+      </el-menu-item> -->
       <!-- <el-submenu index="1" disabled>
         <template slot="title"
           ><i class="el-icon-document-copy"></i>SKP</template

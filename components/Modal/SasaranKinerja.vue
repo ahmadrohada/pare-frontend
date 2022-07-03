@@ -258,13 +258,13 @@ export default {
       disabledSelectJabatanPegawaiYangDinilai:true,
       disabledSelectJabatanPejabatPenilai:true,
       jenisJabatanSkpList: [{
-          value: 'PEJABAT PIMPINAN TINGGI',
+          value: 'JABATAN PIMPINAN TINGGI',
         }, {
           value: 'PIMPINAN UNIT KERJA MANDIRI',
         }, {
-          value: 'PEJABAT ADMINISTRASI',
+          value: 'JABATAN ADMINISTRASI',
         }, {
-          value: 'PEJABAT FUNGSIONAL',
+          value: 'JABATAN FUNGSIONAL',
         }],
       data:{
           detail:null,

@@ -193,7 +193,7 @@ export default {
     },
     viewSasaranKinerja: function(data) {
       this.$refs.loader.start()
-      this.$router.push("/personal/sasaran_kinerja/"+data.id+"/edit");
+      this.$router.push("/personal/sasaran_kinerja/"+data.id+"/sumary");
     },
     reviewSasaranKinerja: function(data) {
       this.$refs.loader.start()

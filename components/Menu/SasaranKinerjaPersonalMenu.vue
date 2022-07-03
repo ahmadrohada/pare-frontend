@@ -21,12 +21,14 @@
       </div>
     </card>
     <el-menu
-      :default-openeds="[]"
+      
+      :default-openeds="open_list"
       background-color="transparent"
       text-color="#fff"
       active-text-color="#ffd04b"
       :router="true" 
       :default-active="activeLink"
+      
     >
       <!-- <el-menu-item 
         index="/personal"
@@ -61,6 +63,53 @@
           <i class="el-icon-data-analysis"></i>
           <span>Sasaran Kinerja List</span>
       </el-menu-item>
+      <br>
+      <el-menu-item 
+        index= "personal-sasaran_kinerja-id-sumary___en"
+        :route="{path:`/personal/sasaran_kinerja/${sasaranKinerjaId}/sumary`, name:'personal-sasaran_kinerja-id-sumary___en'}"
+       >
+        <i class="el-icon-data-board"></i>
+        <span>Sumary</span>
+      </el-menu-item>
+
+      <el-submenu index="1">
+        <template slot="title">
+          <i class="el-icon-document-copy"></i>Perencanaan</template>
+          <el-menu-item 
+            index="personal-sasaran_kinerja-id-rencana_hasil_kerja___en"
+            :route="{path:`/personal/sasaran_kinerja/${sasaranKinerjaId}/rencana_hasil_kerja`, name:'personal-sasaran_kinerja-id-rencana_hasil_kerja___en'}"
+            
+          >
+          Hasil Kerja
+          </el-menu-item>
+
+           <el-menu-item 
+            index="personal-sasaran_kinerja-id-rencana_perilaku_kerja___en"
+            :route="{path:`/personal/sasaran_kinerja/${sasaranKinerjaId}/rencana_perilaku_kerja`, name:'personal-sasaran_kinerja-id-rencana_perilaku_kerja___en'}"
+            
+          >
+          Perilaku Kerja
+          </el-menu-item>
+      </el-submenu>
+      
+
+
+      <!-- <el-menu-item 
+        index="/personal/sasaran_kinerja"
+        :route="{path: '/personal/sasaran_kinerja'}"
+       >
+          <i class="el-icon-data-analysis"></i>
+          <span>Hasil Kerja</span>
+      </el-menu-item>
+
+      <el-menu-item 
+        index="/personal/sasaran_kinerja"
+        :route="{path: '/personal/sasaran_kinerja'}"
+       >
+          <i class="el-icon-data-analysis"></i>
+          <span>Perilaku Kerja</span>
+      </el-menu-item> -->
+
 
      <!--  <el-menu-item 
         index="/personal/sasaran_kinerja"
@@ -119,52 +168,21 @@ export default {
   data() {
     return {
       activeLink: null,
+      open_list:null,
     };
   },
   watch: {
     $route (to, from) {
-      this.activeLink = to.path;
+      this.activeLink = to.name;
     }
   },
-  methods: {
-    
-  },
   mounted() {
-    this.activeLink = this.$route.path; 
+    this.activeLink = this.$route.name; 
+    this.sasaranKinerjaId = this.$route.params.id;
   },
 };
 </script>
 
 <style lang="scss">
  
-  .el-menu{
-    border-right: none !important;
-  }
-  .el-submenu__title:hover , .el-menu-item:hover  {
-      background-color: rgba(5, 117, 93, 0.288) !important;
-  }
-
-  .el-menu-item, .el-submenu__title {
-    height: 40px !important;
-    line-height: 40px !important;
-  }
-
-  .bg_photo{
-    max-width: 200px;
-    width: 98%;
-    margin: auto;
-    position: absolute;
-    margin-top:3px;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 30;
-  }
-
-  .el-badge__content.is-fixed {
-    top: 10px !important;
-    right: 13px;
-    height: 20px;
-  }
-
 </style>

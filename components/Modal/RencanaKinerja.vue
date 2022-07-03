@@ -15,11 +15,11 @@
         <input v-model="RencanaKinerjaForm.sasaranKinerjaId" hidden></input>
         <input v-model="RencanaKinerjaForm.rencanaKinerjaId" hidden></input>
        
-        <el-form-item label="Jenis Rencana Kinerja" prop="jenisRencanaKinerja">
+        <el-form-item label="Jenis Rencana Hasil Kerja" prop="jenisRencanaKinerja">
           <el-select 
             @change="onChangeJenisRencanaKinerja($event)"
             v-model="RencanaKinerjaForm.jenisRencanaKinerja" 
-            placeholder="pilih Jenis Rencana Kinerja">
+            placeholder="pilih Jenis Rencana Hasil Kerja">
             <el-option label="Kinerja Utama" value="kinerja_utama" ></el-option>
             <el-option label="Kinerja Tambahan" value="kinerja_tambahan"></el-option>
           </el-select>
@@ -29,7 +29,7 @@
           <el-select 
             v-model="RencanaKinerjaForm.typeKinerjaUtama" 
             default-first-option
-            placeholder="pilih Type Kinerja Utama">
+            placeholder="pilih Type Kinerja Hasil Kerja Utama">
             <el-option label="Perjanjian Kinerja" value="perjanjian_kinerja" ></el-option>
             <el-option label="Direktif" value="direktif"></el-option>
             <el-option label="Inisiatif Strategis" value="inisiatif_strategis"></el-option>
@@ -57,8 +57,8 @@
         </el-form-item>
 
        
-        <el-form-item   label="Rencana Kinerja"  prop="rencanaKinerjaLabel">
-          <el-input size="mini" autosize type="textarea" placeholder="Rencana Kinerja Label" v-model="RencanaKinerjaForm.rencanaKinerjaLabel"></el-input>
+        <el-form-item   label="Rencana Hasil Kerja Label"  prop="rencanaKinerjaLabel">
+          <el-input size="mini" autosize type="textarea" placeholder="Rencana Hasil Kerja Label" v-model="RencanaKinerjaForm.rencanaKinerjaLabel"></el-input>
         </el-form-item>
         
 
@@ -143,7 +143,7 @@ export default {
       this.resetForm("RencanaKinerjaForm")
       this.submitLoader = false
       this.formType = "create"
-      this.headerText = "Add Rencana Kinerja"
+      this.headerText = "Add Rencana Hasil Kerja"
       this.RencanaKinerjaForm.jenisRencanaKinerja = "kinerja_utama"
       this.isVisibleTypeKinerjaUtama  = true
       this.RencanaKinerjaForm.sasaranKinerjaId = sasaranKinerjaId
@@ -153,7 +153,7 @@ export default {
       this.submitLoader = false
       this.$refs.loader.start() 
       this.formType = "edit"
-      this.headerText = "Edit Rencana Kinerja"
+      this.headerText = "Edit Rencana Hasil Kerja"
       this.$axios
           .$get("/rencana_kinerja?id="+id )
           .then((resp) => {

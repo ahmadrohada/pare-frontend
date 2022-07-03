@@ -15,10 +15,10 @@
        
         <input v-model="IndikatorKinerjaIndividuForm.indikatorId" hidden></input>
 
-          <el-form-item label="Rencana Kinerja" prop="rencanaKinerjaId" >
+          <el-form-item label="Rencana Hasil Kerja" prop="rencanaKinerjaId" >
             <el-select 
               v-model="IndikatorKinerjaIndividuForm.rencanaKinerjaId" 
-              placeholder="Pilih Rencana Kinerja"
+              placeholder="Pilih Rencana Hasil Kerja"
               style="width:100%"
               >
               <el-option
@@ -69,6 +69,14 @@
         <el-form-item  label="Satuan Target"   prop="satuanTarget">
           <el-input size="mini" type="input" placeholder="Satuan Target" v-model="IndikatorKinerjaIndividuForm.satuanTarget"></el-input>
         </el-form-item>
+
+        <el-form-item  v-if="(this.jenisJabatanSkp == 'JABATAN PIMPINAN TINGGI')" label ="Perspektif" prop="perspektif">
+          <el-input size="mini" type="input" placeholder="Perspektif" v-model="IndikatorKinerjaIndividuForm.perspektif"></el-input>
+        </el-form-item>
+
+        <el-form-item  v-if="(this.jenisJabatanSkp != 'JABATAN PIMPINAN TINGGI')" label ="Aspek" prop="aspek">
+          <el-input size="mini" type="input" placeholder="Aspek" v-model="IndikatorKinerjaIndividuForm.aspek"></el-input>
+        </el-form-item>
         
 
 
@@ -98,6 +106,7 @@ export default {
       formType: 'create',
       selectVisible:true,
       submitLoader:false,
+      jenisJabatanSkp:null,
       headerText:'Indikator Kinerja Individu Form',
       modalFormVisible: false,
       rencanaKinerja:[],
@@ -107,7 +116,8 @@ export default {
         indikatorKinerjaIndividuLabel:"",
         targetMin:"",
         targetMax:"",
-        satuanTarget:""
+        satuanTarget:"",
+        perspektif:""
        
       },
       targetMinDisabled:true,
@@ -154,7 +164,6 @@ export default {
           }) 
         
     },
-    
     showModalAdd(sasaranKinerjaId) {
       this.resetForm("IndikatorKinerjaIndividuForm")
       this.submitLoader = false
@@ -181,6 +190,7 @@ export default {
             this.IndikatorKinerjaIndividuForm.targetMin = resp.target_min
             this.IndikatorKinerjaIndividuForm.targetMax = resp.target_max
             this.IndikatorKinerjaIndividuForm.satuanTarget = resp.satuan_target
+            this.IndikatorKinerjaIndividuForm.perspektif = resp.perspektif
 
             //persiapkan type target
             if (resp.type_target == 1){

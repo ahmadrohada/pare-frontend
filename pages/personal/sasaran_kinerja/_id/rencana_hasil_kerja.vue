@@ -392,7 +392,7 @@ export default {
       objectSpanMethodKinerjaUtama({ row, column, rowIndex, columnIndex }) {
         //console.log(row, column);
         
-        if (columnIndex === 0 || columnIndex === 1 ) {
+        if (columnIndex === 0 || columnIndex === 1 || columnIndex === 2 ) {
          
             const _row = this.spanArrKinerjaUtama[rowIndex];
             const _col = _row > 0 ? 1 : 0;
@@ -461,7 +461,7 @@ export default {
       },
       addIndikatorKinerjaIndividu: function(data) {
       //console.log(data)
-      this.$refs.ModalIndikatorKinerjaIndividu.opsi(this.jenisJabatanSkp);
+      //this.$refs.ModalIndikatorKinerjaIndividu.opsi(this.jenisJabatanSkp);
       this.$refs.ModalIndikatorKinerjaIndividu.showModalAdd(this.sasaranKinerjaId);
       },
       editIndikatorKinerjaIndividu: function(data) {

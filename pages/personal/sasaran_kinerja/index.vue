@@ -7,6 +7,20 @@
       @loadAsyncData="loadAsyncData"
     >
     </sasaran-kinerja>
+
+    <pejabat-penilai 
+      ref="PejabatPenilaiForm" 
+      @loadAsyncData="loadAsyncData"
+    >
+    </pejabat-penilai>
+
+    <atasan-pejabat-penilai 
+      ref="AtasanPejabatPenilaiForm" 
+      @loadAsyncData="loadAsyncData"
+    >
+    </atasan-pejabat-penilai>
+
+
     <template slot="header" class="d-inline">
       <h4 class="title d-inline">Sasaran Kinerja Pegawai ( SKP )</h4>
       <p class="card-category d-inline">Personal</p>
@@ -26,8 +40,7 @@
       highlight-current-row
       border
       style="width: 100%;">
-      <el-table-column width="75" align="center" prop="periode_tahun" label="Periode SKP"></el-table-column>
-      <!-- <el-table-column min-width="130" align="center" prop="jenis_jabatan_skp" label="Jenis Jabatan SKP"></el-table-column> -->
+      <el-table-column width="75" align="center" prop="periode_tahun" label="Periode"></el-table-column>
       <el-table-column min-width="180" label="Pegawai Yang Dinilai">
         <template slot-scope="{ row }">
           <div style="padding:0px !important;">
@@ -40,20 +53,32 @@
       </el-table-column>
       <el-table-column min-width="180" label="Pejabat Penilai">
         <template slot-scope="{ row }">
-          <div style="padding:0px !important;">
+
+          <el-button v-if="row.nama_pejabat_penilai == null" size="mini" type="text" @click="addPejabatPenilai(row)" >
+            <i class="el-icon-user"></i> Add Pejabat Penilai
+            <md-tooltip md-direction="top">Add Pejabat Penilai</md-tooltip>
+          </el-button>
+          
+          <div v-if="row.nama_pejabat_penilai != null" style="padding:0px !important;">
             <span style="color:#130f0f;" class="">{{ row.nama_pejabat_penilai}}</span><br>
           </div>
-          <div style="padding:0px !important; margin-top:-5px;">
+          <div v-if="row.nama_pejabat_penilai != null" style="padding:0px !important; margin-top:-5px;">
             <span style="" class="">{{ row.nip_pejabat_penilai}}</span><br>
           </div>
         </template>
       </el-table-column>
       <el-table-column min-width="180" label="Atasan Pejabat Penilai">
         <template slot-scope="{ row }">
-          <div style="padding:0px !important;">
+
+          <el-button v-if="row.nama_atasan_pejabat_penilai == null" size="mini" type="text" @click="addAtasanPejabatPenilai(row)" >
+            <i class="el-icon-user"></i> Add Atasan Pejabat Penilai
+            <md-tooltip md-direction="top">Add Atasan Pejabat Penilai</md-tooltip>
+          </el-button>
+
+          <div v-if="row.nama_atasan_pejabat_penilai != null" style="padding:0px !important;">
             <span style="color:#130f0f;" class="">{{ row.nama_atasan_pejabat_penilai}}</span><br>
           </div>
-          <div style="padding:0px !important; margin-top:-5px;">
+          <div v-if="row.nama_atasan_pejabat_penilai != null" style="padding:0px !important; margin-top:-5px;">
             <span style="" class="">{{ row.nip_atasan_pejabat_penilai}}</span><br>
           </div>
         </template>
@@ -66,29 +91,7 @@
           </div>
         </template>
       </el-table-column>
-      <!-- <el-table-column   align="center" label="Status">
-        <template slot-scope="{ row }">
-          
-          <el-button v-if=" row.status == '1' "  size="mini" type="text" @click="submitSasaranKinerja(row)">
-            <i class="el-icon-edit">
-            </i> Perencanaan
-            <md-tooltip md-direction="top">Klik Untuk Submit Sasaran Kinerja</md-tooltip>
-          </el-button>
-           
-          <span v-if=" row.status == '2' " class="text-info">
-            Submited
-          </span>
-          <span v-if=" row.status == '3' " class="text-info">
-            Proses Reviu
-          </span>
-          <el-button v-if=" row.status == '4' "  size="mini" type="text">
-            <i class="el-icon-position">
-            </i> Ditetapkan
-            <md-tooltip md-direction="top">Klik Untuk Submit Perjanjian Kinerja</md-tooltip>
-          </el-button>
-        </template>
-      </el-table-column> -->
-      <el-table-column width="90px" align="center">
+      <el-table-column width="60px" align="center">
         <template slot="header">
           <i class="el-icon-s-tools"></i>
         </template>
@@ -98,9 +101,8 @@
               </i> Hapus
               <md-tooltip md-direction="top">Hapus Data</md-tooltip>
             </el-button> -->
-            <el-button  size="mini" type="text" @click="viewSasaranKinerja(row)">
-              <i class="el-icon-view">
-              </i> Lihat
+            <el-button  size="medium" type="text" @click="viewSasaranKinerja(row)">
+              <i class="el-icon-edit-outline"></i>
               <md-tooltip md-direction="top">Lihat Data</md-tooltip>
             </el-button>
         </template>
@@ -116,6 +118,8 @@
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
 import SasaranKinerja from '~/components/Modal/SasaranKinerja.vue';
+import PejabatPenilai from "~/components/Modal/ModalPejabatPenilai.vue";
+import AtasanPejabatPenilai from "~/components/Modal/ModalAtasanPejabatPenilai.vue";
 import { mapGetters } from 'vuex' 
 
 
@@ -124,7 +128,9 @@ export default {
   middleware: "auth",
    components: {
     PareLoader,
-    SasaranKinerja
+    SasaranKinerja,
+    PejabatPenilai,
+    AtasanPejabatPenilai
   },
   data() {
     return {
@@ -201,6 +207,16 @@ export default {
     },
     createSkp: function(e) {
       this.$refs.ModalSasaranKinerja.showModal(this.skpd_id);
+    },
+    addPejabatPenilai: function(row){
+      console.log(row)
+      this.$refs.PejabatPenilaiForm.showModalAdd(row);
+
+    },
+    addAtasanPejabatPenilai: function(row){
+      console.log(row)
+      this.$refs.AtasanPejabatPenilaiForm.showModalAdd(row);
+
     },
     hapusSasaranKinerja: function(data) {
         //const parent = node.parent;

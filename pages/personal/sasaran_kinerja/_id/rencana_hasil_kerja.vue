@@ -87,7 +87,7 @@
         v-if="(this.jenisJabatanSkp != 'JABATAN PIMPINAN TINGGI')"
         >
         <template slot-scope="{row}">
-          {{row.indikator_kinerja_individu}}
+          {{row.aspek}}
         </template>
       </el-table-column>
       <el-table-column class-name="align-top" label="Indikator Kinerja Individu" min-width="320">
@@ -178,7 +178,7 @@
         v-if="(this.jenisJabatanSkp != 'JABATAN PIMPINAN TINGGI')"
         class-name="align-top">
         <template slot-scope="{row}">
-          {{row.indikator_kinerja_individu}}
+          {{row.aspek}}
         </template>
       </el-table-column>
       <el-table-column class-name="align-top" label="Indikator Kinerja Individu" min-width="320">

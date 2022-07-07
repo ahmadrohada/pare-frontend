@@ -75,7 +75,16 @@
         </el-form-item>
 
         <el-form-item  v-if="(this.jenisJabatanSkp != 'JABATAN PIMPINAN TINGGI')" label ="Aspek" prop="aspek">
-          <el-input size="mini" type="input" placeholder="Aspek" v-model="IndikatorKinerjaIndividuForm.aspek"></el-input>
+          <!-- <el-input size="mini" type="input" placeholder="Aspek" v-model="IndikatorKinerjaIndividuForm.aspek"></el-input> -->
+           <el-select 
+            v-model="IndikatorKinerjaIndividuForm.aspek" 
+            default-first-option
+            placeholder="pilih Aspek Indikator Kinerja Individu">
+            <el-option label="Kuantitas" value="kuantitas" ></el-option>
+            <el-option label="Kualitas" value="kualitas"></el-option>
+            <el-option label="Waktu" value="waktu"></el-option>
+            <el-option label="Biaya" value="biaya"></el-option>
+          </el-select>
         </el-form-item>
         
 
@@ -117,7 +126,8 @@ export default {
         targetMin:"",
         targetMax:"",
         satuanTarget:"",
-        perspektif:""
+        perspektif:"",
+        aspek:""
        
       },
       targetMinDisabled:true,
@@ -191,6 +201,7 @@ export default {
             this.IndikatorKinerjaIndividuForm.targetMax = resp.target_max
             this.IndikatorKinerjaIndividuForm.satuanTarget = resp.satuan_target
             this.IndikatorKinerjaIndividuForm.perspektif = resp.perspektif
+            this.IndikatorKinerjaIndividuForm.aspek = resp.aspek
 
             //persiapkan type target
             if (resp.type_target == 1){

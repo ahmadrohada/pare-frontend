@@ -21,6 +21,13 @@
       >
       </manual-indikator-kinerja>
 
+      <rencana-hasil-kerja-pimpinan
+        ref="ModalRencanaHasilKerjaPimpinan"
+        @loadAsyncData="loadAsyncData"
+      >
+      </rencana-hasil-kerja-pimpinan>
+      
+
 
     <template slot="header" class="d-inline">
       <h4 class="title d-inline">Sasaran Kinerja</h4>
@@ -67,7 +74,12 @@
             label="Rencana Hasil Kerja Pimpinan yang Diintervensi" 
             width="290">
         <template slot-scope="{row}">
-          -
+          <i v-if=" row.parent_id  == null ">
+            <el-button  size="mini" type="text" @click="addRencanaHasilKerjaPimpinan(row)">
+            <i class="el-icon-document-copy"></i> Pilih Rencana Hasil Kerja Pimpinan
+            <md-tooltip md-direction="top">Rencana Hasil Kerja Pimpinan yang diintervensi</md-tooltip>
+            </el-button>
+          </i>
         </template>
       </el-table-column>
       <el-table-column label="Rencana Hasil Kerja" width="290">
@@ -240,6 +252,7 @@ import PareLoader from '~/components/Loader/PareLoader.vue';
 import IndikatorKinerjaIndividu from '~/components/Modal/IndikatorKinerjaIndividu.vue';
 import RencanaKinerja from '~/components/Modal/RencanaKinerja.vue';
 import ManualIndikatorKinerja from '~/components/Modal/ManualIndikatorKinerja.vue';
+import RencanaHasilKerjaPimpinan from '~/components/Modal/RencanaHasilKerjaPimpinan.vue';
 
 export default {
 
@@ -249,6 +262,7 @@ export default {
     RencanaKinerja,
     IndikatorKinerjaIndividu,
     ManualIndikatorKinerja,
+    RencanaHasilKerjaPimpinan,
     PareLoader
   },
   data() {
@@ -458,6 +472,9 @@ export default {
             message: 'Proses Hapus Dibatalkan'
           });          
         });
+      },
+      addRencanaHasilKerjaPimpinan: function(data){
+        this.$refs.ModalRencanaHasilKerjaPimpinan.showModalAdd(this.sasaranKinerjaId);
       },
       addIndikatorKinerjaIndividu: function(data) {
       //console.log(data)

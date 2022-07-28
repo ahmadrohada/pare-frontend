@@ -9,15 +9,13 @@
       <el-form
         ref="RencanahasilKerjaPimpinanForm"
         :model="RencanahasilKerjaPimpinanForm"
-        :rules="rules"
         size="mini"
       >
        
-        <input v-model="RencanahasilKerjaPimpinanForm.indikatorId" hidden></input>
-
-          <el-form-item label="Rencana Hasil Kerja" prop="rencanaKinerjaId" >
+        
+          <el-form-item label="Rencana Hasil Kerja Pimpinan" prop="rencanaKinerjaPimpinanId" >
             <el-select 
-              v-model="RencanahasilKerjaPimpinanForm.rencanaKinerjaId" 
+              v-model="RencanahasilKerjaPimpinanForm.rencanaKinerjaPimpinanId" 
               placeholder="Pilih Rencana Hasil Kerja"
               style="width:100%"
               >
@@ -34,61 +32,7 @@
             </el-select>
           </el-form-item>
 
-        <el-form-item    label ="Indikator Kinerja Individu" prop="indikatorKinerjaIndividuLabel">
-          <el-input size="mini" autosize type="textarea" placeholder="Indikator Kinerja Individu Label" v-model="RencanahasilKerjaPimpinanForm.indikatorKinerjaIndividuLabel"></el-input>
-        </el-form-item>
-
-        <el-row :gutter="10">
-          <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-            
-            <el-form-item label="Type Target">
-              <el-select 
-                @change="onChangeTypeTarget($event)"
-                v-model="RencanahasilKerjaPimpinanForm.typeTarget" 
-                placeholder="pilih Type Target">
-                <el-option label="Single Rate" value="1" ></el-option>
-                <el-option label="Range" value="2"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-
-          <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-            <el-form-item   label="Target Min"  prop="targetMin">
-              <el-input :disabled="targetMinDisabled" size="mini" type="input" placeholder="Target Min" v-model="RencanahasilKerjaPimpinanForm.targetMin"></el-input>
-            </el-form-item>
-          </el-col>
-
-           <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-            <el-form-item  label="Target Max"   prop="targetMax">
-              <el-input :disabled="targetMaxDisabled" size="mini" type="input" placeholder="Target Max" v-model="RencanahasilKerjaPimpinanForm.targetMax"></el-input>
-            </el-form-item>
-          </el-col>
-
-        </el-row>
-
-        <el-form-item  label="Satuan Target"   prop="satuanTarget">
-          <el-input size="mini" type="input" placeholder="Satuan Target" v-model="RencanahasilKerjaPimpinanForm.satuanTarget"></el-input>
-        </el-form-item>
-
-        <el-form-item  v-if="(this.jenisJabatanSkp == 'JABATAN PIMPINAN TINGGI')" label ="Perspektif" prop="perspektif">
-          <el-input size="mini" type="input" placeholder="Perspektif" v-model="RencanahasilKerjaPimpinanForm.perspektif"></el-input>
-        </el-form-item>
-
-        <el-form-item  v-if="(this.jenisJabatanSkp != 'JABATAN PIMPINAN TINGGI')" label ="Aspek" prop="aspek">
-          <!-- <el-input size="mini" type="input" placeholder="Aspek" v-model="RencanahasilKerjaPimpinanForm.aspek"></el-input> -->
-           <el-select 
-            v-model="RencanahasilKerjaPimpinanForm.aspek" 
-            default-first-option
-            placeholder="pilih Aspek Indikator Kinerja Individu">
-            <el-option label="Kuantitas" value="kuantitas" ></el-option>
-            <el-option label="Kualitas" value="kualitas"></el-option>
-            <el-option label="Waktu" value="waktu"></el-option>
-            <el-option label="Biaya" value="biaya"></el-option>
-          </el-select>
-        </el-form-item>
         
-
-
         <el-form-item size="mini" style="margin-top:20px;">
           <el-button v-if="formType=='add'" type="primary"  :loading="submitLoader" @click="saveForm('RencanahasilKerjaPimpinanForm')"
             >Save</el-button
@@ -113,45 +57,16 @@ export default {
   data() {
     return {
       formType: 'add',
-      selectVisible:true,
       submitLoader:false,
-      jenisJabatanSkp:null,
+      sasaranKinerjaId:"",
       headerText:'Indikator Kinerja Individu Form',
       modalFormVisible: false,
       rencanaKinerja:[],
       RencanahasilKerjaPimpinanForm: {
-        rencanaKinerjaId:"",
-        indikatorId:"",
-        indikatorKinerjaIndividuLabel:"",
-        targetMin:"",
-        targetMax:"",
-        satuanTarget:"",
-        perspektif:"",
-        aspek:""
+        rencanaKinerjaPimpinanId:"",
        
       },
-      targetMinDisabled:true,
-      targetMaxDisabled:true,
-      rules: {
-          rencanaKinerjaId: [
-            { required: true, message: 'Silakan Pilih Sasaran Strategis', trigger: 'blur' }
-          ],
-          indikatorKinerjaIndividuLabel: [
-            { required: true, message: 'Silakan isi Indikator Sasaran Strategis', trigger: 'blur' }
-          ],
-          targetMax: [
-            { required: true, message: 'Silakan isi Target Max', trigger: 'blur' }
-          ],
-          targetMin: [
-            { required: true, message: 'Silakan isi Target Min', trigger: 'blur' }
-          ],
-          typeTarget: [
-            { required: true, message: 'Silakan isi Type Target', trigger: 'blur' }
-          ],
-          satuanTarget: [
-            { required: true, message: 'Silakan isi Satuan Target', trigger: 'blur' }
-          ],
-      },
+     
       
     };
   },
@@ -174,7 +89,9 @@ export default {
           }) 
         
     },
-    showModalAdd(sasaranKinerjaId) {
+    showModalAdd(sasaranKinerjaId,RencanaKinerjaId) {
+      this.sasaranKinerjaId = sasaranKinerjaId
+      this.RencanahasilKerjaPimpinanForm.rencanaKinerjaId = RencanaKinerjaId
       this.resetForm("RencanahasilKerjaPimpinanForm")
       this.submitLoader = false
       this.$refs.loader.start() 
@@ -184,8 +101,13 @@ export default {
       this.$axios
           .$get("/rencana_hasil_kerja_pimpinan?sasaran_kinerja_id="+sasaranKinerjaId )
           .then((resp) => {
-            
-            
+              //this.rencanaKinerjaList(resp.sasaran_kinerja_id,resp.rencana_kinerja_id)
+              this.rencanaKinerja =  resp.rencana_kinerja;
+              setTimeout(() => {
+                  this.$refs.loader.finish() 
+                  this.modalFormVisible = true;
+              }, 800);
+              
           })
           .catch((error) => {
             this.$message({
@@ -193,7 +115,7 @@ export default {
               message: error.response.data.message
             }); 
           });       
-      //this.modalFormVisible = true;
+      
     },  
     showModalEdit(id) {
       this.resetForm("RencanahasilKerjaPimpinanForm")
@@ -242,7 +164,7 @@ export default {
           if (valid) {
             this.submitLoader = true
             this.$axios
-                    .$post("/indikator_kinerja_individu", this.RencanahasilKerjaPimpinanForm )
+                    .$post("/rencana_hasil_kerja_pimpinan", this.RencanahasilKerjaPimpinanForm )
                     .then((response) => {
                       setTimeout(() => {
                         this.$emit('loadAsyncData')
@@ -305,27 +227,10 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
-      this.onChangeTypeTarget(1);
       this.modalFormVisible = false;
       this.submitLoader = false
     },
-    onChangeTypeTarget(event) {
-      console.log(event)
-      if (event == 1){
-        this.RencanahasilKerjaPimpinanForm.typeTarget = '1'
-        this.targetMinDisabled = true 
-        this.targetMaxDisabled = false
-        this.RencanahasilKerjaPimpinanForm.targetMin = '-'
-      }else if (event == 2 ){
-        this.RencanahasilKerjaPimpinanForm.typeTarget = '2'
-        this.targetMinDisabled = false 
-        this.targetMaxDisabled = false
-        this.RencanahasilKerjaPimpinanForm.targetMin = null
-      }else{
-        this.targetMinDisabled = true 
-        this.targetMaxDisabled = true
-      }
-    }
+
    
    
   },

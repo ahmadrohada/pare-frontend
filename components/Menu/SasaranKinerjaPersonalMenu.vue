@@ -167,6 +167,7 @@ export default {
   name: "PersonalMenu",
   data() {
     return {
+      sasaranKinerjaId:null,
       activeLink: null,
       open_list:null,
     };

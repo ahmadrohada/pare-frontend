@@ -74,6 +74,7 @@
             label="Rencana Hasil Kerja Pimpinan yang Diintervensi" 
             width="290">
         <template slot-scope="{row}">
+          {{row.parent_label}}
           <i v-if=" row.parent_id  == null ">
             <el-button  size="mini" type="text" @click="addRencanaHasilKerjaPimpinan(row)">
             <i class="el-icon-document-copy"></i> Pilih Rencana Hasil Kerja Pimpinan
@@ -474,7 +475,8 @@ export default {
         });
       },
       addRencanaHasilKerjaPimpinan: function(data){
-        this.$refs.ModalRencanaHasilKerjaPimpinan.showModalAdd(this.sasaranKinerjaId);
+        console.log(data.id)
+        this.$refs.ModalRencanaHasilKerjaPimpinan.showModalAdd(this.sasaranKinerjaId,data.id);
       },
       addIndikatorKinerjaIndividu: function(data) {
       //console.log(data)

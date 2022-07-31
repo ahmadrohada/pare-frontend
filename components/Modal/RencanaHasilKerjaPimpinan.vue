@@ -37,7 +37,7 @@
           <el-button v-if="formType=='add'" type="primary"  :loading="submitLoader" @click="saveForm('RencanahasilKerjaPimpinanForm')"
             >Save</el-button
           >
-          <el-button v-if="formType=='edit'" type="primary"  :loading="submitLoader" @click="updateForm('RencanahasilKerjaPimpinanForm')"
+          <el-button v-if="formType=='edit'" type="primary"  :loading="submitLoader" @click="saveForm('RencanahasilKerjaPimpinanForm')"
             >Update</el-button
           >
           <el-button @click="resetForm('RencanahasilKerjaPimpinanForm')">Tutup</el-button>
@@ -71,24 +71,6 @@ export default {
     };
   },
   methods: {
-    rencanaKinerjaList(sasaranKinerjaId,selectedId){
-       const isSelect = selectedId
-          this.$axios
-            .$get("/rencana_kinerja_select_list?sasaran_kinerja_id="+sasaranKinerjaId)
-            .then((resp) => {
-              this.selectVisible = true
-              this.rencanaKinerja =  resp.rencana_kinerja;
-              if ( isSelect == 0 ){
-                this.RencanahasilKerjaPimpinanForm.rencanaKinerjaId = resp.rencana_kinerja[0].id // pilih data ke 1
-              }else{
-                this.RencanahasilKerjaPimpinanForm.rencanaKinerjaId = isSelect
-              }
-            setTimeout(() => {
-              this.$refs.loader.finish() 
-            }, 200);
-          }) 
-        
-    },
     showModalAdd(sasaranKinerjaId,RencanaKinerjaId) {
       this.sasaranKinerjaId = sasaranKinerjaId
       this.RencanahasilKerjaPimpinanForm.rencanaKinerjaId = RencanaKinerjaId
@@ -98,11 +80,19 @@ export default {
       this.formType = "add"
       this.headerText = "Pilih Rencana Hasil Kerja Pimpinan"
 
+      const params = [
+                  `sasaran_kinerja_id=${sasaranKinerjaId}`,
+                  `rencana_kinerja_id=${RencanaKinerjaId}`
+                  
+                  ].join('&')
+
       this.$axios
-          .$get("/rencana_hasil_kerja_pimpinan?sasaran_kinerja_id="+sasaranKinerjaId )
+          .$get(`/rencana_hasil_kerja_pimpinan?${params}` )
           .then((resp) => {
-              //this.rencanaKinerjaList(resp.sasaran_kinerja_id,resp.rencana_kinerja_id)
-              this.rencanaKinerja =  resp.rencana_kinerja;
+              
+              this.rencanaKinerja =  resp.rencana_hasil_kerja_pimpinan;
+              this.RencanahasilKerjaPimpinanForm.rencanaKinerjaPimpinanId = resp.rencana_hasil_kerja_pimpinan[0].id // pilih data ke 1
+             
               setTimeout(() => {
                   this.$refs.loader.finish() 
                   this.modalFormVisible = true;
@@ -117,40 +107,42 @@ export default {
           });       
       
     },  
-    showModalEdit(id) {
+    showModalEdit(sasaranKinerjaId,RencanaKinerjaId) {
+
+      this.sasaranKinerjaId = sasaranKinerjaId
+      this.RencanahasilKerjaPimpinanForm.rencanaKinerjaId = RencanaKinerjaId
       this.resetForm("RencanahasilKerjaPimpinanForm")
       this.submitLoader = false
       this.$refs.loader.start() 
       this.formType = "edit"
-      this.headerText = "Edit Indikator Kinerja Individu"
+      this.headerText = "Pilih Rencana Hasil Kerja Pimpinan"
+
+
+      const params = [
+                  `sasaran_kinerja_id=${sasaranKinerjaId}`,
+                  `rencana_kinerja_id=${RencanaKinerjaId}`
+                  
+                  ].join('&')
+
       this.$axios
-          .$get("/indikator_kinerja_individu?id="+id )
+          .$get(`/rencana_hasil_kerja_pimpinan?${params}` )
           .then((resp) => {
-            
-            this.RencanahasilKerjaPimpinanForm.indikatorId = resp.id
-            this.rencanaKinerjaList(resp.sasaran_kinerja_id,resp.rencana_kinerja_id)
-            this.RencanahasilKerjaPimpinanForm.indikatorKinerjaIndividuLabel = resp.label
-            this.RencanahasilKerjaPimpinanForm.typeTarget = resp.type_target
-            this.RencanahasilKerjaPimpinanForm.targetMin = resp.target_min
-            this.RencanahasilKerjaPimpinanForm.targetMax = resp.target_max
-            this.RencanahasilKerjaPimpinanForm.satuanTarget = resp.satuan_target
-            this.RencanahasilKerjaPimpinanForm.perspektif = resp.perspektif
-            this.RencanahasilKerjaPimpinanForm.aspek = resp.aspek
+              const isSelect = resp.rencana_kinerja_detail.parent_id;
+              //console.log(resp.rencana_kinerja_detail.parent_id)
+              
+              this.rencanaKinerja =  resp.rencana_hasil_kerja_pimpinan;
 
-            //persiapkan type target
-            if (resp.type_target == 1){
-              this.targetMinDisabled = true 
-              this.targetMaxDisabled = false
-            }else if (resp.type_target == 2 ){
-              this.targetMinDisabled = false 
-              this.targetMaxDisabled = false
-            }else{
-              this.targetMinDisabled = true 
-              this.targetMaxDisabled = true
-            }
-
-            this.modalFormVisible = true;
-            
+              
+              if ( isSelect == null ){
+                this.RencanahasilKerjaPimpinanForm.rencanaKinerjaPimpinanId = resp.rencana_hasil_kerja_pimpinan[0].id  // pilih data ke 1
+              }else{
+                this.RencanahasilKerjaPimpinanForm.rencanaKinerjaPimpinanId = isSelect
+              } 
+              setTimeout(() => {
+                  this.$refs.loader.finish() 
+                  this.modalFormVisible = true;
+              }, 800);
+              
           })
           .catch((error) => {
             this.$message({
@@ -192,47 +184,11 @@ export default {
       });
         
     },
-    updateForm(formName) {
-      this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.submitLoader = true
-            this.$axios
-                    .$put("/indikator_kinerja_individu", this.RencanahasilKerjaPimpinanForm )
-                    .then((response) => {
-                      this.$emit('loadAsyncData')
-                      setTimeout(() => {
-                        this.resetForm('RencanahasilKerjaPimpinanForm')
-                        this.$message({
-                          type: 'info',
-                          message: 'Update Berhasil'
-                        }); 
-                      }, 200);
-                    })
-                    .catch((errors) => {
-                      this.submitLoader = false
-                      console.log(errors);
-                      this.$message({
-                        type: 'warning',
-                        message: 'terjadi kesalahan'
-                      }); 
-                    }); 
-
-
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-      });
-        
-    },
     resetForm(formName) {
       this.$refs[formName].resetFields();
       this.modalFormVisible = false;
       this.submitLoader = false
     },
-
-   
-   
   },
   mounted() {
       

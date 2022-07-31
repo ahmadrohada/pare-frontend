@@ -75,6 +75,13 @@
             width="290">
         <template slot-scope="{row}">
           {{row.parent_label}}
+          <i v-if=" row.parent_label  != '' ">
+            <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaHasilKerjaPimpinan(row)">
+            <i class="el-icon-edit-outline"></i> Edit
+            <md-tooltip md-direction="top">Edit Rencana Hasil Kerja Pimpinan yang diintervensi</md-tooltip>
+            </el-button>
+          </i>
+
           <i v-if=" row.parent_id  == null ">
             <el-button  size="mini" type="text" @click="addRencanaHasilKerjaPimpinan(row)">
             <i class="el-icon-document-copy"></i> Pilih Rencana Hasil Kerja Pimpinan
@@ -477,6 +484,10 @@ export default {
       addRencanaHasilKerjaPimpinan: function(data){
         console.log(data.id)
         this.$refs.ModalRencanaHasilKerjaPimpinan.showModalAdd(this.sasaranKinerjaId,data.id);
+      },
+      editRencanaHasilKerjaPimpinan: function(data){
+        console.log(data.id)
+        this.$refs.ModalRencanaHasilKerjaPimpinan.showModalEdit(this.sasaranKinerjaId,data.id);
       },
       addIndikatorKinerjaIndividu: function(data) {
       //console.log(data)

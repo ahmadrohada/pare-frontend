@@ -74,8 +74,8 @@
             label="Rencana Hasil Kerja Pimpinan yang Diintervensi" 
             width="290">
         <template slot-scope="{row}">
-          {{row.parent_label}}
-          <i v-if=" row.parent_label  != '' ">
+          {{row.rencana_kerja_pimpinan}}
+          <!-- <i v-if=" row.parent_label  != '' ">
             <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaHasilKerjaPimpinan(row)">
             <i class="el-icon-edit-outline"></i> Edit
             <md-tooltip md-direction="top">Edit Rencana Hasil Kerja Pimpinan yang diintervensi</md-tooltip>
@@ -87,7 +87,7 @@
             <i class="el-icon-document-copy"></i> Pilih Rencana Hasil Kerja Pimpinan
             <md-tooltip md-direction="top">Rencana Hasil Kerja Pimpinan yang diintervensi</md-tooltip>
             </el-button>
-          </i>
+          </i> -->
         </template>
       </el-table-column>
       <el-table-column label="Rencana Hasil Kerja" width="290">

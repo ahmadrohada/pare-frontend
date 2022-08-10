@@ -223,7 +223,7 @@ export default {
         simpegId:"",
         skpdId:"",
         unitKerjaId:"",
-        jenisJabatanSkp:"PEJABAT PIMPINAN TINGGI",
+        jenisJabatanSkp:"JABATAN PIMPINAN TINGGI",
 
         //Pegawai yang dinilai
         namaLengkapPegawaiYangDinilai:"",

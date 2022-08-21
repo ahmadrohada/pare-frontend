@@ -139,6 +139,19 @@ export default {
       }, 800);
 
     },
+    showModalEdit(data) {
+      this.clearAtasanPejabatPenilai()
+      this.submitLoader = false
+      this.$refs.loader.start() 
+      this.text_header = "Ubah Atasan Pejabat Penilai"
+      this.AtasanPejabatPenilaiForm.sasaranKinerjaId = data.id
+    
+      this.modalFormVisible = true; 
+      setTimeout(() => {
+        this.$refs.loader.finish() 
+      }, 800);
+
+    },
     //====== PEJABAT PENILAI  ===============================//
     querySearchAtasanPejabatPenilai(queryString, cb) {
         //console.log(queryString)

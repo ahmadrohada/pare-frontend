@@ -139,6 +139,20 @@ export default {
       }, 800);
 
     },
+    showModalEdit(data) {
+      this.submitLoader = false
+      this.$refs.loader.start() 
+      this.text_header = "Ubah Pejabat Penilai"
+      this.PejabatPenilaiForm.sasaranKinerjaId = data.id
+      
+
+    
+      this.modalFormVisible = true; 
+      setTimeout(() => {
+        this.$refs.loader.finish() 
+      }, 800);
+
+    },
     //====== PEJABAT PENILAI  ===============================//
     querySearchPejabatPenilai(queryString, cb) {
         //console.log(queryString)

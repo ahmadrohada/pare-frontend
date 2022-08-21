@@ -60,7 +60,12 @@
           </el-button>
           
           <div v-if="row.nama_pejabat_penilai != null" style="padding:0px !important;">
-            <span style="color:#130f0f;" class="">{{ row.nama_pejabat_penilai}}</span><br>
+            <span style="color:#130f0f;" class="">{{ row.nama_pejabat_penilai}}</span>
+            <el-button  size="medium" type="text" @click="editPejabatPenilai(row)">
+              <i class="el-icon-edit-outline"></i>
+              <md-tooltip md-direction="top">Ubah Pejabat Penilai</md-tooltip>
+            </el-button>
+            <br>
           </div>
           <div v-if="row.nama_pejabat_penilai != null" style="padding:0px !important; margin-top:-5px;">
             <span style="" class="">{{ row.nip_pejabat_penilai}}</span><br>
@@ -76,7 +81,14 @@
           </el-button>
 
           <div v-if="row.nama_atasan_pejabat_penilai != null" style="padding:0px !important;">
-            <span style="color:#130f0f;" class="">{{ row.nama_atasan_pejabat_penilai}}</span><br>
+            <span style="color:#130f0f;" class="">{{ row.nama_atasan_pejabat_penilai}}</span>
+
+            <el-button  size="medium" type="text" @click="editAtasanPejabatPenilai(row)">
+              <i class="el-icon-edit-outline"></i>
+              <md-tooltip md-direction="top">Ubah Atasan Pejabat Penilai</md-tooltip>
+            </el-button>
+            
+            <br>
           </div>
           <div v-if="row.nama_atasan_pejabat_penilai != null" style="padding:0px !important; margin-top:-5px;">
             <span style="" class="">{{ row.nip_atasan_pejabat_penilai}}</span><br>
@@ -91,19 +103,18 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column width="60px" align="center">
+      <el-table-column width="70px" align="center">
         <template slot="header">
           <i class="el-icon-s-tools"></i>
         </template>
         <template slot-scope="{ row }">
-           <!--  <el-button  size="mini" type="text danger" @click="hapusSasaranKinerja(row)">
-              <i class="el-icon-delete">
-              </i> Hapus
-              <md-tooltip md-direction="top">Hapus Data</md-tooltip>
-            </el-button> -->
             <el-button  size="medium" type="text" @click="viewSasaranKinerja(row)">
               <i class="el-icon-edit-outline"></i>
               <md-tooltip md-direction="top">Lihat Data</md-tooltip>
+            </el-button>
+            <el-button size="medium" type="text danger" @click="hapusSasaranKinerja(row)">
+              <i class="el-icon-delete" style="color:#F56C6C;"></i>
+              <md-tooltip md-direction="top">Hapus Data</md-tooltip>
             </el-button>
         </template>
       </el-table-column>
@@ -211,12 +222,18 @@ export default {
     addPejabatPenilai: function(row){
       console.log(row)
       this.$refs.PejabatPenilaiForm.showModalAdd(row);
-
     },
     addAtasanPejabatPenilai: function(row){
       console.log(row)
       this.$refs.AtasanPejabatPenilaiForm.showModalAdd(row);
-
+    },
+    editPejabatPenilai: function(row){
+      console.log(row)
+      this.$refs.PejabatPenilaiForm.showModalEdit(row);
+    },
+    editAtasanPejabatPenilai: function(row){
+      console.log(row)
+      this.$refs.AtasanPejabatPenilaiForm.showModalEdit(row);
     },
     hapusSasaranKinerja: function(data) {
         //const parent = node.parent;

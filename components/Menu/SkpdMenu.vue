@@ -43,13 +43,6 @@
         <i class="el-icon-data-analysis"></i>
         <span>Manajemen Kinerja</span>
       </el-menu-item>
-      <!-- <el-menu-item 
-        index="/skpd/perjanjian_kinerja"
-        :route="{path: '/skpd/perjanjian_kinerja'}"
-       >
-        <i class="el-icon-data-board"></i>
-        <span>Perjanjian Kinerja</span>
-      </el-menu-item>
       <el-menu-item 
         index="/skpd/sasaran_kinerja"
         :route="{path: '/skpd/sasaran_kinerja'}"
@@ -57,6 +50,14 @@
         <i class="el-icon-data-analysis"></i>
         <span>Sasaran Kinerja</span>
       </el-menu-item>
+      <!-- <el-menu-item 
+        index="/skpd/perjanjian_kinerja"
+        :route="{path: '/skpd/perjanjian_kinerja'}"
+       >
+        <i class="el-icon-data-board"></i>
+        <span>Perjanjian Kinerja</span>
+      </el-menu-item>
+     
       <el-submenu index="3" disabled>
         <template slot="title"
           ><i class="el-icon-money"></i>TPP</template

@@ -11,18 +11,17 @@
       <p class="card-category d-inline">{{user.skpd.singkatan}}</p>
     </template>
 
-    <md-button 
+    <!-- <md-button 
       style="height:28px;margin-left:-1px; font-size:11px;" 
       class="md-dense md-raised md-primary"
       v-on:click="createSasaranKinerja($event)"
       value="0"
      
     ><span class="fa fa-plus"></span> Create SKP
-    </md-button>
+    </md-button> -->
     <el-table
       :data="tableDataSkp"
       highlight-current-row
-      :span-method="objectSpanMethodUser"
       border
       style="width: 100%;">
       <el-table-column min-width="60" align="center" prop="periode_tahun" label="Periode"></el-table-column>
@@ -35,15 +34,15 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column  min-width="100" align="center" label="Status">
+      <!-- <el-table-column  min-width="100" align="center" label="Status">
         <template slot-scope="{ row }">
-          <!-- DRAFT -->
+         
           <el-button v-if=" row.status == '1' "  size="mini" type="text" @click="submitSasaranKinerja(row)">
             <i class="el-icon-edit-outline">
             </i> Perencanaan
             <md-tooltip md-direction="top">Klik Untuk Submit Sasaran Kinerja</md-tooltip>
           </el-button>
-           <!-- Submit -->
+          
           <span v-if=" row.status == '2' " class="text-info">
             Submited
           </span>
@@ -96,7 +95,7 @@
           </div>
           
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
 
     </el-table>

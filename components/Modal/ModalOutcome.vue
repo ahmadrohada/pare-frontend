@@ -83,11 +83,11 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item   label="Label"  prop="outcomeLabel">
+        <el-form-item   label="Intermediate Outcome"  prop="outcomeLabel">
           <el-input 
             :rows="3"
             type="textarea" 
-            placeholder="Outcome Label" 
+            placeholder="Intermediate Outcome" 
             v-model="OutcomeForm.outcomeLabel">
             </el-input>
         </el-form-item>

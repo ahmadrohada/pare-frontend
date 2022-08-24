@@ -19,6 +19,17 @@
      
     ><span class="fa fa-plus"></span> Create SKP
     </md-button> -->
+
+    <el-input
+        size="small"
+        style="width:220px; float: right; padding: 3px 0"
+        placeholder="Cari Nama Pegawai"
+        prefix-icon="el-icon-search"
+        v-model="search"
+        @input="onSearch">
+    </el-input>
+
+
     <el-table
       :data="tableDataSkp"
       highlight-current-row
@@ -99,6 +110,14 @@
 
 
     </el-table>
+     <el-pagination
+        :layout="layout"
+        @current-change="onPageChange"
+        @size-change="handleSizeChange"
+        :page-sizes="[20, 50, 100]"
+        :page-size="pageSize"
+        :total="total"
+      />
    
      
   </card>
@@ -181,6 +200,11 @@ export default {
           this.isEmpty = true
           throw error
         })
+    },
+    onSearch(value) {
+      this.search = value
+      this.page = null
+      this.loadAsyncData()
     },
     onPageChange(page) {
       this.page = page

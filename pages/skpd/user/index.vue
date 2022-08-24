@@ -15,7 +15,7 @@
       <el-input
         size="small"
         style="width:220px; float: right; padding: 3px 0"
-        placeholder="Cari"
+        placeholder="Cari Nama Pegawai"
         prefix-icon="el-icon-search"
         v-model="search"
         @input="onSearch">
@@ -28,7 +28,7 @@
         :span-method="objectSpanMethodUser"
         border
         style="width: 100%;">
-        <el-table-column  min-width="160" sortable label="Nama Lengkap">
+        <el-table-column  min-width="160" label="Nama Lengkap">
             <template slot-scope="scope">
               <div style="padding:0px !important;">
                 <span style="margin-top:-6px; color:black;" class="">{{scope.row.nama_lengkap}}</span><br>

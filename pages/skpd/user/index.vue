@@ -66,7 +66,7 @@
         :layout="layout"
         @current-change="onPageChange"
         @size-change="handleSizeChange"
-        :page-sizes="[20, 50, 100]"
+        :page-sizes="[15]"
         :page-size="pageSize"
         :total="total"
       />
@@ -104,7 +104,7 @@ export default {
      
       defaultSortOrder: 'asc',
       page: 1,
-      limit:'20',
+      limit:'15',
       total:'',
       currentPage: 1,
 

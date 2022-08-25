@@ -23,7 +23,7 @@
     <el-input
         size="small"
         style="width:220px; float: right; padding: 3px 0"
-        placeholder="Cari Nama Pegawai"
+        placeholder="Cari Nama Pegawai atau Jenis Jabatan"
         prefix-icon="el-icon-search"
         v-model="search"
         @input="onSearch">
@@ -180,10 +180,9 @@ export default {
           // api.themoviedb.org manage max 1000 pages
           this.tableDataSkp = []
           this.total = data.pagination.total
-          this.page = data.pagination.current_page
-          this.perPage = data.pagination.per_page
-          this.totalPage = data.pagination.total_page
-          this.limit = data.pagination.limit
+          this.currentPage = data.pagination.currentPage
+          this.pageSize = data.pagination.limit
+
           data.data.forEach((item) => {
             this.tableDataSkp.push(item)
           })

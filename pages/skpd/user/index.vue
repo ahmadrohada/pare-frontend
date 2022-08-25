@@ -99,7 +99,7 @@ export default {
       //pagination
       layout: ' prev,  pager,next',
       search: '',
-      sortField: 'id',
+      sortField: '',
       sortOrder: 'asc',
      
       defaultSortOrder: 'asc',

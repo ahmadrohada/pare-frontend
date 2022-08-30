@@ -62,6 +62,15 @@
           <span>Sasaran Kinerja</span>
       </el-menu-item>
 
+
+       <el-menu-item 
+        index="/personal/ekspektasi"
+        :route="{path: '/personal/ekspektasi'}"
+       >
+          <i class="el-icon-data-analysis"></i>
+          <span>SKP Bawahan</span>
+      </el-menu-item>
+
      <!--  <el-menu-item 
         index="/personal/laporan_harian"
         :route="{path: '/personal/laporan_harian'}"

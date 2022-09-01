@@ -442,9 +442,20 @@ export default {
               this.SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiId = resp.data.jabatan[0].referensi.id
               this.SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiJenis = resp.data.jabatan[0].referensi.jenis
               this.SasaranKinerjaForm.jabatanPegawaiYangDinilai = resp.data.jabatan[0].nama
-              this.SasaranKinerjaForm.pangkatPegawaiYangDinilai = resp.data.jabatan[0].golongan.referensi.pangkat
-              this.SasaranKinerjaForm.golonganPegawaiYangDinilai = resp.data.jabatan[0].golongan.referensi.golongan
-              this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = resp.data.jabatan[0].golongan.referensi.pangkat+" / "+resp.data.jabatan[0].golongan.referensi.golongan
+
+
+              //this.SasaranKinerjaForm.pangkatPegawaiYangDinilai = resp.data.jabatan[0].golongan.referensi.pangkat
+              //this.SasaranKinerjaForm.golonganPegawaiYangDinilai = resp.data.jabatan[0].golongan.referensi.golongan
+              //this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = resp.data.jabatan[0].golongan.referensi.pangkat+" / "+resp.data.jabatan[0].golongan.referensi.golongan
+              
+              this.SasaranKinerjaForm.pangkatPegawaiYangDinilai = resp.data.golongan.referensi.pangkat
+              this.SasaranKinerjaForm.golonganPegawaiYangDinilai = resp.data.golongan.referensi.golongan
+              this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = resp.data.golongan.referensi.pangkat+" / "+resp.data.golongan.referensi.golongan
+              
+
+
+
+              this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = resp.data.pangkat+" / "+resp.golongan
               this.SasaranKinerjaForm.instansiPegawaiYangDinilai = resp.data.jabatan[0].skpd.nama
               
 
@@ -475,7 +486,8 @@ export default {
 
               console.log(resp)
               this.SasaranKinerjaForm.jabatanAktifPegawaiYangDinilaiId = selectedId
-              this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = resp.pangkat+" / "+resp.golongan
+              //ini mah yang dari jabatan,salah ternyata,,harusnya gol selevel di jabatan
+              //this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = resp.pangkat+" / "+resp.golongan
               this.SasaranKinerjaForm.instansiPegawaiYangDinilai = resp.skpd
               
               
@@ -530,9 +542,13 @@ export default {
               this.SasaranKinerjaForm.jabatanSimAsnPejabatPenilaiId = resp.data.jabatan[0].referensi?resp.data.jabatan[0].referensi.id:null
               this.SasaranKinerjaForm.jabatanSimAsnPejabatPenilaiJenis = resp.data.jabatan[0].referensi?resp.data.jabatan[0].referensi.jenis:null
               this.SasaranKinerjaForm.jabatanPejabatPenilai = resp.data.jabatan[0].nama
-              this.SasaranKinerjaForm.pangkatPejabatPenilai = resp.data.jabatan[0].golongan?resp.data.jabatan[0].golongan.referensi.pangkat:""
-              this.SasaranKinerjaForm.golonganPejabatPenilai = resp.data.jabatan[0].golongan?resp.data.jabatan[0].golongan.referensi.golongan:""
+
+              this.SasaranKinerjaForm.pangkatPejabatPenilai = resp.data.golongan?resp.data.golongan.referensi.pangkat:""
+              this.SasaranKinerjaForm.golonganPejabatPenilai = resp.data.golongan?resp.data.golongan.referensi.golongan:""
               this.SasaranKinerjaForm.pangkatGolonganPejabatPenilai = this.SasaranKinerjaForm.pangkatPejabatPenilai+" / "+this.SasaranKinerjaForm.golonganPejabatPenilai
+              
+              
+              
               this.SasaranKinerjaForm.instansiPejabatPenilai = resp.data.jabatan[0].skpd?resp.data.jabatan[0].skpd.nama:null
               
 
@@ -552,7 +568,7 @@ export default {
         }); 
     },
     onPilihJabatanPejabatPenilai(selectedId){
-      this.SasaranKinerjaForm.pangkatGolonganPejabatPenilai = null;
+      //this.SasaranKinerjaForm.pangkatGolonganPejabatPenilai = null;
       this.SasaranKinerjaForm.instansiPejabatPenilai = null;
 
       const isSelect = selectedId
@@ -562,7 +578,7 @@ export default {
 
               console.log(resp)
               this.SasaranKinerjaForm.jabatanAktifPejabatPenilaiId = selectedId
-              this.SasaranKinerjaForm.pangkatGolonganPejabatPenilai = resp.pangkat+" / "+resp.golongan
+              //this.SasaranKinerjaForm.pangkatGolonganPejabatPenilai = resp.pangkat+" / "+resp.golongan
               this.SasaranKinerjaForm.instansiPejabatPenilai = resp.skpd
               
               

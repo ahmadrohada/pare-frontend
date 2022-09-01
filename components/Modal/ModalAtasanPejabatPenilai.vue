@@ -189,9 +189,11 @@ export default {
               this.AtasanPejabatPenilaiForm.jabatanSimAsnAtasanPejabatPenilaiId = resp.data.jabatan[0].referensi?resp.data.jabatan[0].referensi.id:null
               this.AtasanPejabatPenilaiForm.jabatanSimAsnAtasanPejabatPenilaiJenis = resp.data.jabatan[0].referensi?resp.data.jabatan[0].referensi.jenis:null
               this.AtasanPejabatPenilaiForm.jabatanAtasanPejabatPenilai = resp.data.jabatan[0].nama
-              this.AtasanPejabatPenilaiForm.pangkatAtasanPejabatPenilai = resp.data.jabatan[0].golongan?resp.data.jabatan[0].golongan.referensi.pangkat:""
-              this.AtasanPejabatPenilaiForm.golonganAtasanPejabatPenilai = resp.data.jabatan[0].golongan?resp.data.jabatan[0].golongan.referensi.golongan:""
+
+              this.AtasanPejabatPenilaiForm.pangkatAtasanPejabatPenilai = resp.data.golongan?resp.data.golongan.referensi.pangkat:""
+              this.AtasanPejabatPenilaiForm.golonganAtasanPejabatPenilai = resp.data.golongan?resp.data.golongan.referensi.golongan:""
               this.AtasanPejabatPenilaiForm.pangkatGolonganAtasanPejabatPenilai = this.AtasanPejabatPenilaiForm.pangkatAtasanPejabatPenilai+" / "+this.AtasanPejabatPenilaiForm.golonganAtasanPejabatPenilai
+              
               this.AtasanPejabatPenilaiForm.instansiAtasanPejabatPenilai = resp.data.jabatan[0].skpd?resp.data.jabatan[0].skpd.nama:null
               
 
@@ -211,7 +213,7 @@ export default {
         }); 
     },
     onPilihJabatanAtasanPejabatPenilai(selectedId){
-      this.AtasanPejabatPenilaiForm.pangkatGolonganAtasanPejabatPenilai = null;
+      //this.AtasanPejabatPenilaiForm.pangkatGolonganAtasanPejabatPenilai = null;
       this.AtasanPejabatPenilaiForm.instansiAtasanPejabatPenilai = null;
 
       const isSelect = selectedId
@@ -221,7 +223,7 @@ export default {
 
               console.log(resp)
               this.AtasanPejabatPenilaiForm.jabatanAktifAtasanPejabatPenilaiId = selectedId
-              this.AtasanPejabatPenilaiForm.pangkatGolonganAtasanPejabatPenilai = resp.pangkat+" / "+resp.golongan
+              //this.AtasanPejabatPenilaiForm.pangkatGolonganAtasanPejabatPenilai = resp.pangkat+" / "+resp.golongan
               this.AtasanPejabatPenilaiForm.instansiAtasanPejabatPenilai = resp.skpd
               
               

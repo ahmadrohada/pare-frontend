@@ -190,9 +190,11 @@ export default {
               this.PejabatPenilaiForm.jabatanSimAsnPejabatPenilaiId = resp.data.jabatan[0].referensi?resp.data.jabatan[0].referensi.id:null
               this.PejabatPenilaiForm.jabatanSimAsnPejabatPenilaiJenis = resp.data.jabatan[0].referensi?resp.data.jabatan[0].referensi.jenis:null
               this.PejabatPenilaiForm.jabatanPejabatPenilai = resp.data.jabatan[0].nama
-              this.PejabatPenilaiForm.pangkatPejabatPenilai = resp.data.jabatan[0].golongan?resp.data.jabatan[0].golongan.referensi.pangkat:""
-              this.PejabatPenilaiForm.golonganPejabatPenilai = resp.data.jabatan[0].golongan?resp.data.jabatan[0].golongan.referensi.golongan:""
+
+              this.PejabatPenilaiForm.pangkatPejabatPenilai = resp.data.golongan?resp.data.golongan.referensi.pangkat:""
+              this.PejabatPenilaiForm.golonganPejabatPenilai = resp.data.golongan?resp.data.golongan.referensi.golongan:""
               this.PejabatPenilaiForm.pangkatGolonganPejabatPenilai = this.PejabatPenilaiForm.pangkatPejabatPenilai+" / "+this.PejabatPenilaiForm.golonganPejabatPenilai
+              
               this.PejabatPenilaiForm.instansiPejabatPenilai = resp.data.jabatan[0].skpd?resp.data.jabatan[0].skpd.nama:null
               
 
@@ -212,7 +214,7 @@ export default {
         }); 
     },
     onPilihJabatanPejabatPenilai(selectedId){
-      this.PejabatPenilaiForm.pangkatGolonganPejabatPenilai = null;
+      //this.PejabatPenilaiForm.pangkatGolonganPejabatPenilai = null;
       this.PejabatPenilaiForm.instansiPejabatPenilai = null;
 
       const isSelect = selectedId
@@ -222,7 +224,7 @@ export default {
 
               console.log(resp)
               this.PejabatPenilaiForm.jabatanAktifPejabatPenilaiId = selectedId
-              this.PejabatPenilaiForm.pangkatGolonganPejabatPenilai = resp.pangkat+" / "+resp.golongan
+              //this.PejabatPenilaiForm.pangkatGolonganPejabatPenilai = resp.pangkat+" / "+resp.golongan
               this.PejabatPenilaiForm.instansiPejabatPenilai = resp.skpd
               
               

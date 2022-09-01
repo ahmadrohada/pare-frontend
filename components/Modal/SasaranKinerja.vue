@@ -418,7 +418,9 @@ export default {
         this.$axios
           .get(`/pegawai_detail?${params}`)
           .then((resp) => {
-            console.log(resp)
+            console.log(resp.data.golongan.referensi.pangkat)
+
+
             this.SasaranKinerjaForm.nipPegawaiYangDinilai = resp.data.nip;
             this.SasaranKinerjaForm.namaLengkapPegawaiYangDinilai = resp.data.nama_lengkap;
             this.SasaranKinerjaForm.userId = queryString
@@ -454,8 +456,6 @@ export default {
               
 
 
-
-              this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = resp.data.pangkat+" / "+resp.golongan
               this.SasaranKinerjaForm.instansiPegawaiYangDinilai = resp.data.jabatan[0].skpd.nama
               
 

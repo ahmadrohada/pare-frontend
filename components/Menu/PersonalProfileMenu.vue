@@ -53,8 +53,8 @@
       </el-menu-item>
 
        <el-menu-item 
-        index="/personal/ekspektasi"
-        :route="{path: '/personal/ekspektasi'}"
+        index="/personal/sasaran_kinerja_bawahan"
+        :route="{path: '/personal/sasaran_kinerja_bawahan'}"
        >
           <i class="el-icon-data-analysis"></i>
           <span>SKP Bawahan</span>

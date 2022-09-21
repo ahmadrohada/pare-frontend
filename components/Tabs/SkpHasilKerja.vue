@@ -17,28 +17,7 @@
         @loadAsyncData="loadAsyncData"
       >
       </manual-indikator-kinerja>
-      
-    <md-button 
-      style="height:28px;margin-left:-1px; font-size:11px; margin-top:3px;" 
-      class="md-dense md-raised md-primary"
-      v-on:click="addRencanaKinerja($event)"
-      value="0"
-      v-if="statusSasaranKinerja == 'drafted'"
-    ><i class="el-icon-plus"></i>  Rencana Kinerja
-    </md-button>
-
-    <md-button 
-      style="height:28px;margin-left:-1px; font-size:11px; margin-top:3px;" 
-      class="md-dense md-raised md-primary"
-      v-on:click="addIndikatorKinerjaIndividu($event)"
-      value="0"
-      v-if=" statusSasaranKinerja == 'drafted'"
-    ><i class="el-icon-plus"></i> Indikator Kinerja Individu
-    </md-button>
-
-    <hr>
-
-
+    
     <p class="" style="margin-top: 20px">A. KINERJA UTAMA</p>
     <el-table
       :data="tableDataKinerjaUtama"
@@ -54,12 +33,12 @@
       <el-table-column label="Rencana Kinerja" width="270">
         <template slot-scope="{row}">
           {{row.rencana_kinerja}}
-          <i v-if=" row.indikator_id  != '' ">
+          <!-- <i v-if=" row.indikator_id  != '' ">
             <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaKinerja(row)">
             <i class="el-icon-edit-outline"></i> Edit
             <md-tooltip md-direction="top">Edit Rencana Kinerja</md-tooltip>
             </el-button>
-          </i>
+          </i> -->
         </template>
       </el-table-column>
       <el-table-column  label="Indikator Kinerja Individu" min-width="320">
@@ -73,7 +52,7 @@
         label="Target"
         width="150">
       </el-table-column>
-      <el-table-column  fixed="right" align="center" label="Manual" width="70" v-if="statusSasaranKinerja == 'drafted' ">
+     <!--  <el-table-column  fixed="right" align="center" label="Manual" width="70" v-if="statusSasaranKinerja == 'drafted' ">
         <template slot-scope="{row}">
           <el-button v-if=" row.manual_indikator_kinerja_id  == 0 "  size="medium" type="text" @click="addManualIndikatorKinerja(row)">
             <i class="el-icon-circle-plus-outline"></i>
@@ -85,8 +64,8 @@
             <md-tooltip md-direction="top">Edit Manual Indikator Kinerja</md-tooltip>
           </el-button>
         </template>
-      </el-table-column>
-      <el-table-column fixed="right" align="center"  label="Aksi" width="70"  v-if="statusSasaranKinerja == 'drafted' ">
+      </el-table-column> -->
+      <!-- <el-table-column fixed="right" align="center"  label="Aksi" width="70"  v-if="statusSasaranKinerja == 'drafted' ">
         <template slot-scope="{row}" >
           <div v-if=" row.indikator_id  != '' ">
             <el-button size="medium" type="text" @click="editIndikatorKinerjaIndividu(row)">
@@ -109,7 +88,7 @@
             </el-button>
           </div>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
 
 
@@ -225,14 +204,11 @@ export default {
     }
   },
   mounted() {
-    if ( this.sasaranKinerjaId != null ){
-        this.loadData(sasaranKinerjaId)
-    }
-   
+    this.sasaranKinerjaId = this.$route.params.id
+    this.loadData()
   },
   methods: {
-      loadData(sasaranKinerjaId){
-        this.sasaranKinerjaId = sasaranKinerjaId
+      loadData(){
         this.loadAsyncDataKinerjaUtama()
         this.loadAsyncDataKinerjaTambahan()
       },

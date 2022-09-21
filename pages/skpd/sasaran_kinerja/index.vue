@@ -45,6 +45,17 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column min-width="80" align="center">
+        <template slot="header">
+          <i class="el-icon-s-tools"></i>
+        </template>
+        <template slot-scope="{ row }">
+            <el-button  size="medium" type="text" @click="viewSasaranKinerja(row)">
+              <i class="el-icon-edit-outline"></i>
+              <md-tooltip md-direction="top">Lihat SKP</md-tooltip>
+            </el-button>
+        </template>
+      </el-table-column>
       <!-- <el-table-column  min-width="100" align="center" label="Status">
         <template slot-scope="{ row }">
          
@@ -209,128 +220,9 @@ export default {
       this.page = page
       this.loadAsyncData()
     },
-    viewSasaranKinerja: function(data) {
-      this.$refs.loader.start()
-      this.$router.push("/sasaran_kinerja/"+data.id);
-    },
-    reviuSasaranKinerja: function(data) {
-
-      this.$confirm('Anda Akan melakukan proses Reviu terhadap SKP JPT', 'Konfirmasi', {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Batal',
-          type: 'warning'
-        }).then(() => {
-
-          this.$axios
-            .$post("/sasaran_kinerja_reviu?id="+data.id)
-            .then((resp) => {
-                this.$router.push("/sasaran_kinerja_reviu/"+resp);
-            })
-            .catch((error) => {
-              this.$message({
-                type: 'error',
-                message: error.response.data.message
-              });          
-            });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Proses Reviu Dibatalkan'
-          });          
-        });
-    },
-    editReviuSasaranKinerja: function(data) {
-      this.$router.push("/sasaran_kinerja_reviu/"+data.id);
-    },
-    createSasaranKinerja: function(e) {
-      this.$refs.ModalSasaranKinerja.showModal(this.skpd_id);
-    },
-    hapusSasaranKinerja: function(data) {
-        //const parent = node.parent;
-        //const child = parent.data.child || parent.data;
-        
-        this.$confirm('Ini akan menghapus Sasaran Kinerja, Semua data akan ikut terhapus !', 'Konfirmasi', {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Batal',
-          type: 'warning'
-        }).then(() => {
-          this.$axios
-            .$delete("/sasaran_kinerja?id="+data.id)
-            .then((resp) => {
-                this.loadAsyncData()
-                this.$message({
-                  type: 'success',
-                  message: 'Berhasil dihapus'
-                });
-            })
-            .catch((error) => {
-              //console.log(error.response.data.message)
-              this.$message({
-                type: 'error',
-                message: error.response.data.message
-              });          
-            });
-
-          
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Proses Hapus Dibatalkan'
-          });          
-        });
-    },
-    submitSasaranKinerja: function(row) {
-
-      const params = [
-        `id=${row.id}`,
-      ].join('&')
-
-      this.$axios
-        .$get(`/sasaran_kinerja?${params}`)
-        .then(({ data }) => {
-          
-          if(data.jumlahRencanaKinerja >= 1 ){
-              this.$confirm('SKP dalam status perencanaan, klik submit untuk lanjut ke proses reviu pengelola kinerja', 'Info', {
-                confirmButtonText: 'Submit',
-                cancelButtonText: 'Batal',
-                type: 'info'
-              }).then(() => {
-                this.$axios
-                  .$put("/submit_sasaran_kinerja?id="+data.id)
-                  .then((resp) => {
-                      this.loadAsyncData()
-                      this.$message({
-                        type: 'success',
-                        message: 'Berhasil Submit'
-                      });
-                  })
-                  .catch((error) => {
-                    //console.log(error.response.data.message)
-                    this.$message({
-                      type: 'error',
-                      message: error.response.data.message
-                    });          
-                  });
-
-                
-              }).catch(() => {
-                this.$message({
-                  type: 'info',
-                  message: 'Proses Submit Dibatalkan'
-                });          
-              });
-          }else{
-            this.$message({
-                  type: 'warning',
-                  message: 'SKP harus memiliki minimal 1 Rencana Kinerja'
-                });   
-          }
-        
-
-        })
-        .catch((error) => {
-          throw error
-        })
+    viewSasaranKinerja: function (data) {
+      this.$refs.loader.start();
+      this.$router.push("/skpd/sasaran_kinerja/" + data.id );
     },
   },
   mounted() {

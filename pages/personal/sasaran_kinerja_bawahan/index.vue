@@ -43,22 +43,22 @@
           </ol>
         </template>
       </el-table-column>
-      <el-table-column min-width="80" align="center">
-        <template slot="header">
-          Perilaku Kerja
-        </template>
-        <template slot-scope="{ row }">
-            <el-button  size="medium" type="text" @click="viewPerilakuKerja(row)">
-              <i class="el-icon-edit-outline"></i>
-              <md-tooltip md-direction="top">Lihat Perilaku Kerja</md-tooltip>
-            </el-button>
-        </template>
-      </el-table-column>
       <el-table-column   align="center" label="Created at">
         <template slot-scope="{ row }">
           <div style="padding:0px !important;">
             <span style="margin-top:-6px;" class="">{{moment(row.created_at).format('DD-MM-YYYY hh:mm')}}</span><br>
           </div>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" align="center">
+        <template slot="header">
+          <i class="el-icon-s-tools"></i>
+        </template>
+        <template slot-scope="{ row }">
+            <el-button  size="medium" type="text" @click="viewSasaranKinerjaBawahan(row)">
+              <i class="el-icon-edit-outline"></i>
+              <md-tooltip md-direction="top">Lihat SKP</md-tooltip>
+            </el-button>
         </template>
       </el-table-column>
       <!-- <el-table-column width="70px" align="center">
@@ -164,13 +164,9 @@ export default {
     viewPerilakuKerja: function (data) {
       this.$refs.ModalPerilakuKerja.showModal(data);
     },
-    viewSasaranKinerja: function (data) {
+    viewSasaranKinerjaBawahan: function (data) {
       this.$refs.loader.start();
-      this.$router.push("/personal/sasaran_kinerja/" + data.id + "/sumary");
-    },
-    reviewSasaranKinerja: function (data) {
-      this.$refs.loader.start();
-      this.$router.push("/personal/sasaran_kinerja_reviu/" + data.id);
+      this.$router.push("/personal/sasaran_kinerja_bawahan/" + data.id );
     },
   },
   mounted() {

@@ -148,8 +148,7 @@ export default {
     }
   },
   methods: {
-    loadData(sasaranKinerjaId) {
-      this.sasaranKinerjaId = sasaranKinerjaId
+    loadData() {
       const params = [
         `id=${this.sasaranKinerjaId}`,
       ].join('&')
@@ -232,9 +231,8 @@ export default {
     },
   },
   mounted() {
-    if ( this.sasaranKinerjaId != null ){
-        this.loadData(this.sasaranKinerjaId)
-    }
+    this.sasaranKinerjaId = this.$route.params.id
+    this.loadData()
   },
 
 };

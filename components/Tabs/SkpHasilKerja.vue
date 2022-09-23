@@ -127,7 +127,7 @@
         label="Target"
         width="150">
       </el-table-column>
-      <el-table-column  fixed="right" align="center" label="Manual" width="70" v-if="statusSasaranKinerja == 'drafted' ">
+      <!-- <el-table-column  fixed="right" align="center" label="Manual" width="70" v-if="statusSasaranKinerja == 'drafted' ">
         <template slot-scope="{row}">
           <el-button v-if=" row.manual_indikator_kinerja_id  == 0  "  size="mini" type="text" @click="addManualIndikator(row)">
             <i class="el-icon-circle-plus-outline"></i>
@@ -163,7 +163,7 @@
             </el-button>
           </div>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
 
 

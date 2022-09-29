@@ -152,10 +152,6 @@ export default {
   //min-height: 430px !important;
 }
 
-.modal-dialog {
-  max-width: 950px !important;
-  margin-bottom: 13px !important;
-}
 
 .el-table .cell {
   word-break: normal !important;

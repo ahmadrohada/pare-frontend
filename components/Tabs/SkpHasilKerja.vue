@@ -428,5 +428,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
+.el-table td,
+.el-table th {
+  vertical-align: top;
+}
 </style>

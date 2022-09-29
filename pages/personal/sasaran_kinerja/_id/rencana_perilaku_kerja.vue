@@ -28,7 +28,7 @@
         label="Aspek Perilaku Kerja"
         >
         <template slot-scope="{ row }">
-          {{row.aspek}}
+          {{row.label}}
 
           <ul style="margin-left: -30px;" v-if="row.point_penilaian != null" >
             <li v-for="(data, key) in row.point_penilaian" :key="key">

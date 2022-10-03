@@ -25,7 +25,7 @@
       </el-radio-group>
     </div>
 
-      <el-form-item v-if="EkspektasiForm.option == 'manual'" label="" prop="ekspektasiLabel">
+      <el-form-item v-if="EkspektasiForm.option == 'manual'" label="" prop="ekspektasiLabel" style="margin-top:10px;">
         <el-input
           :rows="3"
           type="textarea"
@@ -137,10 +137,12 @@ export default {
       this.modalFormVisible = true;
     },
     showModalEdit(e) {
+      this.resetForm("EkspektasiForm");
       this.submitLoader = false;
       this.headerText = "Edit Ekspektasi Khusus Pimpinan";
       this.$refs.loader.start();
       this.formType = "edit";
+      this.EkspektasiForm.option = "manual"
       this.EkspektasiForm.perilakuKerjaLabel = e.label;
       this.EkspektasiForm.perilakuKerjaId = e.id;
       setTimeout(() => {

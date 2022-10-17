@@ -20,6 +20,8 @@
         </div>
       </div>
     </card>
+    
+
     <el-menu
       :default-openeds="[]"
       background-color="transparent"
@@ -28,44 +30,29 @@
       :router="true" 
       :default-active="activeLink"
     >
-      <el-menu-item 
-        index="/bkpsdm"
-        :route="{path: '/bkpsdm'}"
-       >
-       
-        <i class="el-icon-data-board"></i>
-        <span>Dashboard</span>
-      </el-menu-item>
-      <el-menu-item 
-        index="/bkpsdm/skpd"
-        :route="{path: '/bkpsdm/skpd'}"
-       >
-       
-        <i class="el-icon-data-board"></i>
-        <span>SKPD</span>
-      </el-menu-item>
-      <el-menu-item 
+      
+   <!--    <el-menu-item 
         index="/bkpsdm/user"
         :route="{path: '/bkpsdm/user'}"
        >
        
         <i class="el-icon-user"></i>
         <span>User</span>
+      </el-menu-item> -->
+     <!--  <el-menu-item 
+        index="/bkpsdm/manajemen_kinerja"
+        :route="{path: '/bkpsdm/manajemen_kinerja'}"
+       >
+        <i class="el-icon-data-analysis"></i>
+        <span>Manajemen Kinerja</span>
+      </el-menu-item> -->
+      <el-menu-item 
+        index="/bkpsdm/sasaran_kinerja"
+        :route="{path: '/bkpsdm/sasaran_kinerja'}"
+       >
+        <i class="el-icon-data-analysis"></i>
+        <span>Sasaran Kinerja</span>
       </el-menu-item>
-      <el-submenu index="2" disabled>
-        <template slot="title"
-          ><i class="el-icon-notebook-2"></i>Capaian</template
-        >
-          <el-menu-item index="2-1">Tahunan</el-menu-item>
-          <el-menu-item index="2-2">Bulanan</el-menu-item>
-      </el-submenu>
-      <el-submenu index="3" disabled>
-        <template slot="title"
-          ><i class="el-icon-money"></i>TPP</template
-        >
-          <el-menu-item index="3-1">Report</el-menu-item>
-        </el-submenu>
-      </el-submenu>
     </el-menu>
   </div>
 </template>

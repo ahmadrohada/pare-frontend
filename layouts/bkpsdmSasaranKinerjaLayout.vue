@@ -7,7 +7,10 @@
       :short-title="$t('sidebar.shortTitle')"
       :title="$t('sidebar.title')"
     >
-    <bkpsdm-menu></bkpsdm-menu>
+    <skp-skpd-menu 
+          :skpdLogo="dataUser.skpd.logo"
+          :skpdSingkatan="dataUser.skpd.singkatan"
+          ></skp-skpd-menu>
     </side-bar>
     
     <div class="main-panel" :data="sidebarBackground">
@@ -51,8 +54,9 @@
   import ContentFooter from '@/components/Layout/ContentFooter.vue';
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
-  import BkpsdmMenu from '~/components/Menu/BkpsdmMenu.vue';
+  import SkpSkpdMenu from '~/components/Menu/SasaranKinerjaBkpsdmMenu.vue';
 
+  import { mapGetters } from 'vuex'
 
   export default {
     
@@ -62,17 +66,20 @@
       DashboardContent,
       SlideYDownTransition,
       ZoomCenterTransition,
-      BkpsdmMenu,
+      SkpSkpdMenu,
     },
     data() {
       return {
         sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
-        isFullScreenRoute:false,
-        laoding:true,
-        overlay:true,
       };
     },
     computed: {
+      isFullScreenRoute() {
+        return this.$route.path === '/maps/full-screen'
+      },
+      ...mapGetters({
+        dataUser:'user',
+      })
     },
     methods: {
       toggleSidebar() {
@@ -97,7 +104,7 @@
     },
     watch: {
       '$route.path': function() {
-        //console.log(this.$route.fullPath); // path is /users
+        console.log(this.$route); 
       }
     },
     mounted() {
@@ -130,9 +137,7 @@
       transform: scale3d($scaleSize, $scaleSize, $scaleSize);
     }
   }
-
   .main-panel .zoomOut {
     animation-name: zoomOut95;
   }
-
 </style>

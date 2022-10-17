@@ -17,7 +17,7 @@
         </button>
       </div>
 
-    <div style="width:100%; text-align:center;margin-left:25px;">
+    <div style="width:100%; text-align:center;margin-left:0px;">
       
       <el-badge is-dot class="item" hidden>
         <el-button type="success" size="small" icon="fa fa-home" @click="goToHome"></el-button>
@@ -29,6 +29,10 @@
 
       <el-badge is-dot class="item" hidden>
         <el-button v-if = "isAdminSkpd" type="success" size="small" icon="fa fa-users" @click="goToSkpd"></el-button>
+      </el-badge>
+
+      <el-badge is-dot class="item" hidden>
+        <el-button v-if = "isAdminBkpsdm" type="success" size="small" icon="el-icon-office-building" @click="goToBkpsdm"></el-button>
       </el-badge>
       
       
@@ -119,6 +123,9 @@ export default {
     goToSkpd(){
       this.$router.push("/skpd");
     },
+    goToBkpsdm(){
+      this.$router.push("/bkpsdm");
+    },
     capitalizeFirstLetter(string) {
       if (!string || typeof string !== 'string') {
         return ''
@@ -204,7 +211,7 @@ export default {
 
 .item {
   margin-top: 0px;
-  margin-right: 8px;
+  margin-right: 5px;
 }
 
 </style>

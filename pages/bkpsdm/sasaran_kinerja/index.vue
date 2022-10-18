@@ -36,8 +36,28 @@
       border
       style="width: 100%;">
       <el-table-column min-width="60" align="center" prop="periode_tahun" label="Periode"></el-table-column>
-      <el-table-column min-width="130" align="center" prop="jenis_jabatan_skp" label="Jenis Jabatan SKP"></el-table-column>
-      <el-table-column min-width="230" align="left" prop="nama_pegawai" label="Nama Pegawai"></el-table-column>
+      <el-table-column min-width="180" label="Pegawai Yang Dinilai">
+        <template slot-scope="{ row }">
+          <div style="padding:0px !important;">
+            <span style="color:#130f0f;" class="">{{ row.nama_pegawai}}</span><br>
+          </div>
+          <div style="padding:0px !important; margin-top:-5px;">
+            <span style="" class="">{{ row.nip_pegawai}}</span><br>
+          </div>
+        </template>
+      </el-table-column>
+
+      <el-table-column min-width="250" label="Jabatan dan Instansi">
+        <template slot-scope="{ row }">
+          <div style="padding:0px !important;">
+            <span style="color:#130f0f;" class="">{{ row.jabatan_pegawai}}</span><br>
+          </div>
+          <div style="padding:0px !important; margin-top:-5px;">
+            <span style="" class="">{{ row.skpd}}</span><br>
+          </div>
+        </template>
+      </el-table-column>
+      
       <el-table-column  min-width="100" align="center" label="Created at">
         <template slot-scope="{ row }">
           <div style="padding:0px !important;">

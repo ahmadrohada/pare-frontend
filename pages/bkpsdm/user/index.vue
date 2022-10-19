@@ -36,8 +36,14 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column min-width="60" align="center" prop="jabatan_eselon" label="Eselon"></el-table-column>
-          <el-table-column min-width="250" prop="jabatan" label="Jabatan"></el-table-column>
+          <el-table-column  min-width="360" label="Instansi">
+            <template slot-scope="scope">
+              <div style="padding:0px !important;">
+                <span style="margin-top:-6px; color:black;" class="">{{scope.row.skpd}}</span><br>
+                <span style="font-size:11px; margin-top:-6px; color:#696969;" class="text-muted">{{scope.row.nip}}</span>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column min-width="60" header-align="center" label="Is Admin">
             <template slot-scope="{ row }">
               <div class="text-center">
@@ -133,7 +139,6 @@ export default {
     }, */
     loadAsyncDataUser() {
         const params = [
-          //`skpd_id=${this.skpdId}`,
           `search=${this.search}`,
           `order_by=${this.sortField}`,
           `order_direction=${this.sortOrder}`,
@@ -143,7 +148,7 @@ export default {
 
         this.$refs.loader.start() 
         this.$axios
-          .get(`/user?${params}`)
+          .get(`/user_all?${params}`)
           .then(({ data }) => {
             this.tableDataUser= []
             this.total = data.pagination.total

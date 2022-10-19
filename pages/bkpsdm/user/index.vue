@@ -5,6 +5,11 @@
       <h4 class="title d-inline">User List</h4>
       <p class="card-category d-inline"></p>
 
+      <br>
+
+      
+
+
 
     
 
@@ -14,12 +19,15 @@
 
       <el-input
         size="small"
-        style="width:220px; float: right; padding: 3px 0"
-        placeholder="Cari Nama Pegawai"
+        style="width:250px; float: right; padding: 3px 2px"
+        placeholder="Cari Pegawai / SKPD"
         prefix-icon="el-icon-search"
         v-model="search"
-        @input="onSearch">
+        @input="onSearch"
+        clearable>
       </el-input>
+
+        
 
     
       <el-table
@@ -36,22 +44,34 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column  min-width="360" label="Instansi">
+          <el-table-column  min-width="360" label="Instansi / Jabatan">
             <template slot-scope="scope">
-              <div style="padding:0px !important;">
-                <span style="margin-top:-6px; color:black;" class="">{{scope.row.skpd}}</span><br>
-                <span style="font-size:11px; margin-top:-6px; color:#696969;" class="text-muted">{{scope.row.nip}}</span>
+
+              <div v-if="scope.row.jabatan != null ">
+                <template v-for="(data,index) in scope.row.jabatan">
+                  <div style="padding:0px !important;">
+                    <span style="margin-top:-6px; color:black;" class="">{{data.instansi}}</span><br>
+                    <span style="font-size:11px; margin-top:-6px; color:#696969;" class="text-muted">{{data.nama_jabatan}}</span>
+                  </div>
+                </template>
               </div>
+              <div v-else>
+                <div style="padding:0px !important;">
+                  <span style="margin-top:-6px; color:black;" class="">{{scope.row.skpd}}</span><br>
+                  <span style="font-size:11px; margin-top:-6px; color:#696969;" class="text-muted">-</span>
+                </div>
+              </div>
+
+
             </template>
           </el-table-column>
           <el-table-column min-width="60" header-align="center" label="Is Admin">
-            <template slot-scope="{ row }">
+            <template slot-scope="scope">
               <div class="text-center">
                 <el-switch
-                    v-model="row.is_admin"
+                    v-model="scope.row.is_admin"
                     active-color="#13ce66"
-                    v-on:change="$emit('addToAdmin', row)"
-                    disabled
+                    v-on:change="addToAdmin(scope.row)"
                     >
                   </el-switch>
                   <md-tooltip md-direction="top">Admin</md-tooltip>
@@ -68,7 +88,10 @@
             </template>
           </el-table-column>
       </el-table>
+
+      
       <el-pagination
+        v-if="total >= 1"
         :layout="layout"
         @current-change="onPageChange"
         @size-change="handleSizeChange"
@@ -92,16 +115,13 @@ export default {
   },
   data() {
     return {
-      skpdid:null,
       tableDataUser: [],
 
       spanArrUser: [],
       positionUser: null,
 
-
-      search: '',
-      
-
+      namaSkpd:'',
+    
       //pagination
       layout: ' prev,  pager,next',
       search: '',
@@ -110,7 +130,7 @@ export default {
      
       defaultSortOrder: 'asc',
       page: 1,
-      limit:'15',
+      limit:'30',
       total:'',
       currentPage: 1,
 
@@ -120,7 +140,7 @@ export default {
   computed: {
       
       ...mapGetters({
-        //skpdId:'id_skpd',
+        skpdId:'id_skpd',
         user:'user',
       })
     },
@@ -139,6 +159,8 @@ export default {
     }, */
     loadAsyncDataUser() {
         const params = [
+          
+          `nama_skpd=${this.namaSkpd}`,
           `search=${this.search}`,
           `order_by=${this.sortField}`,
           `order_direction=${this.sortOrder}`,
@@ -208,6 +230,7 @@ export default {
       this.page = null
       this.loadAsyncDataUser()
     },
+
     onPageChange(page) {
       this.page = page
       this.loadAsyncDataUser()
@@ -215,7 +238,21 @@ export default {
     viewUser: function(data) {
      
       this.$refs.loader.start()
-      this.$router.push("/skpd/user/"+data.nip);
+      this.$router.push("/bkpsdm/user/"+data.nip);
+    },
+    addToAdmin: function(data){
+      //console.log(data)
+      this.$axios
+        .$post("/update_role", data )
+          .then((response) => {
+
+          setTimeout(() => {
+                        
+          }, 200);
+          })
+          .catch((errors) => {
+            console.log(errors);
+        });
     }
   },
   mounted() {

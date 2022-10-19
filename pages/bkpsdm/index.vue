@@ -29,7 +29,7 @@ export default {
     
   },
   mounted() {
-    this.$router.push("/bkpsdm/sasaran_kinerja");
+    this.$router.push("/bkpsdm/user");
 
   },
 };

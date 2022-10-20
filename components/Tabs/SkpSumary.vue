@@ -148,7 +148,8 @@ export default {
     }
   },
   methods: {
-    loadData() {
+    loadData(skpId) {
+      this.sasaranKinerjaId = skpId
       const params = [
         `id=${this.sasaranKinerjaId}`,
       ].join('&')
@@ -231,8 +232,11 @@ export default {
     },
   },
   mounted() {
-    this.sasaranKinerjaId = this.$route.params.id
-    this.loadData()
+    if ( this.$route.params.id != null ){
+      this.loadData(this.$route.params.id)
+    }
+    //this.sasaranKinerjaId = this.$route.params.id
+    //this.loadData()
   },
 
 };

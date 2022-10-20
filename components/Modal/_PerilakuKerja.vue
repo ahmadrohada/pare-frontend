@@ -5,12 +5,12 @@
       <h4 class="modal-title">Perilaku Kerja</h4>
     </template>
 
-     <modal-outcome 
+     <!-- <modal-outcome 
         ref="OutcomeForm"
         style="min-height:350px;"
         @loadAsyncData="loadAsyncData"
       >
-      </modal-outcome>
+      </modal-outcome> -->
 
     <el-table
       :data="tableDataPerilakuKerja"

@@ -37,15 +37,43 @@
             </template>
           </el-table-column>
           <el-table-column min-width="60" align="center" prop="jabatan_eselon" label="Eselon"></el-table-column>
-          <el-table-column min-width="250" prop="jabatan" label="Jabatan"></el-table-column>
+          <el-table-column  min-width="360" label="Jabatan">
+            <template slot-scope="scope">
+
+              <div v-if="scope.row.jabatan != null ">
+                <template v-for="(data,index) in scope.row.jabatan">
+                  <div style="padding:0px !important;">
+                    <!-- <span style="margin-top:-6px; color:black;" class="">{{data.instansi}}</span><br> -->
+                    <span style="font-size:11px; margin-top:-6px; color:#696969;" class="text-muted">{{data.nama_jabatan}}</span>
+                  </div>
+                </template>
+              </div>
+              <div v-else>
+                <div style="padding:0px !important;">
+                  <!-- <span style="margin-top:-6px; color:black;" class="">{{scope.row.skpd}}</span><br> -->
+                  <span style="font-size:11px; margin-top:-6px; color:#696969;" class="text-muted">-</span>
+                </div>
+              </div>
+
+
+            </template>
+          </el-table-column>
           <el-table-column min-width="60" header-align="center" label="Is Admin">
-            <template slot-scope="{ row }">
-              <div class="text-center">
+            <template slot-scope="scope">
+              <div class="text-center" v-if="scope.row.id != user.id">
                 <el-switch
-                    v-model="row.is_admin"
+                    v-model="scope.row.is_admin"
                     active-color="#13ce66"
-                    v-on:change="$emit('addToAdmin', row)"
+                    v-on:change="addToAdmin(scope.row)"
+                    >
+                  </el-switch>
+                  <md-tooltip md-direction="top">Admin</md-tooltip>
+              </div>
+              <div class="text-center" v-else >
+                <el-switch
                     disabled
+                    v-model="scope.row.is_admin"
+                    active-color="#13ce66"
                     >
                   </el-switch>
                   <md-tooltip md-direction="top">Admin</md-tooltip>
@@ -99,14 +127,15 @@ export default {
       //pagination
       layout: ' prev,  pager,next',
       search: '',
-      sortField: '',
+      sortField: 'id',
       sortOrder: 'asc',
      
       defaultSortOrder: 'asc',
       page: 1,
-      limit:'15',
-      total:'',
+      limit:'20',
+      total:0,
       currentPage: 1,
+      pageSize:0,
 
       kalkulasi:1,
     };
@@ -207,11 +236,33 @@ export default {
       this.page = page
       this.loadAsyncDataUser()
     },
+    handleSizeChange(page) {
+      
+    },
     viewUser: function(data) {
      
       this.$refs.loader.start()
       this.$router.push("/skpd/user/"+data.nip);
-    }
+    },
+    
+    addToAdmin: function(data){
+      //console.log(this.user.id)
+      if ( this.user.id == data.id ){
+        console.log("id nya sama")
+      }else{
+        this.$axios
+          .$post("/update_role", data )
+            .then((response) => {
+
+            setTimeout(() => {
+                          
+            }, 200);
+            })
+            .catch((errors) => {
+              console.log(errors);
+          });
+      }
+    } 
   },
   mounted() {
     

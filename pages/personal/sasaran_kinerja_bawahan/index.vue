@@ -2,12 +2,12 @@
   <card style="min-height:480px;">
     <pare-loader ref="loader"></pare-loader>
 
-    <perilaku-kerja
+    <!-- <perilaku-kerja
       ref="ModalPerilakuKerja"
       style="min-height:350px;"
       @loadAsyncData="loadAsyncData"
     >
-    </perilaku-kerja>
+    </perilaku-kerja> -->
    
     <template slot="header" class="d-inline">
       <h4 class="title d-inline">Sasaran Kinerja Pegawai ( SKP )</h4>
@@ -86,7 +86,7 @@
 
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
-import PerilakuKerja from '~/components/Modal/PerilakuKerja.vue';
+import PerilakuKerja from '~/components/Modal/_PerilakuKerja.vue';
 import { mapGetters } from "vuex";
 
 export default {

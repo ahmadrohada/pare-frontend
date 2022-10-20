@@ -131,8 +131,9 @@ export default {
       defaultSortOrder: 'asc',
       page: 1,
       limit:'30',
-      total:'',
+      total:0,
       currentPage: 1,
+      pageSize:0,
 
       kalkulasi:1,
     };
@@ -233,7 +234,10 @@ export default {
 
     onPageChange(page) {
       this.page = page
-      this.loadAsyncDataUser()
+      this.loadAsyncDataUser() 
+    },
+    handleSizeChange(page) {
+      
     },
     viewUser: function(data) {
      

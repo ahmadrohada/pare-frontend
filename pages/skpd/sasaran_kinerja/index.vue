@@ -160,8 +160,9 @@ export default {
       defaultSortOrder: 'asc',
       page: 1,
       limit:'20',
-      total:'',
+      total:0,
       currentPage: 1,
+      pageSize:0,
 
       jenis_jabatan:'',
     };
@@ -219,6 +220,9 @@ export default {
     onPageChange(page) {
       this.page = page
       this.loadAsyncData()
+    },
+    handleSizeChange(page) {
+      
     },
     viewSasaranKinerja: function (data) {
       this.$refs.loader.start();

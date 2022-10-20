@@ -95,7 +95,7 @@
     <p class="" style="margin-top: 20px">B. KINERJA TAMBAHAN</p>
     <el-table
       :data="tableDataKinerjaTambahan"
-      :span-method="objectSpanMethodKinerjaTambahan"
+      :span-method="objectSpanMethodKinerjaTambahan" 
       border
       style="width: 100%;"
       :show-header = "true">
@@ -204,11 +204,16 @@ export default {
     }
   },
   mounted() {
-    this.sasaranKinerjaId = this.$route.params.id
-    this.loadData()
+     if ( this.$route.params.id != null ){
+      this.loadData(this.$route.params.id)
+    }
+
+    //this.sasaranKinerjaId = this.$route.params.id
+    //this.loadData()
   },
   methods: {
-      loadData(){
+      loadData(skpId){
+        this.sasaranKinerjaId = skpId
         this.loadAsyncDataKinerjaUtama()
         this.loadAsyncDataKinerjaTambahan()
       },

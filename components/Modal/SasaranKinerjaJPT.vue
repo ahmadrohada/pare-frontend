@@ -424,6 +424,7 @@ export default {
               this.SasaranKinerjaForm.jabatanAktifPegawaiYangDinilaiId = selectedId
               this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = resp.pangkat+" / "+resp.golongan
               this.SasaranKinerjaForm.instansiPegawaiYangDinilai = resp.skpd
+              this.SasaranKinerjaForm.skpdId = resp.skpd_id
               
               
           }) 
@@ -511,7 +512,7 @@ export default {
               this.SasaranKinerjaForm.jabatanAktifPejabatPenilaiId = selectedId
               this.SasaranKinerjaForm.pangkatGolonganPejabatPenilai = resp.pangkat+" / "+resp.golongan
               this.SasaranKinerjaForm.instansiPejabatPenilai = resp.skpd
-              this.SasaranKinerjaForm.skpdId = resp.skpd_id
+              
               
               
           }) 

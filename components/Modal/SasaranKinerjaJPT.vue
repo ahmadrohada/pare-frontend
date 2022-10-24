@@ -511,6 +511,7 @@ export default {
               this.SasaranKinerjaForm.jabatanAktifPejabatPenilaiId = selectedId
               this.SasaranKinerjaForm.pangkatGolonganPejabatPenilai = resp.pangkat+" / "+resp.golongan
               this.SasaranKinerjaForm.instansiPejabatPenilai = resp.skpd
+              this.SasaranKinerjaForm.skpdId = resp.skpd_id
               
               
           }) 

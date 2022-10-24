@@ -20,7 +20,7 @@
       <el-input
         size="small"
         style="width:250px; float: right; padding: 3px 2px"
-        placeholder="Cari Pegawai / SKPD"
+        placeholder="Nama,NIP,SKPD"
         prefix-icon="el-icon-search"
         v-model="search"
         @input="onSearch"

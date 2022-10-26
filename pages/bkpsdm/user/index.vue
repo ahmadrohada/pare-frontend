@@ -5,7 +5,12 @@
       <h4 class="title d-inline">User List</h4>
       <p class="card-category d-inline"></p>
 
-      <br>
+      <add-user
+        ref="addUserForm" 
+        @loadAsyncDataUser="loadAsyncDataUser"
+      >
+      </add-user>
+   
 
       
 
@@ -15,11 +20,17 @@
 
     </template>
 
-    
+     <md-button
+      style="height:28px;margin-left:-1px; font-size:11px; float: left;"
+      class="md-dense md-raised md-primary"
+      v-on:click="addUser($event)"
+      value="0"
+      ><i class="el-icon-plus"></i> User
+    </md-button>
 
       <el-input
         size="small"
-        style="width:250px; float: right; padding: 3px 2px"
+        style="width:250px; float: right; padding: 3px 2px;"
         placeholder="Nama,NIP,SKPD"
         prefix-icon="el-icon-search"
         v-model="search"
@@ -105,13 +116,15 @@
 <script>
 
 import PareLoader from "~/components/Loader/PareLoader.vue";
+import AddUser from "~/components/Modal/ModalAddUser.vue";
 import { mapGetters } from 'vuex'
 
 export default {
   layout: "bkpsdmLayout",
   middleware: "auth",
    components: {
-    PareLoader
+    PareLoader,
+    AddUser
   },
   data() {
     return {
@@ -257,6 +270,10 @@ export default {
           .catch((errors) => {
             console.log(errors);
         });
+    },
+    addUser:function(data){
+      console.log(data)
+      this.$refs.addUserForm.showModalAdd(data);
     }
   },
   mounted() {

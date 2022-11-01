@@ -89,6 +89,13 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column min-width="75" header-align="center" align="center" label="Last Update">
+            <template slot-scope="{ row }">
+              <div style="padding:0px !important;">
+                <span style="margin-top:-6px;" class="">{{moment(row.updated_at).format('DD-MM-YYYY hh:mm')}}</span><br>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column min-width="60" header-align="center" align="center" label="Aksi">
             <template slot-scope="scope">
               <el-button size="mini" type="text" @click="viewUser(scope.row)">

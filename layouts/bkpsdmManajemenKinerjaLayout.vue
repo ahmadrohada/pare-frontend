@@ -10,7 +10,7 @@
       <manajemen-kinerja-menu 
           :skpdLogo="dataUser.skpd.logo"
           :skpdSingkatan="dataUser.skpd.singkatan"
-          :skpdId="dataUser.skpd.id"
+          :skpdId="this.skpd_id"
       ></manajemen-kinerja-menu>
     </side-bar>
     
@@ -53,7 +53,7 @@
   import ContentFooter from '@/components/Layout/ContentFooter.vue';
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
-  import ManajemenKinerjaMenu from '~/components/Menu/ManajemenKinerjaMenu.vue';
+  import ManajemenKinerjaMenu from '~/components/Menu/bkpsdmManajemenKinerjaMenu.vue';
 
   import { mapGetters } from 'vuex'
 
@@ -70,6 +70,8 @@
       return {
         sidebarBackground: 'vue', //vue|blue|orange|green|red|primary
         isFullScreenRoute:false,
+        skpd_id:null,
+        periode:null,
 
       };
     },
@@ -109,7 +111,15 @@
     mounted() {
       this.initScrollbar();
     },
-   
+    async asyncData({ params }) {
+      const periode = params.periode
+      const skpd_id = params.skpd
+      return { 
+        periode,
+        skpd_id 
+        }
+      
+    },
   };
 </script>
 <style lang="scss">

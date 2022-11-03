@@ -48,6 +48,13 @@
         <span>User</span>
       </el-menu-item>
       <el-menu-item 
+        index="/bkpsdm/manajemen_kinerja"
+        :route="{path: '/bkpsdm/manajemen_kinerja'}"
+       >
+        <i class="el-icon-data-analysis"></i>
+        <span>Manajemen Kinerja</span>
+      </el-menu-item>
+      <el-menu-item 
         index="/bkpsdm/sasaran_kinerja"
         :route="{path: '/bkpsdm/sasaran_kinerja'}"
        >

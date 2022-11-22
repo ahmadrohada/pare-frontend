@@ -1,43 +1,55 @@
 <template>
   <div>
-    <card class="card-user" style="margin-top:10px !important;height: 150px !important; background: transparent !important;">
-     <!--  <div class="author">
-         <img 
-          src="~/static/img/bg_profile.png"
-          alt="..."
-          class="bg_photo"
-        />
+    <card
+      class="card-user"
+      style="
+        margin-top: 10px !important;
+        height: 150px !important;
+        background: transparent !important;
+      "
+    >
+      <div class="author">
+        <img src="~/static/img/bg_profile.png" alt="..." class="bg_photo" />
         <img
           class="sidemenu-avatar"
-          :src="skpdLogo"
+          src="~/static/img/icons/logo_bkpsdm.png"
           alt="..."
         />
         <div>
-          <h4 style="font-size: 13px; color: rgb(252, 252, 252) !important;">{{skpdSingkatan}}</h4>
-          <h5 style="font-size: 11px; margin-top: -15px; color: rgb(252, 252, 252) !important;">
-             Manajemen Kinerja PNS
-          </h5>
-          <h5 style="font-size: 12px; margin-top: -15px; color: rgb(252, 252, 252) !important;">
-             Periode {{periodeTahun}}
+          <h4 style="font-size: 13px; color: rgb(252, 252, 252) !important">
+            BKPSDM KARAWANG
+          </h4>
+          <h5
+            style="
+              font-size: 10px;
+              margin-top: -13px;
+              color: rgb(252, 252, 252) !important;
+            "
+          >
+            Administrator
           </h5>
         </div>
-      </div> -->
+      </div>
     </card>
+
     <el-menu
       :default-openeds="[]"
       background-color="transparent"
       text-color="#fff"
       active-text-color="#ffd04b"
-      :router="true" 
+      :router="true"
       :default-active="activeLink"
     >
-     <el-menu-item 
+      <el-menu-item
         index="bkpsdm-manajemen_kinerja-periode___en"
-        :route="{path:`/bkpsdm/manajemen_kinerja`, name:'bkpsdm-manajemen_kinerja___en'}"
-       >
+        :route="{
+          path: `/bkpsdm/manajemen_kinerja`,
+          name: 'bkpsdm-manajemen_kinerja___en',
+        }"
+      >
         <i class="el-icon-back"></i>
         <span>Manajemen Kinerja List</span>
-      </el-menu-item> 
+      </el-menu-item>
       <!-- <el-menu-item 
         index="bkpsdm-manajemen_kinerja-periode___en"
         :route="{path:`/bkpsdm/manajemen_kinerja/${periodeTahun}`, name:'bkpsdm-manajemen_kinerja-periode___en'}"
@@ -83,10 +95,10 @@ export default {
   data() {
     return {
       activeLink: null,
-      disabledSkpjpt:false,
-      disabledTimKerja:false,
-      periodeTahun:null,
-      skpdId:null,
+      disabledSkpjpt: false,
+      disabledTimKerja: false,
+      periodeTahun: null,
+      skpdId: null,
     };
   },
   methods: {
@@ -94,32 +106,29 @@ export default {
       const params = [
         `skpd_id=${this.skpdId}`,
         `periode_tahun=${this.periodeTahun}`,
-      ].join('&')
+      ].join("&");
       this.$axios
         .get(`/manajemen_kinerja_menu?${params}`)
         .then((resp) => {
           //console.log(resp.data[0].perjanjian_kinerja)
-          if (resp.data[0].perjanjian_kinerja == true ){
-            this.disabledSkpjpt = false
-            this.disabledTimKerja = false
+          if (resp.data[0].perjanjian_kinerja == true) {
+            this.disabledSkpjpt = false;
+            this.disabledTimKerja = false;
           }
-          
-          
         })
         .catch((error) => {
-          throw error
-        })
+          throw error;
+        });
     },
-    
   },
   watch: {
-    $route (to, from) {
+    $route(to, from) {
       this.activeLink = to.name;
-      console.log(this.activeLink)
-    }
+      console.log(this.activeLink);
+    },
   },
   mounted() {
-    this.activeLink = this.$route.name; 
+    this.activeLink = this.$route.name;
     this.periodeTahun = this.$route.params.periode;
     this.skpdId = this.$route.params.skpd;
     //this.activateMenu()
@@ -128,5 +137,4 @@ export default {
 </script>
 
 <style lang="scss">
- 
 </style>

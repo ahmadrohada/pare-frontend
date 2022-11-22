@@ -103,7 +103,7 @@
     },
     watch: {
       '$route.path': function() {
-        console.log(this.$route); 
+        console.log(this.$route);  
       }
 
 

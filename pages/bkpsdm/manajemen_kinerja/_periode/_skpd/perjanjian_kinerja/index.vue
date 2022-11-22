@@ -12,14 +12,7 @@
       <!-- <p class="card-category d-inline">{{user.skpd.singkatan}}</p> -->
     </template>
 
-    <md-button 
-      v-show="(showButtonCreate == true )"
-      style="height:28px;margin-left:-1px; font-size:11px;" 
-      class="md-dense md-raised md-primary btn-block"
-      v-on:click="createRenja($event)"
-    >
-    <span class="fa fa-plus"></span> Create Perjanjian Kinerja
-    </md-button>
+   
 
 
     <el-tabs 
@@ -56,7 +49,6 @@
 
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
-import CreatePk from '~/components/Modal/PerjanjianKinerja.vue';
 import PkSumary from '~/components/Tabs/PkSumary.vue';
 import PkSasaranStrategis from '~/components/Tabs/PkSasaranStrategis.vue';
 import { mapGetters } from 'vuex' 
@@ -67,14 +59,12 @@ export default {
   middleware: "auth",
    components: {
     PareLoader,
-    CreatePk,
     PkSumary,
     PkSasaranStrategis
   },
   data() {
     return {
       periode:null,
-      showButtonCreate:false,
       showTab:false,
       perjanjianKinerjaId:null,
       activeName: 'sumary'
@@ -82,16 +72,10 @@ export default {
   },
   computed: {
       ...mapGetters({
-        //skpd_id:'id_skpd',
         user:'user',
       })
     },
   methods: {
-    createRenja: function(e) {
-      this.$refs.ModalRenja.tes();
-      this.$refs.ModalRenja.showModal(this.skpd_id,this.periode);
-      
-    },
     perjanjianKinerja(){
        const params = [
         `periode=${this.periode}`,
@@ -108,7 +92,9 @@ export default {
             this.perjanjianKinerjaId = data.id
             this.showButtonCreate = false
             this.showTab = true
+            this.$refs.tabSumary.hideSubmit();
             this.$refs.tabSumary.loadData(data.id);
+            this.$refs.tabSasaranStrategis.hideButton();
             this.$refs.tabSasaranStrategis.loadData(data.id);
 
           }

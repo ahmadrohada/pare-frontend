@@ -44,7 +44,7 @@
     <el-button 
         class="btn-block"
         size="small"
-        v-show="(statusPk == 'open')" 
+        v-show="(statusPk == 'open' & showButton == 'true')" 
         type="primary"  
         :loading="submitLoader"  
         icon="el-icon-position"
@@ -76,12 +76,16 @@ export default {
       createdBy:'-',
       jumlahSasaranStrategis:'-',
       statusPk:'close',
+      showButton:'true',
       perjanjianKinerjaId:null,
       submitLoader:false
 
     }
   },
   methods: {
+    hideSubmit(){
+      this.showButton = 'false'
+    },
     loadData(perjanjianKinerjaId) {
       this.perjanjianKinerjaId = perjanjianKinerjaId
       const params = [

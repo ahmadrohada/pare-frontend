@@ -18,7 +18,7 @@
       class="md-dense md-raised md-primary"
       v-on:click="addSasaranStrategis($event)"
       value="0"
-      v-if="statusPk == 'open'"
+      v-if="statusPk == 'open' & showButton == 'true'"
     ><i class="el-icon-plus"></i>  Sasaran Strategis 
     </md-button>
 
@@ -27,7 +27,7 @@
       class="md-dense md-raised md-primary"
       v-on:click="addIndikatorSasaranStrategis($event)"
       value="0"
-      v-if=" (tableData.length != 0)&(statusPk == 'open') "
+      v-if=" (tableData.length != 0)&(statusPk == 'open')&(showButton == 'true') "
     ><i class="el-icon-plus"></i> Indikator Kinerja Utama
     </md-button>
 
@@ -47,7 +47,7 @@
         <template slot-scope="scope">
           {{scope.row.sasaran_strategis}}
           <!-- <i v-if=" scope.row.indikator_id  != '' "> -->
-            <el-button v-if="statusPk == 'open' " size="medium" type="text" @click="editSasaranStrategis(scope.row)">
+            <el-button v-if="statusPk == 'open' & showButton == 'true' " size="medium" type="text" @click="editSasaranStrategis(scope.row)">
             <i class="el-icon-edit-outline"></i> Edit
             <md-tooltip md-direction="top">Edit Sasaran Strategis</md-tooltip>
             </el-button>
@@ -65,7 +65,7 @@
         label="Target"
         width="150">
       </el-table-column>
-      <el-table-column fixed="right" align="center"  label="Aksi" width="70"  v-if="statusPk == 'open' ">
+      <el-table-column fixed="right" align="center"  label="Aksi" width="70"  v-if="statusPk == 'open' & showButton == 'true'">
         <template slot-scope="scope" >
           <div v-if=" scope.row.indikator_id  != '' ">
             <el-button size="medium" type="text" @click="editIndikatorSasaranStrategis(scope.row)">
@@ -125,6 +125,7 @@ export default {
   data() {
     return {
       statusPk:'open',
+      showButton:'true',
       isEmpty:false,
       perjanjianKinerjaId:null,
       tableData: [],
@@ -141,6 +142,9 @@ export default {
     }
   },
   methods: {
+    hideButton(){
+      this.showButton = 'false'
+    },
     loadAsyncData() {
       const params = [
         `perjanjian_kinerja_id=${this.perjanjianKinerjaId}`,

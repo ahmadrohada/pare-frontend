@@ -42,7 +42,20 @@
 
 
             </template>
-        </el-table-column>
+        </el-table-column> 
+        <el-table-column min-width="60" header-align="center" label="Status">
+            <template slot-scope="scope">
+              <div class="text-center">
+                <el-switch
+                    v-model="scope.row.is_open"
+                    active-color="#13ce66"
+                    v-on:change="setStatus(scope.row)"
+                    >
+                  </el-switch>
+                  <md-tooltip md-direction="top">Open/Close</md-tooltip>
+              </div>
+            </template>
+          </el-table-column>
         
         <el-table-column min-width="75" header-align="center" align="center" label="Created at">
           <template slot-scope="{ row }">
@@ -204,6 +217,20 @@ export default {
      
       this.$refs.loader.start()
       this.$router.push("/bkpsdm/manajemen_kinerja/"+data.periode+"/"+data.skpd_id);
+    },
+    setStatus: function(data){
+      //console.log(data)
+      this.$axios
+        .$put("/update_pk_status", data )
+          .then((response) => {
+
+          setTimeout(() => {
+                        
+          }, 200);
+          })
+          .catch((errors) => {
+            console.log(errors);
+        });
     },
   },
   mounted() {

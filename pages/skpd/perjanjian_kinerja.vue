@@ -33,7 +33,7 @@
       <el-table-column  min-width="120" align="center" label="Created at">
         <template slot-scope="{ row }">
           <div style="padding:0px !important;">
-            <span style="margin-top:-6px;" class="">{{moment(row.created_at).format('DD-MM-YYYY hh:mm')}}</span><br>
+            <span style="margin-top:-6px;" class="">{{moment(row.created_at).format('DD-MM-YYYY HH:mm')}}</span><br>
           </div>
         </template>
       </el-table-column>

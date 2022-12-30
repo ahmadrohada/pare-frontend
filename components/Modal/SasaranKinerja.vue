@@ -489,6 +489,10 @@ export default {
               //ini mah yang dari jabatan,salah ternyata,,harusnya gol selevel di jabatan
               //this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = resp.pangkat+" / "+resp.golongan
               this.SasaranKinerjaForm.instansiPegawaiYangDinilai = resp.skpd
+
+              //ini yang baru ternyata panggol harus ada
+              this.SasaranKinerjaForm.pangkatGolonganPegawaiYangDinilai = resp.pangkat+" / "+resp.golongan
+
               
               
           }) 

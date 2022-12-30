@@ -26,6 +26,12 @@
         @loadAsyncData="loadAsyncData"
       >
       </rencana-hasil-kerja-pimpinan>
+
+      <matriks-rencana-kinerja
+        ref="ModalMatriksRencanaKinerja"
+        @loadAsyncData="loadAsyncData"
+      >
+      </matriks-rencana-kinerja>
       
 
 
@@ -50,6 +56,15 @@
       value="0"
       v-if=" statusSasaranKinerja == 'drafted'"
     ><i class="el-icon-plus"></i> Indikator Kinerja Individu
+    </md-button>
+
+    <md-button 
+      style="height:28px;margin-left:-1px; font-size:11px; margin-top:30px;" 
+      class="md-dense md-raised md-primary"
+      v-on:click="matriksRencanaKinerja($event)"
+      value="0"
+      v-if="statusSasaranKinerja == 'drafted'"
+    ><i class="el-icon-plus"></i>  Matriks Hasil
     </md-button>
 
     <hr>
@@ -258,6 +273,7 @@
 
 import PareLoader from '~/components/Loader/PareLoader.vue';
 import IndikatorKinerjaIndividu from '~/components/Modal/IndikatorKinerjaIndividu.vue';
+import MatriksRencanaKinerja from '~/components/Modal/MatriksRencanaKinerja.vue';
 import RencanaKinerja from '~/components/Modal/RencanaKinerja.vue';
 import ManualIndikatorKinerja from '~/components/Modal/ManualIndikatorKinerja.vue';
 import RencanaHasilKerjaPimpinan from '~/components/Modal/RencanaHasilKerjaPimpinan.vue';
@@ -271,11 +287,14 @@ export default {
     IndikatorKinerjaIndividu,
     ManualIndikatorKinerja,
     RencanaHasilKerjaPimpinan,
+    MatriksRencanaKinerja,
     PareLoader
   },
   data() {
     return {
       sasaranKinerjaId:null,
+      skpJabatanPegawaiId:null,
+      skpPeriode:null,
       jenisJabatanSkp:null,
       tableDataKinerjaUtama: [],
       tableDataKinerjaTambahan: [],
@@ -306,6 +325,10 @@ export default {
           .$get(`/sasaran_kinerja?${params}`)
           .then(({ data }) => {
 
+            //console.log(data.periodePenilaian.tahun)
+
+            this.skpJabatanPegawaiId = data.pegawaiYangDinilai.jabatan_id
+            this.skpPeriode = data.periodePenilaian.tahun
             this.jenisJabatanSkp = data.jenisJabatanSkp
 
             this.loadAsyncData()
@@ -447,6 +470,11 @@ export default {
         //console.log(data)
         this.$refs.ModalRencanaKinerja.showModalEdit(data.id);
       },
+      matriksRencanaKinerja: function(data) {
+        this.$refs.ModalMatriksRencanaKinerja.showModal(this.skpJabatanPegawaiId,this.skpPeriode,this.sasaranKinerjaId);
+      },
+
+      
       hapusRencanaKinerja: function(data) {
         //const parent = node.parent;
         //const child = parent.data.child || parent.data;
@@ -497,6 +525,14 @@ export default {
       editIndikatorKinerjaIndividu: function(data) {
         this.$refs.ModalIndikatorKinerjaIndividu.showModalEdit(data.indikator_id);
       },
+      addManualIndikatorKinerja: function(data) {
+      //console.log(data)
+      this.$refs.ModalManualIndikatorKinerja.showModalAdd(data.indikator_id);
+      },
+      editManualIndikatorKinerja: function(data) {
+        //console.log(data)
+        this.$refs.ModalManualIndikatorKinerja.showModalEdit(data.manual_indikator_kinerja_id);
+      },
       hapusIndikatorKinerjaIndividu: function(data) {
         //const parent = node.parent;
         //const child = parent.data.child || parent.data;
@@ -531,14 +567,7 @@ export default {
           });          
         });
       },
-      addManualIndikatorKinerja: function(data) {
-      //console.log(data)
-      this.$refs.ModalManualIndikatorKinerja.showModalAdd(data.indikator_id);
-      },
-      editManualIndikatorKinerja: function(data) {
-        //console.log(data)
-        this.$refs.ModalManualIndikatorKinerja.showModalEdit(data.manual_indikator_kinerja_id);
-      },
+     
   },
 }
 </script>

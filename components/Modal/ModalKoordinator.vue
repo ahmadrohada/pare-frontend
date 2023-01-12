@@ -103,7 +103,7 @@ export default {
       this.$refs.loader.start() 
       //this.jabatanAtasanId = 1931
 
-      const params = [
+      /* const params = [
           `periode=${this.KoordinatorForm.periode}`,
           `skpd_id=${this.KoordinatorForm.skpdId}`,
           //`jabatan_atasan_id=${this.jabatanAtasanId}`,
@@ -128,13 +128,44 @@ export default {
           setTimeout(() => {
             this.$refs.loader.finish() 
           }, 700);
-      }); 
+      });  */
+      this.submitDataPeran()
+      this.$refs.loader.finish() 
       this.modalFormVisible = true;
     },  
     submitData() {
       this.submitLoader = true
       this.$axios
         .$post("/jabatan", this.KoordinatorForm )
+        .then((response) => {
+          this.$emit('loadAsyncData');
+          setTimeout(() => {
+                this.modalFormVisible = false;
+                this.submitLoader = false
+                this.$message({
+                  type: 'info',
+                  message: 'berhasil menyimpan data'
+                }); 
+          }, 200);
+                      
+                      
+        })
+        .catch((error) => {
+            this.submitLoader = false
+            this.$message({
+              type: 'error',
+              duration: 2000,
+              message: "Tidak Berhasil Menyimpan Data"
+            });    
+        });
+      
+      
+    },
+
+    submitDataPeran() {
+      this.submitLoader = true
+      this.$axios
+        .$post("/peran", this.KoordinatorForm )
         .then((response) => {
           this.$emit('loadAsyncData');
           setTimeout(() => {

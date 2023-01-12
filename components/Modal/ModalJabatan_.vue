@@ -33,8 +33,7 @@
       <el-form-item  label="Level Jabatan"  prop="role">
         <el-select 
           v-model="JabatanForm.role" 
-          placeholder="pilih Level Jabatan"
-          @change="onChangeLevelJabatan($event)">
+          placeholder="pilih Level Jabatan">
           <el-option label="Ketua" value="ketua" ></el-option>
           <el-option label="Anggota" value="anggota"></el-option>
         </el-select>
@@ -131,7 +130,6 @@ export default {
       this.JabatanForm.parentId = null
       this.JabatanForm.skpdId = skpd_id
 
-      this.$refs.loader.start() 
       //get data list jabatan yang dibawah roleId beserta dianya
       const params = [
           `role_id=${this.JabatanForm.roleId}`,
@@ -139,10 +137,10 @@ export default {
           `skpd_id=${this.JabatanForm.skpdId}`,
         ].join('&')
 
-      
+      this.$refs.loader.start() 
 
       this.$axios
-          .get(`/list_role_atasan?${params}`)
+          .get(`/list_jabatan_atasan?${params}`)
           .then(({data}) => {
             
             this.parentList = data.list_jabatan
@@ -159,13 +157,10 @@ export default {
           setTimeout(() => {
             this.$refs.loader.finish() 
           }, 700);
-      });  
-      this.$refs.loader.finish() 
+      }); 
+      
       this.modalFormVisible = true;
     },  
-    onChangeLevelJabatan(){
-      this.disabled = false
-    },
 
     onChangeJabatanAtasan(jabatanAtasanId) {
 
@@ -208,7 +203,7 @@ export default {
       this.submitLoader = true
       this.$refs.loader.start() 
       this.$axios
-        .$post("/peran", this.JabatanForm )
+        .$post("/jabatan", this.JabatanForm )
         .then((response) => {
           this.$emit('loadAsyncData');
           setTimeout(() => {

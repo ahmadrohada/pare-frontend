@@ -86,6 +86,7 @@ export default {
           role:'koordinator',
           level:"S2",
           selectedRoles: [],
+          
 
       }
       //loading: true

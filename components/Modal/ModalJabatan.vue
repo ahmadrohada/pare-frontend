@@ -44,7 +44,7 @@
 
      
 
-      <el-table
+      <!-- <el-table
             ref="jabatanTable"
             :data="tableListJabatan"
             :show-header="false"
@@ -68,7 +68,7 @@
                 </div>
               </template>
             </el-table-column>
-      </el-table>
+      </el-table> -->
 
     
           <!-- <input v-model="JabatanForm.level" hidden></input>
@@ -166,9 +166,8 @@ export default {
     onChangeLevelJabatan(){
       this.disabled = false
     },
-
-    onChangeJabatanAtasan(jabatanAtasanId) {
-
+   onChangeJabatanAtasan(jabatanAtasanId) {
+      this.disabled = false
       this.tableListJabatan = [];
       this.tableListJabatanVisible = false
       if ( jabatanAtasanId != "" ){
@@ -184,10 +183,11 @@ export default {
                     
                     this.JabatanForm.role = data.role
                     this.JabatanForm.level = data.level
-                    data.list_jabatan.forEach((item) => {
+                    /* data.list_jabatan.forEach((item) => {
                       this.tableListJabatan.push(item)
                     })
                     this.tableListJabatanVisible = true
+                     */
                     setTimeout(() => {
                       this.$refs.loader.finish() 
                     }, 700);

@@ -219,30 +219,6 @@ export default {
       console.log(data)
 
     },
-    addKetua(perjanjianKinerjaId){
-      this.$axios
-        .$post("/add_tim_kerja", { 
-          perjanjianKinerjaId : perjanjianKinerjaId,
-          label : 'KETUA',
-          parentId : 0
-        } )
-        .then((response) => {
-            
-           /*  setTimeout(() => {
-              this.$message({
-                type: 'info',
-                message: 'berhasil menambahkan data'
-              }); 
-            }, 200); */
-        })
-        .catch((error) => {
-          this.$message({
-            type: 'error',
-            duration: 3000,
-            message: error.response.data.message
-          });    
-        });
-    },
     saveForm(formName) {
 
         this.$refs[formName].validate((valid) => {
@@ -251,13 +227,12 @@ export default {
             this.$axios
                     .$post("/perjanjian_kinerja", this.RenjaForm )
                     .then((response) => {
-                      //this.addKetua(response)
                       this.$emit('loadAsyncData')
                       this.modalFormVisible = false;
                       setTimeout(() => {
                         this.submitLoader = false
                         this.$message({
-                          type: 'info',
+                          type: 'success',
                           message: 'berhasil menyimpan data'
                         }); 
                       }, 200);

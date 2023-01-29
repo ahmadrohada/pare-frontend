@@ -136,7 +136,7 @@
 
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
-import SasaranKinerja from '~/components/Modal/SasaranKinerja.vue';
+import SasaranKinerja from '~/components/Modal/ModalSasaranKinerja.vue';
 import { mapGetters } from 'vuex' 
 
 
@@ -151,6 +151,7 @@ export default {
     return {
       tableDataSkp: [],
       search: '',
+      debounce:null,
       //pagination
       layout: ' prev,  pager,next',
       search: '',
@@ -213,9 +214,13 @@ export default {
         })
     },
     onSearch(value) {
-      this.search = value
-      this.page = null
-      this.loadAsyncData()
+      this.search = value;
+      this.page = null;
+      
+      clearTimeout(this.debounce)
+      this.debounce = setTimeout(() => {
+        this.loadAsyncData();
+      }, 600)
     },
     onPageChange(page) {
       this.page = page

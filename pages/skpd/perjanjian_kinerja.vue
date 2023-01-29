@@ -80,7 +80,7 @@
 
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
-import CreatePk from '~/components/Modal/PerjanjianKinerja.vue';
+import CreatePk from '~/components/Modal/ModalPerjanjianKinerja.vue';
 import { mapGetters } from 'vuex' 
 
 

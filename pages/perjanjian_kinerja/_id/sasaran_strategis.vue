@@ -113,8 +113,8 @@
     return items
   }
 
-import IndikatorSasaranUtama from '~/components/Modal/IndikatorSasaranUtama.vue';
-import SasaranStrategis from '~/components/Modal/SasaranStrategis.vue';
+import IndikatorSasaranUtama from '~/components/Modal/ModalIndikatorKinerjaUtama.vue';
+import SasaranStrategis from '~/components/Modal/ModalSasaranStrategis.vue';
 export default {
 
   middleware: ['auth'],

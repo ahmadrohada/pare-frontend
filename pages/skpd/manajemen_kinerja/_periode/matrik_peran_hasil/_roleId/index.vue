@@ -46,10 +46,13 @@
       :highlight-current-row="false"
       style="width: 100%;">
 
-      <el-table-column  :fixed="true" min-width="360" label="Jabatan dan Nama Pegawai">
+      <el-table-column  :fixed="true" min-width="360" label="Nama Pegawai dan Jabatan">
         <template slot-scope="{ row }">
           <div style="display: inline-block !important; padding:0px !important; width:100%; ">
             <div style="float: left; width:80%;">
+              <div style="padding: 0px !important">
+                <span  size="small" style="color:#a1a1a1;" class="el-icon-s-management"></span><span style="color:#a1a1a1;   margin-top:-6px;" class=""> {{row.role}}</span><br>
+              </div>
 
               <div v-if="row.nama_pegawai != null ">
                 <el-button size="mini" type="text" @click="hapusPegawai(row)">
@@ -69,9 +72,7 @@
               <div style="padding: 0px !important">
                 <span style="margin-top:-6px; color:#242424;" class="">{{row.jabatan}}</span>
               </div>
-              <div style="padding: 0px !important">
-                <span  size="small" style="color:#a1a1a1;" class="el-icon-s-management"></span><span style="color:#a1a1a1;   margin-top:-6px;" class=""> {{row.role}}</span><br>
-              </div>
+             
               
             </div>
             <div style="margin-top:10px;float:right;">
@@ -114,7 +115,9 @@
 
     <br>
 
-    <span style="color:#22726f">* Klik pada item Intermediate Outcome untuk melakukan menghapus atau melakukan perubahan narasi</span>
+    <span style="color:#22726f">* Klik pada icon Tambah Outcome Hasil [ <i class="el-icon-s-order" style="color:rgb(52, 168, 144);"></i> ] untuk Menambahkan Outcome / Hasil</span>
+    <br>
+    <span style="color:#22726f">* Klik icon Tambah Pegawai [ <i class="el-icon-user" style="color:#66b1ff;"></i> ] untuk menambahkan Pegawai dan Jabatan nya</span>
     
 
    <!--  https://stackoverflow.com/questions/70373804/vue-js-element-ui-el-table-how-to-merge-cells-and-subtotal-them -->

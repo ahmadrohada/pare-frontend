@@ -128,7 +128,7 @@
 
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
-import SasaranKinerja from '~/components/Modal/SasaranKinerja.vue';
+import SasaranKinerja from '~/components/Modal/ModalSasaranKinerja.vue';
 import PejabatPenilai from "~/components/Modal/ModalPejabatPenilai.vue";
 import AtasanPejabatPenilai from "~/components/Modal/ModalAtasanPejabatPenilai.vue";
 import { mapGetters } from 'vuex' 

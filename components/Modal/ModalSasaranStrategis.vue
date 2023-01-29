@@ -106,7 +106,7 @@ export default {
                         this.$emit('loadAsyncData')
                         this.resetForm('SasaranStrategisForm')
                         this.$message({
-                          type: 'info',
+                          type: 'success',
                           message: 'berhasil menyimpan data'
                         }); 
                       }, 200);
@@ -139,7 +139,7 @@ export default {
                       setTimeout(() => {
                         this.resetForm('SasaranStrategisForm')
                         this.$message({
-                          type: 'info',
+                          type: 'success',
                           message: 'Update Berhasil'
                         }); 
                       }, 200);

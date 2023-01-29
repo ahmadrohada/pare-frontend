@@ -122,6 +122,7 @@ export default {
 
 
       search: '',
+      debounce:null,
       
 
       //pagination
@@ -228,9 +229,13 @@ export default {
         }
     },
     onSearch(value) {
-      this.search = value
-      this.page = null
-      this.loadAsyncDataUser()
+      this.search = value;
+      this.page = null;
+      
+      clearTimeout(this.debounce)
+      this.debounce = setTimeout(() => {
+        this.loadAsyncDataUser();
+      }, 600)
     },
     onPageChange(page) {
       this.page = page

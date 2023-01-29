@@ -42,7 +42,7 @@
 
 <script>
 import PareLoader from "~/components/Loader/PareLoader.vue";
-import SasaranKinerja from '~/components/Modal/SasaranKinerja.vue';
+import SasaranKinerja from '~/components/Modal/ModalSasaranKinerja.vue';
 import SkpSumary from '~/components/Tabs/SkpSumary.vue';
 import SkpRencanaKinerja from '~/components/Tabs/SkpHasilKerja.vue';
 import { mapGetters } from 'vuex' 

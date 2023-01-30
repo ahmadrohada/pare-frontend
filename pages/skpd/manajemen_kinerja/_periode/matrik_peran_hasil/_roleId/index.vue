@@ -27,7 +27,7 @@
 
 
     
-    <md-button 
+    <!-- <md-button 
       style="height:28px;margin-left:-1px; font-size:11px;" 
       class="md-dense md-raised md-primary"
       v-on:click="addJabatan($event)"
@@ -35,7 +35,7 @@
      
     ><span class="fa fa-plus"></span>  Peran
     <md-tooltip md-direction="top">Tambah Peran Pada Tim Kerja</md-tooltip>
-    </md-button>
+    </md-button> -->
     
    
 
@@ -46,13 +46,25 @@
       :highlight-current-row="false"
       style="width: 100%;">
 
-      <el-table-column  :fixed="true" min-width="360" label="Nama Pegawai dan Jabatan">
+      <el-table-column  :fixed="true" min-width="360" label="Peran / Role ">
         <template slot-scope="{ row }">
           <div style="display: inline-block !important; padding:0px !important; width:100%; ">
             <div style="float: left; width:80%;">
               <div style="padding: 0px !important">
                 <span  size="small" style="color:#a1a1a1;" class="el-icon-s-management"></span><span style="color:#a1a1a1;   margin-top:-6px;" class=""> {{row.role}}</span><br>
               </div>
+              <el-row>
+              <el-button size="mini" type="text" @click="addBawahan(row)" >
+                <i class="el-icon-bottom"></i> Tambah Bawahan / Subordinate
+                <md-tooltip md-direction="top">Add Bawahan</md-tooltip>
+              </el-button>
+              <br>
+               <el-button size="mini" type="text" @click="addPegawai(row)" >
+                <i class="el-icon-user"></i> Tambah Pegawai
+                <md-tooltip md-direction="top">Add Pegawai</md-tooltip>
+              </el-button>
+              <br>
+              </el-row>
 
               <div v-if="row.nama_pegawai != null ">
                 <el-button size="mini" type="text" @click="hapusPegawai(row)">
@@ -63,15 +75,12 @@
                   row.nama_pegawai
                 }}</span
                 ><br />
-              </div>
-              <el-button v-else size="mini" type="text" @click="addPegawai(row)" >
-                <i class="el-icon-user"></i> Tambah Pegawai
-                <md-tooltip md-direction="top">Add Pegawai</md-tooltip>
-              </el-button>
-
-              <div style="padding: 0px !important">
+                  <div style="padding: 0px !important">
                 <span style="margin-top:-6px; color:#242424;" class="">{{row.jabatan}}</span>
               </div>
+              </div>
+
+            
              
               
             </div>
@@ -93,7 +102,7 @@
     
       <!-- ========== KOLOM HASIL / OUTCOME ========================== -->
       <template v-for="(data,index) in sasaranStrategis">
-        <el-table-column  v-bind:key min-width="250" label="INTERMEDIATE OUTCOME">
+        <el-table-column  v-bind:key min-width="250" label="Intermediate Outcome">
           <template slot-scope="{ row }">
             <span style="margin-top:-6px;" class="">{{row.outcome[index].label}}</span>
 
@@ -191,8 +200,9 @@ export default {
             throw error
           })
       },
-      addJabatan: function(e) {
-        this.$refs.JabatanForm.showModalAdd(this.skpd_id);
+      addBawahan: function(e) {
+        console.log(e)
+        this.$refs.JabatanForm.showModalAdd(e);
       },
       addOutcome: function(e) {
         console.log(e)

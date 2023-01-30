@@ -438,4 +438,7 @@ export default {
 .el-table th {
   vertical-align: top;
 } */
+.el-table .cell {
+    word-break: normal !important;
+  }
 </style>

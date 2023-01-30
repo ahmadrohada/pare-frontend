@@ -112,6 +112,7 @@
           {{ row.role }}
           <el-row>
             <el-button
+              v-if="row.level == 'S2' "
               size="small"
               type="text"
               @click="editKoordinator(row)"

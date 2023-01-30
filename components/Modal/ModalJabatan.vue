@@ -12,76 +12,29 @@
         size="mini"
       >
 
-    <label>Parent / Atasan</label>
-      <el-select 
-        size="mini"
-        v-model="JabatanForm.parentId" 
-        placeholder="Pilih Atasan"
-        @change="onChangeJabatanAtasan($event)"
-        :clearable = true
-      >
-        <el-option
-            v-for="item in parentList"
-            :selected="item.label"
-            :key="item.id"
-            :label="item.nama_lengkap"
-            :value="item.id" 
-        >
-        </el-option>
-      </el-select>
+    <el-form-item  label="Atasan / Parent"  prop="roleParent">
+          <el-input
+          size="mini"
+          readonly
+          type="input"
+          v-model="JabatanForm.roleParent"
+        ></el-input>
+      </el-form-item>
+     
         
       <el-form-item  label="Level Jabatan"  prop="role">
         <el-select 
           v-model="JabatanForm.role" 
-          placeholder="pilih Level Jabatan"
-          @change="onChangeLevelJabatan($event)">
-          <el-option label="Ketua" value="ketua" ></el-option>
-          <el-option label="Anggota" value="anggota"></el-option>
+          placeholder="pilih Level Jabatan">
+          <el-option label="" value="" ></el-option>
+          <el-option :disabled = ketuaDisabled label="Ketua" value="ketua" ></el-option>
+          <el-option :disabled = anggotaDisabled label="Anggota" value="anggota"></el-option>
         </el-select>
       </el-form-item>
-
-   
-
-     
-
-      <!-- <el-table
-            ref="jabatanTable"
-            :data="tableListJabatan"
-            :show-header="false"
-            border
-            :highlight-current-row="false"
-            style="width: 100%; margin-top:10px;"
-            @selection-change="handleSelectionChange"
-            v-show="tableListJabatanVisible"
-            >
-
-            <el-table-column
-              align="center"
-              type="selection"
-              width="40">
-            </el-table-column>
-            
-            <el-table-column   label="JABATAN">
-              <template slot-scope="{ row }">
-                <div style="padding:0px !important;">
-                  <span style="margin-top:-6px;" class="">{{row.nama_lengkap}}</span>
-                </div>
-              </template>
-            </el-table-column>
-      </el-table> -->
-
-    
-          <!-- <input v-model="JabatanForm.level" hidden></input>
-          <input v-model="JabatanForm.skpdId" hidden></input>
-          <input v-model="JabatanForm.periode" hidden></input>
-          <input v-model="JabatanForm.roleId" hidden></input>
-          <input v-model="JabatanForm.selectedRoles" hidden></input> -->
-
       </el-form>
          
     <template slot="footer"> 
       <el-button  
-        :disabled="disabled"
         size="mini" 
         type="primary"  
         :loading="submitLoader" 
@@ -105,76 +58,38 @@ export default {
       submitLoader:false,
       headerText:'Tambah Peran pada Tim Kerja',
       modalFormVisible: false,
-      tableListJabatan:[],
-      parentList:[],
-      disabled:true,
-      tableListJabatanVisible:false,
       params:[],
+      ketuaDisabled:false,
+      anggotaDisabled:false,
       
       JabatanForm:{
           skpdId:null,
           periode:null,
-          roleId:null,
-          parentId:null,
-          level:null,
+          roleParentId:null,
+          roleParent:null,
+          levelParent:null,
           role:[],
-          selectedRoles:null
       }
       //loading: true
     };
   },
   methods: {
     
-    showModalAdd(skpd_id) {
-      this.tableListJabatan = [];
-      this.tableListJabatanVisible = false
-      this.JabatanForm.parentId = null
-      this.JabatanForm.skpdId = skpd_id
-
+    showModalAdd(data) {
       this.$refs.loader.start() 
-      //get data list jabatan yang dibawah roleId beserta dianya
+      this.JabatanForm.roleParentId = data.id
+      this.JabatanForm.skpdId = data.skpd_id
+      this.JabatanForm.roleParent = data.role
+      this.JabatanForm.levelParent = data.level
+
+      if ( data.role == "KETUA" ){
+        this.ketuaDisabled =true
+      }
+
       const params = [
-          `role_id=${this.JabatanForm.roleId}`,
-          `periode=${this.JabatanForm.periode}`,
-          `skpd_id=${this.JabatanForm.skpdId}`,
-        ].join('&')
-
-      
-
-      this.$axios
-          .get(`/list_role_atasan?${params}`)
-          .then(({data}) => {
-            
-            this.parentList = data.list_jabatan
-            
-            setTimeout(() => {
-              this.$refs.loader.finish() 
-            }, 700);
-          })
-          .catch((error) => {
-          this.$message({
-            type: 'error',
-            message: error.response.data.message
-          });    
-          setTimeout(() => {
-            this.$refs.loader.finish() 
-          }, 700);
-      });  
-      this.$refs.loader.finish() 
-      this.modalFormVisible = true;
-    },  
-    onChangeLevelJabatan(){
-      this.disabled = false
-    },
-   onChangeJabatanAtasan(jabatanAtasanId) {
-      this.disabled = false
-      this.tableListJabatan = [];
-      this.tableListJabatanVisible = false
-      if ( jabatanAtasanId != "" ){
-        const params = [
                   `periode=${this.JabatanForm.periode}`,
                   `skpd_id=${this.JabatanForm.skpdId}`,
-                  `jabatan_atasan_id=${jabatanAtasanId}`,
+                  `jabatan_atasan_id=${this.JabatanForm.roleParentId}`,
                 ].join('&')
               this.$refs.loader.start() 
               this.$axios
@@ -183,17 +98,12 @@ export default {
                     
                     this.JabatanForm.role = data.role
                     this.JabatanForm.level = data.level
-                    /* data.list_jabatan.forEach((item) => {
-                      this.tableListJabatan.push(item)
-                    })
-                    this.tableListJabatanVisible = true
-                     */
+                   
                     setTimeout(() => {
                       this.$refs.loader.finish() 
                     }, 700);
                   })
                   .catch((error) => {
-                    this.JabatanForm.parentId = null
                     this.$message({
                       type: 'error',
                       message: error.response.data.message
@@ -202,8 +112,12 @@ export default {
                       this.$refs.loader.finish() 
                     }, 700);
               }); 
-      }
-    },
+
+      
+      
+      this.$refs.loader.finish() 
+      this.modalFormVisible = true;
+    },  
     submitData() {
       this.submitLoader = true
       this.$refs.loader.start() 
@@ -216,7 +130,7 @@ export default {
                 this.submitLoader = false
                 this.$refs.loader.finish() 
                 this.$message({
-                  type: 'info',
+                  type: 'success',
                   message: 'berhasil menyimpan data'
                 }); 
           }, 200);
@@ -235,19 +149,10 @@ export default {
       
       
     },
-    handleSelectionChange(val) {
-        this.JabatanForm.selectedRoles = val;
-        if ( this.JabatanForm.selectedRoles != "" ){
-          this.disabled = false
-        }else{
-          this.disabled = true
-        }
-    }
    
   },
-  mounted() {
+   mounted() {
     this.JabatanForm.periode = this.$route.params.periode
-    this.JabatanForm.roleId =  this.$route.params.roleId
       
   }
 };

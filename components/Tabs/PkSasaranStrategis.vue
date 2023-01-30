@@ -377,4 +377,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-table .cell {
+    word-break: normal !important;
+  }
 </style>

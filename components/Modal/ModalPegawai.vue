@@ -248,7 +248,7 @@ export default {
                         this.submitLoader = false
                         this.$refs.loader.finish() 
                         this.$message({
-                          type: 'info',
+                          type: 'success',
                           message: 'berhasil menyimpan data Pegawai'
                         }); 
                       }, 500);

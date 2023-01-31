@@ -54,11 +54,11 @@
                 <span  size="small" style="color:#a1a1a1;" class="el-icon-s-management"></span><span style="color:#a1a1a1;   margin-top:-6px;" class=""> {{row.role}}</span><br>
               </div>
               <el-row>
-              <el-button size="mini" type="text" @click="addBawahan(row)" >
+              <el-button v-if="row.roleName != 'ANGGOTA' " size="mini" type="text" @click="addBawahan(row)" >
                 <i class="el-icon-bottom"></i> Tambah Bawahan / Subordinate
                 <md-tooltip md-direction="top">Add Bawahan</md-tooltip>
               </el-button>
-              <br>
+              <br v-if="row.roleName != 'ANGGOTA' ">
                <el-button size="mini" type="text" @click="addPegawai(row)" >
                 <i class="el-icon-user"></i> Tambah Pegawai
                 <md-tooltip md-direction="top">Add Pegawai</md-tooltip>

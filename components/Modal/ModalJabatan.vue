@@ -59,8 +59,8 @@ export default {
       headerText:'Tambah Peran pada Tim Kerja',
       modalFormVisible: false,
       params:[],
-      ketuaDisabled:false,
-      anggotaDisabled:false,
+      ketuaDisabled:true,
+      anggotaDisabled:true,
       
       JabatanForm:{
           skpdId:null,
@@ -82,8 +82,15 @@ export default {
       this.JabatanForm.roleParent = data.role
       this.JabatanForm.levelParent = data.level
 
-      if ( data.role == "KETUA" ){
-        this.ketuaDisabled =true
+      if ( data.roleName == "KETUA" ){
+        this.ketuaDisabled    = true
+        this.anggotaDisabled  = false
+      }else if ( data.roleName == "KOORDINATOR" ){
+        this.ketuaDisabled    = false
+        this.anggotaDisabled  = false
+      }else{
+        this.ketuaDisabled    = true
+        this.anggotaDisabled  = true
       }
 
       const params = [

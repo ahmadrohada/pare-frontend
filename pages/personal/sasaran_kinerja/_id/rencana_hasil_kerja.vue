@@ -273,7 +273,7 @@
 
 import PareLoader from '~/components/Loader/PareLoader.vue';
 import IndikatorKinerjaIndividu from '~/components/Modal/IndikatorKinerjaIndividu.vue';
-import MatriksRencanaKinerja from '~/components/Modal/MatriksRencanaKinerja.vue';
+import MatriksRencanaKinerja from '~/components/Modal/ModalMatriksRencanaKinerja.vue';
 import RencanaKinerja from '~/components/Modal/RencanaKinerja.vue';
 import ManualIndikatorKinerja from '~/components/Modal/ManualIndikatorKinerja.vue';
 import RencanaHasilKerjaPimpinan from '~/components/Modal/RencanaHasilKerjaPimpinan.vue';
@@ -294,6 +294,7 @@ export default {
     return {
       sasaranKinerjaId:null,
       skpJabatanPegawaiId:null,
+      skpNipPegawaiYangDinilai:null,
       skpPeriode:null,
       jenisJabatanSkp:null,
       tableDataKinerjaUtama: [],
@@ -328,6 +329,7 @@ export default {
             //console.log(data.periodePenilaian.tahun)
 
             this.skpJabatanPegawaiId = data.pegawaiYangDinilai.jabatan_id
+            this.skpNipPegawaiYangDinilai = data.pegawaiYangDinilai.nip
             this.skpPeriode = data.periodePenilaian.tahun
             this.jenisJabatanSkp = data.jenisJabatanSkp
 
@@ -471,7 +473,7 @@ export default {
         this.$refs.ModalRencanaKinerja.showModalEdit(data.id);
       },
       matriksRencanaKinerja: function(data) {
-        this.$refs.ModalMatriksRencanaKinerja.showModal(this.skpJabatanPegawaiId,this.skpPeriode,this.sasaranKinerjaId);
+        this.$refs.ModalMatriksRencanaKinerja.showModal(this.skpNipPegawaiYangDinilai,this.skpPeriode,this.sasaranKinerjaId);
       },
 
       

@@ -64,14 +64,14 @@ export default {
     };
   },
   methods: {
-    showModal(jabatanId, periodeSkp, skpId) {
+    showModal(nipPegawai, periodeSkp, skpId) {
       //alert(periodeSkp);
-      this.outcomeForm.jabatanId = jabatanId
+      this.outcomeForm.nipPegawai = nipPegawai
       this.outcomeForm.periodeSkp = periodeSkp
       this.outcomeForm.sasaranKinerjaId = skpId
 
       const params = [
-        `jabatanId=${this.outcomeForm.jabatanId}`,
+        `nipPegawaiYangDinilai=${this.outcomeForm.nipPegawai}`,
         `periode=${this.outcomeForm.periodeSkp}`,
         `skpId=${this.outcomeForm.sasaranKinerjaId}`,
       ].join("&");
@@ -79,7 +79,7 @@ export default {
       this.$refs.loader.start();
 
       this.$axios
-        .get(`/list_outcome_jabatan?${params}`)
+        .get(`/list_outcome_pegawai?${params}`)
         .then(({ data }) => {
           this.outcomeList = data.outcome;
           this.last_update = data.last_update;

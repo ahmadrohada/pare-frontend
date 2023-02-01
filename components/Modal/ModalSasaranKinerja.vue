@@ -2,29 +2,49 @@
     <modal :show.sync="modalFormVisible">
         <pare-loader ref="loader"></pare-loader>
         <template slot="header">
-            <h4 class="modal-title">Sasaran Kinerja Pegawai</h4>
+            <h4 class="modal-title">Sasaran Kinerja Pegawai ( SKP )</h4>
         </template>
 
         <el-form ref="SasaranKinerjaForm" :model="SasaranKinerjaForm" :rules="rules" size="mini">
             <el-tabs v-model="activeName" style="min-height:260px;">
-                <el-tab-pane label="PERIODE" name="periode">
-                    <el-form-item v-if="showSelectPeriode" label="Periode" prop="periodeTahun">
-                        <el-select v-model="SasaranKinerjaForm.periodeTahun"
-                            placeholder="Pilih Periode Perjanjian Kinerja" v-on:change="pilihPeriode($event)">
-                            <el-option v-for="item in periodeTahunList" :selected="item.label" :key="item.periode"
-                                :label="item.periode" :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
+                <el-tab-pane label="PERIODE PK" name="periode">
+
+                  <el-row v-if="periodeTahunList != '' ">
+                    
 
                     <el-form-item label="Jenis Jabatan" v-if="showSelectJenisJabatan" prop="jenisJabatanSkp">
-                        <el-select v-model="SasaranKinerjaForm.jenisJabatanSkp"
-                            placeholder="Pilih Jenis Jabatan Sasaran Kinerja">
-                            <el-option v-for="item in jenisJabatanSkpList" :selected="item.value" :key="item.value"
-                                :label="item.value" :value="item.value">
-                            </el-option>
-                        </el-select>
+                      <el-select v-model="SasaranKinerjaForm.jenisJabatanSkp"
+                          placeholder="Pilih Jenis Jabatan Sasaran Kinerja">
+                          <el-option v-for="item in jenisJabatanSkpList" :selected="item.value" :key="item.value"
+                            :label="item.value" :value="item.value">
+                          </el-option>
+                      </el-select>
                     </el-form-item>
+
+                    <el-form-item v-if="showSelectPeriode" label="Periode" prop="periodeTahun">
+                      <el-select v-model="SasaranKinerjaForm.periodeTahun"
+                          placeholder="Pilih Periode Perjanjian Kinerja" v-on:change="pilihPeriode($event)">
+                          <el-option v-for="item in periodeTahunList" :selected="item.label" :key="item.periode"
+                              :label="item.periode" :value="item.id">
+                          </el-option>
+                      </el-select>
+                    </el-form-item>
+
+                  </el-row>
+
+
+                  <el-row>
+                    JABATAN PADA MPH
+                    <ol style="margin-left: -22px">
+                      <li v-for="(data, key) in roleList" :key="key">
+                        {{ data.roleName }} -> Jumlah Kegiatan ( Outcome ) : {{ data.outcome }}
+                      </li>
+                    </ol>
+                    
+
+
+                  </el-row>
+                  
 
 
 
@@ -65,17 +85,17 @@
                         </el-input>
                     </el-form-item>
 
-                    <input v-model="SasaranKinerjaForm.userId" hidden></input>
-                    <input v-model="SasaranKinerjaForm.periodeLabel" hidden></input>
-                    <input v-model="SasaranKinerjaForm.simpegId" hidden></input>
-                    <input v-model="SasaranKinerjaForm.pnsId" hidden></input>
+                    <input v-model="SasaranKinerjaForm.userId" ></input>
+                    <input v-model="SasaranKinerjaForm.periodeLabel" ></input>
+                    <input v-model="SasaranKinerjaForm.simpegId" ></input>
+                    <input v-model="SasaranKinerjaForm.pnsId" ></input>
 
 
-                    <input v-model="SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiId" hidden></input>
-                    <input v-model="SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiJenis" hidden></input>
-                    <input v-model="SasaranKinerjaForm.jabatanPegawaiYangDinilai" hidden></input>
-                    <input v-model="SasaranKinerjaForm.golonganPegawaiYangDinilai" hidden></input>
-                    <input v-model="SasaranKinerjaForm.pangkatPegawaiYangDinilai" hidden></input>
+                    <input v-model="SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiId" ></input>
+                    <input v-model="SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiJenis" ></input>
+                    <input v-model="SasaranKinerjaForm.jabatanPegawaiYangDinilai" ></input>
+                    <input v-model="SasaranKinerjaForm.golonganPegawaiYangDinilai" ></input>
+                    <input v-model="SasaranKinerjaForm.pangkatPegawaiYangDinilai" ></input>
 
 
                 </el-tab-pane>
@@ -143,7 +163,7 @@
 
 
         <template slot="footer">
-            <el-button size="mini" type="primary" :loading="submitLoader" @click="submitForm('SasaranKinerjaForm')">
+            <el-button v-if="periodeTahunList != '' " size="mini" type="primary" :loading="submitLoader" @click="submitForm('SasaranKinerjaForm')">
                 Create</el-button>
             <el-button size="mini" @click="resetForm('SasaranKinerjaForm')">Tutup</el-button>
         </template>
@@ -187,6 +207,7 @@ export default {
       jabatansPejabatPenilai: [],
       disabledSelectJabatanPegawaiYangDinilai: true,
       disabledSelectJabatanPejabatPenilai: true,
+      roleList:[],
       jenisJabatanSkpList: [
         {
           value: "JABATAN PIMPINAN TINGGI",
@@ -266,6 +287,8 @@ export default {
       this.modalFormVisible = true;
     },
     listPeriodePK() {
+      this.roleList = ""
+      this.SasaranKinerjaForm.periodeTahun = ""
       this.$refs.loader.start();
       const params = [`skpd_id=${this.skpd_id}`, `status=close`].join("&");
       //get data periode PK List from this SKPD
@@ -273,6 +296,13 @@ export default {
         .$get(`/perjanjian_kinerja?${params}`)
         .then((data) => {
           this.periodeTahunList = data.data;
+
+          if (data.data == ''){
+            this.$message({
+            type: "error",
+            message: "Perjanjian Kinerja Tidak ditemukan",
+          });
+          }
           setTimeout(() => {
             this.$refs.loader.finish();
           }, 700);
@@ -323,19 +353,42 @@ export default {
       this.$refs[formName].resetFields();
       this.modalFormVisible = false;
     },
-    pilihPeriode(event) {
+    pilihPeriode(pk_id) {
+
+      const params = [
+                  `perjanjian_kinerja_id=${pk_id}`,
+                  `nip_pegawai_yang_dinilai=${this.SasaranKinerjaForm.nipPegawaiYangDinilai}`,
+                ].join('&')
+
+      this.$refs.loader.start()    
       this.$axios
-        .$get("/perjanjian_kinerja_detail?id=" + event)
-        .then((resp) => {
-          this.SasaranKinerjaForm.periodeLabel = resp.periodePk;
-          const start = getStartDate(resp.periodePk);
-          const end = getEndDate(resp.periodePk);
+                  .get(`/pk_mph_skp?${params}`)
+                  .then(({data}) => {
+                    
+                    this.SasaranKinerjaForm.periodeLabel = data.pk.periodePk;
+                    const start = getStartDate(data.pk.periodePk);
+                    const end = getEndDate(data.pk.periodePk);
 
-          this.SasaranKinerjaForm.dateFrom = start;
-          this.SasaranKinerjaForm.dateTo = end;
+                    this.SasaranKinerjaForm.dateFrom = start;
+                    this.SasaranKinerjaForm.dateTo = end;
 
-          console.log(resp.periodePk);
-        });
+                    this.roleList = data.role
+                   
+                    
+                    setTimeout(() => {
+                      this.$refs.loader.finish() 
+                    }, 700);
+
+                  })
+                  .catch((error) => {
+                    this.$message({
+                      type: 'error',
+                      message: error.response.data.message
+                    });    
+                    setTimeout(() => {
+                      this.$refs.loader.finish() 
+                    }, 700);
+              });        
     },
     handleSelectPegawaiYangDinilai(queryString) {
       this.$refs.loader.start();

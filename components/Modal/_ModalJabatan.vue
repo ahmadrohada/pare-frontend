@@ -36,7 +36,7 @@
           placeholder="pilih Level Jabatan"
           @change="onChangeLevelJabatan($event)">
           <el-option label="Ketua" value="ketua" ></el-option>
-          <el-option label="Anggota" value="anggota"></el-option>
+          <el-option label="Anggotajjjjj" value="anggota"></el-option>
         </el-select>
       </el-form-item>
 

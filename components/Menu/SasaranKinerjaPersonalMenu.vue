@@ -60,8 +60,8 @@
         index="/personal/sasaran_kinerja"
         :route="{path: '/personal/sasaran_kinerja'}"
        >
-          <i class="el-icon-data-analysis"></i>
-          <span>Sasaran Kinerja List</span>
+          <i class="el-icon-s-order"></i>
+          <span>List SKP</span>
       </el-menu-item>
       <br>
       <el-menu-item 
@@ -71,15 +71,23 @@
         <i class="el-icon-data-board"></i>
         <span>Sumary</span>
       </el-menu-item>
+      <el-menu-item 
+        index= "personal-sasaran_kinerja-id-data_pegawai___en"
+        :route="{path:`/personal/sasaran_kinerja/${sasaranKinerjaId}/data_pegawai`, name:'personal-sasaran_kinerja-id-data_pegawai___en'}"
+       >
+        <i class="el-icon-user"></i>
+        <span>Data Pegawai</span>
+      </el-menu-item>
 
       <el-submenu index="1">
         <template slot="title">
-          <i class="el-icon-document-copy"></i>Perencanaan</template>
+          <i class="el-icon-document-copy"></i> Kegiatan SKP</template>
           <el-menu-item 
             index="personal-sasaran_kinerja-id-rencana_hasil_kerja___en"
             :route="{path:`/personal/sasaran_kinerja/${sasaranKinerjaId}/rencana_hasil_kerja`, name:'personal-sasaran_kinerja-id-rencana_hasil_kerja___en'}"
             
           >
+          <i class="el-icon-arrow-right"></i>
           Hasil Kerja
           </el-menu-item>
 
@@ -88,9 +96,18 @@
             :route="{path:`/personal/sasaran_kinerja/${sasaranKinerjaId}/rencana_perilaku_kerja`, name:'personal-sasaran_kinerja-id-rencana_perilaku_kerja___en'}"
             
           >
+          <i class="el-icon-arrow-right"></i>
           Perilaku Kerja
           </el-menu-item>
       </el-submenu>
+
+      <el-menu-item 
+        index="personal-sasaran_kinerja-id-rencana_aksi___en"
+        :route="{path:`/personal/sasaran_kinerja/${sasaranKinerjaId}/rencana_aksi`, name:'personal-sasaran_kinerja-id-rencana_aksi___en'}"
+       >
+          <i class="el-icon-date"></i>
+          <span>Rencana Aksi</span>
+      </el-menu-item>
       
 
 

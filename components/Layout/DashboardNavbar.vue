@@ -185,10 +185,13 @@ export default {
       return false
     }
   },
+  async fetch() {
+    //console.log(this.$route.fullPath);
+  },
   mounted() {
     //this.photoUrl = this.$auth.user.profile.photo
     //this.nama_lengkap = this.$auth.user.profile.pegawai.nama_lengkap
-    var roles = this.$auth.state.user.roles
+    var roles = this.$auth.$state.user.roles
     this.isPersonal = this.functionPersonal(roles)
     this.isAdminSkpd = this.functionAdminSkpd(roles)
     this.isAdminBkpsdm = this.functionAdminBkpsdm(roles)

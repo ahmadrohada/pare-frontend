@@ -85,7 +85,7 @@ export default {
   },
   mounted() {
     
-    var roles = this.$auth.state.user.roles
+    var roles = this.$auth.$state.user.roles
     this.isPersonal = this.functionPersonal(roles)
     this.isAdminSkpd = this.functionAdminSkpd(roles)
     //this.isAdminBkpsdm = this.functionAdminBkpsdm(roles)

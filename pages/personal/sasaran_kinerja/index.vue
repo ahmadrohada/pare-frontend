@@ -103,7 +103,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column width="70px" align="center">
+      <el-table-column width="120px" align="center">
         <template slot="header">
           <i class="el-icon-s-tools"></i>
         </template>
@@ -111,6 +111,10 @@
             <el-button  size="medium" type="text" @click="viewSasaranKinerja(row)">
               <i class="el-icon-edit-outline"></i>
               <md-tooltip md-direction="top">Lihat Data</md-tooltip>
+            </el-button>
+            <el-button  size="medium" type="text" role="link" @click="cetakSasaranKinerja(row)">
+              <i class="el-icon-printer"></i>
+              <md-tooltip md-direction="top">Cetak SKP</md-tooltip>
             </el-button>
             <el-button size="medium" type="text danger" @click="hapusSasaranKinerja(row)">
               <i class="el-icon-delete" style="color:#F56C6C;"></i>
@@ -321,6 +325,10 @@ export default {
         .catch((error) => {
           throw error
         })
+    },
+    cetakSasaranKinerja(row) {
+      window.open('https://api-pare-v3.bkpsdm.karawangkab.go.id/cetak_skp/'+row.id, '_blank', 'noreferrer');
+      //window.open('http://localhost:8000/cetak_skp/'+row.id, '_blank', 'noreferrer');
     },
   },
   mounted() {

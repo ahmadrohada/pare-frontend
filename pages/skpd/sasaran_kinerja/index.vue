@@ -54,6 +54,13 @@
               <i class="el-icon-edit-outline"></i>
               <md-tooltip md-direction="top">Lihat SKP</md-tooltip>
             </el-button>
+
+            <el-button  size="medium" type="text" role="link" @click="cetakSasaranKinerja(row)">
+              <i class="el-icon-printer"></i>
+              <md-tooltip md-direction="top">Cetak SKP</md-tooltip>
+            </el-button>
+
+
         </template>
       </el-table-column>
       <!-- <el-table-column  min-width="100" align="center" label="Status">
@@ -232,6 +239,10 @@ export default {
     viewSasaranKinerja: function (data) {
       this.$refs.loader.start();
       this.$router.push("/skpd/sasaran_kinerja/" + data.id );
+    },
+    cetakSasaranKinerja(row) {
+      window.open('https://api-pare-v3.bkpsdm.karawangkab.go.id/cetak_skp/'+row.id, '_blank', 'noreferrer');
+      //window.open('http://localhost:8000/cetak_skp/'+row.id, '_blank', 'noreferrer');
     },
   },
   mounted() {

@@ -39,7 +39,7 @@ export default {
     },
   },
   mounted() {
-    this.cek_skpd();
+    //this.cek_skpd();
   },
 };
 </script>

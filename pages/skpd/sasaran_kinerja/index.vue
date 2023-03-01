@@ -241,8 +241,14 @@ export default {
       this.$router.push("/skpd/sasaran_kinerja/" + data.id );
     },
     cetakSasaranKinerja(row) {
-      window.open('https://api-pare-v3.bkpsdm.karawangkab.go.id/cetak_skp/'+row.id, '_blank', 'noreferrer');
-      //window.open('http://localhost:8000/cetak_skp/'+row.id, '_blank', 'noreferrer');
+       //console.log(row.jenis_jabatan_skp)
+       if(row.jenis_jabatan_skp == "JABATAN PIMPINAN TINGGI"){
+        window.open('https://api-pare-v3.bkpsdm.karawangkab.go.id/cetak_skp_jpt/'+row.id, '_blank', 'noreferrer');
+      }else{
+        window.open('https://api-pare-v3.bkpsdm.karawangkab.go.id/cetak_skp/'+row.id, '_blank', 'noreferrer');
+      }
+      //http://localhost:8000
+      //https://api-pare-v3.bkpsdm.karawangkab.go.id
     },
   },
   mounted() {

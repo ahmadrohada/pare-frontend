@@ -70,8 +70,16 @@
           <el-input size="mini" type="input" placeholder="Satuan Target" v-model="IndikatorKinerjaIndividuForm.satuanTarget"></el-input>
         </el-form-item>
 
+        
         <el-form-item  v-if="(this.jenisJabatanSkp == 'JABATAN PIMPINAN TINGGI')" label ="Perspektif" prop="perspektif">
-          <el-input size="mini" type="input" placeholder="Perspektif" v-model="IndikatorKinerjaIndividuForm.perspektif"></el-input>
+           <el-select 
+            v-model="IndikatorKinerjaIndividuForm.perspektif" 
+            default-first-option
+            placeholder="pilih Perspektif">
+            <el-option label="Penerima Layanan" value="penerima layanan" ></el-option>
+            <el-option label="Penguatan Internal" value="penguatan internal"></el-option>
+            <el-option label="Proses Bisnis" value="proses bisnis"></el-option>
+          </el-select>
         </el-form-item>
 
         <el-form-item  v-if="(this.jenisJabatanSkp != 'JABATAN PIMPINAN TINGGI')" label ="Aspek" prop="aspek">
@@ -174,7 +182,9 @@ export default {
           }) 
         
     },
-    showModalAdd(sasaranKinerjaId) {
+    showModalAdd(sasaranKinerjaId,jenisJabatan) {
+     
+      this.jenisJabatanSkp = jenisJabatan
       this.resetForm("IndikatorKinerjaIndividuForm")
       this.submitLoader = false
       this.$refs.loader.start() 
@@ -183,7 +193,8 @@ export default {
       this.rencanaKinerjaList(sasaranKinerjaId,0)
       this.modalFormVisible = true;
     },  
-    showModalEdit(id) {
+    showModalEdit(id,jenisJabatan) {
+      this.jenisJabatanSkp = jenisJabatan
       this.resetForm("IndikatorKinerjaIndividuForm")
       this.submitLoader = false
       this.$refs.loader.start() 

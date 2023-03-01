@@ -154,10 +154,8 @@ export default {
       //pagination
       layout: ' prev,  pager,next',
       search: '',
-      sortField: 'id',
-      sortOrder: 'asc',
-     
-      defaultSortOrder: 'asc',
+      sortField: 'periode_tahun',
+      sortOrder: 'desc',
       page: 1,
       limit:'20',
       total:'',
@@ -214,7 +212,13 @@ export default {
     },
     viewSasaranKinerja: function(data) {
       this.$refs.loader.start()
-      this.$router.push("/personal/sasaran_kinerja/"+data.id+"/sumary");
+      //cek apakah JPT atu bukan
+      //console.log(data.jenis_jabatan_skp)
+      if ( data.jenis_jabatan_skp == 'JABATAN PIMPINAN TINGGI'){
+        this.$router.push("/personal/sasaran_kinerja_jpt/"+data.id+"/sumary");
+      }else{
+        this.$router.push("/personal/sasaran_kinerja/"+data.id+"/sumary");
+      }
     },
     reviewSasaranKinerja: function(data) {
       this.$refs.loader.start()
@@ -327,8 +331,15 @@ export default {
         })
     },
     cetakSasaranKinerja(row) {
-      window.open('https://api-pare-v3.bkpsdm.karawangkab.go.id/cetak_skp/'+row.id, '_blank', 'noreferrer');
-      //window.open('http://localhost:8000/cetak_skp/'+row.id, '_blank', 'noreferrer');
+
+      //console.log(row.jenis_jabatan_skp)
+      if(row.jenis_jabatan_skp == "JABATAN PIMPINAN TINGGI"){
+        window.open('https://api-pare-v3.bkpsdm.karawangkab.go.id/cetak_skp_jpt/'+row.id, '_blank', 'noreferrer');
+      }else{
+        window.open('https://api-pare-v3.bkpsdm.karawangkab.go.id/cetak_skp/'+row.id, '_blank', 'noreferrer');
+      }
+      //http://localhost:8000
+      //https://api-pare-v3.bkpsdm.karawangkab.go.id
     },
   },
   mounted() {

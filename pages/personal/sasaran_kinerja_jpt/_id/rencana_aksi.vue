@@ -2,75 +2,13 @@
    <card style="min-height:500px;">
     <pare-loader ref="loader"></pare-loader>
 
-     <rencana-kinerja 
-        ref="ModalRencanaKinerja"
-        style="min-height:350px;"
-        @loadAsyncData="loadAsyncData"
-      >
-      </rencana-kinerja>
-
-      <indikator-kinerja-individu
-        ref="ModalIndikatorKinerjaIndividu"
-        @loadAsyncData="loadAsyncData"
-      >
-      </indikator-kinerja-individu>
-
-      <manual-indikator-kinerja
-        ref="ModalManualIndikatorKinerja"
-        @loadAsyncData="loadAsyncData"
-      >
-      </manual-indikator-kinerja>
-
-      <rencana-hasil-kerja-pimpinan
-        ref="ModalRencanaHasilKerjaPimpinan"
-        @loadAsyncData="loadAsyncData"
-      >
-      </rencana-hasil-kerja-pimpinan>
-
-      <matriks-rencana-kinerja
-        ref="ModalMatriksRencanaKinerja"
-        @loadAsyncData="loadAsyncData"
-      >
-      </matriks-rencana-kinerja>
-      
-
-
+     
     <template slot="header" class="d-inline">
-      <h4 class="title d-inline">Sasaran Kinerja</h4>
-      <p class="card-category d-inline">Rencana Hasil Kerja</p>
+      <h4 class="title d-inline">Rencana Aksi JPT</h4>
+      <p class="card-category d-inline"></p>
     </template>
 
-    <md-button 
-      style="height:28px;margin-left:-1px; font-size:11px; margin-top:30px;" 
-      class="md-dense md-raised md-primary"
-      v-on:click="addRencanaKinerja($event)"
-      value="0"
-      v-if="statusSasaranKinerja == 'drafted'"
-    ><i class="el-icon-plus"></i>  Rencana Hasil Kerja
-    </md-button>
-
-    <md-button 
-      style="height:28px;margin-left:-1px; font-size:11px; margin-top:30px;" 
-      class="md-dense md-raised md-primary"
-      v-on:click="addIndikatorKinerjaIndividu($event)"
-      value="0"
-      v-if=" statusSasaranKinerja == 'drafted'"
-    ><i class="el-icon-plus"></i> Indikator Kinerja Individu
-    </md-button>
-
-    <md-button 
-      style="height:28px;margin-left:-1px; font-size:11px; margin-top:30px;" 
-      class="md-dense md-raised md-primary"
-      v-on:click="matriksRencanaKinerja($event)"
-      value="0"
-      v-if="statusSasaranKinerja == 'drafted'"
-    ><i class="el-icon-plus"></i>  Matriks Hasil
-    </md-button>
-
-    <hr>
-
-
-    <p class="" style="margin-top: 20px">A. KINERJA UTAMA</p>
+    
     <el-table
       :data="tableDataKinerjaUtama"
       :span-method="objectSpanMethodKinerjaUtama"
@@ -84,50 +22,17 @@
         class-name="align-top"
         >
       </el-table-column>
-      <el-table-column  
-            v-if="(this.jenisJabatanSkp != 'JABATAN PIMPINAN TINGGI')"
-            label="Rencana Hasil Kerja Pimpinan yang Diintervensi" 
-            width="290">
-        <template slot-scope="{row}">
-          {{row.rencana_kerja_pimpinan}}
-          <!-- <i v-if=" row.parent_label  != '' ">
-            <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaHasilKerjaPimpinan(row)">
-            <i class="el-icon-edit-outline"></i> Edit
-            <md-tooltip md-direction="top">Edit Rencana Hasil Kerja Pimpinan yang diintervensi</md-tooltip>
-            </el-button>
-          </i>
-
-          <i v-if=" row.parent_id  == null ">
-            <el-button  size="mini" type="text" @click="addRencanaHasilKerjaPimpinan(row)">
-            <i class="el-icon-document-copy"></i> Pilih Rencana Hasil Kerja Pimpinan
-            <md-tooltip md-direction="top">Rencana Hasil Kerja Pimpinan yang diintervensi</md-tooltip>
-            </el-button>
-          </i> -->
-        </template>
-      </el-table-column>
       <el-table-column label="Rencana Hasil Kerja" width="290">
         <template slot-scope="{row}">
           {{row.rencana_kinerja}}
-          <i v-if=" row.indikator_id  != '' ">
-            <el-button v-if="statusSasaranKinerja == 'drafted' " size="mini" type="text" @click="editRencanaKinerja(row)">
-            <i class="el-icon-edit-outline"></i> Edit
-            <md-tooltip md-direction="top">Edit Rencana Hasil Kerja</md-tooltip>
-            </el-button>
-          </i>
         </template>
       </el-table-column>
       <el-table-column  
-        label="Aspek" 
+        label="Rencana Aksi" 
         min-width="120"
-        v-if="(this.jenisJabatanSkp != 'JABATAN PIMPINAN TINGGI')"
         >
         <template slot-scope="{row}">
-          {{row.aspek}}
-        </template>
-      </el-table-column>
-      <el-table-column class-name="align-top" label="Indikator Kinerja Individu" min-width="320">
-        <template slot-scope="{row}">
-          {{row.indikator_kinerja_individu}}
+          {{row.label}}
         </template>
       </el-table-column>
       <el-table-column
@@ -137,105 +42,12 @@
         width="150"
         class-name="align-top">
       </el-table-column>
-      <!-- <el-table-column
-        align="center"
-        prop="perspektif"
-        label="Perspektif"
-        width="150"
-        class-name="align-top"
-        v-if="(this.jenisJabatanSkp == 'JABATAN PIMPINAN TINGGI')"
-        >
-      </el-table-column> -->
-      <el-table-column class-name="align-top" fixed="right" align="center"  label="Aksi" width="70">
-        <template slot-scope="{row}" >
-          <div v-if=" row.indikator_id  != '' ">
-            <el-button size="medium" type="text" @click="editIndikatorKinerjaIndividu(row)">
-              <i class="el-icon-edit-outline"></i>
-              <md-tooltip md-direction="top">Edit Indikator Kinerja Individu</md-tooltip>
-            </el-button>
-            <el-button size="medium" type="text danger" @click="hapusIndikatorKinerjaIndividu(row)">
-              <i class="el-icon-delete" style="color:#F56C6C;"></i>
-              <md-tooltip md-direction="top">Hapus Indikator Kinerja Individu</md-tooltip>
-            </el-button>
-          </div>
-          <div v-else>
-            <el-button size="medium" type="text" @click="editRencanaKinerja(row)">
-              <i class="el-icon-edit-outline"></i>
-              <md-tooltip md-direction="top">Edit  Rencana Kinerja</md-tooltip>
-            </el-button>
-            <el-button size="medium" type="text danger" @click="hapusRencanaKinerja(row)">
-              <i class="el-icon-delete" style="color:#F56C6C;"></i>
-              <md-tooltip md-direction="top">Hapus  Rencana Kinerja</md-tooltip>
-            </el-button>
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
-
-
-    <p class="" style="margin-top: 20px">B. KINERJA TAMBAHAN</p>
-    <el-table
-      :data="tableDataKinerjaTambahan"
-      :span-method="objectSpanMethodKinerjaTambahan"
-      border
-      style="width: 100%;"
-      :show-header = "true">
       <el-table-column
-        align="center"
-        prop="no"
-        label="No"
-        width="45"
-        class-name="align-top">
-      </el-table-column>
-      <el-table-column  
-            v-if="(this.jenisJabatanSkp != 'JABATAN PIMPINAN TINGGI')"
-            label="Rencana Hasil Kerja Pimpinan yang Diintervensi" 
-            width="290"
-            class-name="align-top">
-        <template slot-scope="{row}">
-          -
-        </template>
-      </el-table-column>
-      <el-table-column class-name="align-top" label="Rencana Hasil Kerja" width="290">
-        <template slot-scope="{row}">
-          {{row.rencana_kinerja}}
-          <i v-if=" row.indikator_id  != '' ">
-            <el-button v-if="statusSasaranKinerja == 'drafted' " size="medium" type="text" @click="editRencanaKinerja(row)">
-            <i class="el-icon-edit-outline"></i> Edit
-            <md-tooltip md-direction="top">Edit Rencana Hasil Kerja</md-tooltip>
-            </el-button>
-          </i>
-        </template>
-      </el-table-column>
-      <el-table-column  
-        label="Aspek" 
-        min-width="120"
-        v-if="(this.jenisJabatanSkp != 'JABATAN PIMPINAN TINGGI')"
-        class-name="align-top">
-        <template slot-scope="{row}">
-          {{row.aspek}}
-        </template>
-      </el-table-column>
-      <el-table-column class-name="align-top" label="Indikator Kinerja Individu" min-width="320">
-        <template slot-scope="{row}">
-          {{row.indikator_kinerja_individu}}
-        </template>
-      </el-table-column>
-     <el-table-column
         align="center"
         prop="target"
-        label="Target"
-        width="150"
+        label="Pelaksanaan ( Bulan )"
+        width="170"
         class-name="align-top">
-      </el-table-column>
-      <el-table-column
-        align="center"
-        prop="perspektif"
-        label="Perspektif"
-        width="150"
-        class-name="align-top"
-        v-if="(this.jenisJabatanSkp == 'JABATAN PIMPINAN TINGGI')"
-        >
       </el-table-column>
       <el-table-column class-name="align-top" fixed="right" align="center"  label="Aksi" width="70">
         <template slot-scope="{row}" >
@@ -262,9 +74,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-
-
 
    </card>
 </template>
@@ -281,7 +90,7 @@ import RencanaHasilKerjaPimpinan from '~/components/Modal/RencanaHasilKerjaPimpi
 export default {
 
   middleware: ['auth'],
-  layout: "sasaranKinerjaPersonalLayout",
+  layout: "sasaranKinerjaJptPersonalLayout",
   components: {
     RencanaKinerja,
     IndikatorKinerjaIndividu,
@@ -344,10 +153,37 @@ export default {
           })
       },
       loadAsyncData(){
-        this.loadAsyncDataKinerjaUtama()
-        this.loadAsyncDataKinerjaTambahan()
+        //this.loadAsyncDataKinerjaUtama()
+        //this.loadAsyncDataKinerjaTambahan()
+        this.loadAsyncDataRencanaAksi()
       },
-      loadAsyncDataKinerjaUtama() {
+      loadAsyncDataRencanaAksi() {
+        const params = [
+          `sasaran_kinerja_id=${this.sasaranKinerjaId}`,
+          `search=${this.search}`,
+          `order_by=${this.sortField}`,
+          `order_direction=${this.sortOrder}`,
+        ].join('&')
+
+        this.$axios
+          .get(`/sasaran_kinerja_rencana_aksi?${params}`)
+          .then(({ data }) => {
+            this.tableDataKinerjaUtama = []
+            this.spanArrKinerjaUtama = []
+            data.data.forEach((item) => {
+              this.tableDataKinerjaUtama.push(item)
+            }) 
+            this.onMergeLinesKinerjaUtama(data.data);
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 800);
+          })
+          .catch((error) => {
+            this.tableDataKinerjaUtama = []
+            throw error
+          })
+      },
+      /* loadAsyncDataKinerjaUtama() {
         const params = [
           `sasaran_kinerja_id=${this.sasaranKinerjaId}`,
           `search=${this.search}`,
@@ -397,7 +233,7 @@ export default {
             this.tableDataKinerjaTambahan = []
             throw error
           })
-      },
+      }, */
       onMergeLinesKinerjaUtama(data) {
         data.forEach((item,index) => {
           if (index === 0) {

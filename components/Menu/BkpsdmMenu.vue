@@ -45,21 +45,21 @@
        >
        
         <i class="el-icon-user"></i>
-        <span>User</span>
+        <span>Pegawai</span>
       </el-menu-item>
       <el-menu-item 
-        index="/bkpsdm/manajemen_kinerja"
-        :route="{path: '/bkpsdm/manajemen_kinerja'}"
+        index="/bkpsdm/perjanjian_kinerja"
+        :route="{path: '/bkpsdm/perjanjian_kinerja'}"
        >
         <i class="el-icon-data-analysis"></i>
-        <span>Manajemen Kinerja</span>
+        <span>Perjanjian Kinerja</span>
       </el-menu-item>
       <el-menu-item 
         index="/bkpsdm/sasaran_kinerja"
         :route="{path: '/bkpsdm/sasaran_kinerja'}"
        >
         <i class="el-icon-data-analysis"></i>
-        <span>Sasaran Kinerja</span>
+        <span>SKP</span>
       </el-menu-item>
     </el-menu>
   </div>

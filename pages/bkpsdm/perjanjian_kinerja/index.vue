@@ -20,7 +20,7 @@
       border
       style="width: 100%;">
 
-      <el-table-column min-width="60" align="center" prop="periode" label="Periode"></el-table-column>
+      <el-table-column min-width="60" align="center" prop="periode_tahun" label="Periode"></el-table-column>
       <el-table-column min-width="190" align="left" prop="nama_skpd" label="Nama SKPD"></el-table-column>
       <el-table-column min-width="190" align="left" prop="nama_kepala_skpd" label="Kepala SKPD"></el-table-column>
       <el-table-column min-width="180" align="left" prop="nama_admin" label="Admin SKPD"></el-table-column>
@@ -42,6 +42,16 @@
       </el-table-column> -->
 
     </el-table>
+
+    <el-pagination
+      v-if="total >= 1"
+      :layout="layout"
+      @current-change="onPageChange"
+      @size-change="handleSizeChange"
+      :page-sizes="[15]"
+      :page-size="pageSize"
+      :total="total"
+    />
    
       
   </card>
@@ -67,8 +77,8 @@ export default {
       //pagination
       layout: ' prev,  pager,next',
       search: '',
-      sortField: 'id',
-      sortOrder: 'asc',
+      sortField: 'created_at',
+      sortOrder: 'desc',
      
       defaultSortOrder: 'asc',
       page: 1,

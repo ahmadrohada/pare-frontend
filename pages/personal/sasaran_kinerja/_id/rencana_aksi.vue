@@ -24,7 +24,7 @@
       </el-table-column>
       <el-table-column label="Rencana Hasil Kerja" width="290">
         <template slot-scope="{row}">
-          {{row.rencana_kinerja}}
+          {{row.rencana_kerja}}
         </template>
       </el-table-column>
       <el-table-column  
@@ -37,43 +37,35 @@
       </el-table-column>
       <el-table-column
         align="center"
-        prop="target"
-        label="Target"
-        width="150"
-        class-name="align-top">
-      </el-table-column>
-      <el-table-column
-        align="center"
-        prop="target"
+        prop="bulan"
         label="Pelaksanaan ( Bulan )"
-        width="170"
-        class-name="align-top">
+        width="170">
       </el-table-column>
       <el-table-column class-name="align-top" fixed="right" align="center"  label="Aksi" width="70">
         <template slot-scope="{row}" >
-          <div v-if=" row.indikator_id  != '' ">
-            <el-button size="medium" type="text" @click="editIndikatorKinerjaIndividu(row)">
+          
+            <el-button size="medium" type="text" >
               <i class="el-icon-edit-outline"></i>
-              <md-tooltip md-direction="top">Edit Indikator Kinerja Individu</md-tooltip>
+              <md-tooltip md-direction="top">Edit  Rencana Aksi</md-tooltip>
             </el-button>
-            <el-button size="medium" type="text danger" @click="hapusIndikatorKinerjaIndividu(row)">
+            <el-button size="medium" type="text danger">
               <i class="el-icon-delete" style="color:#F56C6C;"></i>
-              <md-tooltip md-direction="top">Hapus Indikator Kinerja Individu</md-tooltip>
+              <md-tooltip md-direction="top">Hapus  Rencana Aksi</md-tooltip>
             </el-button>
-          </div>
-          <div v-else>
-            <el-button size="medium" type="text" @click="editRencanaKinerja(row)">
-              <i class="el-icon-edit-outline"></i>
-              <md-tooltip md-direction="top">Edit  Rencana Kinerja</md-tooltip>
-            </el-button>
-            <el-button size="medium" type="text danger" @click="hapusRencanaKinerja(row)">
-              <i class="el-icon-delete" style="color:#F56C6C;"></i>
-              <md-tooltip md-direction="top">Hapus  Rencana Kinerja</md-tooltip>
-            </el-button>
-          </div>
+         
         </template>
       </el-table-column>
     </el-table>
+
+    <el-pagination
+      v-if="total >= 1"
+      :layout="layout"
+      @current-change="onPageChange"
+      @size-change="handleSizeChange"
+      :page-sizes="[15]"
+      :page-size="pageSize"
+      :total="total"
+    />
 
    </card>
 </template>
@@ -112,10 +104,19 @@ export default {
       spanArrKinerjaTambahan: [],
       positionKinerjaTambahan: null,
       positionKinerjaUtama: null,
-      search: '',
-      sortField: 'id',
-      sortOrder: 'asc',
       statusSasaranKinerja:'drafted',
+
+      //pagination
+      layout: ' prev,  pager,next',
+      search: '',
+      sortField: 'created_at',
+      sortOrder: 'desc',
+     
+      defaultSortOrder: 'asc',
+      page: 1,
+      limit:'20',
+      total:'',
+      currentPage: 1,
      
     }
   },

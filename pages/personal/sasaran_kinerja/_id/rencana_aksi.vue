@@ -8,6 +8,15 @@
       <p class="card-category d-inline"></p>
     </template>
 
+    <md-button 
+      style="height:28px;margin-left:-1px; font-size:11px;" 
+      class="md-dense md-raised md-primary"
+      v-on:click="createRencanaAksi($event)"
+      value="0"
+     
+    ><span class="fa fa-plus"></span> Rencana Aksi
+    </md-button>
+
     
     <el-table
       :data="tableDataKinerjaUtama"

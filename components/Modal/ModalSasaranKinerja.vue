@@ -385,6 +385,8 @@ export default {
                       type: 'error',
                       message: error.response.data.message
                     });    
+                    this.SasaranKinerjaForm.dateFrom = "";
+                    this.SasaranKinerjaForm.dateTo = "";
                     setTimeout(() => {
                       this.$refs.loader.finish() 
                     }, 700);

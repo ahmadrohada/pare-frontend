@@ -25,7 +25,7 @@
                       <el-select v-model="SasaranKinerjaForm.periodeTahun"
                           placeholder="Pilih Periode Perjanjian Kinerja" v-on:change="pilihPeriode($event)">
                           <el-option v-for="item in periodeTahunList" :selected="item.label" :key="item.periode"
-                              :label="item.periode" :value="item.id">
+                              :label="item.periode_tahun" :value="item.id">
                           </el-option>
                       </el-select>
                     </el-form-item>
@@ -85,17 +85,17 @@
                         </el-input>
                     </el-form-item>
 
-                    <input v-model="SasaranKinerjaForm.userId" ></input>
-                    <input v-model="SasaranKinerjaForm.periodeLabel" ></input>
-                    <input v-model="SasaranKinerjaForm.simpegId" ></input>
-                    <input v-model="SasaranKinerjaForm.pnsId" ></input>
+                    <input v-model="SasaranKinerjaForm.userId" hidden></input>
+                    <input v-model="SasaranKinerjaForm.periodeLabel" hidden></input>
+                    <input v-model="SasaranKinerjaForm.simpegId" hidden></input>
+                    <input v-model="SasaranKinerjaForm.pnsId" hidden></input>
 
 
-                    <input v-model="SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiId" ></input>
-                    <input v-model="SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiJenis" ></input>
-                    <input v-model="SasaranKinerjaForm.jabatanPegawaiYangDinilai" ></input>
-                    <input v-model="SasaranKinerjaForm.golonganPegawaiYangDinilai" ></input>
-                    <input v-model="SasaranKinerjaForm.pangkatPegawaiYangDinilai" ></input>
+                    <input v-model="SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiId" hidden></input>
+                    <input v-model="SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiJenis" hidden></input>
+                    <input v-model="SasaranKinerjaForm.jabatanPegawaiYangDinilai" hidden></input>
+                    <input v-model="SasaranKinerjaForm.golonganPegawaiYangDinilai" hidden></input>
+                    <input v-model="SasaranKinerjaForm.pangkatPegawaiYangDinilai" hidden></input>
 
 
                 </el-tab-pane>

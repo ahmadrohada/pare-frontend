@@ -8,6 +8,14 @@
       <p class="card-category d-inline"></p>
     </template>
 
+
+    <rencana-aksi 
+        ref="ModalRencanaAksi"
+        style="min-height:350px;"
+        @loadAsyncData="loadAsyncData"
+      >
+      </rencana-aksi>
+
     <md-button 
       style="height:28px;margin-left:-1px; font-size:11px;" 
       class="md-dense md-raised md-primary"
@@ -82,22 +90,18 @@
 <script>
 
 import PareLoader from '~/components/Loader/PareLoader.vue';
-import IndikatorKinerjaIndividu from '~/components/Modal/IndikatorKinerjaIndividu.vue';
-import MatriksRencanaKinerja from '~/components/Modal/ModalMatriksRencanaKinerja.vue';
-import RencanaKinerja from '~/components/Modal/RencanaKinerja.vue';
-import ManualIndikatorKinerja from '~/components/Modal/ManualIndikatorKinerja.vue';
-import RencanaHasilKerjaPimpinan from '~/components/Modal/RencanaHasilKerjaPimpinan.vue';
+//import IndikatorKinerjaIndividu from '~/components/Modal/IndikatorKinerjaIndividu.vue';
+//import MatriksRencanaKinerja from '~/components/Modal/ModalMatriksRencanaKinerja.vue';
+//import RencanaKinerja from '~/components/Modal/RencanaKinerja.vue';
+//import ManualIndikatorKinerja from '~/components/Modal/ManualIndikatorKinerja.vue';
+import RencanaAksi from '~/components/Modal/ModalRencanaAksi.vue';
 
 export default {
 
   middleware: ['auth'],
   layout: "sasaranKinerjaPersonalLayout",
   components: {
-    RencanaKinerja,
-    IndikatorKinerjaIndividu,
-    ManualIndikatorKinerja,
-    RencanaHasilKerjaPimpinan,
-    MatriksRencanaKinerja,
+    RencanaAksi,
     PareLoader
   },
   data() {
@@ -310,17 +314,17 @@ export default {
           
         }
       },
-      addRencanaKinerja: function(data) {
+      createRencanaAksi: function(data) {
       //console.log(data)
-      this.$refs.ModalRencanaKinerja.showModalAdd(this.sasaranKinerjaId);
+      this.$refs.ModalRencanaAksi.showModalAdd(this.sasaranKinerjaId);
       },
-      editRencanaKinerja: function(data) {
+     /*  editRencanaKinerja: function(data) {
         //console.log(data)
         this.$refs.ModalRencanaKinerja.showModalEdit(data.id);
       },
       matriksRencanaKinerja: function(data) {
         this.$refs.ModalMatriksRencanaKinerja.showModal(this.skpNipPegawaiYangDinilai,this.skpPeriode,this.sasaranKinerjaId);
-      },
+      }, 
 
       
       hapusRencanaKinerja: function(data) {
@@ -415,6 +419,7 @@ export default {
           });          
         });
       },
+      */
      
   },
 }

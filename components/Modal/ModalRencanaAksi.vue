@@ -6,11 +6,79 @@
         </template>
 
  
-        <template slot="footer">
-            <el-button v-if="periodeTahunList != '' " size="mini" type="primary" :loading="submitLoader" @click="submitForm('SasaranKinerjaForm')">
-                Create</el-button>
-            <el-button size="mini" @click="resetForm('RencanaAksiForm')">Tutup</el-button>
-        </template>
+        <el-form
+        ref="RencanaAksiForm"
+        :model="RencanaAksiForm"
+        :rules="rules"
+        size="mini"
+      >
+       
+        <input v-model="RencanaAksiForm.indikatorId" hidden></input>
+
+          <el-form-item label="Rencana Hasil Kerja" prop="rencanaKinerjaId" >
+            <el-select 
+              v-model="RencanaAksiForm.rencanaKinerjaId" 
+              placeholder="Pilih Rencana Hasil Kerja"
+              style="width:100%"
+              >
+              <el-option
+                v-for="item in rencanaKinerja"
+                :selected="item.id"
+                :key="item.label"
+                :label="item.label"
+                :value="item.id"
+                
+              
+                >
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+        <el-form-item    label ="Rencana Aksi" prop="rencanaAksiLabel">
+          <el-input size="mini" autosize type="textarea" placeholder="Rencana Aksi Label" v-model="RencanaAksiForm.rencanaAksiLabel"></el-input>
+        </el-form-item>
+
+        
+        <el-form-item  label ="Bulan Pelaksanaan" prop="bulan_pelaksanaan">
+          <!-- <el-select 
+            v-model="RencanaAksiForm.bulan_pelaksanaan" 
+            multiple 
+            style="width:100%"
+            placeholder="Pilih Bulan">
+            <el-option
+              v-for="item in bulanList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select> -->
+          <el-select 
+              v-model="RencanaAksiForm.bulanPelaksanaanId" 
+              placeholder="Pilih Rencana Hasil Kerja"
+              style="width:100%"
+              multiple
+              >
+              <el-option
+              v-for="item in bulanList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+              </el-option>
+          </el-select>
+        </el-form-item>
+        
+
+
+        <el-form-item size="mini" style="margin-top:20px;">
+          <el-button v-if="formType=='create'" type="primary"  :loading="submitLoader" @click="saveForm('RencanaAksiForm')"
+            >Save</el-button
+          >
+          <el-button v-if="formType=='edit'" type="primary"  :loading="submitLoader" @click="updateForm('RencanaAksiForm')"
+            >Update</el-button
+          >
+          <el-button @click="resetForm('RencanaAksiForm')">Tutup</el-button>
+        </el-form-item>
+      </el-form>
     </modal>
 </template>
 
@@ -43,11 +111,48 @@ export default {
     return {
       modalFormVisible: false,
       
-      data: {
-
-      },
+      bulanList: [{
+          value: '1',
+          label: 'Januari'
+        }, {
+          value: '2',
+          label: 'Februari'
+        }, {
+          value: '3',
+          label: 'Maret'
+        }, {
+          value: '4',
+          label: 'April'
+        }, {
+          value: '5',
+          label: 'Mei'
+        },{
+          value: '6',
+          label: 'Juni'
+        }, {
+          value: '7',
+          label: 'Juli'
+        }, {
+          value: '8',
+          label: 'Agustus'
+        }, {
+          value: '9',
+          label: 'September'
+        }, {
+          value: '10',
+          label: 'Oktober'
+        },{
+          value: '11',
+          label: 'November'
+        },{
+          value: '12',
+          label: 'Desember'
+        }],
+      
       RencanaAksiForm: {
-        
+        rencanaKinerjaId:"",
+        rencanaAksiLabel:"",
+        bulanPelaksanaanId:[]
       },
       rules: {
   
@@ -55,9 +160,70 @@ export default {
     };
   },
   methods: {
-    showModalAdd() {
-      this.submitLoader = false;
+    rencanaKinerjaList(sasaranKinerjaId,selectedId){
+       const isSelect = selectedId
+          this.$axios
+            .$get("/rencana_kinerja_select_list?sasaran_kinerja_id="+sasaranKinerjaId)
+            .then((resp) => {
+              this.selectVisible = true
+              this.rencanaKinerja =  resp.rencana_kinerja;
+              if ( isSelect == 0 ){
+                this.RencanaAksiForm.rencanaKinerjaId = resp.rencana_kinerja[0].id // pilih data ke 1
+              }else{
+                this.RencanaAksiForm.rencanaKinerjaId = isSelect
+              }
+            setTimeout(() => {
+              this.$refs.loader.finish() 
+            }, 200);
+          }) 
+        
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+      this.modalFormVisible = false;
+      this.submitLoader = false
+    },
+    showModalAdd(sasaranKinerjaId) {
+      this.resetForm("RencanaAksiForm")
+      this.submitLoader = false
+      this.$refs.loader.start() 
+      this.formType = "create"
+      this.headerText = "Add Rencana Aksi"
+      this.rencanaKinerjaList(sasaranKinerjaId,0)
       this.modalFormVisible = true;
+    },
+    saveForm(formName) {
+      /* this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.submitLoader = true
+            this.$axios
+                    .$post("/indikator_kinerja_individu", this.IndikatorKinerjaIndividuForm )
+                    .then((response) => {
+                      setTimeout(() => {
+                        this.$emit('loadAsyncData')
+                        this.resetForm('IndikatorKinerjaIndividuForm')
+                        this.$message({
+                          type: 'info',
+                          message: 'berhasil menyimpan data'
+                        }); 
+                      }, 100);
+                    })
+                    .catch((error) => {
+                      this.submitLoader = false
+                      console.log(errors);
+                      this.$message({
+                        type: 'warning',
+                        message: error.response.data.message
+                      }); 
+                    });
+
+
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+      }); */
+        
     },
     
   },

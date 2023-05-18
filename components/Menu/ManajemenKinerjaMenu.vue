@@ -38,6 +38,16 @@
         <i class="el-icon-date"></i>
         <span>Timeline</span>
       </el-menu-item> -->
+
+      <el-menu-item 
+        index="/skpd/manajemen_kinerja"
+        :route="{path: '/skpd/manajemen_kinerja'}"
+       >
+          <i class="el-icon-s-order"></i>
+          <span>List Manajemen Kinerja</span>
+      </el-menu-item>
+      <br>
+
       <el-menu-item 
         index="skpd-manajemen_kinerja-periode-perjanjian_kinerja___en"
         :route="{path:`/skpd/manajemen_kinerja/${periodeTahun}/perjanjian_kinerja`, name:'skpd-manajemen_kinerja-periode-perjanjian_kinerja___en'}"

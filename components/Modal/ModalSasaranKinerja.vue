@@ -33,16 +33,13 @@
                   </el-row>
 
 
-                  <el-row>
+                  <el-row v-if="roleList != []">
                     JABATAN PADA MPH
                     <ol style="margin-left: -22px">
                       <li v-for="(data, key) in roleList" :key="key">
                         {{ data.roleName }} -> Jumlah Kegiatan ( Outcome ) : {{ data.outcome }}
                       </li>
                     </ol>
-                    
-
-
                   </el-row>
                   
 

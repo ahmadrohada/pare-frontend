@@ -8,15 +8,40 @@
       <p class="card-category d-inline">{{user.skpd.singkatan}}</p>
     </template>
 
-    <el-row :gutter="2">
-      <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
+   
         <el-table
           :data="tableDataPeriode"
           highlight-current-row
           border
           style="width: 100%;">
 
+          
+
           <el-table-column min-width="40" align="center" prop="periode" label="Periode"></el-table-column>
+          <el-table-column min-width="120" align="center" label="Perjanjian Kinerja">
+            <template slot-scope="{ row }">
+              <el-button  size="medium" type="text">
+                <i v-if=" row.perjanjian_kinerja == true " class="el-icon-circle-check"></i>
+                <i v-else class="el-icon-s-release"></i>
+              </el-button>
+            </template>
+          </el-table-column>
+          <el-table-column min-width="120" align="center" label="SKP JPT">
+            <template slot-scope="{ row }">
+              <el-button  size="medium" type="text">
+                <i v-if=" row.skp_jpt == true " class="el-icon-circle-check"></i>
+                <i v-else class="el-icon-s-release"></i>
+              </el-button>
+            </template>
+          </el-table-column>
+          <el-table-column min-width="120" align="center" label="MPH">
+            <template slot-scope="{ row }">
+              <el-button  size="medium" type="text">
+                <i v-if=" row.mph == true " class="el-icon-circle-check"></i>
+                <i v-else class="el-icon-s-release"></i>
+              </el-button>
+            </template>
+          </el-table-column>
           <el-table-column min-width="120" align="center" label="Aksi">
             <template slot-scope="{ row }">
               <el-button  size="mini" type="text" @click="viewManajemenKinerja(row)">
@@ -30,8 +55,6 @@
         </el-table>
         
 
-      </el-col>
-    </el-row>
 
 
    
@@ -81,11 +104,12 @@ export default {
         `order_direction=${this.sortOrder}`,
         `page=${this.page}`,
         `take=${this.limit}`,
+        `skpd_id=${this.skpd_id}`,
       ].join('&')
 
       this.$refs.loader.start() 
       this.$axios
-        .get(`/periode_list?${params}`)
+        .get(`/manajemen_kinerja_list?${params}`)
         .then(({ data }) => {
           // api.themoviedb.org manage max 1000 pages
           this.tableDataPeriode = []

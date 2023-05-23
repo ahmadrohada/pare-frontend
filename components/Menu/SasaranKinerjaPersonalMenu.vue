@@ -88,7 +88,7 @@
             
           >
           <i class="el-icon-arrow-right"></i>
-          Hasil Kerja
+          Rencana Hasil Kerja
           </el-menu-item>
 
            <el-menu-item 

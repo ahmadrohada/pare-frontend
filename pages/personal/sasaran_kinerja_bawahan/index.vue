@@ -30,7 +30,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column min-width="280" label="Rencana Kerja">
+      <el-table-column min-width="280" label="Rencana Hasil Kerja">
         <template slot-scope="{ row }">
           <ol style="margin-left: -22px">
             <!-- <div v-for="(data, key) in row.rencana_kerja" :key="key"> -->

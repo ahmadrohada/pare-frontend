@@ -27,38 +27,52 @@
 
     
     <el-table
-      :data="tableDataKinerjaUtama"
-      :span-method="objectSpanMethodKinerjaUtama"
+      :data="tableDataRencanaAksi"
       border
       style="width: 100%;">
       <el-table-column
-        align="center"
-        prop="no"
-        label="No"
-        width="45"
+        prop="bulan"
+        label="Bulan Pelaksanaan"
         class-name="align-top"
-        >
+        width="220">
       </el-table-column>
-      <el-table-column label="Rencana Hasil Kerja" width="290">
+      <el-table-column
+        prop="no"
+        label="Rencana Aksi"
+        >
+        <template slot-scope="{ row }">
+          <ol style="margin-left: -22px">
+            <li v-for="(data, key) in row.rencana_aksi" :key="key">
+              {{ data.label }}
+            </li>
+            <!--  <el-button
+              size="mini"
+              type="text"
+              @click="addOutcome(row)"
+              style="margin-left: -18px"
+            >
+              <i class="el-icon-circle-plus"></i>Tambah Outcome
+              <md-tooltip md-direction="top">Add Outcome</md-tooltip>
+            </el-button> -->
+          </ol>
+        </template>
+      </el-table-column> 
+
+      <!-- <el-table-column label="Rencana Hasil Kerja" width="290">
         <template slot-scope="{row}">
           {{row.rencana_kerja}}
         </template>
-      </el-table-column>
-      <el-table-column  
+      </el-table-column> -->
+      <!-- <el-table-column  
         label="Rencana Aksi" 
         min-width="120"
         >
         <template slot-scope="{row}">
           {{row.label}}
         </template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        prop="bulan"
-        label="Pelaksanaan ( Bulan )"
-        width="170">
-      </el-table-column>
-      <el-table-column class-name="align-top" fixed="right" align="center"  label="Aksi" width="70">
+      </el-table-column> -->
+     
+      <!-- <el-table-column class-name="align-top" fixed="right" align="center"  label="Aksi" width="70">
         <template slot-scope="{row}" >
           
             <el-button size="medium" type="text" >
@@ -71,10 +85,10 @@
             </el-button>
          
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
 
-    <el-pagination
+    <!-- <el-pagination
       v-if="total >= 1"
       :layout="layout"
       @current-change="onPageChange"
@@ -82,7 +96,7 @@
       :page-sizes="[15]"
       :page-size="pageSize"
       :total="total"
-    />
+    /> -->
 
    </card>
 </template>
@@ -90,10 +104,6 @@
 <script>
 
 import PareLoader from '~/components/Loader/PareLoader.vue';
-//import IndikatorKinerjaIndividu from '~/components/Modal/IndikatorKinerjaIndividu.vue';
-//import MatriksRencanaKinerja from '~/components/Modal/ModalMatriksRencanaKinerja.vue';
-//import RencanaKinerja from '~/components/Modal/RencanaKinerja.vue';
-//import ManualIndikatorKinerja from '~/components/Modal/ManualIndikatorKinerja.vue';
 import RencanaAksi from '~/components/Modal/ModalRencanaAksi.vue';
 
 export default {
@@ -107,23 +117,12 @@ export default {
   data() {
     return {
       sasaranKinerjaId:null,
-      skpJabatanPegawaiId:null,
-      skpNipPegawaiYangDinilai:null,
-      skpPeriode:null,
-      jenisJabatanSkp:null,
-      tableDataKinerjaUtama: [],
-      tableDataKinerjaTambahan: [],
-      spanArrKinerjaUtama: [],
-      spanArrKinerjaTambahan: [],
-      positionKinerjaTambahan: null,
-      positionKinerjaUtama: null,
-      statusSasaranKinerja:'drafted',
-
+      tableDataRencanaAksi:null,
       //pagination
       layout: ' prev,  pager,next',
       search: '',
-      sortField: 'created_at',
-      sortOrder: 'desc',
+      sortField: 'bulan_pelaksanaan',
+      sortOrder: 'asc',
      
       defaultSortOrder: 'asc',
       page: 1,
@@ -135,42 +134,10 @@ export default {
   },
   mounted() {
     this.sasaranKinerjaId = this.$route.params.id
-    this.loadData()
+    this.loadAsyncDataRencanaAksi()
   },
   
   methods: {
-        loadData() {
-
-        const params = [
-          `id=${this.sasaranKinerjaId}`,
-        ].join('&')
-        this.$refs.loader.start() 
-        this.$axios
-          .$get(`/sasaran_kinerja?${params}`)
-          .then(({ data }) => {
-
-            //console.log(data.periodePenilaian.tahun)
-
-            this.skpJabatanPegawaiId = data.pegawaiYangDinilai.jabatan_id
-            this.skpNipPegawaiYangDinilai = data.pegawaiYangDinilai.nip
-            this.skpPeriode = data.periodePenilaian.tahun
-            this.jenisJabatanSkp = data.jenisJabatanSkp
-
-            this.loadAsyncData()
-            setTimeout(() => {
-              //this.$refs.loader.finish() 
-            }, 800);
-
-          })
-          .catch((error) => {
-            throw error
-          })
-      },
-      loadAsyncData(){
-        //this.loadAsyncDataKinerjaUtama()
-        //this.loadAsyncDataKinerjaTambahan()
-        this.loadAsyncDataRencanaAksi()
-      },
       loadAsyncDataRencanaAksi() {
         const params = [
           `sasaran_kinerja_id=${this.sasaranKinerjaId}`,
@@ -180,14 +147,9 @@ export default {
         ].join('&')
 
         this.$axios
-          .get(`/sasaran_kinerja_rencana_aksi?${params}`)
+          .get(`/bulan_rencana_aksi?${params}`)
           .then(({ data }) => {
-            this.tableDataKinerjaUtama = []
-            this.spanArrKinerjaUtama = []
-            data.data.forEach((item) => {
-              this.tableDataKinerjaUtama.push(item)
-            }) 
-            this.onMergeLinesKinerjaUtama(data.data);
+            this.tableDataRencanaAksi = data.bulanList
             setTimeout(() => {
               this.$refs.loader.finish() 
             }, 800);
@@ -197,230 +159,11 @@ export default {
             throw error
           })
       },
-      /* loadAsyncDataKinerjaUtama() {
-        const params = [
-          `sasaran_kinerja_id=${this.sasaranKinerjaId}`,
-          `search=${this.search}`,
-          `order_by=${this.sortField}`,
-          `order_direction=${this.sortOrder}`,
-          `jenis_rencana_kinerja=kinerja_utama`
-        ].join('&')
-
-        this.$axios
-          .get(`/sasaran_kinerja_rencana_kinerja?${params}`)
-          .then(({ data }) => {
-            this.tableDataKinerjaUtama = []
-            this.spanArrKinerjaUtama = []
-            data.data.forEach((item) => {
-              this.tableDataKinerjaUtama.push(item)
-            }) 
-            this.onMergeLinesKinerjaUtama(data.data);
-          })
-          .catch((error) => {
-            this.tableDataKinerjaUtama = []
-            throw error
-          })
-      },
-      loadAsyncDataKinerjaTambahan() {
-        const params = [
-          `sasaran_kinerja_id=${this.sasaranKinerjaId}`,
-          `search=${this.search}`,
-          `order_by=${this.sortField}`,
-          `order_direction=${this.sortOrder}`,
-          `jenis_rencana_kinerja=kinerja_tambahan`
-        ].join('&')
-
-        this.$axios
-          .get(`/sasaran_kinerja_rencana_kinerja?${params}`)
-          .then(({ data }) => {
-            this.tableDataKinerjaTambahan = []
-            this.spanArrKinerjaTambahan = []
-            data.data.forEach((item) => {
-              this.tableDataKinerjaTambahan.push(item)
-            }) 
-            this.onMergeLinesKinerjaTambahan(data.data);
-            setTimeout(() => {
-              this.$refs.loader.finish() 
-            }, 800);
-          })
-          .catch((error) => {
-            this.tableDataKinerjaTambahan = []
-            throw error
-          })
-      }, */
-      onMergeLinesKinerjaUtama(data) {
-        data.forEach((item,index) => {
-          if (index === 0) {
-            this.spanArrKinerjaUtama.push(1);
-            this.positionKinerjaUtama = 0;
-          } else {
-            if (
-              this.tableDataKinerjaUtama[index].no ===
-              this.tableDataKinerjaUtama[index - 1].no
-            ) {
-              this.spanArrKinerjaUtama[this.positionKinerjaUtama] += 1 ;
-              this.spanArrKinerjaUtama.push(0);
-            } else {
-              this.spanArrKinerjaUtama.push(1);
-              this.positionKinerjaUtama = index;
-            }
-          }
-        })
-      },
-      onMergeLinesKinerjaTambahan(data) {
-        data.forEach((item,index) => {
-          if (index === 0) {
-            this.spanArrKinerjaTambahan.push(1);
-            this.positionKinerjaTambahan = 0;
-          } else {
-            if (
-              this.tableDataKinerjaTambahan[index].no ===
-              this.tableDataKinerjaTambahan[index - 1].no
-            ) {
-              this.spanArrKinerjaTambahan[this.positionKinerjaTambahan] += 1;
-              this.spanArrKinerjaTambahan.push(0);
-            } else {
-              this.spanArrKinerjaTambahan.push(1);
-              this.positionKinerjaTambahan = index;
-            }
-          }
-        })
-      },
-      objectSpanMethodKinerjaUtama({ row, column, rowIndex, columnIndex }) {
-        //console.log(row, column);
-        
-        if (columnIndex === 0 || columnIndex === 1 || columnIndex === 2 ) {
-         
-            const _row = this.spanArrKinerjaUtama[rowIndex];
-            const _col = _row > 0 ? 1 : 0;
-            return {
-              rowspan: _row,
-              colspan: _col,
-            };
-          
-        }
-      },
-       objectSpanMethodKinerjaTambahan({ row, column, rowIndex, columnIndex }) {
-        //console.log(row, column);
-        
-        if (columnIndex === 0 || columnIndex === 1 ) {
-         
-            const _row = this.spanArrKinerjaTambahan[rowIndex];
-            const _col = _row > 0 ? 1 : 0;
-            return {
-              rowspan: _row,
-              colspan: _col,
-            };
-          
-        }
-      },
+      
       createRencanaAksi: function(data) {
       //console.log(data)
       this.$refs.ModalRencanaAksi.showModalAdd(this.sasaranKinerjaId);
       },
-     /*  editRencanaKinerja: function(data) {
-        //console.log(data)
-        this.$refs.ModalRencanaKinerja.showModalEdit(data.id);
-      },
-      matriksRencanaKinerja: function(data) {
-        this.$refs.ModalMatriksRencanaKinerja.showModal(this.skpNipPegawaiYangDinilai,this.skpPeriode,this.sasaranKinerjaId);
-      }, 
-
-      
-      hapusRencanaKinerja: function(data) {
-        //const parent = node.parent;
-        //const child = parent.data.child || parent.data;
-        
-        this.$confirm('Hapus Rencana Kinerja', 'Konfirmasi', {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Batal',
-          type: 'warning'
-        }).then(() => {
-          this.$axios
-            .$delete("/rencana_kinerja?id="+data.id)
-            .then((resp) => {
-                this.loadAsyncData()
-                this.$message({
-                  type: 'success',
-                  message: 'Berhasil dihapus'
-                });
-            })
-            .catch((error) => {
-              //console.log(error.response.data.message)
-              this.$message({
-                type: 'error',
-                message: error.response.data.message
-              });          
-            });
-
-          
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Proses Hapus Dibatalkan'
-          });          
-        });
-      },
-      addRencanaHasilKerjaPimpinan: function(data){
-        console.log(data.id)
-        this.$refs.ModalRencanaHasilKerjaPimpinan.showModalAdd(this.sasaranKinerjaId,data.id);
-      },
-      editRencanaHasilKerjaPimpinan: function(data){
-        console.log(data.id)
-        this.$refs.ModalRencanaHasilKerjaPimpinan.showModalEdit(this.sasaranKinerjaId,data.id);
-      },
-      addIndikatorKinerjaIndividu: function(data) {
-      //console.log(data)
-      //this.$refs.ModalIndikatorKinerjaIndividu.opsi(this.jenisJabatanSkp);
-      this.$refs.ModalIndikatorKinerjaIndividu.showModalAdd(this.sasaranKinerjaId);
-      },
-      editIndikatorKinerjaIndividu: function(data) {
-        this.$refs.ModalIndikatorKinerjaIndividu.showModalEdit(data.indikator_id);
-      },
-      addManualIndikatorKinerja: function(data) {
-      //console.log(data)
-      this.$refs.ModalManualIndikatorKinerja.showModalAdd(data.indikator_id);
-      },
-      editManualIndikatorKinerja: function(data) {
-        //console.log(data)
-        this.$refs.ModalManualIndikatorKinerja.showModalEdit(data.manual_indikator_kinerja_id);
-      },
-      hapusIndikatorKinerjaIndividu: function(data) {
-        //const parent = node.parent;
-        //const child = parent.data.child || parent.data;
-        
-        this.$confirm('Hapus Indikator Kinerja Individu', 'Konfirmasi', {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Batal',
-          type: 'warning'
-        }).then(() => {
-          this.$axios
-            .$delete("/indikator_kinerja_individu?id="+data.indikator_id)
-            .then((resp) => {
-                this.loadAsyncData()
-                this.$message({
-                  type: 'success',
-                  message: 'Berhasil dihapus'
-                });
-            })
-            .catch((error) => {
-              //console.log(error.response.data.message)
-              this.$message({
-                type: 'error',
-                message: error.response.data.message
-              });          
-            });
-
-          
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Proses Hapus Dibatalkan'
-          });          
-        });
-      },
-      */
-     
   },
 }
 </script>

@@ -13,8 +13,7 @@
         size="mini"
       >
        
-        <input v-model="RencanaAksiForm.indikatorId" hidden></input>
-
+       
           <el-form-item label="Rencana Hasil Kerja" prop="rencanaKinerjaId" >
             <el-select 
               v-model="RencanaAksiForm.rencanaKinerjaId" 
@@ -39,22 +38,10 @@
         </el-form-item>
 
         
-        <el-form-item  label ="Bulan Pelaksanaan" prop="bulan_pelaksanaan">
-          <!-- <el-select 
-            v-model="RencanaAksiForm.bulan_pelaksanaan" 
-            multiple 
-            style="width:100%"
-            placeholder="Pilih Bulan">
-            <el-option
-              v-for="item in bulanList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select> -->
+        <el-form-item  label ="Bulan Pelaksanaan" prop="bulanPelaksanaanId">
           <el-select 
               v-model="RencanaAksiForm.bulanPelaksanaanId" 
-              placeholder="Pilih Rencana Hasil Kerja"
+              placeholder="Pilih Bulan Pelaksanaan"
               style="width:100%"
               multiple
               >
@@ -150,12 +137,21 @@ export default {
         }],
       
       RencanaAksiForm: {
+        sasaranKinerjaId:"",
         rencanaKinerjaId:"",
         rencanaAksiLabel:"",
         bulanPelaksanaanId:[]
       },
       rules: {
-  
+        rencanaKinerjaId: [
+            { required: true, message: 'Silakan Pilih Rencana Hasil Kerja', trigger: 'blur' }
+          ],
+          rencanaAksiLabel: [
+            { required: true, message: 'Silakan isi Label Rencana Aksi', trigger: 'blur' }
+          ],
+          bulanPelaksanaanId: [
+            { required: true, message: 'Silakan pilih bulan pelaksanaan', trigger: 'blur' }
+          ]
       },
     };
   },
@@ -184,6 +180,7 @@ export default {
       this.submitLoader = false
     },
     showModalAdd(sasaranKinerjaId) {
+      this.RencanaAksiForm.sasaranKinerjaId = sasaranKinerjaId
       this.resetForm("RencanaAksiForm")
       this.submitLoader = false
       this.$refs.loader.start() 
@@ -193,15 +190,15 @@ export default {
       this.modalFormVisible = true;
     },
     saveForm(formName) {
-      /* this.$refs[formName].validate((valid) => {
+       this.$refs[formName].validate((valid) => {
           if (valid) {
             this.submitLoader = true
             this.$axios
-                    .$post("/indikator_kinerja_individu", this.IndikatorKinerjaIndividuForm )
+                    .$post("/rencana_aksi", this.RencanaAksiForm )
                     .then((response) => {
                       setTimeout(() => {
                         this.$emit('loadAsyncData')
-                        this.resetForm('IndikatorKinerjaIndividuForm')
+                        this.resetForm('RencanaAksiForm')
                         this.$message({
                           type: 'info',
                           message: 'berhasil menyimpan data'
@@ -222,7 +219,7 @@ export default {
             console.log('error submit!!');
             return false;
           }
-      }); */
+      }); 
         
     },
     

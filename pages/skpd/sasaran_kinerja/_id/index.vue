@@ -11,7 +11,7 @@
           <skp-sumary></skp-sumary>
         </el-tab-pane>
         <el-tab-pane>
-          <span slot="label">Hasil Kerja</span>
+          <span slot="label">Rencana Hasil Kerja</span>
           <skp-hasil-kerja></skp-hasil-kerja>
         </el-tab-pane>
         <el-tab-pane>

@@ -2,7 +2,7 @@
     <modal :show.sync="modalFormVisible">
         <pare-loader ref="loader"></pare-loader>
         <template slot="header">
-            <h4 class="modal-title">Rencana Aksi</h4>
+            <h4 class="modal-title ">{{ headerText }}</h4>
         </template>
 
  
@@ -135,12 +135,15 @@ export default {
           value: '12',
           label: 'Desember'
         }],
-      
+      submitLoader: false,
+      formType: "create",
+      rencanaKinerja:[],
       RencanaAksiForm: {
         sasaranKinerjaId:"",
         rencanaKinerjaId:"",
         rencanaAksiLabel:"",
-        bulanPelaksanaanId:[]
+        bulanPelaksanaanId:[],
+        
       },
       rules: {
         rencanaKinerjaId: [
@@ -186,6 +189,16 @@ export default {
       this.$refs.loader.start() 
       this.formType = "create"
       this.headerText = "Add Rencana Aksi"
+      this.rencanaKinerjaList(sasaranKinerjaId,0)
+      this.modalFormVisible = true;
+    },
+    showModalUpdate(sasaranKinerjaId) {
+      //this.RencanaAksiForm.sasaranKinerjaId = sasaranKinerjaId
+      this.resetForm("RencanaAksiForm")
+      this.submitLoader = false
+      this.$refs.loader.start() 
+      this.formType = "update"
+      this.headerText = "Update Rencana Aksi"
       this.rencanaKinerjaList(sasaranKinerjaId,0)
       this.modalFormVisible = true;
     },

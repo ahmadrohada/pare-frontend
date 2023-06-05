@@ -12,7 +12,7 @@
     <rencana-aksi 
         ref="ModalRencanaAksi"
         style="min-height:350px;"
-        @loadAsyncData="loadAsyncData"
+        @loadAsyncData="loadAsyncDataRencanaAksi"
       >
       </rencana-aksi>
 
@@ -42,8 +42,12 @@
         >
         <template slot-scope="{ row }">
           <ol style="margin-left: -22px">
-            <li v-for="(data, key) in row.rencana_aksi" :key="key">
-              {{ data.label }}
+            <li style="margin-bottom:8px; margin-top:-5px; padding:5px;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px;" v-for="(data, key) in row.rencana_aksi" :key="key">
+              <span style="display: block;" class="">{{data.label}}</span>
+              <el-button  v-if="data.label != '' " size="mini" type="text"  style="color:#34a890;margin-left:-3px;margin-top:-10px;" @click="klikRencanaAksi(data)" >
+                <i class="el-icon-setting"></i> Update/Delete
+                <md-tooltip md-direction="top">Update / Delete Rencana Aksi</md-tooltip>
+              </el-button>
             </li>
             <!--  <el-button
               size="mini"
@@ -144,7 +148,7 @@ export default {
           `search=${this.search}`,
           `order_by=${this.sortField}`,
           `order_direction=${this.sortOrder}`,
-        ].join('&')
+        ].join('&') 
 
         this.$axios
           .get(`/bulan_rencana_aksi?${params}`)
@@ -163,6 +167,11 @@ export default {
       createRencanaAksi: function(data) {
       //console.log(data)
       this.$refs.ModalRencanaAksi.showModalAdd(this.sasaranKinerjaId);
+      },
+      klikRencanaAksi: function(e) {
+        console.log(e)
+        this.$refs.ModalRencanaAksi.showModalUpdate(e);
+        
       },
   },
 }

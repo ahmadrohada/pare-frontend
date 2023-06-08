@@ -159,10 +159,11 @@ export default {
               this.PegawaiForm.jabatanSimAsnPegawaiId = resp.data.jabatan[0].referensi.id
               this.PegawaiForm.jabatanSimAsnPegawaiJenis = resp.data.jabatan[0].referensi.jenis
               this.PegawaiForm.jabatanPegawai = resp.data.jabatan[0].nama
-              this.PegawaiForm.pangkatPegawai = resp.data.jabatan[0].golongan.referensi.pangkat
-              this.PegawaiForm.golonganPegawai = resp.data.jabatan[0].golongan.referensi.golongan
-              this.PegawaiForm.pangkatGolonganPegawai = resp.data.jabatan[0].golongan.referensi.pangkat+" / "+resp.data.jabatan[0].golongan.referensi.golongan
-              this.PegawaiForm.instansiPegawai = resp.data.jabatan[0].skpd.nama
+              //08062023 ..sim asn nya berubah, pang gol gk dari jabatan
+              this.PegawaiForm.pangkatPegawai = resp.data.golongan.referensi.pangkat
+              this.PegawaiForm.golonganPegawai = resp.data.golongan.referensi.golongan
+              this.PegawaiForm.pangkatGolonganPegawai = resp.data.golongan.referensi.pangkat+" / "+resp.data.golongan.referensi.golongan
+              this.PegawaiForm.instansiPegawai = resp.data.jabatan[0].referensi.skpd.nama
               setTimeout(() => {
                 this.$refs.loader.finish() 
               }, 700);
@@ -213,6 +214,8 @@ export default {
         .$get("/user_jabatan_detail?jabatan_aktif_id="+selectedId+"&nip_pegawai="+this.PegawaiForm.nipPegawai)
         .then((resp) => {
           console.log(resp)
+          //08062023, bingung jabatan nya gk bisa piih,mnambahin ini aja ah
+          this.PegawaiForm.jabatanPegawai = resp.jabatan
           this.PegawaiForm.jabatanAktifId = selectedId
           this.PegawaiForm.pangkatGolonganPegawai = resp.pangkat+" / "+resp.golongan
           this.PegawaiForm.instansiPegawai = resp.skpd      

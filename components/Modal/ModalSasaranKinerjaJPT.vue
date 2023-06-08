@@ -378,8 +378,8 @@ export default {
 
             //coba lakukan perulangan pada jabatan,untuk memilih jabatan yang sama dengan jabatan aktif nya
             this.jabatansPegawaiYangDinilai.forEach((data, index) => {
-              console.log(data.skpd.id);
-              if (data.skpd.id == this.SasaranKinerjaForm.skpdId) {
+              //console.log(data.skpd.id);
+              if (data.referensi.skpd.id == this.SasaranKinerjaForm.skpdId) {
                 this.SasaranKinerjaForm.jabatanAktifPegawaiYangDinilaiId =
                   resp.data.jabatan[index].id;
                 this.SasaranKinerjaForm.jabatanSimAsnPegawaiYangDinilaiId =
@@ -389,10 +389,13 @@ export default {
                 this.SasaranKinerjaForm.jabatanPegawaiYangDinilai =
                   resp.data.jabatan[index].nama;
 
+                //08062023, perubahan pada API sim-asn masuk ref dulu
                 this.SasaranKinerjaForm.instansiPegawaiYangDinilai =
-                  resp.data.jabatan[index].skpd.nama;
+                  resp.data.jabatan[index].referensi.skpd.nama;
               }
             });
+
+            //08062023, perubahan pada API sim-asn
             this.SasaranKinerjaForm.pangkatPegawaiYangDinilai =
               resp.data.golongan.referensi.pangkat;
             this.SasaranKinerjaForm.golonganPegawaiYangDinilai =
@@ -410,7 +413,8 @@ export default {
           this.$message({
             type: "error",
             duration: 1800,
-            message: error.response.data.message,
+            //message: error.response.data.message,
+            message: "ini errornya",
           });
           setTimeout(() => {
             this.$refs.loader.finish();

@@ -142,6 +142,7 @@ export default {
         sasaranKinerjaId:"",
         rencanaKinerjaId:"",
         rencanaAksiLabel:"",
+        rencanaAksiId:"",
         bulanPelaksanaanId:[],
         
       },
@@ -192,14 +193,33 @@ export default {
       this.rencanaKinerjaList(sasaranKinerjaId,0)
       this.modalFormVisible = true;
     },
-    showModalUpdate(sasaranKinerjaId) {
-      //this.RencanaAksiForm.sasaranKinerjaId = sasaranKinerjaId
+    showModalUpdate(rencanaAksiId) {
       this.resetForm("RencanaAksiForm")
-      this.submitLoader = false
-      this.$refs.loader.start() 
       this.formType = "update"
       this.headerText = "Update Rencana Aksi"
-      this.rencanaKinerjaList(sasaranKinerjaId,0)
+      this.submitLoader = false
+      this.RencanaAksiForm.rencanaAksiId = rencanaAksiId
+      this.$refs.loader.start() 
+      const params = [
+        `id=${this.RencanaAksiForm.rencanaAksiId}`,
+      ].join('&')
+      this.$axios
+        .$get(`/rencana_aksi_detail?${params}`)
+        .then(({ data }) => {
+          console.log(data.bulan_pelaksanaan);
+          this.rencanaKinerjaList(data.sasaran_kinerja_id,data.rencana_kinerja_id)
+
+          this.RencanaAksiForm.rencanaAksiLabel = data.label
+          this.RencanaAksiForm.bulanPelaksanaanId = [ data.bulan_pelaksanaan ]
+
+
+
+          setTimeout(() => {
+            this.$refs.loader.finish() 
+          }, 200);
+          
+        });
+      //this.rencanaKinerjaList(sasaranKinerjaId,0)
       this.modalFormVisible = true;
     },
     saveForm(formName) {

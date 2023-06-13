@@ -169,8 +169,8 @@ export default {
       this.$refs.ModalRencanaAksi.showModalAdd(this.sasaranKinerjaId);
       },
       klikRencanaAksi: function(e) {
-        console.log(e)
-        this.$refs.ModalRencanaAksi.showModalUpdate(e);
+        console.log(e.id)
+        this.$refs.ModalRencanaAksi.showModalUpdate(e.id);
         
       },
   },

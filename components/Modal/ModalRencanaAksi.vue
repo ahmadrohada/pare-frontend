@@ -38,7 +38,7 @@
         </el-form-item>
 
         
-        <el-form-item  label ="Bulan Pelaksanaan" prop="bulanPelaksanaanId">
+        <el-form-item  v-if="formType=='create'" label ="Bulan Pelaksanaan" prop="bulanPelaksanaanId">
           <el-select 
               v-model="RencanaAksiForm.bulanPelaksanaanId" 
               placeholder="Pilih Bulan Pelaksanaan"
@@ -62,6 +62,10 @@
           >
           <el-button v-if="formType=='edit'" type="primary"  :loading="submitLoader" @click="updateForm('RencanaAksiForm')"
             >Update</el-button
+          >
+
+          <el-button style="float:right;" v-if="formType=='edit'" type="danger"  @click="deleteForm('RencanaAksiForm')"
+            >Delete</el-button
           >
           <el-button @click="resetForm('RencanaAksiForm')">Tutup</el-button>
         </el-form-item>
@@ -195,8 +199,8 @@ export default {
     },
     showModalUpdate(rencanaAksiId) {
       this.resetForm("RencanaAksiForm")
-      this.formType = "update"
-      this.headerText = "Update Rencana Aksi"
+      this.formType = "edit"
+      this.headerText = "Edit Rencana Aksi"
       this.submitLoader = false
       this.RencanaAksiForm.rencanaAksiId = rencanaAksiId
       this.$refs.loader.start() 
@@ -211,7 +215,7 @@ export default {
 
           this.RencanaAksiForm.rencanaAksiLabel = data.label
           this.RencanaAksiForm.bulanPelaksanaanId = [ data.bulan_pelaksanaan ]
-
+          this.RencanaAksiForm.sasaranKinerjaId = data.sasaran_kinerja_id
 
 
           setTimeout(() => {
@@ -254,6 +258,100 @@ export default {
           }
       }); 
         
+    },
+    updateForm(formName) {
+       this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.submitLoader = true
+          this.$axios
+            .$put("/rencana_aksi", this.RencanaAksiForm )
+            .then((response) => {
+              this.$emit('loadAsyncData');
+              setTimeout(() => {
+                    this.modalFormVisible = false;
+                    this.submitLoader = false
+                    this.$message({
+                      type: 'info',
+                      message: 'berhasil mengupdate data'
+                    }); 
+              }, 200);
+                          
+                          
+            })
+            .catch((error) => {
+                this.submitLoader = false
+                this.$message({
+                  type: 'error',
+                  duration: 2000,
+                  message: "Tidak Berhasil mengupdate Data"
+                });    
+            });
+
+        }else{
+          console.log('error submit!!');
+          return false;
+        }
+      });
+
+    },
+    deleteForm(formName) {
+      this.$confirm('Ini akan menghapus Rencana Aksi !', 'Konfirmasi', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.$axios
+            .$delete("/rencana_aksi?id="+this.RencanaAksiForm.rencanaAksiId)
+            .then((resp) => {
+                this.modalFormVisible = false;
+                this.$emit('loadAsyncData');
+                this.$message({
+                  type: 'success',
+                  message: 'Berhasil dihapus'
+                });
+            })
+            .catch((error) => {
+               this.$message({
+                  type: 'error',
+                  duration: 2000,
+                  message: "Tidak Berhasil Menghapus Data"
+                });          
+            });
+
+          
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Proses Hapus Dibatalkan'
+          });          
+        });
+       
+          /* this.submitLoader = true
+          this.$axios
+            .$put("/hasil", this.OutcomeForm )
+            .then((response) => {
+              this.$emit('loadAsyncData');
+              setTimeout(() => {
+                    this.modalFormVisible = false;
+                    this.submitLoader = false
+                    this.$message({
+                      type: 'info',
+                      message: 'berhasil mengupdate data'
+                    }); 
+              }, 200);
+                          
+                          
+            })
+            .catch((error) => {
+                this.submitLoader = false
+                this.$message({
+                  type: 'error',
+                  duration: 2000,
+                  message: "Tidak Berhasil mengupdate Data"
+                });    
+            }); */
+
+
     },
     
   },

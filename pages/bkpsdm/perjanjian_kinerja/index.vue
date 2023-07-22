@@ -13,6 +13,16 @@
       <p class="card-category d-inline"></p>
     </template>
 
+    <el-input
+        size="small"
+        style="width:250px; float: right; padding: 3px 2px;"
+        placeholder="Nama SKPD"
+        prefix-icon="el-icon-search"
+        v-model="search"
+        @input="onSearch"
+        clearable>
+      </el-input>
+
     <el-table
       :data="tableDataPk"
       highlight-current-row
@@ -24,6 +34,19 @@
       <el-table-column min-width="190" align="left" prop="nama_skpd" label="Nama SKPD"></el-table-column>
       <el-table-column min-width="190" align="left" prop="nama_kepala_skpd" label="Kepala SKPD"></el-table-column>
       <el-table-column min-width="180" align="left" prop="nama_admin" label="Admin SKPD"></el-table-column>
+      <el-table-column min-width="52" header-align="center" label="Draft">
+        <template slot-scope="scope">
+          <div class="text-center">
+            <el-switch
+              v-model="scope.row.is_open"
+              active-color="#13ce66"
+              v-on:change="setStatus(scope.row)"
+            >
+            </el-switch>
+            <md-tooltip md-direction="top">Close/Open</md-tooltip>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column  min-width="100" align="center" label="Created at">
         <template slot-scope="{ row }">
           <div style="padding:0px !important;">
@@ -31,15 +54,14 @@
           </div>
         </template>
       </el-table-column>
-      <!--  -->
-      <!-- <el-table-column min-width="60" align="center" label="Aksi">
+      <el-table-column min-width="60" align="center" label="Aksi">
         <template slot-scope="{ row }">
           <el-button size="mini" type="text" @click="viewPerjanjianKinerja(row)">
             <i class="el-icon-view"></i>
             <md-tooltip md-direction="top">Lihat Data</md-tooltip>
           </el-button>
         </template>
-      </el-table-column> -->
+      </el-table-column>
 
     </el-table>
 
@@ -127,6 +149,11 @@ export default {
           throw error
         })
     },
+    onSearch(value) {
+      this.search = value
+      this.page = null
+      this.loadAsyncData()
+    },
     onPageChange(page) {
       this.page = page
       this.loadAsyncData()
@@ -134,6 +161,20 @@ export default {
     viewPerjanjianKinerja: function(data) {
       this.$refs.loader.start()
       this.$router.push("/bkpsdm/perjanjian_kinerja/"+data.id);
+    },
+    setStatus: function(data){
+      //console.log(data)
+      this.$axios
+        .$put("/update_pk_status", data )
+          .then((response) => {
+
+          setTimeout(() => {
+                        
+          }, 200);
+          })
+          .catch((errors) => {
+            console.log(errors);
+        });
     },
   },
   mounted() {

@@ -11,7 +11,7 @@
 
    
 
-   <!--    <el-input
+   <el-input
         size="small"
         style="width:250px; float: right; padding: 3px 2px;"
         placeholder="Nama SKPD"
@@ -19,7 +19,7 @@
         v-model="search"
         @input="onSearch"
         clearable>
-      </el-input> -->
+      </el-input>
 
         
 
